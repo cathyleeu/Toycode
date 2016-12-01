@@ -17,7 +17,6 @@
   	cd server
     npm install
   	npm run dev
-
     ```
 
 ## 서버 실행
