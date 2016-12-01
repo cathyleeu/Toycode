@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
+import {connect} from 'react-redux'
+import {signupUser} from '../../actions'
+import {bindActionCreators} from 'redux'
 
 
 class SignupForm extends Component {
@@ -7,7 +10,8 @@ class SignupForm extends Component {
     super(props)
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      passwordConfirm: ''
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -46,14 +50,35 @@ class SignupForm extends Component {
           placeholder="비밀번호 입력"
           className="form-control"/>
         </fieldset>
+        <fieldset className="form-group">
+         <label>비밀번호확인:</label>
+         <input
+          value={this.state.passwordConfirm}
+          name="passwordConfirm"
+          type="password"
+          onChange= {this.onChange}
+          placeholder="비밀번호 확인입력"
+          className="form-control"/>
+        </fieldset>
         <button action="submit" className="btn btn-primary">회원가입</button>
       </form>
     )
   }
 }
 
-SignupForm.propTypes = {
-  signupUser: React.PropTypes.func.isRequired
+function mapStateToProps(state){
+  return{
+    // auth: state.auth,
+    errorMessage: state.auth.error
+    // props로 사용할 이름 : reducer에서 불러오는 것
+  }
 }
 
-export default SignupForm
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    signupUser:signupUser
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm)
+// export default SignupForm
