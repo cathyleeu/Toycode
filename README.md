@@ -1,17 +1,18 @@
 
 ## 설치
+  * 서버 설치
   ```
   git clone git@gitlab.com:toycode/sample-erp.git
   cd sample-erp
 	```
-    * ForSite : 클라이언트
+  * 각 폴더에서 npm install 후 실행
+    * ForSite : 클라이언트실행
   	```
   	cd ForSite
     npm install
   	npm start
     ```
-
-    * server : 백엔드
+    * server : 백엔드실행
     ```
   	cd server
     npm install
