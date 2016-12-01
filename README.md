@@ -1,24 +1,23 @@
 
 ## 설치
-
   ```
   git clone git@gitlab.com:toycode/sample-erp.git
   cd sample-erp
 	```
-  * ForSite : 클라이언트
-	```
-	cd ForSite
-  npm install
-	npm start
-  ```
-  * server : 백엔드
+    * ForSite : 클라이언트
+  	```
+  	cd ForSite
+    npm install
+  	npm start
+    ```
 
-  ```
-	cd server
-  npm install
-	npm run dev
+    * server : 백엔드
+    ```
+  	cd server
+    npm install
+  	npm run dev
 
-  ```
+    ```
 
 ## 서버 실행
   * 서버 시작
@@ -32,8 +31,8 @@
     ```
 
 ## local 주소
-	* ForSite : http://localhost:8080/
-	* server : http://localhost:3090/
+ForSite : http://localhost:8080/
+server : http://localhost:3090/
 
 ## 사용된 라이브러리
   * [redux](http://dobbit.github.io/redux/)
