@@ -1,17 +1,19 @@
 
 ## 설치
+
   ```
   git clone git@gitlab.com:toycode/sample-erp.git
   cd sample-erp
 	```
-	ForSite : 클라이언트
-	server : 백엔드
-	각 폴더에 들어가서 npm install 해주시면 됩니다.
+  * ForSite : 클라이언트
 	```
 	cd ForSite
   npm install
 	npm start
+  ```
+  * server : 백엔드
 
+  ```
 	cd server
   npm install
 	npm run dev
@@ -34,17 +36,18 @@
 	* server : http://localhost:3090/
 
 ## 사용된 라이브러리
-* [redux](http://dobbit.github.io/redux/)
-* [webpack](https://webpack.github.io/)
-* [Babel](http://babeljs.io/)
-* [passport](http://passportjs.org/j)
-* [jwt](http://jwt.io/)
-* [axios](https://github.com/mzabriskie/axios)
-* [mongod](https://www.mongodb.com)
-* [mongoose](http://mongoosejs.com/)
+  * [redux](http://dobbit.github.io/redux/)
+  * [webpack](https://webpack.github.io/)
+  * [Babel](http://babeljs.io/)
+  * [passport](http://passportjs.org/j)
+  * [jwt](http://jwt.io/)
+  * [axios](https://github.com/mzabriskie/axios)
+  * [mongod](https://www.mongodb.com)
+  * [mongoose](http://mongoosejs.com/)
 
 
 ## TODO
-* 회원가입 폼 상세
-* User 모델 스키마 정의
-* Feature 구도
+  * 회원가입 폼 상세
+  * User 모델 스키마 정의
+  * Feature 구도
+  * 매터리얼 디자인 적용
