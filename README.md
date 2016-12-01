@@ -31,8 +31,8 @@
     ```
 
 ## local 주소
-ForSite : http://localhost:8080/
-server : http://localhost:3090/
+* ForSite : http://localhost:8080/
+* server : http://localhost:3090/
 
 ## 사용된 라이브러리
   * [redux](http://dobbit.github.io/redux/)
