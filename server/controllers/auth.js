@@ -15,6 +15,7 @@ exports.signin = function (req, res, next) {
   res.send({ token: tokenForUser(req.user) });
 }
 
+
 exports.signup = function(req, res, next) {
 
   const email = req.body.email;
@@ -33,6 +34,8 @@ exports.signup = function(req, res, next) {
     if(existingUser){
       return res.status(422).send({ error: '이미사용되는 이메일입니다.'})
     }
+
+
     // 한번도 생성한 적이 없는 경우 유저생성하는 것
     const user = new User({
       email: email,

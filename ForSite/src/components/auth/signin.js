@@ -38,9 +38,10 @@ class Signin extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <div className="FormCont">
+      <form onSubmit={this.onSubmit} className="LoginForm">
         <fieldset className="form-group">
-         <label>이메일:</label>
+         <label>이메일</label>
          <input
            value={this.state.email}
            name="email"
@@ -52,7 +53,7 @@ class Signin extends Component {
          />
         </fieldset>
         <fieldset className="form-group">
-         <label>비밀번호:</label>
+         <label>비밀번호</label>
          <input
           value={this.state.password}
           name="password"
@@ -64,11 +65,12 @@ class Signin extends Component {
           />
         </fieldset>
         {this.renderAlert()}
-        <button action="submit" className="btn btn-primary">로그인</button>
-        <div>
+        <div className="Form-Bottom">
+          <button action="submit" className="btn btn-primary">로그인</button>
           <Link to="/signup">회원가입</Link>
         </div>
       </form>
+      </div>
     )
   }
 }
@@ -86,11 +88,5 @@ function mapDispatchToProps(dispatch){
   }, dispatch)
 }
 
-// Signin.propTypes = {
-//   signinUser: React.PropTypes.func.isRequired,
-//   authError: React.PropTypes.func.isRequired
-// }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin)
-// export default connect(null, {signinUser, authError})(Signin)
-// export default Signin

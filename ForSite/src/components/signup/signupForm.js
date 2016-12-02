@@ -3,6 +3,9 @@ import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {signupUser} from '../../actions'
 import {bindActionCreators} from 'redux'
+const Validator = require('validator');
+
+
 
 
 class SignupForm extends Component {
@@ -21,47 +24,79 @@ class SignupForm extends Component {
     [e.target.name]: e.target.value
     })
   }
+  isValidate(){
+    const data = this.state
+    if(!Validator.equals(data.password, data.passwordConfirm)){
+      return (
+        <div className="alert alert-danger">
+          패스워드가 다릅니다.
+        </div>
+      )
+    }
+    if(!Validator.isEmail(data.email)){
+      return (
+        <div className="alert alert-danger">
+          유효한 메일이 아닙니다.
+        </div>
+      )
+    }
+    if(Validator.isEmpty(data.email)|| Validator.isEmpty(data.password) ||Validator.isEmpty(data.passwordConfirm)){
+      return (
+        <div className="alert alert-danger">
+          양식을 정확히 입력해 주세요.
+        </div>
+      )
+    }
+  }
   onSubmit(e){
     e.preventDefault()
     this.props.signupUser(this.state)
-
   }
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <fieldset className="form-group">
-         <label>이메일:</label>
-         <input
-           value={this.state.email}
-           name="email"
-           type="text"
-           placeholder="이메일 입력"
-           className="form-control"
-           onChange= {this.onChange}
-         />
-        </fieldset>
-        <fieldset className="form-group">
-         <label>비밀번호:</label>
-         <input
-          value={this.state.password}
-          name="password"
-          type="password"
-          onChange= {this.onChange}
-          placeholder="비밀번호 입력"
-          className="form-control"/>
-        </fieldset>
-        <fieldset className="form-group">
-         <label>비밀번호확인:</label>
-         <input
-          value={this.state.passwordConfirm}
-          name="passwordConfirm"
-          type="password"
-          onChange= {this.onChange}
-          placeholder="비밀번호 확인입력"
-          className="form-control"/>
-        </fieldset>
-        <button action="submit" className="btn btn-primary">회원가입</button>
-      </form>
+      <div className="FormCont">
+        <form onSubmit={this.onSubmit} className="LoginForm">
+          {this.isValidate()}
+          <fieldset className="form-group">
+           <label>이메일</label>
+           <input
+             value={this.state.email}
+             name="email"
+             type="text"
+             placeholder="이메일 입력"
+             className="form-control"
+             onChange= {this.onChange}
+             required
+           />
+          </fieldset>
+          <fieldset className="form-group">
+           <label>비밀번호</label>
+           <input
+            value={this.state.password}
+            name="password"
+            type="password"
+            onChange= {this.onChange}
+            placeholder="비밀번호 입력"
+            className="form-control"
+            required/>
+          </fieldset>
+          <fieldset className="form-group">
+           <label>비밀번호확인</label>
+           <input
+            value={this.state.passwordConfirm}
+            name="passwordConfirm"
+            type="password"
+            onChange= {this.onChange}
+            placeholder="비밀번호 확인입력"
+            className="form-control"
+            required/>
+          </fieldset>
+          <div className="Form-Bottom">
+            <button action="submit" className="btn btn-primary">회원가입</button>
+            <Link to="/">홈으로 가기</Link>
+          </div>
+        </form>
+      </div>
     )
   }
 }
@@ -81,4 +116,3 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm)
-// export default SignupForm

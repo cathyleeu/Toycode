@@ -12,11 +12,14 @@ import Signin from './components/auth/signin';
 import Signout from './components/auth/signout';
 import SignupForm from './components/signup/signupForm';
 import Feature from './components/feature';
+import Support from './components/support';
+import LoginIssue from './components/login_issue';
+import BookOrder from './components/book_order';
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers)
+const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : f => f)
 
 const token = localStorage.getItem('token')
 if (token) {
@@ -32,6 +35,9 @@ ReactDOM.render(
         <Route path='signout' component={Signout}/>
         <Route path='signup' component={SignupForm}/>
         <Route path='feature' component={requireAuth(Feature)}/>
+        <Route path='support' component={requireAuth(Support)}/>
+        <Route path='book_order' component={requireAuth(BookOrder)}/>
+        <Route path='login_issue' component={requireAuth(LoginIssue)}/>
       </Route>
     </Router>
   </Provider>

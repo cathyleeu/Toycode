@@ -31,6 +31,7 @@ export function signupUser(userData) {
     axios.post(ROOT_URL+'/signup', userData)
       .then(response => {
         localStorage.setItem('token', response.data.token)
+        alert('회원가입이 완료되었습니다. 로그인 페이지로 넘어갑니다.')
         browserHistory.push('signin')
       })
       .catch(response => dispatch(authError(response.data.error)))

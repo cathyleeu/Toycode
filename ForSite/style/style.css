@@ -1,0 +1,21 @@
+.FormCont{
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+}
+.LoginForm{
+  width: 40%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+.Form-Bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
