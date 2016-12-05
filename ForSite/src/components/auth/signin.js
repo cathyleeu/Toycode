@@ -26,7 +26,7 @@ class Signin extends Component {
     if(this.props.errorMessage){
       return(
         <div className="alert alert-danger">
-          <strong>띠용!!</strong> {this.props.errorMessage}
+          <strong> {this.props.errorMessage}</strong>
         </div>
       )
     }
