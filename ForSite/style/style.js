@@ -56,5 +56,18 @@ export default StyleSheet.create({
         "borderTop": "1px solid #ddd",
         "borderBottom": "1px solid #ddd",
         "marginBottom": 1
+    },
+    "quantity": {
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "height": 40,
+        "paddingTop": 0,
+        "paddingRight": 0.5,
+        "paddingBottom": 0,
+        "paddingLeft": 0.5
+    },
+    "quantity input": {
+        "width": 100
     }
 });

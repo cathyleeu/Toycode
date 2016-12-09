@@ -14,6 +14,9 @@ import Feature from './components/feature';
 import Support from './components/support';
 import LoginIssue from './components/login_issue';
 import { OrderTable } from './components/order';
+// import { getAllProducts } from './actions/order'
+import {fetchBooks} from './components/order/actions'
+
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types'
 
@@ -24,6 +27,9 @@ const token = localStorage.getItem('token')
 if (token) {
   store.dispatch({ type: AUTH_USER })
 }
+
+// store.dispatch(getAllProducts())
+store.dispatch(fetchBooks())
 
 ReactDOM.render(
   <Provider store={store}>

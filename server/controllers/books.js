@@ -29,5 +29,5 @@ exports.getbooks = function (req, res) {
       return res.status(500).send({error: 'database failure'});
     }
     return res.json(books)
-  })
+  }).sort({"id": 1 })
 }
