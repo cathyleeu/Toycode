@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 
 const booksSchema = new Schema({
+  id: Number,
   title : String,
   code : String,
   quantity : Number,
   price : Number,
   desc: String,
-  img: String,
-  status: Boolean
+  img: String
 });
 
 // module.exports = mongoose.model('books', booksSchema)
