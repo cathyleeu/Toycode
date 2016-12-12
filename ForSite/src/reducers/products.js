@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+// import { combineReducers } from 'redux'
 import { RECEIVE_PRODUCTS, ADD_TO_CART, FETCH_BOOKS } from '../actions/types'
 
 const products = (state, action) => {

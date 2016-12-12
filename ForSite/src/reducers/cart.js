@@ -14,7 +14,7 @@ const addedIds = ( state = initialState.addedIds, action) => {
     // 카트에 추가할때
     case ADD_TO_CART:
       if (state.indexOf(action.bookId) !== -1 ){
-        debugger
+        //똑같은 상품 추가할때 오더 array에 추가하지 않고, 새로운 id가 있을때 추가한ㄷㅏ.
         //state에 action.productId가 존재한다면 (-1이 아니라면 존재)
         return state
         //state값을 리턴
@@ -52,7 +52,7 @@ export const getQuantity = (state, bookId) =>
   state.quantityById[bookId] || 0
   // 주문하는 갯수가 0개 또는 선택한 추가량
 
-export const getAddedIds = state => state.addedIds
+export const getAddedIds = state => state
 
 const cart = (state = initialState, action) => {
   switch (action.type) {

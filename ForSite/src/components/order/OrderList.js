@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component, propTypes } from 'react'
 import { connect } from 'react-redux'
 import { addToCart } from '../../actions/order'
+import { getVisibleProducts } from '../../reducers/products'
 // import * as actions from './actions'
 // import ProductItem from './ProductItem'
 import ProductsList from './ProductsList'
@@ -19,8 +20,11 @@ const OrderList = ({books, addToCart }) => (
 )
 
 
+
 function mapStateToProps(state){
-  return {books: state.books}
+  return {
+    books: state.books
+  }
 }
 
 

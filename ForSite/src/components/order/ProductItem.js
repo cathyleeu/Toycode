@@ -10,14 +10,14 @@ const ProductItem = ({book, onAddToCartClicked}) => (
       price={book.price}
       img={book.img}
     />
-    <form className="quantity">
+    <div className="quantity">
       <input type="number" placeholder="수량입력"/>
       <button
         disabled={book.quantity > 0 ? '' : 'disabled'}
         onClick={onAddToCartClicked}
       >
         {book.quantity > 0 ? '장바구니': '매진'}</button>
-    </form>
+    </div>
   </div>
 )
 
