@@ -4,10 +4,10 @@ import Product from './Product'
 const Cart = ({ books, total, products }) => {
   console.log('Cart.js:',books);
   console.log('Cart.js:', products);
-  const hasBooks = []
-  hasBooks.push(products[books])
+  const hasBooks = Object.assign({}, products[books] )
+
   console.log('hasBooks:', hasBooks);
-  const nodes = hasBooks.length > 0 ? (
+  const nodes = hasBooks ? (
 
       <Product
         title={hasBooks.title}
