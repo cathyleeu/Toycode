@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Product from './Product'
+import AddedProduct from './AddedProduct'
 
 const Cart = ({ books, total }) => {
   console.log('books:',books);
@@ -9,7 +9,7 @@ const Cart = ({ books, total }) => {
 
   const nodes = books !== undefined ? (
     books.map(book =>
-      <Product
+      <AddedProduct
         title={book.title}
         price={book.price}
         key={book.id}
