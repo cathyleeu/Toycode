@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_BOOKS } from './types'
+import { FETCH_BOOKS, PUSH_TO_CART } from './types'
 
 const ROOT_URL = 'http://localhost:3090'
 
@@ -10,5 +10,12 @@ export function fetchBooks() {
     type: FETCH_BOOKS,
     // FETCH_BOOKS라는 type일때 request를 payload로 전달한다.
     payload: request
+  }
+}
+
+export function addtocart(addedbooks) {
+  return {
+    type: PUSH_TO_CART,
+    addedbooks
   }
 }

@@ -31,6 +31,18 @@ if (token) {
 // store.dispatch(getAllProducts())
 store.dispatch(fetchBooks())
 
+/*
+one store => key feature! easy manage
+redux store API is very simple
+
+store.dispatch(action) => store can dispatch action
+store.subsctibe(listener)
+store.getState() => return current state
+replaceReducer(nextReducer) => replace
+
+action 같은 것으로 store을 handle할 수 있음
+*/
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>

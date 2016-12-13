@@ -1,20 +1,20 @@
 import React, { PropTypes } from 'react'
 import Product from './Product'
 
-const Cart = ({ books, total, products }) => {
-  console.log('Cart.js:',books);
-  console.log('Cart.js:', products);
-  const hasBooks = Object.assign({}, products[books] )
+const Cart = ({ books, total }) => {
+  console.log('books:',books);
 
-  console.log('hasBooks:', hasBooks);
-  const nodes = hasBooks ? (
 
+  // const hasBooks = Object.assign({}, products)
+
+  const nodes = books !== undefined ? (
+    books.map(book =>
       <Product
-        title={hasBooks.title}
-        price={hasBooks.price}
-        key={hasBooks.id}
+        title={book.title}
+        price={book.price}
+        key={book.id}
       />
-
+    )
   ) : (
     <em> 상품을 담아주세요. </em>
   )

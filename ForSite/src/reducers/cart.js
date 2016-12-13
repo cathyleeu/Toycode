@@ -20,6 +20,9 @@ const addedIds = ( state = initialState.addedIds, action) => {
         //state값을 리턴
       }
       return [...state, action.bookId]
+
+// Object.assign({}, action.bookId)
+
       //전개연산자 : 배열인 어떤 값을 함수의 파라미터 순서대로 전달해주는 걸 의미
       //아니라면 설정한 state의 파라미터를 전달, action.productId를 전달
 
@@ -51,6 +54,7 @@ const quantityById = ( state = initialState.quantityById, action) => {
 export const getQuantity = (state, bookId) =>
   state.quantityById[bookId] || 0
   // 주문하는 갯수가 0개 또는 선택한 추가량
+
 
 export const getAddedIds = state => state
 

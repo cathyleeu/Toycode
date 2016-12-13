@@ -54,8 +54,9 @@ const products = (state, action) => {
 //   visibleIds
 // })
 //
+
 export const getProduct = (state, id) =>
-  state[id]
+  state[id-1]
 //
 // export const getVisibleProducts = state =>
 //   state.visibleIds.map(id => getProduct(state, id))

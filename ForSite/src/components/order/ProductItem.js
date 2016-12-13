@@ -11,12 +11,16 @@ const ProductItem = ({book, onAddToCartClicked}) => (
       img={book.img}
     />
     <div className="quantity">
-      <input type="number" placeholder="수량입력"/>
-      <button
+      <input
+        type="number"
+        placeholder="수량입력"
+        // value={quantity}
+        />
+      <input
+        type="submit"
         disabled={book.quantity > 0 ? '' : 'disabled'}
         onClick={onAddToCartClicked}
-      >
-        {book.quantity > 0 ? '장바구니': '매진'}</button>
+        value = {book.quantity > 0 ? '장바구니': '매진'}/>
     </div>
   </div>
 )
