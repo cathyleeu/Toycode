@@ -3,6 +3,7 @@ import AddedProduct from './AddedProduct'
 
 const Cart = ({ books, total }) => {
   console.log('books:',books);
+  console.log('total:',total);
 
 
   // const hasBooks = Object.assign({}, products)
@@ -13,6 +14,7 @@ const Cart = ({ books, total }) => {
         title={book.title}
         price={book.price}
         key={book.id}
+        // quantity={book.quantity}
       />
     )
   ) : (
@@ -22,6 +24,7 @@ const Cart = ({ books, total }) => {
     <div>
       <h3>주문서</h3>
       <div>{nodes}</div>
+      <p>{total}</p>
     </div>
   )
 }

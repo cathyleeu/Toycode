@@ -15,6 +15,10 @@ import Support from './components/support';
 import LoginIssue from './components/login_issue';
 import { OrderTable } from './components/order';
 // import { getAllProducts } from './actions/order'
+
+// import { loadBooks } from './actions/booksAction';
+
+
 import {fetchBooks} from './components/order/actions'
 
 import reducers from './reducers';
@@ -30,6 +34,11 @@ if (token) {
 
 // store.dispatch(getAllProducts())
 store.dispatch(fetchBooks())
+
+// store.dispatch(loadBooks())
+
+
+
 
 /*
 one store => key feature! easy manage

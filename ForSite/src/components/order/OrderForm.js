@@ -4,9 +4,10 @@ import { getTotal, getCartProducts } from '../../reducers'
 import Cart from './Cart'
 
 
-const OrderForm = ({ books }) => (
+const OrderForm = ({ books, total }) => (
   <Cart
     books={books}
+    total={total}
   />
 
 )
@@ -14,8 +15,8 @@ const OrderForm = ({ books }) => (
 
 function mapStateToProps(state){
   return {
-    books: getCartProducts(state)
-    // TODO: getCartProducts(state.books) 형식으로 주문한 책만 뽑아주는 필터링 코드가 필요함
+    books: getCartProducts(state),
+    total: getTotal(state)
     // TODO: total도 뿌려줘야함.
   }
 }

@@ -18,10 +18,23 @@ const getAddedIds = state => fromCart.getAddedIds(state)
 const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
 const getProduct = (state, id) => fromProducts.getProduct(state.books, id)
 
-export const getTotal = state =>
-  getAddedIds(state)
-    .reduce((total, id) =>
-      total + getProduct(state, id).price * getQuantity(state, id), 0 ).toFixed(2)
+export const getTotal = state => {
+  if(getAddedIds(state.cart.addedIds) == undefined){
+    getAddedIds(state.cart.addedIds)
+  } else {
+    return (
+      getAddedIds(state.cart.addedIds)
+        .reduce((total, id) =>
+          total + getProduct(state, id).price * getQuantity(state, id), 0 )
+    )
+  }
+}
+
+
+
+
+
+
       //주문하는 수량만큼 총 가격 계산하고 소숫점 2번째 까지
 
 
