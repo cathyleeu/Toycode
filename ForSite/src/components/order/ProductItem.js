@@ -16,6 +16,10 @@ class ProductItem extends Component {
     this.setState({ orderValue: newState })
     this.props.callbackParent(newState)
   }
+  // handleSubmit(e){
+  //   e.preventDefault()
+  //
+  // }
 
   render(){
     var order_num = []
@@ -33,6 +37,7 @@ class ProductItem extends Component {
           <select
             value={this.state.orderValue}
             onChange={this.handleChange}>
+            <option>선택하세요</option>
             {order_num}
           </select>
           <input
