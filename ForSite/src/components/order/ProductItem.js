@@ -1,33 +1,50 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Product from './Product'
 
 
+class ProductItem extends Component {
+  constructor(props, {initialValue}) {
+    super(props, {initialValue})
+    this.state = {
+      orderValue : initialValue
+    }
+    this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(e){
+    const newState = e.target.value
+    this.setState({ orderValue: newState })
+    this.props.callbackParent(newState)
+  }
 
-const ProductItem = ({book, onAddToCartClicked}) => (
-  <div>
-    <Product
-      title={book.title}
-      price={book.price}
-      img={book.img}
-    />
-    <div className="quantity">
-      <input
-        type="number"
-        placeholder="수량입력"
-        // value={quantity}
+  render(){
+    var order_num = []
+    const book = this.props.book
+    for(let i=1; i < book.quantity+1; i++){order_num.push(i)}
+    order_num = order_num.map(i => <option key={i} value={i}>{i}</option>)
+    return(
+      <div>
+        <Product
+          title={book.title}
+          price={book.price}
+          img={book.img}
         />
-      <input
-        type="submit"
-        disabled={book.quantity > 0 ? '' : 'disabled'}
-        onClick={onAddToCartClicked}
-        value = {book.quantity > 0 ? '장바구니': '매진'}/>
-    </div>
-  </div>
-)
+        <div className="quantity">
+          <select
+            value={this.state.orderValue}
+            onChange={this.handleChange}>
+            {order_num}
+          </select>
+          <input
+            type="submit"
+            disabled={book.quantity > 0 ? '' : 'disabled'}
+            onClick={this.props.onAddToCartClicked}
+            value = {book.quantity > 0 ? '장바구니': '매진'} />
+        </div>
+      </div>
+    )
+  }
+}
 
-// ProductItem.propTypes = {
-//   onAddToCartClicked: PropTypes.func.isRequired
-// }
 
-{/* <button onClick={onAddToCartClicked}>장바구니</button> */}
 export default ProductItem

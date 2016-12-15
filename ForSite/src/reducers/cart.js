@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   addedIds: [],
+  amount: [],
   quantityById: {}
 }
 
@@ -34,14 +35,16 @@ const addedIds = ( state = initialState.addedIds, action) => {
 
 
 const quantityById = ( state = initialState.quantityById, action) => {
+
   switch (action.type) {
     case ADD_TO_CART:
     //ADD_TO_CART일때,
-      const { bookId } = action
+      const { bookId, amount } = action
       // 프로덕트 ID는 액션
       // ??: 왜 중괄호 안에 들어가지? 오브젝트를 말하는감?
+
       return { ...state,
-        [bookId]: (state[bookId] || 0) + 1
+        [bookId]: (state[bookId] || 0) + amount
         // 갯수를 추가함
         // 0거나 state[productId] 에 1씩 추가
       }
@@ -50,6 +53,7 @@ const quantityById = ( state = initialState.quantityById, action) => {
 
   }
 }
+
 
 export const getQuantity = (state, bookId) =>
   state.quantityById[bookId] || 0

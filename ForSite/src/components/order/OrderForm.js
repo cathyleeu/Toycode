@@ -4,10 +4,11 @@ import { getTotal, getCartProducts } from '../../reducers'
 import Cart from './Cart'
 
 
-const OrderForm = ({ books, total }) => (
+const OrderForm = ({ books, total, amount }) => (
   <Cart
     books={books}
     total={total}
+    amount={amount}
   />
 
 )
@@ -16,7 +17,8 @@ const OrderForm = ({ books, total }) => (
 function mapStateToProps(state){
   return {
     books: getCartProducts(state),
-    total: getTotal(state)
+    total: getTotal(state),
+    amount: state.cart.quantityById
     // TODO: total도 뿌려줘야함.
   }
 }

@@ -18,6 +18,7 @@ const getAddedIds = state => fromCart.getAddedIds(state)
 const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
 const getProduct = (state, id) => fromProducts.getProduct(state.books, id)
 
+
 export const getTotal = state => {
   if(getAddedIds(state.cart.addedIds) == undefined){
     getAddedIds(state.cart.addedIds)
@@ -31,13 +32,6 @@ export const getTotal = state => {
 }
 
 
-
-
-
-
-      //주문하는 수량만큼 총 가격 계산하고 소숫점 2번째 까지
-
-
 export const getCartProducts = state => {
   if(getAddedIds(state.cart.addedIds) == undefined){
     getAddedIds(state.cart.addedIds)
@@ -46,11 +40,5 @@ export const getCartProducts = state => {
   }
 }
 
-  // .map(id => ({
-  //   ...getProduct(state, id),
-  //   // cart reducer getProduct 상태를 그대로 전달
-  //   // quantity: getQuantity(state, id)
-  // }))
-  // console.log('여기는 index.js:',state.cart);
 
 export default rootReducer;
