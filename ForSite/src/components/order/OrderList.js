@@ -1,11 +1,6 @@
 import React, { Component, propTypes } from 'react'
 import { connect } from 'react-redux'
-import {bindActionCreators} from 'redux'
-// import { addtocart } from './actions'
-import { addToCart, addToCartUnsafe } from '../../actions/order'
-import { getVisibleProducts } from '../../reducers/products'
-// import * as actions from './actions'
-// import ProductItem from './ProductItem'
+import { addToCartUnsafe } from '../../actions/order'
 import ProductsList from './ProductsList'
 import ProductItem from './ProductItem'
 
@@ -31,11 +26,8 @@ class OrderList extends Component{
             book={book}
             initialValue={this.state.orderValue}
             callbackParent={(newState) => this.onChildChanged(newState) }
-            // onAddToCartClicked={() => addtocart(book.id)}
             onAddToCartClicked={() => {
-              this.props.addToCart(book.id, parseInt(this.state.orderValue))
-              // addToCart(book.id, this.state.orderValue)
-              // addToCartUnsafe(this)
+              this.props.addToCartUnsafe(book.id, parseInt(this.state.orderValue))
             }}
           />
         )}
@@ -55,4 +47,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, { addToCart, addToCartUnsafe })(OrderList)
+export default connect(mapStateToProps, { addToCartUnsafe })(OrderList)

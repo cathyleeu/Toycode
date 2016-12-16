@@ -2,7 +2,7 @@
 import { RECEIVE_PRODUCTS, ADD_TO_CART, FETCH_BOOKS } from '../actions/types'
 
 const products = (state, action) => {
-  
+
   switch (action.type) {
     case ADD_TO_CART:
       return {
@@ -60,13 +60,13 @@ const products = (state, action) => {
 export const getProduct = (state, id) =>
   state[id-1]
 
-
+// 이것이 product Reducer의 몸통
 const initialState = 0
 export default function(state=initialState, action){
   switch (action.type) {
     case ADD_TO_CART:
       return {...state, ...action}
-
+//여기서 재고가 변하는 업데이트를 실행해줘야함.
     default:
       return state
   }

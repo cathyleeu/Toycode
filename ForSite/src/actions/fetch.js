@@ -1,37 +1,24 @@
+import { FETCH_BOOKS, START_BOOKS_FETCH, COMPLETE_BOOKS_FETCH } from './types'
 import axios from 'axios'
-import { FETCH_BOOKS } from './types'
-
-const ROOT_URL = 'http://localhost:3090'
-const request = axios.get(`${ROOT_URL}/books`).then((books) => { return books.data })
 
 
-
-export function fetchBooks() {
-
+export var startBooksFetch = () => {
   return {
-    type: FETCH_BOOKS,
-    // FETCH_BOOKS라는 type일때 request를 payload로 전달한다.
-    payload: request
-    // payload: request 를 통해 데이터가 전달되는 것임
+    type: START_BOOKS_FETCH
+  };
+};
 
-  }
-}
-
-/* 이러한 것 자체를 action creator이라고 함
-rateCourse(rating){
+export var completeBooksFetch = (books) => {
   return {
-    type: PPPP,
-    payload
-  }
+    type: COMPLETE_BOOKS_FETCH,
+    books : books.data
+  };
+};
+
+export const fetchBooks = () => (dispatch, getState) => {
+  dispatch(startBooksFetch())
+  const ROOT_URL = 'http://localhost:3090'
+  axios.get(`${ROOT_URL}/books`).then((books) => {
+     dispatch(completeBooksFetch(books))
+   })
 }
-*/
-
-
-
-
-// return function (dispatch) {
-//   axios.get(`${ROOT_URL}/books`)
-//     .then(request => {
-//       dispatch({request})
-//     })
-// }

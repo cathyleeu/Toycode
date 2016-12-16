@@ -14,12 +14,8 @@ import Feature from './components/feature';
 import Support from './components/support';
 import LoginIssue from './components/login_issue';
 import { OrderTable } from './components/order';
-// import { getAllProducts } from './actions/order'
 
-// import { loadBooks } from './actions/booksAction';
-
-
-import {fetchBooks} from './components/order/actions'
+import {fetchBooks} from './actions/fetch'
 
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types'
@@ -31,26 +27,8 @@ const token = localStorage.getItem('token')
 if (token) {
   store.dispatch({ type: AUTH_USER })
 }
-
-// store.dispatch(getAllProducts())
 store.dispatch(fetchBooks())
 
-// store.dispatch(loadBooks())
-
-
-
-
-/*
-one store => key feature! easy manage
-redux store API is very simple
-
-store.dispatch(action) => store can dispatch action
-store.subsctibe(listener)
-store.getState() => return current state
-replaceReducer(nextReducer) => replace
-
-action 같은 것으로 store을 handle할 수 있음
-*/
 
 ReactDOM.render(
   <Provider store={store}>

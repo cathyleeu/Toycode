@@ -15,30 +15,30 @@ const rootReducer = combineReducers({
 
 
 const getAddedIds = state => fromCart.getAddedIds(state)
-const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
+// const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
 const getProduct = (state, id) => fromProducts.getProduct(state.books, id)
 
 
-export const getTotal = state => {
-  if(getAddedIds(state.cart.addedIds) == undefined){
-    getAddedIds(state.cart.addedIds)
-  } else {
-    return (
-      getAddedIds(state.cart.addedIds)
-        .reduce((total, id) =>
-          total + getProduct(state, id).price * getQuantity(state, id), 0 )
-    )
-  }
-}
+// export const getTotal = state => {
+//   if(getAddedIds(state.cart.addedIds) !== undefined){
+//     return (
+//       getAddedIds(state.cart.addedIds)
+//         .reduce((total, id) =>
+//           total + getProduct(state, id).price , 0 )
+//   }
+// }
 
-
+//
 export const getCartProducts = state => {
-  if(getAddedIds(state.cart.addedIds) == undefined){
-    getAddedIds(state.cart.addedIds)
-  } else {
+  if(getAddedIds(state.cart.addedIds) !== undefined){
     return getAddedIds(state.cart.addedIds).map(id => ({...getProduct(state, id)}))
   }
 }
 
+// export const getCartProducts = state => {
+//
+//     return getAddedIds(state.cart.addedIds).map(id => ({...getProduct(state, id)}))
+//
+// }
 
 export default rootReducer;
