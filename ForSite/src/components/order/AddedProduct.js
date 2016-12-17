@@ -41,7 +41,7 @@ return  (
       <QuantityInput
         type={'number'}
         name={id}
-        qutt={qutt}
+        value={qutt}
         placeholder={'주문수량'}
         controlFunc={controlFunc}
       />
