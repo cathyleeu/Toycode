@@ -10,7 +10,7 @@ const QuantityInput = (props) => (
     onChange={props.controlFunc}
   />
 )
-// 
+//
 // QuantityInput.propTypes = {
 // 	type: React.PropTypes.oneOf(['text', 'number']).isRequired,
 // 	name: React.PropTypes.string.isRequired,

@@ -33,20 +33,22 @@ import QuantityInput from './QuantityInput'
 
 //
 //
-const AddedProduct = ({id,price, title, eachTotal, onAddToOrder, qutt, controlFunc}) => {
-
-return  (
-    <div className="orderList">
-      <p>{title} - {price}원</p>
-      <QuantityInput
-        type={'number'}
-        name={id}
-        value={qutt}
-        placeholder={'주문수량'}
-        controlFunc={controlFunc}
-      />
-    </div>
-  )
+const AddedProduct = ({id ,price, title, eachTotal, onAddToOrder, qutt, controlFunc}) => {
+  const value = qutt
+  return  (
+      <div className="orderList">
+        <p>{title} - {price}원</p>
+        <QuantityInput
+          type={'number'}
+          name={id}
+          value={qutt}
+          placeholder={'주문수량'}
+          current={qutt}
+          controlFunc={controlFunc}
+        />
+      </div>
+    )
 }
+
 
 export default AddedProduct
