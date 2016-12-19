@@ -27,7 +27,7 @@ class OrderList extends Component{
             initialValue={this.state.orderValue}
             callbackParent={(newState) => this.onChildChanged(newState) }
             onAddToCartClicked={() => {
-              this.props.addToCartUnsafe(book.id, parseInt(this.state.orderValue))
+              this.props.addToCartUnsafe(book.id)
             }}
           />
         )}

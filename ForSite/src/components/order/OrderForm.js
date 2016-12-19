@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getTotal, getCartProducts } from '../../reducers'
-import { addToCart } from '../../actions/order'
+import { requestInvoice, requestQuantity } from '../../actions/order'
 import Cart from './Cart'
-import CartList from './CartList'
+
 // import AddedProduct from './AddedProduct'
 
 
@@ -20,7 +20,7 @@ class OrderForm extends Component {
     this.setState({
       orderQuantity: e.target.value,
       selectedId: e.target.name
-    }, () => console.log(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity)))
+    }, () => this.props.requestQuantity(parseInt(this.state.selectedId),parseInt(this.state.orderQuantity)))
   }
   render(){
     const props = this.props
@@ -30,6 +30,7 @@ class OrderForm extends Component {
           qutt={this.state.orderQuantity}
           controlFunc={this.handleChange}
           selectedId={this.state.selectedId}
+          requestInvoice={() => { props.requestInvoice(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity))}}
           // total={total}
           // amount={props.amount}
           // onAddToOrder={() => { addToOrder(books.id, this.state.orderQuantity)}}
@@ -70,4 +71,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {addToCart})(OrderForm)
+export default connect(mapStateToProps, {requestInvoice, requestQuantity})(OrderForm)

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({books, amount, onAddToOrder,controlFunc, qutt}) => {
+const Cart = ({books, amount, onAddToOrder,controlFunc, qutt, requestInvoice}) => {
   const nodes = books !== undefined ? (
       books.map(book =>
         <AddedProduct
@@ -19,7 +19,8 @@ const Cart = ({books, amount, onAddToOrder,controlFunc, qutt}) => {
     )
   const checkout = nodes.length > 0 ? (
     <div>
-      <button>주문하기</button>
+      <button
+        onClick={requestInvoice}>주문하기</button>
     </div>
   ): false
   return (

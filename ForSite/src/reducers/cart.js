@@ -2,13 +2,14 @@ import {
   ADD_TO_CART,
   CHECKOUT_REQUEST,
   CHECKOUT_FAILURE,
+  REQUEST_QUANTITY,
   ADD_TO_ORDER
 } from '../actions/types'
 
 const initialState = {
   addedIds: [],
   amount: [],
-  quantityById: {}
+  quantityById: []
 }
 // Question: 왜 addedIds getAddedIds를 했을
 
@@ -19,7 +20,10 @@ const addedIds = ( state = initialState.addedIds, action) => {
         return state
       }
       return [...state, action.bookId]
-    return state
+    case CHECKOUT_REQUEST:
+      return [ ...action.bookId]
+    default:
+      return state
   }
 }
 // TODO: getAddedIds를 COMPLETE_BOOKS_FETCH가 된 후에 해야함
@@ -31,10 +35,11 @@ export const getAddedIds = state => {
 
 const quantityById = ( state = initialState.quantityById, action) => {
   switch (action.type) {
-    case ADD_TO_CART:
+    case REQUEST_QUANTITY:
       const { bookId, amount } = action
-      return {...state,
-        [bookId]: (state[bookId] || 0) + amount
+      return {
+        ...state,
+        [bookId]: amount
       }
     default:
       return state
@@ -53,13 +58,16 @@ export const getQuantity = (state, bookId) =>
 const cart = (state = initialState, action) => {
   switch (action.type) {
     case CHECKOUT_REQUEST:
-      return initialState
+      return {
+        addedIds: addedIds(state.addedIds, action),
+        quantityById: quantityById(state.quantityById, action)
+      }
     case CHECKOUT_FAILURE:
       return action.cart
     default:
       return {
-        addedIds: addedIds(state.addedIds, action),
-        quantityById: quantityById(state.quantityById, action)
+        addedIds: addedIds(state.addedIds, action)
+        // quantityById: quantityById(state.quantityById, action)
       }
   }
 }

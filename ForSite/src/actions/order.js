@@ -6,18 +6,20 @@ export const addToCartUnsafe = (bookId) => ({
   bookId
 })
 
-export const addToOrder = (bookId, amount) => ({
-  type: types.ADD_TO_ORDER,
+export const requestQuantity = (bookId,amount) => ({
+  type: types.REQUEST_QUANTITY,
+  bookId,
+  amount
+})
+
+export const requestInvoice = (bookId, amount) => ({
+  type: types.CHECKOUT_REQUEST,
   bookId,
   amount
 })
 
 
-// export const addToCartUnsafe = (bookId, amount) => ({
-//   type: types.ADD_TO_CART,
-//   bookId,
-//   amount
-// })
+
 
 export const checkout = books => (dispatch, getState) => {
   const {cart} = getState()
