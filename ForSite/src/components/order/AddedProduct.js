@@ -33,7 +33,7 @@ import QuantityInput from './QuantityInput'
 
 //
 //
-const AddedProduct = ({id ,price, title, eachTotal, onAddToOrder, qutt, controlFunc}) => {
+const AddedProduct = ({id ,price, title, eachTotal, onAddToOrder, qutt, controlFunc, requestInvoice}) => {
   const value = qutt
   return  (
       <div className="orderList">
@@ -46,6 +46,7 @@ const AddedProduct = ({id ,price, title, eachTotal, onAddToOrder, qutt, controlF
           current={qutt}
           controlFunc={controlFunc}
         />
+        {/* <button onClick={requestInvoice}>선택</button> */}
       </div>
     )
 }

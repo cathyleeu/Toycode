@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
 
 
 const getAddedIds = state => fromCart.getAddedIds(state)
-// const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
+const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
 const getProduct = (state, id) => fromProducts.getProduct(state.books, id)
 
 

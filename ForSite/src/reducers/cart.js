@@ -9,7 +9,7 @@ import {
 const initialState = {
   addedIds: [],
   amount: [],
-  quantityById: []
+  quantityById: {}
 }
 // Question: 왜 addedIds getAddedIds를 했을
 
@@ -35,21 +35,26 @@ export const getAddedIds = state => {
 
 const quantityById = ( state = initialState.quantityById, action) => {
   switch (action.type) {
-    case REQUEST_QUANTITY:
+    case CHECKOUT_REQUEST:
       const { bookId, amount } = action
-      return {
+      return [
         ...state,
-        [bookId]: amount
-      }
+      { bookId, amount }
+    ]
+    case REQUEST_QUANTITY:
+      return { ...state, amount}
     default:
       return state
   }
 }
 
-// [bookId]: (state[bookId] || 0) + 1
 
-export const getQuantity = (state, bookId) =>
-  state.quantityById[bookId] || 0
+
+export const getQuantity = (state, bookId) => {
+  console.log('state:',state);
+  return state.quantityById[bookId] || 0
+}
+
   // 주문하는 갯수가 0개 또는 선택한 추가량
 
 
@@ -64,10 +69,11 @@ const cart = (state = initialState, action) => {
       }
     case CHECKOUT_FAILURE:
       return action.cart
+    // case REQUEST_QUANTITY:
+    //   return state
     default:
       return {
         addedIds: addedIds(state.addedIds, action)
-        // quantityById: quantityById(state.quantityById, action)
       }
   }
 }

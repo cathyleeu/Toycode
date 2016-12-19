@@ -1,14 +1,14 @@
 // import { combineReducers } from 'redux'
-import { RECEIVE_PRODUCTS, ADD_TO_CART, FETCH_BOOKS } from '../actions/types'
+import { RECEIVE_PRODUCTS, ADD_TO_CART, FETCH_BOOKS, REQUEST_QUANTITY } from '../actions/types'
 
 const products = (state, action) => {
 
   switch (action.type) {
     case ADD_TO_CART:
       return {
-        ...state,
+        ...state
         //books data 그대로 전달
-        quantity: state.quantity - 1
+        // quantity: state.quantity - 1
         //카트에 추가될 때 수량은 하나씩 감소
       }
     default:
@@ -66,6 +66,9 @@ export default function(state=initialState, action){
   switch (action.type) {
     case ADD_TO_CART:
       return {...state, ...action}
+    case REQUEST_QUANTITY:
+      return {...state,
+        amount : state.amount}
 //여기서 재고가 변하는 업데이트를 실행해줘야함.
     default:
       return state
