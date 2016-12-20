@@ -6,9 +6,8 @@ export const addToCartUnsafe = (bookId) => ({
   bookId
 })
 
-export const toggleSelect = (id, orderQutt, price) => ({
+export const toggleSelect = (orderQutt, price) => ({
   type: types.SELECTED_TOGGLE_GOODS,
-  id,
   orderQutt,
   price
 })

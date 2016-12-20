@@ -4,7 +4,7 @@ const initialState = {
   addedIds: [],
   amount: [],
   quantityById: {},
-  selectedGoods: []
+  selectedGoods: [{}]
 }
 // Question: 왜 addedIds getAddedIds를 했을
 
@@ -37,22 +37,25 @@ export const getAddedIds = state => {
 //   ]
 export const selectedGoods = (state = initialState.selectedGoods, action) => {
   switch (action.type) {
-    case types.UNSELECT_TOGGLE_GOODS:
-      return [...state, {
-        selected: false,
+    case types.ADD_TO_CART:
+      return {
+        id:action.bookId,
         amount: undefined,
         total: undefined
-      }]
+      }
+    // case types.UNSELECT_TOGGLE_GOODS:
+    //   return [...state, {
+    //     selected: false,
+    //     amount: undefined,
+    //     total: undefined
+    //   }]
     case types.SELECTED_TOGGLE_GOODS:
-      return [...state,
-        {
-          id: action.id,
-          // selected: true,
+      return [...state, {
+          id: state.id,
           amount: action.orderQutt,
           total : action.price
         }
       ]
-
     default:
       return state
   }

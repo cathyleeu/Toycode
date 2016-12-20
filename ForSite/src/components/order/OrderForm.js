@@ -32,7 +32,7 @@ class OrderForm extends Component {
           controlFunc={this.handleChange}
           selectedId={this.state.selectedId}
           requestInvoice={() => { props.requestInvoice(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity))}}
-          toggleSelect={() => {props.toggleSelect(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity), props.books.price)}}
+          toggleSelect={() => {props.toggleSelect(parseInt(this.state.orderQuantity), props.books.price)}}
           // total={total}
           // amount={props.amount}
           // onAddToOrder={() => { addToOrder(books.id, this.state.orderQuantity)}}

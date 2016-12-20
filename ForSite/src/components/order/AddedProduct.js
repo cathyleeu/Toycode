@@ -2,62 +2,67 @@ import React, { Component, PropTypes } from 'react'
 import QuantityInput from './QuantityInput'
 
 //
-// class AddedProduct extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state={
-//       orderQuantity: 0
-//     }
-//     this.handleChange = this.handleChange.bind(this)
-//   }
-//   handleChange(e){
-//     this.setState({orderQuantity: e.target.value})
-//   }
-//   render(){
-//     return(
-//       <div className="orderList">
-//         <p>{this.props.title} - {this.props.price}원</p>
-//         <QuantityInput
-//           type={'number'}
-//           name={'주문수량'}
-//           qutt={this.state.orderQuantity}
-//           placeholder={'주문수량'}
-//           controlFunc={this.handleChange}
-//         />
-//         <button>삭제</button>
-//       </div>
-//     )
-//   }
-// }
-
-
-//
-//
-const AddedProduct = ({ toggleSelect,id ,price, title, eachTotal, onAddToOrder, qutt, controlFunc, requestInvoice}) => {
-  const value = qutt
-  return  (
+class AddedProduct extends Component {
+  constructor(props) {
+    super(props)
+    this.state={
+      orderQuantity: 0
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange(e){
+    this.setState({orderQuantity: e.target.value})
+  }
+  render(){
+    return(
       <div className="orderList">
-        <div
-          onClick={toggleSelect}>
-          <QuantityInput
-            type={'checkbox'}
-            // checked={toggleSelect}
-            // onClick={toggleSelect}
-          />
+        <div onClick={this.props.toggleSelect}>
+           <QuantityInput
+            type={'checkbox'}/>
         </div>
-        <p>{title} - {price}원</p>
+        <p>{this.props.title} - {this.props.price}원</p>
         <QuantityInput
           type={'number'}
-          name={id}
-          value={qutt}
+          name={this.props.name}
+          value={this.props.qutt}
+          // qutt={this.state.orderQuantity}
           placeholder={'주문수량'}
-          current={qutt}
-          controlFunc={controlFunc}
+          controlFunc={this.props.controlFunc}
         />
-        <button >delete</button>
+        <button>삭제</button>
       </div>
     )
+  }
 }
+
+
+//
+//
+// const AddedProduct = ({ toggleSelect,id ,price, title, eachTotal, onAddToOrder, qutt, controlFunc, requestInvoice}) => {
+//   const value = qutt
+//   return  (
+//       <div className="orderList">
+//         <div
+//           onClick={toggleSelect}>
+//           <QuantityInput
+//             type={'checkbox'}
+//             // checked={toggleSelect}
+//             // onClick={toggleSelect}
+//           />
+//         </div>
+//         <p>{title} - {price}원</p>
+//         <QuantityInput
+//           type={'number'}
+//           name={id}
+//           value={qutt}
+//           placeholder={'주문수량'}
+//           current={qutt}
+//           controlFunc={controlFunc}
+//         />
+//         <button >delete</button>
+//       </div>
+//     )
+// }
 
 
 export default AddedProduct
