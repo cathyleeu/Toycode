@@ -1,27 +1,20 @@
-import {
-  ADD_TO_CART,
-  CHECKOUT_REQUEST,
-  CHECKOUT_FAILURE,
-  REQUEST_QUANTITY,
-  ADD_TO_ORDER
-} from '../actions/types'
+import * as types from '../actions/types'
 
 const initialState = {
   addedIds: [],
   amount: [],
-  quantityById: {}
+  quantityById: {},
+  selectedGoods: []
 }
 // Question: 왜 addedIds getAddedIds를 했을
 
 const addedIds = ( state = initialState.addedIds, action) => {
   switch (action.type) {
-    case ADD_TO_CART:
+    case types.ADD_TO_CART:
       if (state.indexOf(action.bookId) !== -1 ){
         return state
       }
       return [...state, action.bookId]
-    case CHECKOUT_REQUEST:
-      return [ ...action.bookId]
     default:
       return state
   }
@@ -32,28 +25,66 @@ export const getAddedIds = state => {
   console.log('getAddedIds:',state);
   return state
 }
-
-const quantityById = ( state = initialState.quantityById, action) => {
+// case types.SELECTED_TOGGLE_GOODS:
+//   const {id, orderQutt, price } = action
+//   return [...state,
+//     {
+//       id: id,
+//       // selected: true,
+//       orderQutt: orderQutt,
+//       total : orderQutt * price
+//     }
+//   ]
+export const selectedGoods = (state = initialState.selectedGoods, action) => {
   switch (action.type) {
-    case CHECKOUT_REQUEST:
-      const { bookId, amount } = action
-      return [
-        ...state,
-      { bookId, amount }
-    ]
-    case REQUEST_QUANTITY:
-      return { ...state, amount}
+    case types.UNSELECT_TOGGLE_GOODS:
+      return [...state, {
+        selected: false,
+        amount: undefined,
+        total: undefined
+      }]
+    case types.SELECTED_TOGGLE_GOODS:
+      return [...state,
+        {
+          id: action.id,
+          // selected: true,
+          amount: action.orderQutt,
+          total : action.price
+        }
+      ]
+
     default:
       return state
   }
 }
 
+// const quantityById = ( state = initialState.quantityById, action) => {
+//   switch (action.type) {
+//     // case ADD_TO_CART:
+//     //   return [...state, {
+//     //     bookId: action.bookId,
+//     //     amount: action.amount
+//     //     }
+//     //   ]
+//     case types.CHECKOUT_REQUEST:
+//       const { bookId, amount } = action
+//       return [
+//         ...state,
+//       { bookId, amount }
+//     ]
+//     case types.REQUEST_QUANTITY:
+//       return { ...state, amount}
+//     default:
+//       return state
+//   }
+// }
 
 
-export const getQuantity = (state, bookId) => {
-  console.log('state:',state);
-  return state.quantityById[bookId] || 0
-}
+//
+// export const getQuantity = (state, bookId) => {
+//   console.log('state:',state);
+//   return state.quantityById[bookId] || 0
+// }
 
   // 주문하는 갯수가 0개 또는 선택한 추가량
 
@@ -62,18 +93,17 @@ export const getQuantity = (state, bookId) => {
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
-    case CHECKOUT_REQUEST:
-      return {
-        addedIds: addedIds(state.addedIds, action),
-        quantityById: quantityById(state.quantityById, action)
-      }
-    case CHECKOUT_FAILURE:
+    case types.CHECKOUT_REQUEST:
+      return state.selectedGoods
+    case types.CHECKOUT_FAILURE:
       return action.cart
     // case REQUEST_QUANTITY:
     //   return state
     default:
       return {
-        addedIds: addedIds(state.addedIds, action)
+        addedIds: addedIds(state.addedIds, action),
+        // quantityById: quantityById(state.quantityById, action),
+        selectedGoods: selectedGoods(state.selectedGoods, action)
       }
   }
 }

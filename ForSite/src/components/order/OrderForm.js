@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getTotal, getCartProducts } from '../../reducers'
-import { requestInvoice, requestQuantity } from '../../actions/order'
+import { requestInvoice, requestQuantity, toggleSelect } from '../../actions/order'
 import Cart from './Cart'
 
 // import AddedProduct from './AddedProduct'
@@ -12,7 +12,7 @@ class OrderForm extends Component {
     super(props)
     this.state = {
     orderQuantity: 0,
-    seletedId:''
+    seletedId: undefined
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -20,8 +20,9 @@ class OrderForm extends Component {
     this.setState({
       orderQuantity: e.target.value,
       selectedId: e.target.name
-    }, () => this.props.requestQuantity(parseInt(this.state.selectedId),parseInt(this.state.orderQuantity)))
+    }, () => console.log(parseInt(this.state.orderQuantity)))
   }
+  //this.props.requestQuantity(parseInt(this.state.selectedId),parseInt(this.state.orderQuantity))
   render(){
     const props = this.props
     return(
@@ -31,6 +32,7 @@ class OrderForm extends Component {
           controlFunc={this.handleChange}
           selectedId={this.state.selectedId}
           requestInvoice={() => { props.requestInvoice(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity))}}
+          toggleSelect={() => {props.toggleSelect(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity), props.books.price)}}
           // total={total}
           // amount={props.amount}
           // onAddToOrder={() => { addToOrder(books.id, this.state.orderQuantity)}}
@@ -65,10 +67,11 @@ class OrderForm extends Component {
 function mapStateToProps(state){
   return {
     books: getCartProducts(state),
+    selected: state.cart.addedIds,
     // total: getTotal(state),
     amount: state
     // TODO: total도 뿌려줘야함.
   }
 }
 
-export default connect(mapStateToProps, {requestInvoice, requestQuantity})(OrderForm)
+export default connect(mapStateToProps, {requestInvoice, requestQuantity, toggleSelect})(OrderForm)

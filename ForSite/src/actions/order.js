@@ -6,11 +6,20 @@ export const addToCartUnsafe = (bookId) => ({
   bookId
 })
 
-export const requestQuantity = (bookId,amount) => ({
+export const toggleSelect = (id, orderQutt, price) => ({
+  type: types.SELECTED_TOGGLE_GOODS,
+  id,
+  orderQutt,
+  price
+})
+
+export const requestQuantity = (bookId, amount) => ({
   type: types.REQUEST_QUANTITY,
   bookId,
   amount
 })
+
+
 
 export const requestInvoice = (bookId, amount) => ({
   type: types.CHECKOUT_REQUEST,

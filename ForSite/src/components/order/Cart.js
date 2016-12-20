@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({books, amount, onAddToOrder,controlFunc, qutt, requestInvoice}) => {
+const Cart = (props) => {
+  const {books, amount, onAddToOrder,controlFunc, qutt, requestInvoice, toggleSelect} = props
   const nodes = books !== undefined ? (
       books.map(book =>
         <AddedProduct
@@ -11,6 +12,7 @@ const Cart = ({books, amount, onAddToOrder,controlFunc, qutt, requestInvoice}) =
           id={book.id}
           controlFunc={controlFunc}
           qutt={qutt}
+          toggleSelect={toggleSelect}
           onAddToOrder={onAddToOrder}
         />
       )
