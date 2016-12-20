@@ -14,7 +14,7 @@ class Cart extends Component {
               price={book.price}
               key={book.id}
               name={book.id}
-              controlFunc={this.props.controlFunc}
+              // controlFunc={this.props.controlFunc}
               qutt={this.props.qutt}
               toggleSelect={this.props.toggleSelect}
               onAddToOrder={this.props.onAddToOrder}

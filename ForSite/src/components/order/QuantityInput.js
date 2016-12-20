@@ -5,9 +5,9 @@ const QuantityInput = (props) => (
     className="form-input"
     type={props.type}
     name={props.name}
-    value={props.qutt}
+    value={props.value}
     placeholder={props.placeholder}
-    onChange={props.controlFunc}
+    onChange={props.onChange}
   />
 )
 //

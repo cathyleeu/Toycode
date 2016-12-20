@@ -1,13 +1,17 @@
 import * as types from './types'
 
 
-export const addToCartUnsafe = (bookId) => ({
+export const addToCartUnsafe = (bookId,bookTitle,bookPrice) => ({
   type: types.ADD_TO_CART,
-  bookId
+  bookId,
+  bookTitle,
+  bookPrice
 })
 
-export const toggleSelect = (orderQutt, price) => ({
+export const toggleSelect = (title, id, orderQutt, price) => ({
   type: types.SELECTED_TOGGLE_GOODS,
+  title,
+  id,
   orderQutt,
   price
 })

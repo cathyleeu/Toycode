@@ -4,27 +4,33 @@ const initialState = {
   addedIds: [],
   amount: [],
   quantityById: {},
-  selectedGoods: [{}]
+  selectedGoods: []
 }
 // Question: 왜 addedIds getAddedIds를 했을
-
+//if (state.indexOf(action.bookId) !== -1 ){
+//   return state
+// }
 const addedIds = ( state = initialState.addedIds, action) => {
   switch (action.type) {
     case types.ADD_TO_CART:
-      if (state.indexOf(action.bookId) !== -1 ){
+      if(state.id != action.id) {
         return state
       }
-      return [...state, action.bookId]
+      return [...state, {
+        id: action.bookId,
+        title: action.bookTitle,
+        price: action.bookPrice
+      }]
     default:
       return state
   }
 }
 // TODO: getAddedIds를 COMPLETE_BOOKS_FETCH가 된 후에 해야함
 
-export const getAddedIds = state => {
-  console.log('getAddedIds:',state);
-  return state
-}
+// export const getAddedIds = state => {
+//   console.log('getAddedIds:',state);
+//   return state
+// }
 // case types.SELECTED_TOGGLE_GOODS:
 //   const {id, orderQutt, price } = action
 //   return [...state,
@@ -37,12 +43,12 @@ export const getAddedIds = state => {
 //   ]
 export const selectedGoods = (state = initialState.selectedGoods, action) => {
   switch (action.type) {
-    case types.ADD_TO_CART:
-      return {
-        id:action.bookId,
-        amount: undefined,
-        total: undefined
-      }
+    // case types.ADD_TO_CART:
+    //   return {
+    //     id:action.bookId,
+    //     amount: undefined,
+    //     total: undefined
+    //   }
     // case types.UNSELECT_TOGGLE_GOODS:
     //   return [...state, {
     //     selected: false,
@@ -50,10 +56,12 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
     //     total: undefined
     //   }]
     case types.SELECTED_TOGGLE_GOODS:
-      return [...state, {
-          id: state.id,
+      return [ ...state, {
+          title: action.title,
+          id: action.id,
           amount: action.orderQutt,
-          total : action.price
+          price: action.price,
+          total : (action.price*action.orderQutt)
         }
       ]
     default:

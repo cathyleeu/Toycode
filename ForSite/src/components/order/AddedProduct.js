@@ -6,7 +6,7 @@ class AddedProduct extends Component {
   constructor(props) {
     super(props)
     this.state={
-      orderQuantity: 0
+      orderQuantity: ''
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -16,19 +16,24 @@ class AddedProduct extends Component {
   render(){
     return(
       <div className="orderList">
-        <div onClick={this.props.toggleSelect}>
-           <QuantityInput
-            type={'checkbox'}/>
-        </div>
         <p>{this.props.title} - {this.props.price}원</p>
         <QuantityInput
           type={'number'}
           name={this.props.name}
-          value={this.props.qutt}
-          // qutt={this.state.orderQuantity}
+          value={this.state.orderQuantity}
+          onChange={this.handleChange}
           placeholder={'주문수량'}
-          controlFunc={this.props.controlFunc}
         />
+        <button
+          onClick={() => {
+            this.props.toggleSelect(
+              this.props.title,
+              this.props.name,
+              this.state.orderQuantity,
+              this.props.price
+            )
+          }}>
+          추가</button>
         <button>삭제</button>
       </div>
     )

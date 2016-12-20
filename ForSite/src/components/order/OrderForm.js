@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getTotal, getCartProducts } from '../../reducers'
 import { requestInvoice, requestQuantity, toggleSelect } from '../../actions/order'
 import Cart from './Cart'
+import {bindActionCreators} from 'redux'
 
 // import AddedProduct from './AddedProduct'
 
@@ -11,14 +12,13 @@ class OrderForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-    orderQuantity: 0,
+
     seletedId: undefined
     }
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(e){
     this.setState({
-      orderQuantity: e.target.value,
       selectedId: e.target.name
     }, () => console.log(parseInt(this.state.orderQuantity)))
   }
@@ -29,13 +29,11 @@ class OrderForm extends Component {
         <Cart
           books={props.books}
           qutt={this.state.orderQuantity}
-          controlFunc={this.handleChange}
+          // controlFunc={this.handleChange}
           selectedId={this.state.selectedId}
           requestInvoice={() => { props.requestInvoice(parseInt(this.state.selectedId), parseInt(this.state.orderQuantity))}}
-          toggleSelect={() => {props.toggleSelect(parseInt(this.state.orderQuantity), props.books.price)}}
-          // total={total}
-          // amount={props.amount}
-          // onAddToOrder={() => { addToOrder(books.id, this.state.orderQuantity)}}
+          toggleSelect={props.toggleSelect}
+          
          />
     )
   }
@@ -67,11 +65,18 @@ class OrderForm extends Component {
 function mapStateToProps(state){
   return {
     books: getCartProducts(state),
-    selected: state.cart.addedIds,
+    selected: getAddedCart(state)
     // total: getTotal(state),
-    amount: state
     // TODO: total도 뿌려줘야함.
   }
 }
 
-export default connect(mapStateToProps, {requestInvoice, requestQuantity, toggleSelect})(OrderForm)
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    toggleSelect:toggleSelect,
+    requestQuantity:requestQuantity,
+    requestInvoice:requestInvoice
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)

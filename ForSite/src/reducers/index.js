@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 });
 
 
-const getAddedIds = state => fromCart.getAddedIds(state)
+// const getAddedIds = state => fromCart.getAddedIds(state)
 const getQuantity = (state, id) => fromCart.getQuantity(state.cart, id)
 const getProduct = (state, id) => fromProducts.getProduct(state.books, id)
 
@@ -29,11 +29,13 @@ const getProduct = (state, id) => fromProducts.getProduct(state.books, id)
 // }
 
 //
-export const getCartProducts = state => {
-  if(getAddedIds(state.cart.addedIds) !== undefined){
-    return getAddedIds(state.cart.addedIds).map(id => ({...getProduct(state, id)}))
-  }
-}
+export const getAddedCart = state => state.cart.selectedGoods
+export const getCartProducts = state => state.cart.addedIds
+// export const getCartProducts = state => {
+//   if(getAddedIds(state.cart.addedIds) !== undefined){
+//     return getAddedIds(state.cart.addedIds).map(id => ({...getProduct(state, id)}))
+//   }
+// }
 
 // export const getCartProducts = state => {
 //

@@ -12,10 +12,10 @@ class OrderList extends Component{
       orderValue: 0
     }
   }
-  onChildChanged(newState){
-    this.setState({ orderValue: newState })
-    console.log('OrderList:',this.state.orderValue);
-  }
+  // onChildChanged(newState){
+  //   this.setState({ orderValue: newState })
+  //   console.log('OrderList:',this.state.orderValue);
+  // }
   render(){
     const books = this.props.books
     return(
@@ -24,10 +24,10 @@ class OrderList extends Component{
           <ProductItem
             key={book.id}
             book={book}
-            initialValue={this.state.orderValue}
+            // initialValue={this.state.orderValue}
             callbackParent={(newState) => this.onChildChanged(newState) }
             onAddToCartClicked={() => {
-              this.props.addToCartUnsafe(book.id)
+              this.props.addToCartUnsafe(book.id, book.title, book.price)
             }}
           />
         )}
