@@ -15,27 +15,34 @@ const initialState = {
 const addedIds = ( state = initialState.addedIds, action) => {
   switch (action.type) {
     case types.ADD_TO_CART:
-    if(state.indexOf(action.bookId) !== -1 ){
-      return state
-    }
-    return [...state, {
-      id:action.bookId,
-      title: action.bookTitle,
-      price: action.bookPrice
-    }]
+      return [...state, {
+        id:action.bookId,
+        title: action.bookTitle,
+        amount: '',
+        price: action.bookPrice
+      }]
+    // if(state.indexOf(action.bookId) !== -1 ){
+    //   return state
+    // }
+    // return [...state, {
+    //   id:action.bookId,
+    //   title: action.bookTitle,
+    //   amount: '',
+    //   price: action.bookPrice
+    // }]
     default:
       return state
   }
 }
-export const addedBooks = (state = [], action) => {
-  switch (action.type) {
-    case types.ADD_TO_CART:
-    if(state.indexOf(action.bookId) !== -1) {
-      return state
-    }
-    return [ ...state, action.bookId]
-  }
-}
+// export const addedBooks = (state = [], action) => {
+//   switch (action.type) {
+//     case types.ADD_TO_CART:
+//     if(state.indexOf(action.bookId) !== -1) {
+//       return state
+//     }
+//     return [ ...state, action.bookId]
+//   }
+// }
 
 
 
@@ -58,29 +65,23 @@ export const addedBooks = (state = [], action) => {
 
 export const selectedGoods = (state = initialState.selectedGoods, action) => {
   switch (action.type) {
-    case types.SELECTED_TOGGLE_GOODS:
-      return [ ...state, {
-          title: action.title,
-          id: action.id,
-          amount: action.orderQutt,
-          price: action.price,
-          total : (action.price*action.orderQutt)
-        }
-      ]
+    case types.ADD_TO_CART:
+      return [...state, {
+        id:action.bookId,
+        title: action.bookTitle,
+        amount: '',
+        price: action.bookPrice
+      }]
+    case types.SELECTED_GOODS:
+      return state.map((goods) => {
+        // debugger
+        if(goods.id == action.id){
+          return { ...goods, amount: action.orderQutt}
+        } else { return goods }})
     default:
       return state
   }
 }
-
-// case types.SELECTED_TOGGLE_GOODS:
-//   return [ ...state, {
-//       title: action.title,
-//       id: action.id,
-//       amount: action.orderQutt,
-//       price: action.price,
-//       total : (action.price*action.orderQutt)
-//     }
-//   ]
 
 // const quantityById = ( state = initialState.quantityById, action) => {
 //   switch (action.type) {
@@ -121,12 +122,9 @@ const cart = (state = initialState, action) => {
       return state.selectedGoods
     case types.CHECKOUT_FAILURE:
       return action.cart
-    // case REQUEST_QUANTITY:
-    //   return state
     default:
       return {
         addedIds: addedIds(state.addedIds, action),
-        // addedBooks: addedBooks(state.addedIds , action),
         // quantityById: quantityById(state.quantityById, action),
         selectedGoods: selectedGoods(state.selectedGoods, action)
       }

@@ -7,6 +7,7 @@ const Cart = ({books, selected, toggleSelect}) => {
           title={book.title}
           price={book.price}
           key={index}
+          value={book.amount}
           id={book.id}
           toggleSelect={toggleSelect}
         />
@@ -16,14 +17,13 @@ const Cart = ({books, selected, toggleSelect}) => {
       <p>{each.title} : {each.total}</p>
     </div>
   ));
-  const total = selected.reduce((sum, each) => (sum + each.total), 0);
+  const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);
 
   return (
     <div>
       <h3>주문서</h3>
-      {
-        nodes.length == 0 ?
-        <strong> 상품을 담아주세요. </strong> :
+      { nodes.length == 0 ?
+        <strong>상품을 담아주세요.</strong> :
         <div>
           <div>{nodes}</div>
           <hr />
@@ -31,11 +31,6 @@ const Cart = ({books, selected, toggleSelect}) => {
           <div>{total}</div>
         </div>
       }
-      {/* <div>{nodes.length == 0 ? <strong> 상품을 담아주세요. </strong> : nodes}</div>
-      <hr />
-
-      <div>{each.length == 0 ? <strong>교재를 선택해주세요</strong> : each}</div>
-      <div>{total == 0 ? "" : total}</div> */}
     </div>
   )
 }
