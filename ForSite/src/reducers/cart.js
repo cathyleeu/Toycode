@@ -6,26 +6,38 @@ const initialState = {
   quantityById: {},
   selectedGoods: []
 }
-// Question: 왜 addedIds getAddedIds를 했을
+
+// TODO: 선택된 id가 기존에 있는 id 와 동일할 경우 state를 렌더링해야함
+
 //if (state.indexOf(action.bookId) !== -1 ){
 //   return state
 // }
 const addedIds = ( state = initialState.addedIds, action) => {
   switch (action.type) {
     case types.ADD_TO_CART:
-      if(state.id != action.id) {
-        return state
-      }
-      return [...state, {
-        id: action.bookId,
-        title: action.bookTitle,
-        price: action.bookPrice
-      }]
+    if(state.indexOf(action.bookId) !== -1 ){
+      return state
+    }
+    return [...state, {
+      id:action.bookId,
+      title: action.bookTitle,
+      price: action.bookPrice
+    }]
     default:
       return state
   }
 }
-// TODO: getAddedIds를 COMPLETE_BOOKS_FETCH가 된 후에 해야함
+export const addedBooks = (state = [], action) => {
+  switch (action.type) {
+    case types.ADD_TO_CART:
+    if(state.indexOf(action.bookId) !== -1) {
+      return state
+    }
+    return [ ...state, action.bookId]
+  }
+}
+
+
 
 // export const getAddedIds = state => {
 //   console.log('getAddedIds:',state);
@@ -41,20 +53,11 @@ const addedIds = ( state = initialState.addedIds, action) => {
 //       total : orderQutt * price
 //     }
 //   ]
+
+
+
 export const selectedGoods = (state = initialState.selectedGoods, action) => {
   switch (action.type) {
-    // case types.ADD_TO_CART:
-    //   return {
-    //     id:action.bookId,
-    //     amount: undefined,
-    //     total: undefined
-    //   }
-    // case types.UNSELECT_TOGGLE_GOODS:
-    //   return [...state, {
-    //     selected: false,
-    //     amount: undefined,
-    //     total: undefined
-    //   }]
     case types.SELECTED_TOGGLE_GOODS:
       return [ ...state, {
           title: action.title,
@@ -68,6 +71,16 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
       return state
   }
 }
+
+// case types.SELECTED_TOGGLE_GOODS:
+//   return [ ...state, {
+//       title: action.title,
+//       id: action.id,
+//       amount: action.orderQutt,
+//       price: action.price,
+//       total : (action.price*action.orderQutt)
+//     }
+//   ]
 
 // const quantityById = ( state = initialState.quantityById, action) => {
 //   switch (action.type) {
@@ -113,6 +126,7 @@ const cart = (state = initialState, action) => {
     default:
       return {
         addedIds: addedIds(state.addedIds, action),
+        // addedBooks: addedBooks(state.addedIds , action),
         // quantityById: quantityById(state.quantityById, action),
         selectedGoods: selectedGoods(state.selectedGoods, action)
       }

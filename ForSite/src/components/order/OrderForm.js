@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getCartProducts, getAddedCart } from '../../reducers'
-import { requestInvoice, requestQuantity, toggleSelect } from '../../actions/order'
+import { toggleSelect } from '../../actions/order'
 import Cart from './Cart'
 import {bindActionCreators} from 'redux'
 
-//
+
  const OrderForm = ({books, toggleSelect, selected}) => (
    <Cart
     books={books}

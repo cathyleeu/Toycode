@@ -28,7 +28,7 @@ class AddedProduct extends Component {
           onClick={() => {
             this.props.toggleSelect(
               this.props.title,
-              this.props.name,
+              this.props.id,
               this.state.orderQuantity,
               this.props.price
             )

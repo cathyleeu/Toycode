@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
-const Product = ({ price, title, img }) => (
-  <div className="listCard">
+const Product = ({ price, title, img, className }) => (
+  <div className={className}>
     <img src={img} />
     <p>{title} - {price}원</p>
   </div>

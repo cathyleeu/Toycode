@@ -10,17 +10,6 @@ const QuantityInput = (props) => (
     onChange={props.onChange}
   />
 )
-//
-// QuantityInput.propTypes = {
-// 	type: React.PropTypes.oneOf(['text', 'number']).isRequired,
-// 	name: React.PropTypes.string.isRequired,
-// 	controlFunc: React.PropTypes.func.isRequired,
-// 	qutt: React.PropTypes.oneOfType([
-// 		React.PropTypes.string,
-// 		React.PropTypes.number,
-// 	]).isRequired,
-// 	placeholder: React.PropTypes.string,
-// };
 
 
 export default QuantityInput
