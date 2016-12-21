@@ -1,20 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import AddedProduct from './AddedProduct'
 
-const Cart = ({books, selected, toggleSelect}) => {
+const Cart = ({books, selected, goodsSelect, goodsDelete}) => {
   const nodes = books.map((book, index) =>
+    <div key={index}>
         <AddedProduct
           title={book.title}
           price={book.price}
-          key={index}
-          value={book.amount}
           id={book.id}
-          toggleSelect={toggleSelect}
+          goodsSelect={goodsSelect}
         />
+        <button onClick={() => goodsDelete(book.id)}>삭제</button>
+    </div>
       )
   const each = selected.map(each => (
     <div key={each.id} value={each.total}>
-      <p>{each.title} : {each.total}</p>
+      <p>{each.title} {each.amount} </p>
     </div>
   ));
   const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);
@@ -25,7 +26,10 @@ const Cart = ({books, selected, toggleSelect}) => {
       { nodes.length == 0 ?
         <strong>상품을 담아주세요.</strong> :
         <div>
-          <div>{nodes}</div>
+          <div>
+            {nodes}
+
+          </div>
           <hr />
           <div>{each}</div>
           <div>{total}</div>

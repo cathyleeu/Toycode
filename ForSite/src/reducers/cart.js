@@ -21,46 +21,17 @@ const addedIds = ( state = initialState.addedIds, action) => {
         amount: '',
         price: action.bookPrice
       }]
-    // if(state.indexOf(action.bookId) !== -1 ){
-    //   return state
-    // }
-    // return [...state, {
-    //   id:action.bookId,
-    //   title: action.bookTitle,
-    //   amount: '',
-    //   price: action.bookPrice
-    // }]
+    case types.DELETE_GOODS:
+      return state.filter((goods) => goods.id !== action.id);
     default:
       return state
   }
 }
-// export const addedBooks = (state = [], action) => {
-//   switch (action.type) {
-//     case types.ADD_TO_CART:
-//     if(state.indexOf(action.bookId) !== -1) {
-//       return state
-//     }
-//     return [ ...state, action.bookId]
-//   }
-// }
-
-
 
 // export const getAddedIds = state => {
 //   console.log('getAddedIds:',state);
 //   return state
 // }
-// case types.SELECTED_TOGGLE_GOODS:
-//   const {id, orderQutt, price } = action
-//   return [...state,
-//     {
-//       id: id,
-//       // selected: true,
-//       orderQutt: orderQutt,
-//       total : orderQutt * price
-//     }
-//   ]
-
 
 
 export const selectedGoods = (state = initialState.selectedGoods, action) => {
@@ -74,10 +45,11 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
       }]
     case types.SELECTED_GOODS:
       return state.map((goods) => {
-        // debugger
         if(goods.id == action.id){
           return { ...goods, amount: action.orderQutt}
         } else { return goods }})
+    case types.DELETE_GOODS:
+      return state.filter((goods) => goods.id !== action.id);
     default:
       return state
   }

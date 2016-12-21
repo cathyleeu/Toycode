@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getCartProducts, getAddedCart } from '../../reducers'
-import { toggleSelect } from '../../actions/order'
+import { goodsSelect, goodsDelete } from '../../actions/order'
 import Cart from './Cart'
 import {bindActionCreators} from 'redux'
 
 
- const OrderForm = ({books, toggleSelect, selected}) => (
+ const OrderForm = ({books, goodsSelect, selected, goodsDelete}) => (
    <Cart
     books={books}
-    toggleSelect={toggleSelect}
+    goodsSelect={goodsSelect}
+    goodsDelete={goodsDelete}
     selected={selected}
    />
 )
@@ -23,7 +24,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-    toggleSelect:toggleSelect
+    goodsSelect, goodsDelete
   }, dispatch)
 }
 
