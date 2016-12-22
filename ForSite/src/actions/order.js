@@ -35,17 +35,17 @@ export const requestInvoice = (invoiceData) => ((dispatch) => {
 
 
 
-
-export const checkout = books => (dispatch, getState) => {
-  const {cart} = getState()
-
-  dispatch({
-    type: types.CHECKOUT_REQUEST
-  })
-  shop.buyProducts(books, () => {
-    dispatch({
-      type: types.CHECKOUT_SUCCESS,
-      cart
-    })
-  })
-}
+//
+// export const checkout = books => (dispatch, getState) => {
+//   const {cart} = getState()
+//
+//   dispatch({
+//     type: types.CHECKOUT_REQUEST
+//   })
+//   shop.buyProducts(books, () => {
+//     dispatch({
+//       type: types.CHECKOUT_SUCCESS,
+//       cart
+//     })
+//   })
+// }

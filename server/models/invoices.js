@@ -12,7 +12,6 @@ const invoiceSchema = new Schema({
   },
   requestedGoods:[{
     name : {type: String, required: true},
-    code : {type: String, required: true},
     qutt : {type: Number, required: true}
   }],
   requestedDate : { type: Date, default: Date.now },

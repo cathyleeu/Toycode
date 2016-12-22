@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import AddedProduct from './AddedProduct'
 import Address from './Address'
 
-const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice}) => {
+const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice,user}) => {
   const nodes = books.map((book, index) =>
     <div key={index}>
         <AddedProduct
@@ -21,7 +21,6 @@ const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice}) => {
     </div>
   ));
   const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);
-
   return (
     <div>
       <h3>주문서</h3>
@@ -32,14 +31,13 @@ const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice}) => {
           <hr />
           <div>{each}</div>
           <div>{total}</div>
-          <Address />
-          <button
-            onClick={() => requestInvoice(1)}>주문하기</button>
+          <Address
+            requestInvoice={requestInvoice}
+            user={user}
+            selected={selected}
+          />
         </div>
-
-
       }
-
     </div>
   )
 }

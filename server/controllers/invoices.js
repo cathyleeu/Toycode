@@ -1,7 +1,7 @@
 const Invoices = require('../models/invoices');
 
 exports.newInvoice = function (req, res, next) {
-
+  const orderId = req.body.orderId;
   const userEmail = req.body.userEmail;
   const to = req.body.delivery.to
   const address = req.body.delivery.address
@@ -13,6 +13,7 @@ exports.newInvoice = function (req, res, next) {
 
 
     const invoice = new Invoices({
+      orderId : orderId,
       userEmail : userEmail,
       delivery: {
         to : to,
@@ -21,7 +22,6 @@ exports.newInvoice = function (req, res, next) {
       },
       requestedGoods:[{
         name : name,
-        code : code,
         qutt : qutt
       }],
       requestDesc: requestDesc
@@ -30,7 +30,7 @@ exports.newInvoice = function (req, res, next) {
       if(err){
         return next(err)
       }
-      res.json({result:1})
+      res.json(invoice)
     })
 }
 

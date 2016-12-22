@@ -6,20 +6,22 @@ import Cart from './Cart'
 import {bindActionCreators} from 'redux'
 
 
- const OrderForm = ({books, goodsSelect, selected, goodsDelete, requestInvoice}) => (
+const OrderForm = ({books, goodsSelect, selected, goodsDelete, requestInvoice, user}) => (
    <Cart
     books={books}
     goodsSelect={goodsSelect}
     goodsDelete={goodsDelete}
     selected={selected}
     requestInvoice={requestInvoice}
+    user={user}
    />
 )
 
 function mapStateToProps(state){
   return {
     books: getCartProducts(state),
-    selected: getAddedCart(state)
+    selected: getAddedCart(state),
+    user: state.auth
   }
 }
 
