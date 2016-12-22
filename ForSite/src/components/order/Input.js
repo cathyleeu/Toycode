@@ -1,13 +1,14 @@
 import React from 'react'
 
-const QuantityInput = (props) => (
+const Input = (props) => (
   <input
-    className="form-input"
+    className="form-control"
     type={props.type}
+    value={props.value}
     placeholder={props.placeholder}
     onChange={props.onChange}
   />
 )
 
 
-export default QuantityInput
+export default Input

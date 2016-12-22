@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import QuantityInput from './QuantityInput'
+import Input from './Input'
 
 //
 class AddedProduct extends Component {
@@ -16,16 +16,20 @@ class AddedProduct extends Component {
   }
   render(){
     return(
-      <div>
-        <p>{this.props.title} - {this.props.price}원</p>
-        <QuantityInput
-          type={'number'}
-          value={this.state.orderQuantity}
-          onChange={this.handleChange}
-          placeholder={'주문수량'}
-        />
+      <div className="row">
+        <div className="col-md-4"><p>{this.props.title} - {this.props.price}원</p></div>
+        <div className="col-md-6">
+          <Input
+            type={'number'}
+            value={this.state.orderQuantity}
+            onChange={this.handleChange}
+            placeholder={'주문수량'}
+          />
+        </div>
         {/* TODO: 삭제 버튼 눌렀을 때, state가 같이 삭제 되어야함.  */}
-        <button onClick={() => {
+        <button
+          className="col-md-2 btn btn-danger"
+          onClick={() => {
           this.props.goodsDelete(this.props.id)
         }}>삭제</button>
       </div>

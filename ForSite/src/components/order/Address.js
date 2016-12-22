@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import Input from './Input'
 
 
 class Address extends Component {
@@ -29,12 +29,26 @@ class Address extends Component {
       requestDesc: this.state.rqcontent
     }
     return(
-      <div>
-        <label>배송지</label><input type="type" value={invoice.delivery.address}/>
-        <label>수령인</label><input type="type" value={invoice.delivery.to}/>
-        <label>연락처</label><input type="type" value={invoice.delivery.phone}/>
-        <label>배송메모</label><textarea rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' value={this.state.rqcontent} onChange={this.handleChange}></textarea>
+      <div className="col-md-12">
+        <label>배송지</label><Input type={'text'} value={invoice.delivery.address} placeholder={'배송지'}/>
+        <div className="row">
+          <div className="col-md-6">
+            <label>수령인</label>
+            <Input type={'text'} value={invoice.delivery.to} placeholder={'받는이'}/>
+          </div>
+          <div className="col-md-6">
+            <label>연락처</label>
+            <Input type={'text'} value={invoice.delivery.phone} placeholder={'전화번호'}/>
+          </div>
+        </div>
+
+        <label>배송메모</label>
+        <textarea
+          rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.'
+          value={this.state.rqcontent} onChange={this.handleChange}
+          className="form-control"></textarea>
         <button
+          className="btn btn-success col-md-3"
           onClick={() => this.props.requestInvoice(invoice)}>주문하기</button>
       </div>
     )

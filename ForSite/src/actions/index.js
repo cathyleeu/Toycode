@@ -13,7 +13,6 @@ export function signinUser(userData) {
       .then(response => {
         // 요청이 좋다면?
           //유저상태 업데이트
-          debugger
           dispatch({ type: AUTH_USER, email: userData.email })
           // JWT token 저장
           localStorage.setItem('token', response.data.token)
