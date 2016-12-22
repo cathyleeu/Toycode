@@ -4,17 +4,17 @@ const Schema = mongoose.Schema;
 
 const invoiceSchema = new Schema({
   orderId: Number,
-  userEmail : String,
+  userEmail : {type: String, required: true},
   delivery: {
-    to: String,
-    address: String,
+    to: {type: String, required: true},
+    address: {type: String, required: true},
     phone: String
   },
-  requestedGoods:{
-    name : String,
-    code : String,
-    qutt : String
-  },
+  requestedGoods:[{
+    name : {type: String, required: true},
+    code : {type: String, required: true},
+    qutt : {type: Number, required: true}
+  }],
   requestedDate : { type: Date, default: Date.now },
   requestDesc: String
 });

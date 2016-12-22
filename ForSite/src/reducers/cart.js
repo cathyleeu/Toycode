@@ -18,7 +18,6 @@ const addedIds = ( state = initialState.addedIds, action) => {
       return [...state, {
         id:action.bookId,
         title: action.bookTitle,
-        amount: '',
         price: action.bookPrice
       }]
     case types.DELETE_GOODS:

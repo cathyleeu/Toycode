@@ -24,6 +24,10 @@ class AddedProduct extends Component {
           onChange={this.handleChange}
           placeholder={'주문수량'}
         />
+        {/* TODO: 삭제 버튼 눌렀을 때, state가 같이 삭제 되어야함.  */}
+        <button onClick={() => {
+          this.props.goodsDelete(this.props.id)
+        }}>삭제</button>
       </div>
     )
   }

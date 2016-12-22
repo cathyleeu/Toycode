@@ -19,11 +19,11 @@ exports.newInvoice = function (req, res, next) {
         address: address,
         phone : phone
       },
-      requestedGoods:{
+      requestedGoods:[{
         name : name,
         code : code,
         qutt : qutt
-      },
+      }],
       requestDesc: requestDesc
     })
     invoice.save(function(err){
