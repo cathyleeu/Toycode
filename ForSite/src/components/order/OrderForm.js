@@ -1,26 +1,34 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { getTotal, getCartProducts } from '../../reducers'
+import { getCartProducts, getAddedCart } from '../../reducers'
+import { goodsSelect, goodsDelete, requestInvoice } from '../../actions/order'
 import Cart from './Cart'
+import {bindActionCreators} from 'redux'
 
 
-const OrderForm = ({ books, total, amount }) => (
-  <Cart
+const OrderForm = ({books, goodsSelect, selected, goodsDelete, requestInvoice, user}) => (
+   <Cart
     books={books}
-    total={total}
-    amount={amount}
-  />
-
+    goodsSelect={goodsSelect}
+    goodsDelete={goodsDelete}
+    selected={selected}
+    requestInvoice={requestInvoice}
+    user={user}
+   />
 )
-
 
 function mapStateToProps(state){
   return {
     books: getCartProducts(state),
-    total: getTotal(state),
-    amount: state.cart.quantityById
-    // TODO: total도 뿌려줘야함.
+    selected: getAddedCart(state),
+    user: state.auth
   }
 }
 
-export default connect(mapStateToProps)(OrderForm)
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+    goodsSelect, goodsDelete, requestInvoice
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)

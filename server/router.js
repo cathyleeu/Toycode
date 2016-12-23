@@ -1,5 +1,6 @@
 const Auth = require('./controllers/auth');
 const Books = require('./controllers/books');
+const Invoices = require('./controllers/invoices');
 const passportConfig = require('./services/passport');
 const passport = require('passport');
 
@@ -13,10 +14,12 @@ module.exports = function(app) {
   app.post('/signin', requireSignin, Auth.signin)
   app.post('/signup', Auth.signup)
   app.post('/books', Books.newbook)
+  app.post('/invoices', Invoices.newInvoice)
   // app.post('/books/:book_id', function(req, res){
   //   res.end()
   // })
   app.get('/books', Books.getbooks)
+  app.get('/invoices', Invoices.getInvoices)
   // app.put('/books/:book_id', function(req, res){
   //   res.end()
   // })

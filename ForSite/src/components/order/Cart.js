@@ -1,34 +1,36 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import AddedProduct from './AddedProduct'
+import Invoice from './Invoice'
 
-const Cart = ({ books, total, amount }) => {
-  console.log('books:',books);
-  console.log('total:',total);
-  console.log('amount:',amount);
+const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice,user}) => {
+  const nodes = books.map((book, index) =>
+        <AddedProduct
+          key={index}
+          title={book.title}
+          price={book.price}
+          id={book.id}
+          goodsSelect={goodsSelect}
+          goodsDelete={goodsDelete}
+        />
 
-
-  // const hasBooks = Object.assign({}, products)
-
-  const nodes = books !== undefined ? (
-    books.map(book =>
-      <AddedProduct
-        title={book.title}
-        price={book.price}
-        key={book.id}
-        amount={amount[book.id]}
-        eachTotal={amount[book.id]*book.price}
-        // quantity={book.quantity}
-      />
-    )
-  ) : (
-    <em> 상품을 담아주세요. </em>
-  )
+      )
+  const each = selected.map(each => (
+    <div key={each.id} value={each.total}>
+      <p>{each.title} {each.amount} {each.amount*each.price}</p>
+    </div>
+  ));
+  const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);
   return (
     <div>
-      <h3>주문서</h3>
-      <div>{nodes}</div>
-      <hr />
-      <p>총 가격: {total}</p>
+      { nodes.length == 0 ?
+        <strong> 상품을 선택해 주세요.</strong> :
+        <Invoice
+          nodes={nodes}
+          total={total}
+          requestInvoice={requestInvoice}
+          user={user}
+          selected={selected} />
+      }
     </div>
   )
 }
