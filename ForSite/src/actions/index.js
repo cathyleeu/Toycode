@@ -13,9 +13,10 @@ export function signinUser(userData) {
       .then(response => {
         // 요청이 좋다면?
           //유저상태 업데이트
-          dispatch({ type: AUTH_USER, email: userData.email })
+          dispatch({ type: AUTH_USER })
           // JWT token 저장
           localStorage.setItem('token', response.data.token)
+          localStorage.setItem('user', userData.email )
           // feature페이지 re다이렉트
           browserHistory.push('feature')
       })
@@ -49,7 +50,7 @@ export function authError(error) {
 }
 
 export function signoutUser(){
-  localStorage.removeItem('token')
+  localStorage.removeItem('token', 'user')
   return {
     type: UNAUTH_USER
   }

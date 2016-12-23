@@ -9,7 +9,7 @@ import Async from './middlewares/async'
 
 import App from './components/app';
 import requireAuth from './components/require_auth';
-import {Signin, Signout, SignupForm} from './components/auth';
+import {Signin, Signout, SignupForm, Account} from './components/auth';
 import Feature from './components/feature';
 import Support from './components/support';
 import LoginIssue from './components/login_issue';
@@ -41,6 +41,7 @@ ReactDOM.render(
         <Route path='feature' component={requireAuth(Feature)}/>
         <Route path='support' component={requireAuth(Support)}/>
         <Route path='book_order' component={requireAuth(OrderTable)}/>
+        <Route path='my_account' component={requireAuth(Account)}/>
         <Route path='login_issue' component={requireAuth(LoginIssue)}/>
       </Route>
     </Router>

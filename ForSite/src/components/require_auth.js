@@ -20,9 +20,7 @@ export default function(ComposedComponent) {
       }
     }
     render() {
-      console.log(this.context)
       return <ComposedComponent {...this.props} />
-
     }
   }
   function mapStateToProps(state) {
