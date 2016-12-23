@@ -6,9 +6,7 @@ exports.newInvoice = function (req, res, next) {
   const to = req.body.delivery.to
   const address = req.body.delivery.address
   const phone = req.body.delivery.phone
-  const name = req.body.requestedGoods.name
-  const code = req.body.requestedGoods.code
-  const qutt = req.body.requestedGoods.qutt
+  const requestedGoods = req.body.requestedGoods
   const requestDesc = req.body.requestDesc
 
 
@@ -20,10 +18,7 @@ exports.newInvoice = function (req, res, next) {
         address: address,
         phone : phone
       },
-      requestedGoods:[{
-        name : name,
-        qutt : qutt
-      }],
+      requestedGoods: requestedGoods,
       requestDesc: requestDesc
     })
     invoice.save(function(err){

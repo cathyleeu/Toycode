@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Input from './Input'
 
-//
 class AddedProduct extends Component {
   constructor(props) {
     super(props)

@@ -23,7 +23,6 @@ class Address extends Component {
         address: "강남",
         phone: "010-999"
       },
-      // TODO: 500 error 문제해결
       requestedGoods: this.props.selected.map(each => (
         { name : each.title, qutt: parseInt(each.amount) })),
       requestDesc: this.state.rqcontent

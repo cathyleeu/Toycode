@@ -14,9 +14,9 @@ const OrderList = ({books,addToCartUnsafe, selected}) => (
         key={index}
         book={book}
         onAddToCartClicked={() => {
-          var addedId = selected.map((Id) => Id.id)
-          {addedId.indexOf(book.id) != -1 || undefined ?
-            false : addToCartUnsafe(book.id, book.title, book.price)}
+          {selected.map((Id) => Id.id).indexOf(book.id) == -1 &&
+            addToCartUnsafe(book.id, book.title, book.price)
+          }
         }}
       />
     )}

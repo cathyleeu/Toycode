@@ -10,10 +10,7 @@ const invoiceSchema = new Schema({
     address: {type: String, required: true},
     phone: String
   },
-  requestedGoods:[{
-    name : {type: String, required: true},
-    qutt : {type: Number, required: true}
-  }],
+  requestedGoods:[{}],
   requestedDate : { type: Date, default: Date.now },
   requestDesc: String
 });
