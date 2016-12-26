@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
-import { AUTH_USER, AUTH_ERROR, UNAUTH_USER} from './types'
+import * as types from './types'
 
 
 const ROOT_URL = 'http://localhost:3090'
-
 
 export function signinUser(userData) {
   return function (dispatch) {
@@ -13,10 +12,12 @@ export function signinUser(userData) {
       .then(response => {
         // 요청이 좋다면?
           //유저상태 업데이트
-          dispatch({ type: AUTH_USER })
+          dispatch({ type: types.AUTH_USER })
           // JWT token 저장
+          // console.log(userData)
           localStorage.setItem('token', response.data.token)
-          localStorage.setItem('user', userData.email )
+          localStorage.setItem('email', userData.email)
+          dispatch(fetchUser())
           // feature페이지 re다이렉트
           browserHistory.push('feature')
       })
@@ -32,7 +33,7 @@ export function signupUser(userData) {
   return function (dispatch) {
     axios.post(ROOT_URL+'/signup', userData)
       .then(response => {
-        localStorage.setItem('token', response.data.token)
+        // localStorage.setItem('token', response.data.token)
         alert('회원가입이 완료되었습니다. 로그인 페이지로 넘어갑니다.')
         browserHistory.push('signin')
       })
@@ -44,14 +45,32 @@ export function signupUser(userData) {
 export function authError(error) {
   console.log(error)
   return {
-    type: AUTH_ERROR,
+    type: types.AUTH_ERROR,
     payload: error
   }
 }
 
-export function signoutUser(){
-  localStorage.removeItem('token', 'user')
+export function fetchUser() {
+  const user = localStorage.getItem('email')
+  return function (dispatch) {
+    axios.get(`${ROOT_URL}/${user}`).then((user) => {
+      dispatch(completedFetchUser(user))
+    })
+  }
+}
+
+export function completedFetchUser(user) {
   return {
-    type: UNAUTH_USER
+    type: types.STATUS_ON_LIGIN,
+    user: user.data[0]
+  }
+}
+// console.log(localStorage.getItem('email'))
+
+export function signoutUser(){
+  localStorage.removeItem('token')
+  localStorage.removeItem('email')
+  return {
+    type: types.UNAUTH_USER
   }
 }

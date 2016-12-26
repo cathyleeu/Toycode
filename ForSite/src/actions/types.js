@@ -1,11 +1,13 @@
+// user 인증
 export const AUTH_USER = 'AUTH_USER'
 export const UNAUTH_USER = 'UNAUTH_USER'
 export const AUTH_ERROR = 'AUTH_ERROR'
-// export const FETCH_BOOKS = 'FETCH_BOOKS'
+export const STATUS_ON_LIGIN = 'STATUS_ON_LIGIN'
+
+
 
 // For Cart
 export const ADD_TO_CART = 'ADD_TO_CART'
-
 export const SELECTED_GOODS = 'SELECTED_GOODS'
 export const DELETE_GOODS = 'DELETE_GOODS'
 

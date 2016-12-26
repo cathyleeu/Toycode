@@ -5,7 +5,24 @@ const bcrypt = require('bcrypt-nodejs');
 
 const userSchema = new Schema({
   email : { type: String, unique: true, lowercase: true},
-  password: String
+  password: String,
+  branch: {
+    Code: { type: String, unique: true },
+    Name: String,
+    License: { type: String, unique: true },
+    Address: String,
+  },
+  account: {
+    Manager: String,
+    Email: String,
+    Phone: String,
+  },
+  education:{
+    Manager: String,
+    Email: String,
+    Phone: String,
+  },
+  kindergartens: [{}]
 });
 
  // on Save Hook, 비밀번호 암호화

@@ -1,14 +1,16 @@
-import {AUTH_USER, UNAUTH_USER, AUTH_ERROR} from '../actions/types'
+import * as types from '../actions/types'
 
 
 export default function (state = {}, action) {
   switch (action.type) {
-    case AUTH_USER:
-      return { ...state, error: '', authenticated: true, email: localStorage.getItem('user') }
-    case UNAUTH_USER:
-      return { ...state, authenticated: false }
-    case AUTH_ERROR:
+    case types.AUTH_USER:
+      return { ...state, error: '', authenticated: true, email: localStorage.getItem('email')}
+    case types.UNAUTH_USER:
+      return { ...state, authenticated: false, email: '', user: '' }
+    case types.AUTH_ERROR:
       return { ...state, error: action.payload }
+    case types.STATUS_ON_LIGIN:
+      return { ...state, user: action.user}
     default:
       return state
   }

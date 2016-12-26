@@ -14,7 +14,10 @@ class SignupForm extends Component {
     this.state = {
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+      Name: '',
+      License:'',
+      Address: ''
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -88,6 +91,41 @@ class SignupForm extends Component {
             type="password"
             onChange= {this.onChange}
             placeholder="비밀번호 확인입력"
+            className="form-control"
+            required/>
+          </fieldset>
+          <div className="row">
+            <fieldset className="form-group col-md-6">
+             <label>지사상호명</label>
+             <input
+              value={this.state.Name}
+              name="Name"
+              type="text"
+              onChange= {this.onChange}
+              placeholder="지사명을 입력하세요"
+              className="form-control"
+              required/>
+            </fieldset>
+            <fieldset className="form-group col-md-6">
+             <label>사업자 등록번호</label>
+             <input
+              value={this.state.License}
+              name="License"
+              type="text"
+              onChange= {this.onChange}
+              placeholder="사업자 등록번호를 입력하세요"
+              className="form-control"
+              required/>
+            </fieldset>
+          </div>
+          <fieldset className="form-group">
+           <label>사업장 주소</label>
+           <input
+            value={this.state.Address}
+            name="Address"
+            type="text"
+            onChange= {this.onChange}
+            placeholder="사업장 주소를 입력하세요"
             className="form-control"
             required/>
           </fieldset>

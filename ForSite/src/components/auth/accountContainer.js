@@ -1,11 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
-
-const AccountCont = () => (
+const AccountCont = ({user}) => (
   <div>
-    마이페이지 들어갈 곳
+    <div>지사명:{user.branch.Name}</div>
+    <div>지사주소:{user.branch.Address}</div>
+    <div>사업자주소:{user.branch.License}</div>
 
   </div>
 )
 
-export default AccountCont
+function mapStateToProps(state){
+  return {
+    user: state.auth.user
+  }
+}
+
+
+export default connect(mapStateToProps)(AccountCont)

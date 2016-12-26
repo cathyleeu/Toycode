@@ -2,8 +2,6 @@ import * as types from '../actions/types'
 
 const initialState = {
   addedIds: [],
-  amount: [],
-  quantityById: {},
   selectedGoods: []
 }
 
@@ -35,7 +33,7 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
     case types.SELECTED_GOODS:
       return state.map((goods) => {
         if(goods.id == action.id){
-          return { ...goods, amount: action.orderQutt}
+          return { ...goods, amount: action.orderQutt }
         } else { return goods }})
     case types.DELETE_GOODS:
       return state.filter((goods) => goods.id !== action.id);
@@ -49,6 +47,9 @@ const cart = (state = initialState, action) => {
   switch (action.type) {
     case types.CHECKOUT_REQUEST:
       return state
+    //TODO:   CHECKOUT_SUCCESS때 주문페이지를 빈 페이지로 만들어야함.
+    // case types.CHECKOUT_SUCCESS:
+    //   return state
     case types.CHECKOUT_FAILURE:
       return action.cart
     default:
