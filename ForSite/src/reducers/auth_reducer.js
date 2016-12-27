@@ -9,7 +9,7 @@ export default function (state = {}, action) {
       return { ...state, authenticated: false, email: '', user: '' }
     case types.AUTH_ERROR:
       return { ...state, error: action.payload }
-    case types.STATUS_ON_LIGIN:
+    case types.STATUS_ON_LOGIN:
       return { ...state, user: action.user}
     default:
       return state

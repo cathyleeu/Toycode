@@ -2,9 +2,7 @@
 export const AUTH_USER = 'AUTH_USER'
 export const UNAUTH_USER = 'UNAUTH_USER'
 export const AUTH_ERROR = 'AUTH_ERROR'
-export const STATUS_ON_LIGIN = 'STATUS_ON_LIGIN'
-
-
+export const STATUS_ON_LOGIN = 'STATUS_ON_LOGIN'
 
 // For Cart
 export const ADD_TO_CART = 'ADD_TO_CART'
@@ -20,3 +18,8 @@ export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE'
 // Fetch Goods
 export const START_BOOKS_FETCH = 'START_BOOKS_FETCH'
 export const COMPLETE_BOOKS_FETCH = 'COMPLETE_BOOKS_FETCH'
+
+// 지사 유치원 관리
+export const ADD_KINDERGARTEN = 'ADD_KINDERGARTEN'
+export const UPDATE_KINDERGARTEN = 'UPDATE_KINDERGARTEN'
+export const DELETE_KINDERGARTEN = 'DELETE_KINDERGARTEN'

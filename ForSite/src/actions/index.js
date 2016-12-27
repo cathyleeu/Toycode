@@ -61,7 +61,7 @@ export function fetchUser() {
 
 export function completedFetchUser(user) {
   return {
-    type: types.STATUS_ON_LIGIN,
+    type: types.STATUS_ON_LOGIN,
     user: user.data[0]
   }
 }
