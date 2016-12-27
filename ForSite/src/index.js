@@ -9,7 +9,8 @@ import Async from './middlewares/async'
 
 import App from './components/app';
 import requireAuth from './components/require_auth';
-import {Signin, Signout, SignupForm, Account} from './components/auth';
+import {Signin, Signout, SignupForm} from './components/auth';
+import {Account} from './components/account'
 import Feature from './components/feature';
 import Support from './components/support';
 import LoginIssue from './components/login_issue';

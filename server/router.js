@@ -13,14 +13,18 @@ module.exports = function(app) {
   })
   app.post('/signin', requireSignin, Auth.signin)
   app.post('/signup', Auth.signup)
-  app.get('/user/:user',  Auth.onlogin)
+  app.get('/user/:user',  Auth.userOn)
+  app.put('/user/:user',  Auth.userUpdate)
+
   app.post('/books', Books.newbook)
-  app.post('/invoices', Invoices.newInvoice)
+  app.get('/books', Books.getbooks)
+
   // app.post('/books/:book_id', function(req, res){
   //   res.end()
   // })
-  app.get('/books', Books.getbooks)
+
   app.get('/invoices', Invoices.getInvoices)
+  app.post('/invoices', Invoices.newInvoice)
   // app.put('/books/:book_id', function(req, res){
   //   res.end()
   // })

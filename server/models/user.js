@@ -22,7 +22,8 @@ const userSchema = new Schema({
     Email: String,
     Phone: String,
   },
-  kindergartens: [{}]
+  kindergartens: [],
+  createdOn: {type: Date, default: Date.now}
 });
 
  // on Save Hook, 비밀번호 암호화

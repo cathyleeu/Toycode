@@ -5,10 +5,11 @@ import * as types from './types'
 
 const ROOT_URL = 'http://localhost:3090'
 
+
 export function signinUser(userData) {
   return function (dispatch) {
     // 서버에 이메일과 비밀번호 전송
-    axios.post(ROOT_URL+'/signin', userData)
+    axios.post(`${ROOT_URL}/signin`, userData)
       .then(response => {
         // 요청이 좋다면?
           //유저상태 업데이트
@@ -31,7 +32,7 @@ export function signinUser(userData) {
 
 export function signupUser(userData) {
   return function (dispatch) {
-    axios.post(ROOT_URL+'/signup', userData)
+    axios.post(`${ROOT_URL}/signup`, userData)
       .then(response => {
         // localStorage.setItem('token', response.data.token)
         alert('회원가입이 완료되었습니다. 로그인 페이지로 넘어갑니다.')
@@ -65,7 +66,6 @@ export function completedFetchUser(user) {
     user: user.data[0]
   }
 }
-console.log(localStorage.getItem('email'))
 
 export function signoutUser(){
   localStorage.removeItem('token')
