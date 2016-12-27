@@ -9,6 +9,7 @@ const AccountCont = ({user, addBranchKinder}) => (
     <div>지사명:{user.branch.Name}</div>
     <div>지사주소:{user.branch.Address}</div>
     <div>사업자주소:{user.branch.License}</div>
+    <hr />
     <Branch
       addBranchKinder={() => addBranchKinder({kindergartens:[{name: '수수유치원', class: '쌔싹반'},{name: '호호유치원', class: '둘둘반'}]})}/>
   </div>

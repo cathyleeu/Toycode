@@ -6,7 +6,7 @@ class Branch extends Component {
   constructor(props){
     super(props)
     this.state = {
-      classes: ['0'],
+      // classes: ['0'],
       kinder: ['0']
     }
   }
@@ -27,11 +27,13 @@ class Branch extends Component {
             className="col-md-1 btn btn-danger"
             onClick={() => this.appendKinder()}>원 추가</button>
         </div>
-        {this.state.kinder.map(kin => <Kinder
-            key={kin}
-            // appendClass={this.appendClass}
-            StateInput={this.state.classes}
-         />)}
+        <div className="col-md-12">
+          {this.state.kinder.map(kin => <Kinder
+              key={kin}
+              // appendClass={this.appendClass}
+              StateInput={this.state.classes}
+           />)}
+         </div>
       </div>
     )
   }

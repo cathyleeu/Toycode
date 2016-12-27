@@ -17,21 +17,22 @@ class Kinder extends Component {
   render(){
     // const {appendClass, StateInput} = this.props
     return(
-      <div className="row col-md-12">
-        <div className="row col-md-4">
+      <div className="row">
+        <div className="col-md-4">
           <label>원 명</label>
           <input
             type="text"
           />
+          <button className="btn btn-danger" onClick={() => this.appendClass()}>반 추가</button>
         </div>
 
         {/* TODO: 유치원반 추가 버튼  */}
         <div className="col-md-8">
-          <button className="btn btn-danger" onClick={() => this.appendClass()}>반 추가</button>
           <div>
             {this.state.classes.map(ban => <KinderClass key={ban} />)}
           </div>
         </div>
+        <hr className="col-md-12" />
       </div>
     )
   }
