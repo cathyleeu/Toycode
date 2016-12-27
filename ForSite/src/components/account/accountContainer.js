@@ -2,18 +2,40 @@ import React from 'react';
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux'
 import Branch from './Branch'
-import { addBranchKinder } from '../../actions/kindergarten'
+import { completedAddKinder, addKinder } from '../../actions/kindergarten'
 
-const AccountCont = ({user, addBranchKinder}) => (
-  <div>
-    <div>지사명:{user.branch.Name}</div>
-    <div>지사주소:{user.branch.Address}</div>
-    <div>사업자주소:{user.branch.License}</div>
-    <hr />
-    <Branch
-      addBranchKinder={() => addBranchKinder({kindergartens:[{name: '수수유치원', class: '쌔싹반'},{name: '호호유치원', class: '둘둘반'}]})}/>
-  </div>
-)
+const AccountCont = ({user, completedAddKinder, addKinder}) => {
+  //TODO: redux 연결해서 data 받기
+  const KinData = {
+    kindergartens:[
+      {
+        name: '수수유치원',
+        class:[
+          {classname:'쌔싹반', students: 10},
+          {classname:'누리반', students: 11}
+        ]
+      },
+      {
+        name: '나라유치원',
+        class:[
+          {classname:'나나반', students: 10},
+          {classname:'니니반', students: 11}
+        ]
+      }
+    ]
+  }
+  return (
+    <div>
+      <div>지사명:{user.branch.Name}</div>
+      <div>지사주소:{user.branch.Address}</div>
+      <div>사업자주소:{user.branch.License}</div>
+      <hr />
+      <Branch
+        addKinder={addKinder}
+        completedAddKinder={() => completedAddKinder(KinData)}/>
+    </div>
+  )
+}
 
 function mapStateToProps(state){
   return {
@@ -23,7 +45,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return bindActionCreators({
-    addBranchKinder
+    completedAddKinder,
+    addKinder
   }, dispatch)
 }
 

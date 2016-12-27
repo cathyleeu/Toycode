@@ -7,7 +7,8 @@ class Branch extends Component {
     super(props)
     this.state = {
       // classes: ['0'],
-      kinder: ['0']
+      kinder: ['0'],
+      kinderName: ''
     }
   }
   // appendClass() {
@@ -19,6 +20,7 @@ class Branch extends Component {
     this.setState({ kinder: this.state.kinder.concat([newKinder]) });
   }
   render(){
+    const {addKinder} = this.props
     return(
       <div className="row">
         <div className="row col-md-12">
@@ -30,10 +32,14 @@ class Branch extends Component {
         <div className="col-md-12">
           {this.state.kinder.map(kin => <Kinder
               key={kin}
+              addKinder={addKinder}
+              kinderName={this.state.kinderName}
               // appendClass={this.appendClass}
               StateInput={this.state.classes}
            />)}
          </div>
+         <button
+           onClick={this.props.completedAddKinder}>등록하기</button>
       </div>
     )
   }

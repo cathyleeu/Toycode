@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 
+const subClassSchema = new Schema({
+  classname: String,
+  students: Number
+})
+const kinderSchema = new Schema({
+  name: String,
+  class: [subClassSchema]
+})
 
 const userSchema = new Schema({
   email : { type: String, unique: true, lowercase: true},
@@ -22,7 +30,7 @@ const userSchema = new Schema({
     Email: String,
     Phone: String,
   },
-  kindergartens: [],
+  kindergartens: [kinderSchema],
   createdOn: {type: Date, default: Date.now}
 });
 

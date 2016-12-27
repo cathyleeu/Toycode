@@ -7,12 +7,18 @@ class Kinder extends Component {
   constructor(props){
     super(props)
     this.state = {
-      classes: ['0']
+      classes: ['0'],
+      kinderName: ''
     }
+    this.isHandleChange = this.isHandleChange.bind(this)
   }
   appendClass() {
     const newClass = `${this.state.classes.length}`;
     this.setState({ classes: this.state.classes.concat([newClass]) });
+  }
+  isHandleChange(e){
+    this.setState({kinderName: e.target.value},
+    () => this.props.addKinder(this.state.kinderName))
   }
   render(){
     // const {appendClass, StateInput} = this.props
@@ -22,6 +28,8 @@ class Kinder extends Component {
           <label>원 명</label>
           <input
             type="text"
+            value={this.state.kinderName}
+            onChange={this.isHandleChange}
           />
           <button className="btn btn-danger" onClick={() => this.appendClass()}>반 추가</button>
         </div>
