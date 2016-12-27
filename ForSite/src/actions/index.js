@@ -53,7 +53,7 @@ export function authError(error) {
 export function fetchUser() {
   const user = localStorage.getItem('email')
   return function (dispatch) {
-    axios.get(`${ROOT_URL}/${user}`).then((user) => {
+    axios.get(`${ROOT_URL}/user/${user}`).then((user) => {
       dispatch(completedFetchUser(user))
     })
   }
@@ -65,7 +65,7 @@ export function completedFetchUser(user) {
     user: user.data[0]
   }
 }
-// console.log(localStorage.getItem('email'))
+console.log(localStorage.getItem('email'))
 
 export function signoutUser(){
   localStorage.removeItem('token')
