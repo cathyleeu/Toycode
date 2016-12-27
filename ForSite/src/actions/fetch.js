@@ -1,16 +1,16 @@
-import { FETCH_BOOKS, START_BOOKS_FETCH, COMPLETE_BOOKS_FETCH } from './types'
+import * as types from './types'
 import axios from 'axios'
 
 
 export const startBooksFetch = () => {
   return {
-    type: START_BOOKS_FETCH
+    type: types.START_BOOKS_FETCH
   };
 };
 
 export const completeBooksFetch = (books) => {
   return {
-    type: COMPLETE_BOOKS_FETCH,
+    type: types.COMPLETE_BOOKS_FETCH,
     books : books.data
   };
 };

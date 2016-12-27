@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 
 const invoiceSchema = new Schema({
-  orderId: Number,
+  invoiceId: Number,
   userEmail : {type: String, required: true},
   delivery: {
     to: {type: String, required: true},
@@ -12,9 +12,11 @@ const invoiceSchema = new Schema({
   },
   requestedGoods:[{}],
   requestedDate : { type: Date, default: Date.now },
-  requestDesc: String
+  requestDesc: String,
+  totalSales: Number
 });
 
+// totalSales: requestedGoods.map(total => total.sale)
 // module.exports = mongoose.model('invoice', invoiceSchema)
 
 

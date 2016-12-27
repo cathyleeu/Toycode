@@ -28,8 +28,10 @@ export const requestInvoice = (invoiceData) => ((dispatch) => {
       dispatch({ type: types.CHECKOUT_REQUEST })
       alert('주문이 완료되었습니다.')
       browserHistory.push('feature')
+      // dispatch({ type: types.CHECKOUT_SUCCESS })
     })
     .catch((e) => {
+      dispatch({ type: types.CHECKOUT_FAILURE })
       alert('주문을 실패하였습니다.')
     })
 })

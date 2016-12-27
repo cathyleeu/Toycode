@@ -13,6 +13,7 @@ module.exports = function(app) {
   })
   app.post('/signin', requireSignin, Auth.signin)
   app.post('/signup', Auth.signup)
+  app.get('/user/:user',  Auth.onlogin)
   app.post('/books', Books.newbook)
   app.post('/invoices', Invoices.newInvoice)
   // app.post('/books/:book_id', function(req, res){

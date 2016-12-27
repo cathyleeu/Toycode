@@ -9,17 +9,17 @@ function tokenForUser(user) {
   return jwt.encode({sub: user.id, iat: timestamp }, config.secret)
 }
 
-exports.signin = function (req, res, next) {
-  //사용자들이 로그인
-  // token 생성하는 것
-  res.send({ token: tokenForUser(req.user) });
-}
+exports.signin = (req, res, next) => res.send({ token: tokenForUser(req.user) })
 
 
-exports.signup = function(req, res, next) {
+exports.signup = (req, res, next) => {
 
   const email = req.body.email;
   const password = req.body.password;
+  const Name = req.body.Name;
+  const Address = req.body.Address;
+  const License = req.body.License;
+
 
   if(!email || !password){
     return res.status(422).sned({error: '아이디 또는 비밀번호를 입력해주세요.'})
@@ -39,7 +39,12 @@ exports.signup = function(req, res, next) {
     // 한번도 생성한 적이 없는 경우 유저생성하는 것
     const user = new User({
       email: email,
-      password: password
+      password: password,
+      branch: {
+        Name: Name,
+        License: License,
+        Address: Address
+      }
     })
     user.save(function (err) {
       if(err){
@@ -50,6 +55,13 @@ exports.signup = function(req, res, next) {
   })
 
 
-
   //유저 생성이 된 것에 응답하는것
 };
+
+
+//해당 유저의 내용만 받아오기
+exports.onlogin = (req, res ) => {
+  console.log(req.params.user)
+  const user = req.params.user
+  User.find((err, users) => res.json(users)).where({email: user})
+}

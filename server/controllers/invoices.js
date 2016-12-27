@@ -1,17 +1,18 @@
 const Invoices = require('../models/invoices');
 
 exports.newInvoice = function (req, res, next) {
-  const orderId = req.body.orderId;
+  const invoiceId = req.body.invoiceId;
   const userEmail = req.body.userEmail;
   const to = req.body.delivery.to
   const address = req.body.delivery.address
   const phone = req.body.delivery.phone
   const requestedGoods = req.body.requestedGoods
   const requestDesc = req.body.requestDesc
+  const totalSales = req.body.totalSales
 
 
     const invoice = new Invoices({
-      orderId : orderId,
+      invoiceId : invoiceId,
       userEmail : userEmail,
       delivery: {
         to : to,
@@ -19,7 +20,8 @@ exports.newInvoice = function (req, res, next) {
         phone : phone
       },
       requestedGoods: requestedGoods,
-      requestDesc: requestDesc
+      requestDesc: requestDesc,
+      totalSales: totalSales
     })
     invoice.save(function(err){
       if(err){

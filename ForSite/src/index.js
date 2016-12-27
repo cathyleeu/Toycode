@@ -16,18 +16,22 @@ import LoginIssue from './components/login_issue';
 import { OrderTable } from './components/order';
 
 import {fetchBooks} from './actions/fetch'
+import {fetchUser} from './actions'
 
 import reducers from './reducers';
-import { AUTH_USER } from './actions/types'
+import * as types from './actions/types'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, Async)(createStore);
 const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : f => f)
 
 const token = localStorage.getItem('token')
 if (token) {
-  store.dispatch({ type: AUTH_USER })
+  store.dispatch({ type: types.AUTH_USER })
+  store.dispatch(fetchUser())
+  // store.dispatch({ type: types.STATUS_ON_LIGIN})
 }
 store.dispatch(fetchBooks())
+
 
 
 ReactDOM.render(

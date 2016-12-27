@@ -16,7 +16,7 @@ class Address extends Component {
   render(){
     const invoice = {
       //TODO: user 정보 더 받아오기 user.email 식으로 기존 내용 다양하게 정리
-      orderId: 1,
+      invoiceId: 1,
       userEmail: 'leelee',
       delivery: {
         to: '이유경',
@@ -24,8 +24,12 @@ class Address extends Component {
         phone: "010-999"
       },
       requestedGoods: this.props.selected.map(each => (
-        { name : each.title, qutt: parseInt(each.amount) })),
-      requestDesc: this.state.rqcontent
+        { name : each.title,
+          qutt: each.amount,
+          sales: each.amount*each.price
+        })),
+      requestDesc: this.state.rqcontent,
+      totalSales: this.props.selected.map(each => each.amount*each.price).reduce((a,b)=>a+b)
     }
     return(
       <div className="col-md-12">

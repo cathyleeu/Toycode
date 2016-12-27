@@ -11,7 +11,7 @@ class AddedProduct extends Component {
   }
   handleChange(e){
     this.setState({orderQuantity: e.target.value},
-    () => this.props.goodsSelect(this.props.id, this.state.orderQuantity))
+    () => this.props.goodsSelect(this.props.id, parseInt(this.state.orderQuantity)))
   }
   render(){
     return(
