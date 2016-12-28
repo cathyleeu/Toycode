@@ -16,8 +16,10 @@ class Branch extends Component {
   //   this.setState({ classes: this.state.classes.concat([newClass]) });
   // }
   appendKinder(){
+
     const newKinder = `${this.state.kinder.length}`;
-    this.setState({ kinder: this.state.kinder.concat([newKinder]) });
+    this.setState({ kinder: this.state.kinder.concat([newKinder])});
+    // , () => this.props.addKinder('쌔싹유치원')
   }
   render(){
     const {addKinder} = this.props

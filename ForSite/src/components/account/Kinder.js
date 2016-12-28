@@ -14,12 +14,14 @@ class Kinder extends Component {
   }
   appendClass() {
     const newClass = `${this.state.classes.length}`;
+    // debugger
+    // this.props.addKinder('쌔싹유치원')
     this.setState({ classes: this.state.classes.concat([newClass]) });
   }
   isHandleChange(e){
-    this.setState({kinderName: e.target.value},
-    () => this.props.addKinder(this.state.kinderName))
+    this.setState({kinderName: e.target.value})
   }
+
   render(){
     // const {appendClass, StateInput} = this.props
     return(

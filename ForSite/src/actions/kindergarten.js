@@ -1,18 +1,25 @@
 import * as types from './types'
 import axios from 'axios'
 
-const ROOT_URL = 'http://localhost:3090'
+
+const kinderId = 0
+// debugger
+export const addKinder = (kinderName) => ({
+  type: types.ADD_KINDER,
+  kinderId: `${kinderName}_${kinderId}`
+})
+
+
+
 
 export const addKinderClass = (classname, students, id) => ({
   type: types.ADD_KINDERCLASS,
   classname, students, id
 })
 
-export const addKinder = (kinderName) => ({
-  type: types.ADD_KINDER,
-  kinderName
-})
 
+
+const ROOT_URL = 'http://localhost:3090'
 export function completedAddKinder(KinData) {
   const user = localStorage.getItem('email')
   return function (dispatch) {

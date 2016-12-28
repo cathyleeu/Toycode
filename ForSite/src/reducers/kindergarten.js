@@ -2,19 +2,23 @@ import * as types from '../actions/types'
 
 
 const initialState = {
-  addedKinder: [],
+  addedKinder: {},
   addedClass: []
 }
 
-export const addedKinder = (state = initialState.addKinder, action) => {
+//redux 활용해서 하기!!!!
+export const addedKinder = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_KINDER:
-      return { ...state, name: action.kinderName }
+      return {
+        id: action.kinderId
+      }
     default:
       return state
 
   }
 }
+// [[action.kinderId]: action.kinderName ]
 
 
 export default function (state = initialState , action) {
@@ -23,7 +27,8 @@ export default function (state = initialState , action) {
       return {...state, updated: true}
     default:
       return {
-        addedKinder: addedKinder(state.addedKinder, action)
+        
+        [action.kinderId]: addedKinder(state[action.kinderId], action)
       }
   }
 }
