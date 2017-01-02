@@ -27,12 +27,12 @@ const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? win
 
 const token = localStorage.getItem('token')
 if (token) {
-  store.dispatch({ type: types.AUTH_USER })
   store.dispatch(fetchUser())
-  // store.dispatch({ type: types.STATUS_ON_LIGIN})
+  // store.dispatch({ type: types.STATUS_ON_LOGIN })
+  store.dispatch({ type: types.AUTH_USER })
 }
 store.dispatch(fetchBooks())
-
+// debugger
 
 
 ReactDOM.render(

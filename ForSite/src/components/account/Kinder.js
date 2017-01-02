@@ -4,12 +4,9 @@ class Kinder extends Component {
   constructor(props) {
     super(props)
   }
-  //TODO: 따로따로 작동할 수 있도록 해야함.
   handleRemoveClick = e => {
     e.preventDefault()
-
-    const { removeChild, deleteKinderClass, parentId, id } = this.props
-    removeChild(parentId,id)
+    const { deleteKinderClass, id } = this.props
     deleteKinderClass(id)
   }
   render(){
@@ -30,13 +27,11 @@ class Kinder extends Component {
             // value={this.state.students}
             // onChange={this.isHandleChange}
           />
-        {typeof parentId !== 'undefined' &&
           <button
             className="btn btn-outline-secondary"
             onClick={this.handleRemoveClick}>
-            delete
+            삭제
           </button>
-        }
       </div>
     )
   }
