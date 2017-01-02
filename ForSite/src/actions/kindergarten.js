@@ -2,20 +2,51 @@ import * as types from './types'
 import axios from 'axios'
 
 
-const kinderId = 0
-// debugger
-export const addKinder = (kinderName) => ({
-  type: types.ADD_KINDER,
-  kinderId: `${kinderName}_${kinderId}`
+
+let nextKinderId = 0
+export const createKinder = (id) => ({
+  type: types.CREATE_KINDER,
+  kinderId: `${id}_${nextKinderId++}`
 })
 
-
-
-
-export const addKinderClass = (classname, students, id) => ({
-  type: types.ADD_KINDERCLASS,
-  classname, students, id
+export const updateKinder = (kinderName) => ({
+  type: types.UPDATE_KINDER,
+  kinderName
 })
+
+export const deleteKinder = (nodeId) => ({
+  type: types.DELETE_KINDER,
+  nodeId
+})
+
+let nextKinClassId = 0
+export const createKinderClass = (id) => ({
+  type: types.CREATE_KINDER_CLASS,
+  classId: `${id}_${nextKinClassId++}`
+})
+
+export const deleteKinderClass = (nodeId) => ({
+  type: types.DELETE_KINDER_CLASS,
+  nodeId
+})
+
+export const addChild = (childId) => ({
+  type: types.ADD_CHILD,
+  childId
+})
+
+const fakeId = 0
+export const addClass = (classId, childId, id, nodeId) => ({
+  type: types.ADD_CLASS,
+  classId, childId, id, nodeId
+})
+
+export const removeChild = (nodeId, childId) => ({
+  type: types.REMOVE_CHILD,
+  nodeId,
+  childId
+})
+
 
 
 

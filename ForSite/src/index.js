@@ -46,7 +46,7 @@ ReactDOM.render(
         <Route path='feature' component={requireAuth(Feature)}/>
         <Route path='support' component={requireAuth(Support)}/>
         <Route path='book_order' component={requireAuth(OrderTable)}/>
-        <Route path='my_account' component={requireAuth(Account)}/>
+        <Route path='my_account' id={0} component={requireAuth(Account)}/>
         <Route path='login_issue' component={requireAuth(LoginIssue)}/>
       </Route>
     </Router>
