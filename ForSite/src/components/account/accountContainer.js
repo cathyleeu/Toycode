@@ -13,9 +13,9 @@ class AccountCont extends Component{
   }
   handleAddChildClick = e => {
     e.preventDefault()
-    const { addChild, createKinder, id } = this.props
+    const { addChild, createKinder, user } = this.props
     //유치원 명이 들어가면 될 듯 함
-    const childId = createKinder(this.state.kinderName).kinderId
+    const childId = createKinder(this.state.kinderName, user.branch.Name, user.branch.License).kinderId
     addChild(childId)
   }
 
@@ -28,8 +28,8 @@ class AccountCont extends Component{
     )
   }
   render() {
-    const { kinder, user } = this.props
-    const kindergartens = kinder.branch.kinder
+    const { kinders, user } = this.props
+    const kindergartens = kinders.branch.kinder
     return (
       <div className="row">
         <div>
@@ -56,7 +56,7 @@ class AccountCont extends Component{
 function mapStateToProps(state, ownProps){
   return {
     user: state.auth.user,
-    kinder: state.kindergarten
+    kinders: state.kindergarten
   }
 }
 
@@ -90,25 +90,3 @@ export default connect(mapStateToProps, actions)(AccountCont)
 //       }
 //     ]
 //   }
-//   return (
-//     <div>
-      // <div>지사명:{user.branch.Name}</div>
-      // <div>지사주소:{user.branch.Address}</div>
-      // <div>사업자주소:{user.branch.License}</div>
-//       <hr />
-//       <Branch
-//         addKinder={addKinder}
-//         completedAddKinder={() => completedAddKinder(KinData)}/>
-//     </div>
-//   )
-// }
-
-//
-// function mapDispatchToProps(dispatch, ownProps){
-//   return bindActionCreators({
-//     completedAddKinder,
-//     addKinder
-//   }, dispatch)
-// }
-
-// export default AccountCont

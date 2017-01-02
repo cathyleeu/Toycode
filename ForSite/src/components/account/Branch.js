@@ -12,24 +12,21 @@ class Branch extends Component {
   }
   handleAddChildClick = e => {
     e.preventDefault()
-    const { addClass, createKinderClass, id, parentId} = this.props
+    const { addClass, createKinderClass, id} = this.props
     //유치원 명이 들어가면 될 듯 함
     const childId = createKinderClass('반').classId
     const matchId = parseInt(id.split("_")[1])
-    addClass(id, childId, matchId, parentId)
+    addClass(id, childId, matchId)
   }
   handleRemoveClick = e => {
     e.preventDefault()
-
-    const { removeChild, deleteKinder, parentId, id } = this.props
-    removeChild(parentId, id)
+    const { deleteKinder, id } = this.props
     deleteKinder(id)
   }
   renderChild = childId => {
     const { id, removeChild, deleteKinderClass } = this.props
-    const keyId = childId.id.split("_")[1]
     return (
-      <div key={keyId}>
+      <div key={childId.id}>
         <Kinder id={childId.id} parentId={id} removeChild={removeChild} deleteKinderClass={deleteKinderClass} />
       </div>
     )
@@ -42,20 +39,19 @@ class Branch extends Component {
   }
   render(){
     const { parentId, childIds, classCount, kinder, id} = this.props
-    const matchId = parseInt(id.split("_")[1])
+    const index = kinder.map(item => item.id).indexOf(id);
     return(
       <div className="row col-md-12">
         <div className="col-md-5">
-          {typeof parentId !== 'undefined' &&
-            <button
-              className="btn btn-info"
-              onClick={this.handleRemoveClick}>
-              삭제
-            </button>
-          }
-          <label>원 명</label>
+          <button
+            className="btn btn-info"
+            onClick={this.handleRemoveClick}>
+            삭제
+          </button>
+          <label htmlFor={id}>원 명</label>
           <input
             type="text"
+            id={id}
             value={this.state.kinderName}
             name="kinderName"
             onChange={this.isHandleChange}
@@ -65,7 +61,7 @@ class Branch extends Component {
             onClick={this.handleAddChildClick}>반 추가 </button>
         </div>
         <div className="row col-md-7">
-          {kinder[matchId].kinderClasses.map(this.renderChild)}
+          {kinder[index].kinderClasses.map(this.renderChild)}
         </div>
       </div>
     )

@@ -4,9 +4,11 @@ import axios from 'axios'
 
 
 let nextKinderId = 0
-export const createKinder = (id) => ({
+export const createKinder = (id, branchName, branchCode) => ({
   type: types.CREATE_KINDER,
-  kinderId: `${id}_${nextKinderId++}`
+  kinderId: `${id}_${nextKinderId++}`,
+  branchName,
+  branchCode
 })
 
 export const updateKinder = (kinderName) => ({
@@ -14,9 +16,9 @@ export const updateKinder = (kinderName) => ({
   kinderName
 })
 
-export const deleteKinder = (nodeId) => ({
+export const deleteKinder = (id) => ({
   type: types.DELETE_KINDER,
-  nodeId
+  id
 })
 
 let nextKinClassId = 0
@@ -25,9 +27,9 @@ export const createKinderClass = (id) => ({
   classId: `${id}_${nextKinClassId++}`
 })
 
-export const deleteKinderClass = (nodeId) => ({
+export const deleteKinderClass = (id) => ({
   type: types.DELETE_KINDER_CLASS,
-  nodeId
+  id
 })
 
 export const addChild = (childId) => ({
@@ -35,17 +37,12 @@ export const addChild = (childId) => ({
   childId
 })
 
-const fakeId = 0
-export const addClass = (classId, childId, id, nodeId) => ({
+
+export const addClass = (classId, childId, id) => ({
   type: types.ADD_CLASS,
-  classId, childId, id, nodeId
+  classId, childId, id
 })
 
-export const removeChild = (nodeId, childId) => ({
-  type: types.REMOVE_CHILD,
-  nodeId,
-  childId
-})
 
 
 

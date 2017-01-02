@@ -31,7 +31,6 @@ export const DELETE_KINDER_CLASS = 'DELETE_KINDER_CLASS'
 
 export const ADD_CHILD = 'ADD_CHILD'
 export const ADD_CLASS = 'ADD_CLASS'
-export const REMOVE_CHILD = 'REMOVE_CHILD'
 
 //유치원 DB로 전달할 때
 export const COMPLETE_ADD_KINDER = 'COMPLETE_ADD_KINDER'
