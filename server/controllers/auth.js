@@ -20,7 +20,6 @@ exports.signup = (req, res, next) => {
   const Address = req.body.Address;
   const License = req.body.License;
 
-
   if(!email || !password){
     return res.status(422).sned({error: '아이디 또는 비밀번호를 입력해주세요.'})
   }
@@ -53,15 +52,52 @@ exports.signup = (req, res, next) => {
       res.json({token:tokenForUser(user)})
     })
   })
-
-
   //유저 생성이 된 것에 응답하는것
 };
 
 
 //해당 유저의 내용만 받아오기
-exports.onlogin = (req, res ) => {
+exports.userOn = (req, res ) => {
   console.log(req.params.user)
   const user = req.params.user
   User.find((err, users) => res.json(users)).where({email: user})
 }
+
+exports.userUpdate = (req, res) => {
+  const user = req.params.user
+  const kindergartens = req.body.kindergartens
+
+  User.findOne({email: user}, function(err, data){
+    if(err) {
+      console.log(err);
+      res.status(500).send()
+    } else {
+        if(!data) {
+          res.status(404).send()
+        } else {
+            if(kindergartens) {
+              data.kindergartens = req.body.kindergartens
+            }
+            data.save(function (err, updated) {
+              if(err){
+                console.log(err)
+                res.status(500).send()
+              } else {
+                res.send(updated)
+                console.log(updated)
+              }
+            })
+        }
+    }
+  })
+}
+// exports.userUpdate = (req,res) => {
+//   console.log(req.params.user)
+//   const user = req.params.user
+//   const kindergartens = req.body.kindergartens
+//   User.find((err, users) => res.json(users)).where({email: user}).update(
+//     {
+//       kindergartens: kindergartens
+//     }
+//   )
+// }\

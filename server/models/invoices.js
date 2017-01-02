@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//TODO: create sub model
+// const requestedGoods = new Schema({
+//
+// })
+
+// disable _id
+//const noId = new Schema({name: String}, {_id: false});
 
 const invoiceSchema = new Schema({
   invoiceId: Number,
@@ -11,7 +18,7 @@ const invoiceSchema = new Schema({
     phone: String
   },
   requestedGoods:[{}],
-  requestedDate : { type: Date, default: Date.now },
+  createdOn : { type: Date, default: Date.now },
   requestDesc: String,
   totalSales: Number
 });
