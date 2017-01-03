@@ -7,15 +7,11 @@ import * as actions from '../../actions/kindergarten'
 class AccountCont extends Component{
   constructor(){
     super()
-    this.state = {
-      kinderName : '유치원'
-    }
   }
   handleAddChildClick = e => {
     e.preventDefault()
     const { addChild, createKinder, user } = this.props
-    //유치원 명이 들어가면 될 듯 함
-    const childId = createKinder(this.state.kinderName, user.branch.Name, user.branch.License).kinderId
+    const childId = createKinder('유치원', user.branch.Name, user.branch.License).kinderId
     addChild(childId)
   }
 

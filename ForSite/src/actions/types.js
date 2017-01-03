@@ -29,7 +29,7 @@ export const CREATE_KINDER_CLASS = 'CREATE_KINDER_CLASS'
 export const UPDATE_KINDER_CLASS = 'UPDATE_KINDER_CLASS'
 export const DELETE_KINDER_CLASS = 'DELETE_KINDER_CLASS'
 
-export const ADD_CHILD = 'ADD_CHILD'
+export const ADD_KINDER = 'ADD_KINDER'
 export const ADD_CLASS = 'ADD_CLASS'
 
 //유치원 DB로 전달할 때

@@ -13,7 +13,6 @@ class Branch extends Component {
   handleAddChildClick = e => {
     e.preventDefault()
     const { addClass, createKinderClass, id, kinder} = this.props
-    //유치원 명이 들어가면 될 듯 함
     const childId = createKinderClass('반').classId
     const index = kinder.map(item => item.id).indexOf(id);
     addClass(id, childId, index)
@@ -24,18 +23,21 @@ class Branch extends Component {
     deleteKinder(id)
   }
   renderChild = childId => {
-    const { id, removeChild, deleteKinderClass } = this.props
+    const { id, removeChild, kinder,deleteKinderClass, updateKinderClass } = this.props
+    const index = kinder.map(item => item.id).indexOf(id);
     return (
       <div key={childId.id}>
-        <Kinder id={childId.id} parentId={id} removeChild={removeChild} deleteKinderClass={deleteKinderClass} />
+        <Kinder id={childId.id} parentId={id} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} />
       </div>
     )
   }
-  // ,() => updateKinder(this.state.kinderName)
   isHandleChange = e => {
     const {updateKinder} = this.props
-    this.setState({[e.target.name]: e.target.value}
-    )
+    this.setState({[e.target.name]: e.target.value})
+  }
+  isOnBlur = () => {
+    const {id, updateKinder} = this.props
+    updateKinder(this.state.kinderName ,id)
   }
   render(){
     const { parentId, childIds, classCount, kinder, id} = this.props
@@ -54,6 +56,7 @@ class Branch extends Component {
             id={id}
             value={this.state.kinderName}
             name="kinderName"
+            onBlur={this.isOnBlur}
             onChange={this.isHandleChange}
           />
           <button
