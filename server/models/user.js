@@ -8,6 +8,7 @@ const subClassSchema = new Schema({
 })
 const kinderSchema = new Schema({
   name: String,
+  address: String,
   class: [subClassSchema]
 })
 

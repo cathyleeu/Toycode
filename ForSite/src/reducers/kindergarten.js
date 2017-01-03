@@ -20,24 +20,7 @@ const initialState = {
   }
 }
 
-//유치원 추가
-const addKinder = (state, action) => {
-  switch (action.type) {
-
-    //3) addKinder의 ADD_CHILD가 실행 되면
-    case types.ADD_CHILD:
-      return  {
-        code: null,
-        name: null,
-        id: action.childId,
-        kinderClasses:[]
-      }
-    default:
-      return state
-  }
-}
-
-const addKinderClass = (state , action) => {
+const KinderClass = (state , action) => {
   switch (action.type) {
     case types.ADD_CLASS:
       return [...state.kinderClasses, {
@@ -46,53 +29,46 @@ const addKinderClass = (state , action) => {
         className: null,
         students: null
       }]
+    case types.UPDATE_KINDER_CLASS:
+      return state.kinderClasses.map((kinderclass) => {
+        if(kinderclass.id === action.classId){
+          return {...kinderclass, className: action.classname, students: action.students}
+        } else { return kinderclass }
+      })
     default:
       return state
   }
 }
 
-const node = (state, action) => {
+const Kinder = (state, action) => {
   switch (action.type) {
-    case types.ADD_CHILD:
-      return [...state.kinder, addKinder(state, action)]
+    case types.ADD_KINDER:
+      return [...state.kinder, {
+        code: null,
+        name: null,
+        id: action.childId,
+        kinderClasses:[]
+      }]
+    case types.UPDATE_KINDER:
+      return state.kinder.map((kinder) => {
+        if(kinder.id === action.id){
+          return {...kinder, name: action.kinder}
+        } else { return kinder }
+      })
     default:
       return state
   }
 }
 
 
-const getAllDescendantIds = (state, id) => (
+const deleteKinder = (state, id) => (
   state.filter(kinder => kinder.id !== id)
 )
 
-const deleteMany = (state = initialState, ids) => {
-  state = { ...state }
-  ids.forEach(id => delete state[id])
-  return state
-}
 
 export default (state = initialState , action) => {
   const { nodeId, classId } = action
   switch (action.type) {
-    case types.DELETE_KINDER:
-      return {
-        ...state,
-        branch: {
-          ...state.branch,
-          kinder:getAllDescendantIds(state.branch.kinder, action.id)
-        }
-      }
-    case types.DELETE_KINDER_CLASS:
-      return {
-        ...state,
-        branch:{
-          ...state.branch,
-          kinder: state.branch.kinder.map((item, index) => ({
-            ...item,
-            kinderClasses: getAllDescendantIds(item.kinderClasses, action.id)
-          }))
-        }
-      }
     case types.CREATE_KINDER:
       return {
         ...state,
@@ -102,22 +78,26 @@ export default (state = initialState , action) => {
           kinder: [...state.branch.kinder]
         }
       }
-    case types.ADD_CHILD:
+    case types.ADD_KINDER:
+    case types.UPDATE_KINDER:
+    case types.DELETE_KINDER:
       return {
         ...state,
         branch:{
           ...state.branch,
-          kinder:node(state.branch, action)
+          kinder: (action.type == types.DELETE_KINDER ? deleteKinder(state.branch.kinder, action.id): Kinder(state.branch, action))
         }
       }
     case types.ADD_CLASS:
+    case types.UPDATE_KINDER_CLASS:
+    case types.DELETE_KINDER_CLASS:
       return {
         ...state,
         branch:{
           ...state.branch,
           kinder: state.branch.kinder.map((item, index) => ({
             ...item,
-            kinderClasses: index==action.id ? addKinderClass(item, action) : item.kinderClasses
+            kinderClasses: action.type == types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index==action.id ? KinderClass(item, action) : item.kinderClasses)
           }))
         }
       }

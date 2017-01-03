@@ -11,9 +11,9 @@ export const createKinder = (id, branchName, branchCode) => ({
   branchCode
 })
 
-export const updateKinder = (kinderName) => ({
+export const updateKinder = (kinder, id) => ({
   type: types.UPDATE_KINDER,
-  kinderName
+  kinder, id
 })
 
 export const deleteKinder = (id) => ({
@@ -27,13 +27,18 @@ export const createKinderClass = (id) => ({
   classId: `${id}_${nextKinClassId++}`
 })
 
+export const updateKinderClass = (classname, students, id, parentId, classId) => ({
+  type: types.UPDATE_KINDER_CLASS,
+  classname, students, id, parentId, classId
+})
+
 export const deleteKinderClass = (id) => ({
   type: types.DELETE_KINDER_CLASS,
   id
 })
 
 export const addChild = (childId) => ({
-  type: types.ADD_CHILD,
+  type: types.ADD_KINDER,
   childId
 })
 
