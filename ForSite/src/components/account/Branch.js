@@ -12,11 +12,11 @@ class Branch extends Component {
   }
   handleAddChildClick = e => {
     e.preventDefault()
-    const { addClass, createKinderClass, id} = this.props
+    const { addClass, createKinderClass, id, kinder} = this.props
     //유치원 명이 들어가면 될 듯 함
     const childId = createKinderClass('반').classId
-    const matchId = parseInt(id.split("_")[1])
-    addClass(id, childId, matchId)
+    const index = kinder.map(item => item.id).indexOf(id);
+    addClass(id, childId, index)
   }
   handleRemoveClick = e => {
     e.preventDefault()
