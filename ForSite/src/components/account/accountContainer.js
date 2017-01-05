@@ -24,7 +24,7 @@ class AccountCont extends Component{
     )
   }
   render() {
-    const { kinders, user } = this.props
+    const { kinders, user, completedAddKinder } = this.props
     const kindergartens = kinders.branch.kinder
     return (
       <div className="row">
@@ -43,6 +43,11 @@ class AccountCont extends Component{
 
         <div className="col-md-12">
           {kindergartens.map(this.renderChild)}
+        </div>
+        <div className="col-md-12">
+        <button
+          className="col-md-1 btn btn-danger"
+          onClick={() => completedAddKinder(kinders.branch)}>등록하기</button>
         </div>
       </div>
     )
