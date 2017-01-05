@@ -65,7 +65,7 @@ exports.userOn = (req, res ) => {
 
 exports.userUpdate = (req, res) => {
   const user = req.params.user
-  const kindergartens = req.body.kindergartens
+  const kinder = req.body.kinder
 
   User.findOne({email: user}, function(err, data){
     if(err) {
@@ -75,8 +75,8 @@ exports.userUpdate = (req, res) => {
         if(!data) {
           res.status(404).send()
         } else {
-            if(kindergartens) {
-              data.kindergartens = req.body.kindergartens
+            if(kinder) {
+              data.kinder = req.body.kinder
             }
             data.save(function (err, updated) {
               if(err){
@@ -91,13 +91,3 @@ exports.userUpdate = (req, res) => {
     }
   })
 }
-// exports.userUpdate = (req,res) => {
-//   console.log(req.params.user)
-//   const user = req.params.user
-//   const kindergartens = req.body.kindergartens
-//   User.find((err, users) => res.json(users)).where({email: user}).update(
-//     {
-//       kindergartens: kindergartens
-//     }
-//   )
-// }\

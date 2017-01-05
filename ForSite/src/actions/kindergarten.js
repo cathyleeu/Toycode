@@ -50,8 +50,6 @@ export const addClass = (classId, childId, id) => ({
 
 
 
-
-
 const ROOT_URL = 'http://localhost:3090'
 export function completedAddKinder(KinData) {
   const user = localStorage.getItem('email')
