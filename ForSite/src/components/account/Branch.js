@@ -6,9 +6,16 @@ import Kinder from './Kinder'
 class Branch extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      kinderName: ''
-    }
+    const {kinder} = this.props
+    kinder.map((kinder, i) => {
+      this.state = {
+        Name: kinder.name,
+        Address: kinder.address,
+        Phone: kinder.phone,
+        Manager: kinder.manager,
+        ManegerPh: kinder.managerPh
+      }
+    })
   }
   handleAddChildClick = e => {
     e.preventDefault()
@@ -37,31 +44,77 @@ class Branch extends Component {
   }
   isOnBlur = () => {
     const {id, updateKinder} = this.props
-    updateKinder(this.state.kinderName ,id)
+    updateKinder(this.state,id)
   }
   render(){
-    const { parentId, childIds, classCount, kinder, id} = this.props
+    const { parentId, childIds, classCount, kinder, id, kinders, completedAddKinder} = this.props
     const index = kinder.map(item => item.id).indexOf(id);
     return(
       <div className="row col-md-12">
         <div className="col-md-5">
-          <button
-            className="btn btn-info"
-            onClick={this.handleRemoveClick}>
-            삭제
-          </button>
-          <label htmlFor={id}>원 명</label>
-          <input
-            type="text"
-            id={id}
-            value={this.state.kinderName}
-            name="kinderName"
-            onBlur={this.isOnBlur}
-            onChange={this.isHandleChange}
-          />
-          <button
-            className="btn btn-success"
-            onClick={this.handleAddChildClick}>반 추가 </button>
+          <div>
+            <label htmlFor={`${id}_name`}>원 명</label>
+            <input
+              type="text"
+              id={`${id}_name`}
+              value={this.state.Name}
+              name="Name"
+              onBlur={this.isOnBlur}
+              onChange={this.isHandleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor={`${id}_adres`}>원 주소</label>
+            <input
+              type="text"
+              id={`${id}_adres`}
+              value={this.state.Address}
+              name="Address"
+              onBlur={this.isOnBlur}
+              onChange={this.isHandleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor={`${id}_ph`}>원 전화번호</label>
+            <input
+              type="tel"
+              id={`${id}_ph`}
+              value={this.state.Phone}
+              name="Phone"
+              onBlur={this.isOnBlur}
+              onChange={this.isHandleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor={`${id}_mng`}>원 담당자</label>
+            <input
+              type="text"
+              id={`${id}_mng`}
+              value={this.state.Manager}
+              name="Manager"
+              onBlur={this.isOnBlur}
+              onChange={this.isHandleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor={`${id}_mngPh`}>원 담당자 전화번호</label>
+            <input
+              type="tel"
+              id={`${id}_mngPh`}
+              value={this.state.ManegerPh}
+              name="ManegerPh"
+              onBlur={this.isOnBlur}
+              onChange={this.isHandleChange}
+            />
+          </div>
+          <div className="row">
+            <button
+              className="btn btn-danger col-md-3"
+              onClick={this.handleRemoveClick}> 삭제 </button>
+            <button
+              className="btn btn-success col-md-3"
+              onClick={this.handleAddChildClick}>반 추가 </button>
+          </div>
         </div>
         <div className="row col-md-7">
           {kinder[index].kinderClasses.map(this.renderChild)}
