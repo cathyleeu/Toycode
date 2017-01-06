@@ -13,7 +13,12 @@ export const createKinder = (id, branchName, branchCode) => ({
 
 export const updateKinder = (kinder, id) => ({
   type: types.UPDATE_KINDER,
-  kinder, id
+  name: kinder.Name,
+  address: kinder.Address,
+  phone : kinder.Phone,
+  manager: kinder.Manager,
+  managerPh: kinder.ManegerPh,
+  id
 })
 
 export const deleteKinder = (id) => ({
@@ -55,7 +60,6 @@ export function completedAddKinder(KinData) {
   const user = localStorage.getItem('email')
   return function (dispatch) {
     axios.put(`${ROOT_URL}/user/${user}`, KinData).then(response => {
-      console.log(response.data)
       dispatch({type: types.COMPLETE_ADD_KINDER})
     })
   }

@@ -4,24 +4,20 @@ import { connect } from 'react-redux'
 
 const Header = ({auth}) => {
   const lists = [
-    {route: '/feature' , title: '키즈씽킹'},
-    {route: '/support' , title: '영업지원'},
+    // {route: '/feature' , title: '키즈씽킹'},
+    // {route: '/support' , title: '영업지원'},
     {route: '/book_order' , title: '주문'},
-    {route: '/login_issue' , title: '아이디 발급'},
+    // {route: '/login_issue' , title: '아이디 발급'},
     {route: '/my_account' , title: '마이페이지'},
     {route: '/signout' , title: '로그아웃'}
   ]
   const headerList = lists.map(
-        (list,index) => <li className="nav-item" key={index}>
-          <Link to={list.route} className="nav-link">{list.title}</Link>
-        </li>
-      )
+        (list,index) => <Link to={list.route} key={index} className="navLink">{list.title}</Link>)
   return(
-    <nav className="navbar navbar-light">
-      <ul className="nav navbar-nav">
-        { auth.authenticated ? headerList : (<li className="nav-item">
-          <Link className="nav-link" to="/">토이코드</Link>
-        </li>) }
+    <nav className="navBar">
+      <logo>토이코드</logo>
+      <ul className="navBar-nav">
+        { auth.authenticated ? headerList : <Link className="navLink" to="/">토이코드</Link> }
       </ul>
     </nav>
   )

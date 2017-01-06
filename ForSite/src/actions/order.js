@@ -21,13 +21,13 @@ export const goodsDelete = (id) => ({
   id
 })
 
-
 export const requestInvoice = (invoiceData) => ((dispatch) => {
   axios.post(`${ROOT_URL}/invoices`, invoiceData)
     .then(response => {
       dispatch({ type: types.CHECKOUT_REQUEST })
       alert('주문이 완료되었습니다.')
-      browserHistory.push('feature')
+      browserHistory.push('my_account')
+      dispatch(getInvoices())
       // dispatch({ type: types.CHECKOUT_SUCCESS })
     })
     .catch((e) => {
@@ -35,3 +35,25 @@ export const requestInvoice = (invoiceData) => ((dispatch) => {
       alert('주문을 실패하였습니다.')
     })
 })
+
+export const getInvoices = () => (dispatch, getState) => {
+  dispatch(startInvoicesFetch())
+  const ROOT_URL = 'http://localhost:3090'
+  const user = localStorage.getItem('email')
+  axios.get(`${ROOT_URL}/invoices/${user}`).then((invoices) => {
+     dispatch(completeInvoicesFetch(invoices))
+   })
+}
+
+export const startInvoicesFetch = () => {
+  return {
+    type: types.START_INVOICES_FETCH
+  };
+};
+
+export const completeInvoicesFetch = (invoices) => {
+  return {
+    type: types.COMPLETE_INVOICES_FETCH,
+    invoices : invoices.data
+  };
+};

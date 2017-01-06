@@ -15,7 +15,7 @@ import Feature from './components/feature';
 import Support from './components/support';
 import LoginIssue from './components/login_issue';
 import { OrderTable } from './components/order';
-
+import {getInvoices} from './actions/order'
 import {fetchBooks} from './actions/fetch'
 import {fetchUser} from './actions'
 
@@ -32,6 +32,7 @@ if (token) {
   store.dispatch({ type: types.AUTH_USER })
 }
 store.dispatch(fetchBooks())
+store.dispatch(getInvoices())
 // debugger
 
 

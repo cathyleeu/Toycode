@@ -63,10 +63,14 @@ exports.userOn = (req, res ) => {
   User.find((err, users) => res.json(users)).where({email: user})
 }
 
+exports.userKinder = (req, res) => {
+  const user = req.params.user
+  User.find((err, users) => res.json(users)).where({email: user}).find({kinder:{}})
+}
 exports.userUpdate = (req, res) => {
   const user = req.params.user
   const kinder = req.body.kinder
-
+// 비밀번호가 같이 바뀐다... ㅎㅎㅎ TODO: 비밀번호가 같이 바뀌는 문제해결해야함.
   User.findOne({email: user}, function(err, data){
     if(err) {
       console.log(err);

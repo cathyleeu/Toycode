@@ -15,6 +15,7 @@ module.exports = function(app) {
   app.post('/signup', Auth.signup)
   app.get('/user/:user',  Auth.userOn)
   app.put('/user/:user',  Auth.userUpdate)
+  app.get('/user/:user/kinder',  Auth.userKinder)
 
   app.post('/books', Books.newbook)
   app.get('/books', Books.getbooks)
@@ -24,6 +25,7 @@ module.exports = function(app) {
   // })
 
   app.get('/invoices', Invoices.getInvoices)
+  app.get('/invoices/:user', Invoices.getUserInvoices)
   app.post('/invoices', Invoices.newInvoice)
   // app.put('/books/:book_id', function(req, res){
   //   res.end()

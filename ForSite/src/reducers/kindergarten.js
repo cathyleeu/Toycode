@@ -52,7 +52,13 @@ const Kinder = (state, action) => {
     case types.UPDATE_KINDER:
       return state.kinder.map((kinder) => {
         if(kinder.id === action.id){
-          return {...kinder, name: action.kinder}
+          return {...kinder,
+            name: action.name,
+            address: action.address,
+            phone: action.phone,
+            manager: action.manager,
+            managerPh: action.managerPh
+          }
         } else { return kinder }
       })
     default:

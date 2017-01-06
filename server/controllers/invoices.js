@@ -39,3 +39,8 @@ exports.getInvoices = function (req, res) {
     return res.json(invoices)
   })
 }
+
+exports.getUserInvoices = (req, res) => {
+  const user = req.params.user
+  Invoices.find((err, users) => res.json(users)).where({userEmail: user}).sort({createdOn: -1})
+}
