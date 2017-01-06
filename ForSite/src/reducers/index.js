@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import auth from './auth_reducer'
 import books from './books'
+import invoices from './invoices'
 import kindergarten from './kindergarten'
 import cart, * as fromCart from './cart'
 import products, * as fromProducts from './products'
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   books,
   cart,
   products,
-  kindergarten
+  kindergarten,
+  invoices
 });
 
 export const getAddedCart = state => state.cart.selectedGoods

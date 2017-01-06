@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import {bindActionCreators} from 'redux'
 import Branch from './Branch'
 import CompletedBranch from './CompletedBranch'
 import * as actions from '../../actions/kindergarten'
 
-class AccountCont extends Component{
+class BranchCont extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -79,4 +78,4 @@ function mapStateToProps(state, ownProps){
   }
 }
 
-export default connect(mapStateToProps, actions)(AccountCont)
+export default connect(mapStateToProps, actions)(BranchCont)

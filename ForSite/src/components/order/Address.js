@@ -14,13 +14,14 @@ class Address extends Component {
     this.setState({rqcontent:e.target.value})
   }
   render(){
+    const {user, userEmail} = this.props
     const invoice = {
       //TODO: user 정보 더 받아오기 user.email 식으로 기존 내용 다양하게 정리
       invoiceId: 1,
-      userEmail: 'leelee',
+      userEmail: userEmail,
       delivery: {
-        to: '이유경',
-        address: "강남",
+        to: user.Name,
+        address: user.Address,
         phone: "010-999"
       },
       requestedGoods: this.props.selected.map(each => (
@@ -33,11 +34,11 @@ class Address extends Component {
     }
     return(
       <div className="col-md-12">
-        <label>배송지</label><Input type={'text'} value={invoice.delivery.address} placeholder={'배송지'}/>
+        <label>배송지</label><Input type={'text'} value={user.Address} placeholder={'배송지'}/>
         <div className="row">
           <div className="col-md-6">
             <label>수령인</label>
-            <Input type={'text'} value={invoice.delivery.to} placeholder={'받는이'}/>
+            <Input type={'text'} value={user.Name} placeholder={'받는이'}/>
           </div>
           <div className="col-md-6">
             <label>연락처</label>

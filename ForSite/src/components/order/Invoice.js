@@ -15,7 +15,8 @@ const Invoice = ({nodes,total,requestInvoice,user,selected}) => (
       </div>
       <Address
         requestInvoice={requestInvoice}
-        user={user}
+        userEmail={user.email}
+        user={user.user.branch}
         selected={selected}
       />
     </div>

@@ -10,8 +10,11 @@ class AddedProduct extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(e){
-    this.setState({orderQuantity: e.target.value},
-    () => this.props.goodsSelect(this.props.id, parseInt(this.state.orderQuantity)))
+    this.setState({orderQuantity: e.target.value})
+  }
+  isOnBlur = () => {
+    const {goodsSelect} = this.props
+    goodsSelect(this.props.id, parseInt(this.state.orderQuantity))
   }
   render(){
     return(
@@ -23,6 +26,7 @@ class AddedProduct extends Component {
             value={this.state.orderQuantity}
             onChange={this.handleChange}
             placeholder={'주문수량'}
+            onBlur={this.isOnBlur}
           />
         </div>
         {/* TODO: 삭제 버튼 눌렀을 때, state가 같이 삭제 되어야함.  */}

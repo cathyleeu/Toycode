@@ -25,6 +25,7 @@ module.exports = function(app) {
   // })
 
   app.get('/invoices', Invoices.getInvoices)
+  app.get('/invoices/:user', Invoices.getUserInvoices)
   app.post('/invoices', Invoices.newInvoice)
   // app.put('/books/:book_id', function(req, res){
   //   res.end()
