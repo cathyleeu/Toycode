@@ -15,11 +15,11 @@ exports.newbook = function (req, res, next) {
       quantity : quantity,
       price : price
     })
-    book.save(function(err){
+    book.save(function(err, result){
       if(err){
         return next(err)
       }
-      res.json({result:1})
+      res.json(result)
     })
 }
 

@@ -11,6 +11,7 @@ const CompletedList = ({invoices}) => (
       <div className="col-md-3">주문금액</div>
     </div>
     <div className="row">
+      {/* TODO-4: 주문을 선택하고 나면 이것이 통째로 반복되는 것을 해결해야함. */}
       {invoices.map((invoice, index) => (
         <CompletedOrder className="col-md-12" key={index} invoice={invoice}/>
       ))}

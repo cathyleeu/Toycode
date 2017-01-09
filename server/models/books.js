@@ -6,8 +6,8 @@ const booksSchema = new Schema({
   id: Number,
   title : String,
   code : String,
-  quantity : Number,
-  price : Number,
+  quantity : {type: Number, default: 0},
+  price : {type: Number, default: 0},
   desc: String,
   img: String
 });

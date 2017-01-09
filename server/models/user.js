@@ -11,12 +11,12 @@ const bcrypt = require('bcrypt-nodejs');
 //   address: String,
 //   class: [subClassSchema]
 // })
-
+// TODO: unique Code생성
+// Code: { type: String, unique: true },
 const userSchema = new Schema({
   email : { type: String, unique: true, lowercase: true},
   password: String,
   branch: {
-    Code: { type: String, unique: true },
     Name: String,
     License: { type: String, unique: true },
     Address: String,

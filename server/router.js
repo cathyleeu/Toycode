@@ -14,7 +14,8 @@ module.exports = function(app) {
   app.post('/signin', requireSignin, Auth.signin)
   app.post('/signup', Auth.signup)
   app.get('/user/:user',  Auth.userOn)
-  app.put('/user/:user',  Auth.userUpdate)
+  app.put('/user/:user',  Auth.userKinderUpdate)
+  // app.delete('/user/:user',  Auth.userKinderDelete)
   app.get('/user/:user/kinder',  Auth.userKinder)
 
   app.post('/books', Books.newbook)

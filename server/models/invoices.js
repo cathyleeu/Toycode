@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 const Schema = mongoose.Schema;
+
 
 //TODO: create sub model
 // const requestedGoods = new Schema({
 //
 // })
 
-// disable _id
-//const noId = new Schema({name: String}, {_id: false});
+
 
 const invoiceSchema = new Schema({
   invoiceId: Number,
@@ -23,10 +24,11 @@ const invoiceSchema = new Schema({
   totalSales: Number
 });
 
-// totalSales: requestedGoods.map(total => total.sale)
-// module.exports = mongoose.model('invoice', invoiceSchema)
+//TODO-4: 한국시간으로 받아오기
+invoiceSchema.virtual('createdOnInvoice').get(function() {
+  return moment(this.createdOn).format('lll')
+})
 
 
 const InvoiceClass = mongoose.model('invoice', invoiceSchema)
-
 module.exports = InvoiceClass;

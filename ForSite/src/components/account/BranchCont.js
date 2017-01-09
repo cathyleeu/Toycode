@@ -39,12 +39,12 @@ class BranchCont extends Component{
     const kindergartens = kinders.branch.kinder
     return (
       <div className="row">
+        {/* TODO-3: user값을 컴포넌트가 렌더링 하기전에 들고와야함. */}
         <div>
           <div>지사명:{user.branch.Name}</div>
           <div>지사주소:{user.branch.Address}</div>
           <div>사업자주소:{user.branch.License}</div>
         </div>
-
         <div className="row col-md-12">
           <h5 className="col-md-9"> 지사 소속 유치원 리스트</h5>
           {this.state.isEditing ?(
