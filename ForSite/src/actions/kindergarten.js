@@ -1,5 +1,6 @@
 import * as types from './types'
 import axios from 'axios'
+import {fetchUser} from './index'
 
 
 
@@ -61,6 +62,7 @@ export function completedAddKinder(KinData) {
   return function (dispatch) {
     axios.put(`${ROOT_URL}/user/${user}`, KinData).then(response => {
       dispatch({type: types.COMPLETE_ADD_KINDER})
+      dispatch(fetchUser())
     })
   }
 }

@@ -40,7 +40,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-        <IndexRoute component={Signin}/>
+        {token ? <IndexRoute component={Feature}/> : (<IndexRoute component={Signin}/>)}    
         <Route path='signin' component={Signin}/>
         <Route path='signout' component={Signout}/>
         <Route path='signup' component={SignupForm}/>

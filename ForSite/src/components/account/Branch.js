@@ -6,7 +6,7 @@ import Kinder from './Kinder'
 class Branch extends Component {
   constructor(props) {
     super(props)
-    const {kinder} = this.props
+    const {addekinder, kinder} = this.props
     /*
       TODO-1 : 수정, 완료에 따라서 상태값들 분리하기
       완료 클릭시 db로 데이터 전송하고
@@ -14,7 +14,7 @@ class Branch extends Component {
       onChange때 this.state를 바꿔주고.
     */
     //Question: state를 map하면, component도 map해서 각 state의 값과 매치를 해야하는가?
-    // kinder.map((kinder, i) => {
+    addekinder.map((kinder, i) => {
       this.state = {
         Name: kinder.name,
         Address: kinder.address,
@@ -22,7 +22,7 @@ class Branch extends Component {
         Manager: kinder.manager,
         ManegerPh: kinder.managerPh
       }
-    // })
+    })
   }
   handleAddChildClick = e => {
     e.preventDefault()
@@ -135,7 +135,8 @@ class Branch extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    kinder: state.kindergarten.branch.kinder
+    kinder: state.kindergarten.branch.kinder,
+    addekinder: state.auth.user.kinder
   }
 }
 
