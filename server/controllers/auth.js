@@ -71,7 +71,7 @@ exports.userKinder = (req, res) => {
 exports.userKinderUpdate = (req, res) => {
   const user = req.params.user
   const kinder = req.body.kinder
-  User.update({email: user}, {$push: {kinder: kinder}}, function(err, data){
+  User.update({email: user}, {$set: {kinder: kinder}}, function(err, data){
     if(err) {
       console.log("err:",err)
       res.status(500).send()

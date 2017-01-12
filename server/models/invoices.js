@@ -18,16 +18,16 @@ const invoiceSchema = new Schema({
     address: {type: String, required: true},
     phone: String
   },
-  requestedGoods:[{}],
+  requestedGoods:[],
   createdOn : { type: Date, default: Date.now },
   requestDesc: String,
   totalSales: Number
 });
 
 //TODO-4: 한국시간으로 받아오기
-invoiceSchema.virtual('createdOnInvoice').get(function() {
-  return moment(this.createdOn).format('lll')
-})
+// invoiceSchema.virtual('createdOnInvoice').get(function() {
+//   return moment(this.createdOn).format('lll')
+// })
 
 
 const InvoiceClass = mongoose.model('invoice', invoiceSchema)

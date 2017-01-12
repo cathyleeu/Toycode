@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 import * as types from './types'
-
+import getInvoices from './order'
 
 const ROOT_URL = 'http://localhost:3090'
 
@@ -19,6 +19,7 @@ export function signinUser(userData) {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('email', userData.email)
           dispatch(fetchUser())
+          dispatch(getInvoices())
           // feature페이지 re다이렉트
           browserHistory.push('feature')
       })
@@ -55,8 +56,15 @@ export function fetchUser() {
   const user = localStorage.getItem('email')
   return function (dispatch) {
     axios.get(`${ROOT_URL}/user/${user}`).then((user) => {
+      dispatch(fetchKinder(user))
       dispatch(completedFetchUser(user))
     })
+  }
+}
+function fetchKinder(user) {
+  return {
+    type: types.INITIAL_KINDER,
+    kinder: user.data[0].kinder
   }
 }
 
