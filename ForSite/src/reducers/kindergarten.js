@@ -71,11 +71,8 @@ const deleteKinder = (state, id) => (
 export default (state = initialState , action) => {
   const { nodeId, classId } = action
   switch (action.type) {
-    case types.CREATE_KINDER:
-      return {
-        ...state,
-        kinder: [...state.kinder]
-      }
+    case types.INITIAL_KINDER:
+      return {kinder:[...action.kinder]}
     case types.ADD_KINDER:
     case types.UPDATE_KINDER:
     case types.DELETE_KINDER:
@@ -86,7 +83,6 @@ export default (state = initialState , action) => {
     case types.UPDATE_KINDER_CLASS:
     case types.DELETE_KINDER_CLASS:
       return {
-        ...state,
         kinder: state.kinder.map((item, index) => ({
           ...item,
           kinderClasses: action.type == types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index==action.id ? KinderClass(item, action) : item.kinderClasses)

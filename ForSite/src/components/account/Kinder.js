@@ -3,9 +3,10 @@ import React, {Component} from 'react'
 class Kinder extends Component {
   constructor(props) {
     super(props)
+    const {kinderClass} = this.props
     this.state={
-      classname: '',
-      students: ''
+      classname: kinderClass.className,
+      students: kinderClass.students
     }
 
   }

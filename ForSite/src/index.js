@@ -26,28 +26,29 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk, Async)(createStore
 const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : f => f)
 
 const token = localStorage.getItem('token')
+
 if (token) {
   store.dispatch(fetchUser())
-  // store.dispatch({ type: types.STATUS_ON_LOGIN })
   store.dispatch({ type: types.AUTH_USER })
 }
+
 store.dispatch(fetchBooks())
 store.dispatch(getInvoices())
-// debugger
+
 
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-        {token ? <IndexRoute component={requireAuth(Feature)}/> : (<IndexRoute component={Signin}/>)}    
+        {token == undefined ? (<IndexRoute component={Signin}/>) : (<IndexRoute component={Feature}/>)}
         <Route path='signin' component={Signin}/>
         <Route path='signout' component={Signout}/>
         <Route path='signup' component={SignupForm}/>
         <Route path='feature' component={requireAuth(Feature)}/>
         <Route path='support' component={requireAuth(Support)}/>
         <Route path='book_order' component={requireAuth(OrderTable)}/>
-        <Route path='my_account' id={0} component={requireAuth(Account)}/>
+        <Route path='my_account' component={requireAuth(Account)}/>
         <Route path='login_issue' component={requireAuth(LoginIssue)}/>
       </Route>
     </Router>

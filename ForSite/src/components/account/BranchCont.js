@@ -19,11 +19,12 @@ class BranchCont extends Component{
     addChild(childId)
   }
 
-  renderChild = childId => {
-    const { id} = this.props
+  renderChild = (kinder, i) => {
+    const { id } = this.props
     return (
-      <div key={childId.id}>
-        <Branch id={childId.id} parentId={id} />
+      <div key={i}>
+        {/* TODO:  특정 코드를 만들어 줘야함!! */}
+        <Branch id={kinder.id} kinder={kinder}/>
       </div>
     )
   }
@@ -36,7 +37,7 @@ class BranchCont extends Component{
     ()=> completedAddKinder(kinders))
   }
   render() {
-    const { kinders, user, completedAddKinder } = this.props
+    const { kinders, user } = this.props
     const kindergartens = kinders.kinder
     return (
       <div className="row">
@@ -71,10 +72,13 @@ class BranchCont extends Component{
         <div className="col-md-12">
           {this.state.isEditing ? (
             <div>
-              {user && user.kinder.map((kinder, i) => <RegisteredKinder key={i} kinder={kinder}/> )}
               {kindergartens.map(this.renderChild)}
             </div>
-          ): <CompletedBranch kinders={user.kinder}/>}
+          ): (
+            <div>
+              {user.kinder.map((kinder, i) => <CompletedBranch key={i} kinder={kinder}/>)}
+            </div>
+          )}
         </div>
       </div>
     )

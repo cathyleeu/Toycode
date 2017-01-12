@@ -27,8 +27,10 @@ export const requestInvoice = (invoiceData) => ((dispatch) => {
       dispatch({ type: types.CHECKOUT_REQUEST })
       alert('주문이 완료되었습니다.')
       browserHistory.push('my_account')
+      //TODO: 추가된 invoice만 가져오도록 해야함....ㅎㅎㅎㅎ
       dispatch(getInvoices())
-      // dispatch({ type: types.CHECKOUT_SUCCESS })
+      //TODO: CHECKOUT_SUCCESS되면 빈창으로 만드는 것
+      dispatch({ type: types.CHECKOUT_SUCCESS })
     })
     .catch((e) => {
       dispatch({ type: types.CHECKOUT_FAILURE })
