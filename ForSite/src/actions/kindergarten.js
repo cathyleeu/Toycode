@@ -5,11 +5,9 @@ import {fetchUser} from './index'
 
 
 let nextKinderId = 0
-export const createKinder = (id, branchName, branchCode) => ({
+export const createKinder = (id) => ({
   type: types.CREATE_KINDER,
-  kinderId: `${id}_${nextKinderId++}`,
-  branchName,
-  branchCode
+  kinderId: `${id}_${nextKinderId++}`
 })
 
 export const updateKinder = (kinder, id) => ({

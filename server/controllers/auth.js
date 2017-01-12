@@ -67,6 +67,7 @@ exports.userKinder = (req, res) => {
   const user = req.params.user
   User.find((err, users) => res.json(users)).where({email: user}).select('kinder')
 }
+//TODO: update specific field
 exports.userKinderUpdate = (req, res) => {
   const user = req.params.user
   const kinder = req.body.kinder

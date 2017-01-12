@@ -13,11 +13,7 @@ const kinder = {
 }
 
 const initialState = {
-  branch: {
-    code: null,
-    name: null,
-    kinder: [...kinder]
-  }
+  kinder: [...kinder]
 }
 
 const KinderClass = (state , action) => {
@@ -78,34 +74,23 @@ export default (state = initialState , action) => {
     case types.CREATE_KINDER:
       return {
         ...state,
-        branch: {
-          name: action.branchName,
-          code: action.branchCode,
-          kinder: [...state.branch.kinder]
-        }
+        kinder: [...state.kinder]
       }
     case types.ADD_KINDER:
     case types.UPDATE_KINDER:
     case types.DELETE_KINDER:
       return {
-        ...state,
-        branch:{
-          ...state.branch,
-          kinder: (action.type == types.DELETE_KINDER ? deleteKinder(state.branch.kinder, action.id): Kinder(state.branch, action))
-        }
+        kinder: (action.type == types.DELETE_KINDER ? deleteKinder(state.kinder, action.id): Kinder(state, action))
       }
     case types.ADD_CLASS:
     case types.UPDATE_KINDER_CLASS:
     case types.DELETE_KINDER_CLASS:
       return {
         ...state,
-        branch:{
-          ...state.branch,
-          kinder: state.branch.kinder.map((item, index) => ({
-            ...item,
-            kinderClasses: action.type == types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index==action.id ? KinderClass(item, action) : item.kinderClasses)
-          }))
-        }
+        kinder: state.kinder.map((item, index) => ({
+          ...item,
+          kinderClasses: action.type == types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index==action.id ? KinderClass(item, action) : item.kinderClasses)
+        }))
       }
     default:
       return state

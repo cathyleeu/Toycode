@@ -14,7 +14,7 @@ class Branch extends Component {
       onChange때 this.state를 바꿔주고.
     */
     //Question: state를 map하면, component도 map해서 각 state의 값과 매치를 해야하는가?
-    addekinder.map((kinder, i) => {
+    // addekinder.map((kinder, i) => {
       this.state = {
         Name: kinder.name,
         Address: kinder.address,
@@ -22,7 +22,7 @@ class Branch extends Component {
         Manager: kinder.manager,
         ManegerPh: kinder.managerPh
       }
-    })
+    // })
   }
   handleAddChildClick = e => {
     e.preventDefault()
@@ -46,7 +46,6 @@ class Branch extends Component {
     )
   }
   isHandleChange = e => {
-    const {updateKinder} = this.props
     this.setState({[e.target.name]: e.target.value})
   }
   isOnBlur = () => {
@@ -135,7 +134,7 @@ class Branch extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    kinder: state.kindergarten.branch.kinder,
+    kinder: state.kindergarten.kinder,
     addekinder: state.auth.user.kinder
   }
 }
