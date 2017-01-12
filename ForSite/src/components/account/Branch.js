@@ -6,8 +6,15 @@ import Kinder from './Kinder'
 class Branch extends Component {
   constructor(props) {
     super(props)
-    const {kinder} = this.props
-    kinder.map((kinder, i) => {
+    const {addekinder, kinder} = this.props
+    /*
+      TODO-1 : 수정, 완료에 따라서 상태값들 분리하기
+      완료 클릭시 db로 데이터 전송하고
+      수정 클릭시 db에 저장된 값들을 this.state에 지정 후, input의 value값으로 지정하고,
+      onChange때 this.state를 바꿔주고.
+    */
+    //Question: state를 map하면, component도 map해서 각 state의 값과 매치를 해야하는가?
+    // addekinder.map((kinder, i) => {
       this.state = {
         Name: kinder.name,
         Address: kinder.address,
@@ -15,7 +22,7 @@ class Branch extends Component {
         Manager: kinder.manager,
         ManegerPh: kinder.managerPh
       }
-    })
+    // })
   }
   handleAddChildClick = e => {
     e.preventDefault()
@@ -39,7 +46,6 @@ class Branch extends Component {
     )
   }
   isHandleChange = e => {
-    const {updateKinder} = this.props
     this.setState({[e.target.name]: e.target.value})
   }
   isOnBlur = () => {
@@ -49,6 +55,7 @@ class Branch extends Component {
   render(){
     const { parentId, childIds, classCount, kinder, id, kinders, completedAddKinder} = this.props
     const index = kinder.map(item => item.id).indexOf(id);
+    // TODO-2: 반복되는 input을 줄이는 방법
     return(
       <div className="row col-md-12">
         <div className="col-md-5">
@@ -127,7 +134,8 @@ class Branch extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    kinder: state.kindergarten.branch.kinder
+    kinder: state.kindergarten.kinder,
+    addekinder: state.auth.user.kinder
   }
 }
 

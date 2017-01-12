@@ -22,9 +22,18 @@ db.once('open', function() {
 //app setup
 app.use(morgan('combined'));
 app.use(cors());
-app.use(bodyParser.json({type: '*/*'}));
+app.use(errorHandler);
+app.use(bodyParser.json({type: '*/*'})); //bodyparser을 사용해서 req.body를 사용할 수 있음.
 router(app);
 
+
+// Handler for internal server errors
+function errorHandler(err, req, res, next) {
+  console.error(err.message);
+  console.error(err.stack);
+  res.status(500);
+  res.render('error_template', {error: err});
+}
 
 
 //server setup

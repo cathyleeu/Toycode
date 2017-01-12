@@ -1,14 +1,13 @@
 import * as types from './types'
 import axios from 'axios'
+import {fetchUser} from './index'
 
 
 
 let nextKinderId = 0
-export const createKinder = (id, branchName, branchCode) => ({
+export const createKinder = (id) => ({
   type: types.CREATE_KINDER,
-  kinderId: `${id}_${nextKinderId++}`,
-  branchName,
-  branchCode
+  kinderId: `${id}_${nextKinderId++}`
 })
 
 export const updateKinder = (kinder, id) => ({
@@ -61,6 +60,7 @@ export function completedAddKinder(KinData) {
   return function (dispatch) {
     axios.put(`${ROOT_URL}/user/${user}`, KinData).then(response => {
       dispatch({type: types.COMPLETE_ADD_KINDER})
+      dispatch(fetchUser())
     })
   }
 }

@@ -60,38 +60,29 @@ exports.signup = (req, res, next) => {
 exports.userOn = (req, res ) => {
   console.log(req.params.user)
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user})
+  User.find((err, users) => res.json(users)).where({email: user}).select('email kinder branch')
 }
 
 exports.userKinder = (req, res) => {
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user}).find({kinder:{}})
+  User.find((err, users) => res.json(users)).where({email: user}).select('kinder')
 }
-exports.userUpdate = (req, res) => {
+//TODO: update specific field
+exports.userKinderUpdate = (req, res) => {
   const user = req.params.user
   const kinder = req.body.kinder
-// 비밀번호가 같이 바뀐다... ㅎㅎㅎ TODO: 비밀번호가 같이 바뀌는 문제해결해야함.
-  User.findOne({email: user}, function(err, data){
+  User.update({email: user}, {$push: {kinder: kinder}}, function(err, data){
     if(err) {
-      console.log(err);
+      console.log("err:",err)
       res.status(500).send()
-    } else {
-        if(!data) {
-          res.status(404).send()
-        } else {
-            if(kinder) {
-              data.kinder = req.body.kinder
-            }
-            data.save(function (err, updated) {
-              if(err){
-                console.log(err)
-                res.status(500).send()
-              } else {
-                res.send(updated)
-                console.log(updated)
-              }
-            })
-        }
     }
+    console.log("data:",data)
   })
 }
+
+//TODO-5: Delete 생성하기
+// export.userKinderDelete = (req, res) => {
+//   const user = req.params.user
+//   const kinder = req.body.kinder
+//   User.findOneAndDelete({email: user}, {$unset:{kinder: kinder}})
+// }
