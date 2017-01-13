@@ -35,13 +35,13 @@ if (token) {
 store.dispatch(fetchBooks())
 store.dispatch(getInvoices())
 
-
+// TODO: index route 설정 다시하기
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-        {token == undefined ? (<IndexRoute component={Signin}/>) : (<IndexRoute component={Feature}/>)}
+        <IndexRoute component={Signin}/>
         <Route path='signin' component={Signin}/>
         <Route path='signout' component={Signout}/>
         <Route path='signup' component={SignupForm}/>

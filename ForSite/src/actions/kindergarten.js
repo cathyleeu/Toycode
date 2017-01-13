@@ -5,11 +5,36 @@ import {fetchUser} from './index'
 
 // TODO: 지사코드 및 지사에 소속한 유치원의 코드를 발급해줘야 한다!
 
-let nextKinderId = 0
+
+let idNum = 0;
+function convertId(idNum, name) {
+  var zero = new Array(5).join(0);
+  var resultId = name + (zero + idNum).slice(-zero.length);
+  return resultId;
+}
+
+function incNum(){
+  idNum++
+  return idNum
+}
+// function issueId(){
+// 	var issuedId = convertId(idNum, "A")
+//   incNum(idNum)
+//   return issuedId
+// }
+
+
+
+// let nextKinderId = 0
 export function createKinder(id){
+  function issueId(){
+  	var issuedId = convertId(idNum, id)
+    incNum(idNum)
+    return issuedId
+  }
   return {
     type: types.CREATE_KINDER,
-    kinderId: `${id}_${nextKinderId++}`
+    kinderId: issueId()
   }
 }
 

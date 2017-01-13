@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple');
 const User = require('../models/user');
+const Code = require('../models/code');
 const config = require('../config');
 
 // sub : subject 어떤것이 token을 원하는감? ㅎㅎ
@@ -13,17 +14,18 @@ exports.signin = (req, res, next) => res.send({ token: tokenForUser(req.user) })
 
 
 exports.signup = (req, res, next) => {
-
   const email = req.body.email;
   const password = req.body.password;
   const Name = req.body.Name;
   const Address = req.body.Address;
   const License = req.body.License;
 
+
   if(!email || !password){
     return res.status(422).sned({error: '아이디 또는 비밀번호를 입력해주세요.'})
   }
   // 유저가 이메일 있는가 확인 (가입 되었는가 확인)
+
 
   User.findOne({ email: email }, function (err, existingUser) {
     if(err){
@@ -33,24 +35,38 @@ exports.signup = (req, res, next) => {
     if(existingUser){
       return res.status(422).send({ error: '이미사용되는 이메일입니다.'})
     }
+    Code.findOne({dbcollection: 'User'}, function(err, codeRes) {
+      var count = codeRes ? codeRes.count : 0,
+          zero = new Array(5).join(0),
+          resultId = "A" + (zero + count).slice(-zero.length);
 
-
-    // 한번도 생성한 적이 없는 경우 유저생성하는 것
-    const user = new User({
-      email: email,
-      password: password,
-      branch: {
-        Name: Name,
-        License: License,
-        Address: Address
-      }
-    })
-    user.save(function (err) {
-      if(err){
-        return next(err)
-      }
-      res.json({token:tokenForUser(user)})
-    })
+      const user = new User({
+        email: email,
+        password: password,
+        Code: resultId,
+        branch: {
+          Name: Name,
+          License: License,
+          Address: Address
+        }
+      })
+      user.save(function (err) {
+        if(err){
+          return next(err)
+        }
+        codeRes = codeRes || new Code({
+          dbcollection: 'User',
+          count: count
+        });
+        codeRes.count++
+        codeRes.save(function(err) {
+          if(err){
+            return next(err)
+          }
+          res.json({token:tokenForUser(user)})
+        });
+      })
+    });
   })
   //유저 생성이 된 것에 응답하는것
 };
