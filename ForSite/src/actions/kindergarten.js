@@ -1,40 +1,13 @@
 import * as types from './types'
 import axios from 'axios'
-import {fetchUser} from './index'
+import {fetchUser} from './index.js'
 
 
-// TODO: 지사코드 및 지사에 소속한 유치원의 코드를 발급해줘야 한다!
-
-
-let idNum = 0;
-function convertId(idNum, name) {
-  var zero = new Array(5).join(0);
-  var resultId = name + (zero + idNum).slice(-zero.length);
-  return resultId;
-}
-
-function incNum(){
-  idNum++
-  return idNum
-}
-// function issueId(){
-// 	var issuedId = convertId(idNum, "A")
-//   incNum(idNum)
-//   return issuedId
-// }
-
-
-
-// let nextKinderId = 0
+let nextKinId = 0
 export function createKinder(id){
-  function issueId(){
-  	var issuedId = convertId(idNum, id)
-    incNum(idNum)
-    return issuedId
-  }
   return {
     type: types.CREATE_KINDER,
-    kinderId: issueId()
+    kinderId: `${id}_${nextKinId++}`
   }
 }
 
@@ -81,17 +54,18 @@ export const addClass = (classId, childId, id) => ({
   classId, childId, id
 })
 
+export const editKinder = (status) => ({
+  type: types.EDITING_KINDER,
+  status: !status
+})
 
 
+//TODO: pending 문제 해결해야함. 
 const ROOT_URL = 'http://localhost:3090'
-export function completedAddKinder(KinData) {
+export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
-  return function (dispatch) {
-    axios.put(`${ROOT_URL}/user/${user}`, KinData).then(response => {
-      //TODO: pending이 되는 것 해결....
-      alert('회원정보가 수정되었습니다.')
-      dispatch({type: types.COMPLETE_ADD_KINDER})
-      dispatch(fetchUser())
-    })
-  }
+  axios.put(`${ROOT_URL}/user/${user}`, KinData)
+  dispatch(fetchUser())
+  dispatch({type: types.COMPLETE_ADD_KINDER, status: false})
+  alert('수정이 완료되었습니다.')
 }

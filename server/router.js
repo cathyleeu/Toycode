@@ -1,7 +1,6 @@
 const Auth = require('./controllers/auth');
 const Books = require('./controllers/books');
 const Invoices = require('./controllers/invoices');
-// const Code = require('./controllers/codes');
 const passportConfig = require('./services/passport');
 const passport = require('passport');
 
@@ -21,8 +20,6 @@ module.exports = function(app) {
 
   app.post('/books', Books.newbook)
   app.get('/books', Books.getbooks)
-  // app.post('/codes', Code.initialCode)
-  // app.post('/code', )
 
   // app.post('/books/:book_id', function(req, res){
   //   res.end()

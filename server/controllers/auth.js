@@ -35,8 +35,9 @@ exports.signup = (req, res, next) => {
     if(existingUser){
       return res.status(422).send({ error: '이미사용되는 이메일입니다.'})
     }
+    // TODO:나중에 고객이 나눠지면 그에 맞는 구분 코드를 설정해야함.
     Code.findOne({dbcollection: 'User'}, function(err, codeRes) {
-      var count = codeRes ? codeRes.count : 0,
+      var count = codeRes ? codeRes.count : 1,
           zero = new Array(5).join(0),
           resultId = "A" + (zero + count).slice(-zero.length);
 
@@ -76,7 +77,7 @@ exports.signup = (req, res, next) => {
 exports.userOn = (req, res ) => {
   console.log(req.params.user)
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user}).select('email kinder branch')
+  User.find((err, users) => res.json(users)).where({email: user}).select('email kinder branch Code')
 }
 
 exports.userKinder = (req, res) => {
@@ -92,13 +93,7 @@ exports.userKinderUpdate = (req, res) => {
       console.log("err:",err)
       res.status(500).send()
     }
-    console.log("data:",data)
+    console.log("어떤데이터?",data)
+    res.json()
   })
 }
-
-//TODO-5: Delete 생성하기
-// export.userKinderDelete = (req, res) => {
-//   const user = req.params.user
-//   const kinder = req.body.kinder
-//   User.findOneAndDelete({email: user}, {$unset:{kinder: kinder}})
-// }
