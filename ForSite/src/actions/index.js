@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 import * as types from './types'
-import getInvoices from './order'
+
 
 const ROOT_URL = 'http://localhost:3090'
 
@@ -19,7 +19,6 @@ export function signinUser(userData) {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('email', userData.email)
           dispatch(fetchUser())
-          dispatch(getInvoices())
           // feature페이지 re다이렉트
           browserHistory.push('feature')
       })

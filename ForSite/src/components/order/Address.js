@@ -13,11 +13,12 @@ class Address extends Component {
     this.setState({rqcontent:e.target.value})
   }
   render(){
-    const {user, userEmail, requestInvoice, selected} = this.props
+    const {user, userEmail, userCode, requestInvoice, selected} = this.props
+    // debugger
     const invoice = {
       //TODO: user 정보 더 받아오기 user.email 식으로 기존 내용 다양하게 정리
-      invoiceId: 1,
       userEmail: userEmail,
+      userCode: userCode,
       delivery: {
         to: user.Name,
         address: user.Address,

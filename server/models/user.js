@@ -11,29 +11,31 @@ const bcrypt = require('bcrypt-nodejs');
 //   address: String,
 //   class: [subClassSchema]
 // })
-// TODO: unique Code생성
-// Code: { type: String, unique: true },
+
 const userSchema = new Schema({
   email : { type: String, unique: true, lowercase: true},
   password: String,
+  Code: { type: String, unique: true },
   branch: {
     Name: String,
     License: { type: String, unique: true },
-    Address: String,
+    Address: String
   },
   account: {
     Manager: String,
     Email: String,
-    Phone: String,
+    Phone: String
   },
   education:{
     Manager: String,
     Email: String,
-    Phone: String,
+    Phone: String
   },
   kinder: [],
   createdOn: {type: Date, default: Date.now}
-});
+}, {collection:'user'});
+
+
 
  // on Save Hook, 비밀번호 암호화
  // 모델을 저장하기 전에 이 function이 실행됨 (userSchema.pre)
@@ -64,6 +66,4 @@ userSchema.methods.comparePassword = function (candidatePassword, callback) {
 }
 
 // 모델 클래스 생성
-const ModelClass = mongoose.model('user', userSchema)
-
-module.exports = ModelClass;
+module.exports = mongoose.model('user', userSchema)

@@ -11,8 +11,9 @@ const Schema = mongoose.Schema;
 
 
 const invoiceSchema = new Schema({
-  invoiceId: Number,
+  invoiceId: String,
   userEmail : {type: String, required: true},
+  userCode: {type: String, required: true}, 
   delivery: {
     to: {type: String, required: true},
     address: {type: String, required: true},

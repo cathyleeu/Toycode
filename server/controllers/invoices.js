@@ -1,8 +1,9 @@
 const Invoices = require('../models/invoices');
+const Code = require('../models/code');
 
 exports.newInvoice = function (req, res, next) {
-  const invoiceId = req.body.invoiceId;
   const userEmail = req.body.userEmail;
+  const userCode = req.body.userCode;
   const to = req.body.delivery.to
   const address = req.body.delivery.address
   const phone = req.body.delivery.phone
@@ -10,10 +11,15 @@ exports.newInvoice = function (req, res, next) {
   const requestDesc = req.body.requestDesc
   const totalSales = req.body.totalSales
 
+  Code.findOne({dbcollection: 'Invoices'}, function(err, codeRes) {
+    let count = codeRes ? codeRes.count : 1,
+        zero = new Array(9).join(0),
+        resultId = "IV" + (zero + count).slice(-zero.length);
 
     const invoice = new Invoices({
-      invoiceId : invoiceId,
+      invoiceId : resultId,
       userEmail : userEmail,
+      userCode: userCode,
       delivery: {
         to : to,
         address: address,
@@ -27,8 +33,19 @@ exports.newInvoice = function (req, res, next) {
       if(err){
         return next(err)
       }
-      res.json(invoice)
+      codeRes = codeRes || new Code({
+        dbcollection: 'Invoices',
+        count: count
+      });
+      codeRes.count++
+      codeRes.save(function(err) {
+        if(err){
+          return next(err)
+        }
+        res.json(invoice)
+      });
     })
+  })
 }
 
 exports.getInvoices = function (req, res) {
