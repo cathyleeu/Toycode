@@ -2,12 +2,12 @@ import * as types from '../actions/types'
 
 
 const kinderClasses = {
-  id: null,
+  _id: null,
   name: null,
   students: null
 }
 const kinders = {
-  id: null,
+  _id: null,
   name: null,
   kinderClasses: [...kinderClasses]
 }
@@ -22,13 +22,13 @@ const KinderClass = (state , action) => {
     case types.ADD_CLASS:
       return [...state.kinderClasses, {
         parentId: action.classId,
-        id: action.childId,
+        _id: action.childId,
         className: null,
         students: null
       }]
     case types.UPDATE_KINDER_CLASS:
       return state.kinderClasses.map((kinderclass) => {
-        if(kinderclass.id === action.classId){
+        if(kinderclass._id === action.classId){
           return {...kinderclass, className: action.classname, students: action.students}
         } else { return kinderclass }
       })
@@ -43,7 +43,7 @@ const Kinder = (state, action) => {
       return [...state.kinders, {
         code: null,
         name: null,
-        id: action.childId,
+        _id: action.childId,
         kinderClasses:[]
       }]
     case types.UPDATE_KINDER:

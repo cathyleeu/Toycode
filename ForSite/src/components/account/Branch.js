@@ -27,12 +27,12 @@ class Branch extends Component {
     const { deleteKinder, id } = this.props
     deleteKinder(id)
   }
-  renderChild = kinderClass => {
+  renderChild = (kinderClass, i) => {
     const { id, removeChild, kinders, deleteKinderClass, updateKinderClass } = this.props
     const index = kinders.map(item => item._id).indexOf(id);
     return (
-      <div key={kinderClass.id}>
-        <Kinder id={kinderClass.id} kinderClass={kinderClass} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} />
+      <div key={i}>
+        <Kinder id={kinderClass._id} kinderClass={kinderClass} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} />
       </div>
     )
   }
