@@ -18,10 +18,7 @@ class BranchCont extends Component{
   renderChild = (kinder, i) => {
     const { id, user } = this.props
     return (
-      <div key={i}>
-        {/* TODO:  특정 코드를 만들어 줘야함!! */}
-        <Branch id={kinder._id} code={kinder.code} kinder={kinder} branchCode={user.Code} />
-      </div>
+        <Branch id={kinder._id} key={i} code={kinder.code} kinder={kinder} branchCode={user.Code} />
     )
   }
   render() {

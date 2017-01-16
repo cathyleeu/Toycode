@@ -4,10 +4,10 @@ import {fetchUser} from './index.js'
 
 
 let nextKinId = 0
-export function createKinder(id){
+export function createKinder(_id){
   return {
     type: types.CREATE_KINDER,
-    kinderId: `${id}_${nextKinId++}`
+    kinderId: `${_id}_${nextKinId++}`
   }
 }
 

@@ -89,16 +89,24 @@ exports.userKinderUpdate = (req, res) => {
 
   const user = req.params.user
   //TODO: Code를 자동생성하는 것으로 쓸 방법... ㅎㅎㅎ
-  const kinders = req.body.kinders.map((kinder, i) => ({
-      code: kinder.parentId+'-K'+(i+1),
+  const kinders = req.body.kinders.map((kinder, i) => {
+    const kinderId = 'K'+(i+1)
+    const kinderCode = kinder.parentId+'-'+kinderId
+    return({
+      code: kinderCode,
       parentId: kinder.parentId,
       manager: kinder.manager,
       address: kinder.address,
       managerPh: kinder.managerPh,
       name: kinder.name,
       phone: kinder.phone,
-      kinderClasses: kinder.kinderClasses
-    }))
+      kinderClasses: kinder.kinderClasses.map((kinderClass, i) => ({
+        _id: kinderId+'-KC'+(i+1),
+        code: kinderCode+'-KC'+(i+1),
+        className: kinderClass.className,
+        students: kinderClass.students
+      }))
+    })})
   User.findOneAndUpdate({email: user}, {$set: {kinders: kinders}}, function(err, data){
     if(err) {
       console.log("err:",err)
