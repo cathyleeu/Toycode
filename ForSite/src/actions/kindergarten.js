@@ -12,13 +12,14 @@ export function createKinder(id){
 }
 
 
-export const updateKinder = (kinder, id) => ({
+export const updateKinder = (kinder, branchCode, id) => ({
   type: types.UPDATE_KINDER,
   name: kinder.Name,
   address: kinder.Address,
   phone : kinder.Phone,
   manager: kinder.Manager,
   managerPh: kinder.ManegerPh,
+  branchCode,
   id
 })
 
@@ -60,7 +61,7 @@ export const editKinder = (status) => ({
 })
 
 
-//TODO: pending 문제 해결해야함. 
+//TODO: pending 문제 해결해야함.
 const ROOT_URL = 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')

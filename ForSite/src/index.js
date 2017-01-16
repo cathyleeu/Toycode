@@ -29,11 +29,12 @@ const token = localStorage.getItem('token')
 
 if (token) {
   store.dispatch(fetchUser())
+  store.dispatch(getInvoices())
   store.dispatch({ type: types.AUTH_USER })
 }
 
 store.dispatch(fetchBooks())
-store.dispatch(getInvoices())
+// store.dispatch(getInvoices())
 
 // TODO: index route 설정 다시하기
 
@@ -41,7 +42,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-        <IndexRoute component={Signin}/>
+        {token ? <IndexRoute component={Feature}/> : <IndexRoute component={Signin}/>}
         <Route path='signin' component={Signin}/>
         <Route path='signout' component={Signout}/>
         <Route path='signup' component={SignupForm}/>

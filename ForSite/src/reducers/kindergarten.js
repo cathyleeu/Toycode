@@ -6,14 +6,14 @@ const kinderClasses = {
   name: null,
   students: null
 }
-const kinder = {
+const kinders = {
   id: null,
   name: null,
   kinderClasses: [...kinderClasses]
 }
 
 const initialState = {
-  kinder: [...kinder],
+  kinders: [...kinders],
   status: false
 }
 
@@ -40,21 +40,22 @@ const KinderClass = (state , action) => {
 const Kinder = (state, action) => {
   switch (action.type) {
     case types.ADD_KINDER:
-      return [...state.kinder, {
+      return [...state.kinders, {
         code: null,
         name: null,
         id: action.childId,
         kinderClasses:[]
       }]
     case types.UPDATE_KINDER:
-      return state.kinder.map((kinder) => {
-        if(kinder.id === action.id){
+      return state.kinders.map((kinder) => {
+        if(kinder._id === action.id){
           return {...kinder,
             name: action.name,
             address: action.address,
             phone: action.phone,
             manager: action.manager,
-            managerPh: action.managerPh
+            managerPh: action.managerPh,
+            parentId: action.branchCode
           }
         } else { return kinder }
       })
@@ -65,7 +66,7 @@ const Kinder = (state, action) => {
 
 
 const deleteKinder = (state, id) => (
-  state.filter(kinder => kinder.id !== id)
+  state.filter(kinder => kinder._id !== id)
 )
 
 
@@ -73,20 +74,20 @@ export default (state = initialState , action) => {
   const { nodeId, classId } = action
   switch (action.type) {
     case types.INITIAL_KINDER:
-      return { ...state, kinder:[...action.kinder]}
+      return { ...state, kinders:[...action.kinder]}
     case types.ADD_KINDER:
     case types.UPDATE_KINDER:
     case types.DELETE_KINDER:
       return {
         ...state,
-        kinder: (action.type == types.DELETE_KINDER ? deleteKinder(state.kinder, action.id): Kinder(state, action))
+        kinders: (action.type == types.DELETE_KINDER ? deleteKinder(state.kinders, action.id): Kinder(state, action))
       }
     case types.ADD_CLASS:
     case types.UPDATE_KINDER_CLASS:
     case types.DELETE_KINDER_CLASS:
       return {
         ...state,
-        kinder: state.kinder.map((item, index) => ({
+        kinders: state.kinders.map((item, index) => ({
           ...item,
           kinderClasses: action.type == types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index==action.id ? KinderClass(item, action) : item.kinderClasses)
         }))

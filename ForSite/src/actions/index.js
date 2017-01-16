@@ -63,7 +63,7 @@ export function fetchUser() {
 function fetchKinder(user) {
   return {
     type: types.INITIAL_KINDER,
-    kinder: user.data[0].kinder
+    kinder: user.data[0].kinders
   }
 }
 
