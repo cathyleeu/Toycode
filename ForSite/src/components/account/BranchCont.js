@@ -16,17 +16,17 @@ class BranchCont extends Component{
     addChild(branchCode)
   }
   renderChild = (kinder, i) => {
-    const { id } = this.props
+    const { id, user } = this.props
     return (
       <div key={i}>
         {/* TODO:  특정 코드를 만들어 줘야함!! */}
-        <Branch id={kinder.id} kinder={kinder}/>
+        <Branch id={kinder._id} code={kinder.code} kinder={kinder} branchCode={user.Code} />
       </div>
     )
   }
   render() {
     const { kinders, user, editKinder, completedAddKinder } = this.props
-    const kindergartens = kinders.kinder
+    const kindergartens = kinders.kinders
     return (
       <div className="row">
         {/* TODO-3: user값을 컴포넌트가 렌더링 하기전에 들고와야함. - 임시방편 */}
@@ -68,7 +68,7 @@ class BranchCont extends Component{
             </div>
           ): (
             <div>
-              {user && user.kinder.map((kinder, i) => <CompletedBranch key={i} kinder={kinder}/>)}
+              {user && user.kinders.map((kinder, i) => <CompletedBranch key={i} kinder={kinder}/>)}
             </div>
           )}
         </div>

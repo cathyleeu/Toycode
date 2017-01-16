@@ -77,23 +77,33 @@ exports.signup = (req, res, next) => {
 exports.userOn = (req, res ) => {
   console.log(req.params.user)
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user}).select('email kinder branch Code')
+  User.find((err, users) => res.json(users)).where({email: user}).select('email kinders branch Code')
 }
 
 exports.userKinder = (req, res) => {
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user}).select('kinder')
+  User.find((err, users) => res.json(users)).where({email: user}).select('kinders')
 }
 //TODO: update specific field
 exports.userKinderUpdate = (req, res) => {
+
   const user = req.params.user
-  const kinder = req.body.kinder
-  User.update({email: user}, {$set: {kinder: kinder}}, function(err, data){
+  //TODO: Code를 자동생성하는 것으로 쓸 방법... ㅎㅎㅎ
+  const kinders = req.body.kinders.map((kinder, i) => ({
+      code: kinder.parentId+'-K'+(i+1),
+      parentId: kinder.parentId,
+      manager: kinder.manager,
+      address: kinder.address,
+      managerPh: kinder.managerPh,
+      name: kinder.name,
+      phone: kinder.phone,
+      kinderClasses: kinder.kinderClasses
+    }))
+  User.findOneAndUpdate({email: user}, {$set: {kinders: kinders}}, function(err, data){
     if(err) {
       console.log("err:",err)
       res.status(500).send()
     }
-    console.log("어떤데이터?",data)
     res.json()
   })
 }

@@ -6,7 +6,7 @@ import Kinder from './Kinder'
 class Branch extends Component {
   constructor(props) {
     super(props)
-    const { kinder } = this.props
+    const { kinder, branchCode } = this.props
     this.state = {
       Name: kinder.name,
       Address: kinder.address,
@@ -19,7 +19,7 @@ class Branch extends Component {
     e.preventDefault()
     const { addClass, createKinderClass, id, kinders} = this.props
     const childId = createKinderClass('반').classId
-    const index = kinders.map(item => item.id).indexOf(id);
+    const index = kinders.map(item => item._id).indexOf(id);
     addClass(id, childId, index)
   }
   handleRemoveClick = e => {
@@ -29,7 +29,7 @@ class Branch extends Component {
   }
   renderChild = kinderClass => {
     const { id, removeChild, kinders, deleteKinderClass, updateKinderClass } = this.props
-    const index = kinders.map(item => item.id).indexOf(id);
+    const index = kinders.map(item => item._id).indexOf(id);
     return (
       <div key={kinderClass.id}>
         <Kinder id={kinderClass.id} kinderClass={kinderClass} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} />
@@ -41,21 +41,21 @@ class Branch extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
   isOnBlur = () => {
-    const {id, updateKinder} = this.props
-    updateKinder(this.state,id)
+    const {id, updateKinder, branchCode} = this.props
+    updateKinder(this.state,branchCode,id)
   }
   render(){
-    const { parentId, childIds, classCount, kinder, id, kinders, completedAddKinder} = this.props
-    const index = kinders.map(item => item.id).indexOf(id);
+    const { parentId, childIds, classCount, kinder, id, kinders, code } = this.props
+    const index = kinders.map(item => item._id).indexOf(id);
     // TODO-2: 반복되는 input을 줄이는 방법
     return(
       <div className="row col-md-12">
         <div className="col-md-5">
           <div>
-            <label htmlFor={`${id}_name`}>원 명</label>
+            <label htmlFor={`${code}_name`}>원 명</label>
             <input
               type="text"
-              id={`${id}_name`}
+              id={`${code}_name`}
               value={this.state.Name}
               name="Name"
               onBlur={this.isOnBlur}
@@ -63,10 +63,10 @@ class Branch extends Component {
             />
           </div>
           <div>
-            <label htmlFor={`${id}_adres`}>원 주소</label>
+            <label htmlFor={`${code}_adres`}>원 주소</label>
             <input
               type="text"
-              id={`${id}_adres`}
+              id={`${code}_adres`}
               value={this.state.Address}
               name="Address"
               onBlur={this.isOnBlur}
@@ -74,10 +74,10 @@ class Branch extends Component {
             />
           </div>
           <div>
-            <label htmlFor={`${id}_ph`}>원 전화번호</label>
+            <label htmlFor={`${code}_ph`}>원 전화번호</label>
             <input
               type="tel"
-              id={`${id}_ph`}
+              id={`${code}_ph`}
               value={this.state.Phone}
               name="Phone"
               onBlur={this.isOnBlur}
@@ -85,10 +85,10 @@ class Branch extends Component {
             />
           </div>
           <div>
-            <label htmlFor={`${id}_mng`}>원 담당자</label>
+            <label htmlFor={`${code}_mng`}>원 담당자</label>
             <input
               type="text"
-              id={`${id}_mng`}
+              id={`${code}_mng`}
               value={this.state.Manager}
               name="Manager"
               onBlur={this.isOnBlur}
@@ -96,10 +96,10 @@ class Branch extends Component {
             />
           </div>
           <div>
-            <label htmlFor={`${id}_mngPh`}>원 담당자 전화번호</label>
+            <label htmlFor={`${code}_mngPh`}>원 담당자 전화번호</label>
             <input
               type="tel"
-              id={`${id}_mngPh`}
+              id={`${code}_mngPh`}
               value={this.state.ManegerPh}
               name="ManegerPh"
               onBlur={this.isOnBlur}
@@ -126,7 +126,7 @@ class Branch extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    kinders: state.kindergarten.kinder
+    kinders: state.kindergarten.kinders
   }
 }
 

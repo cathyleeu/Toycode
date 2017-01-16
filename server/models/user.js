@@ -6,11 +6,17 @@ const bcrypt = require('bcrypt-nodejs');
 //   classname: String,
 //   students: Number
 // })
-// const kinderSchema = new Schema({
-//   name: String,
-//   address: String,
-//   class: [subClassSchema]
-// })
+const kinderSchema = new Schema({
+  parentId:String,
+  code: String,
+  address: String,
+  phone: String,
+  manager: String,
+  managerPh: String,
+  name: String,
+  address: String,
+  kinderClasses: []
+})
 
 const userSchema = new Schema({
   email : { type: String, unique: true, lowercase: true},
@@ -31,7 +37,7 @@ const userSchema = new Schema({
     Email: String,
     Phone: String
   },
-  kinder: [],
+  kinders: [kinderSchema],
   createdOn: {type: Date, default: Date.now}
 }, {collection:'user'});
 
