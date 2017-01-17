@@ -1,0 +1,38 @@
+.Added {
+  padding: 10px 0;
+}
+.Added button {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #5d5656;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 12px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.Added div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Added div p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.Added-Input {
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  margin-right: 5px;
+  padding: 11px;
+  font-size: 12px;
+  border: 1px solid #f2f2f2;
+  box-sizing: border-box;
+  background-color: #fff;
+}

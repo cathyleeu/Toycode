@@ -1,4 +1,4 @@
-import React, { Component, propTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addToCartUnsafe } from '../../actions/order'
 import { getAddedCart } from '../../reducers'
