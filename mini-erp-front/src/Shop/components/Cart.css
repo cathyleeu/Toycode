@@ -1,0 +1,17 @@
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+.Empty-Container{
+  box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+.Empty-alert{
+  font-size: 30px;
+  /*font-family: 'Jeju Gothic', serif;*/
+}
+.Cart-Title{
+  margin-bottom: 15px;
+}
