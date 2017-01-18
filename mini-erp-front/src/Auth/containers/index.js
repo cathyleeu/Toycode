@@ -1,15 +1,17 @@
 import React from 'react'
-import Signin from '../components/Signin'
+import SignInAndUp from '../components/SignInAndUp'
 import './index.css'
-import logo from '../../../public/logo.png'
 
-const AuthContainer = () => (
-  <div className="Auth-Container">
-    <div className="Form-Container">
-      <img src={logo} className="Auth-logo"/>
-      <Signin />
-    </div>
+
+const AuthContainer = () => {
+  let style = {
+        width: `${window.innerWidth}px`,
+        height: `${window.innerHeight}px`
+      }
+  return(
+  <div className="Auth-Container" style={style}>
+    <SignInAndUp />
   </div>
-)
+)}
 
 export default AuthContainer

@@ -29,14 +29,25 @@ export function signinUser(userData) {
       })
   }
 }
+export const toggleSignin = () => ({
+  type: types.REGISTERED_STATUS,
+  status: false
+})
+
+export const toggleSignup = () => ({
+  type: types.REGISTER_STATUS,
+  status: true
+})
+
 
 export function signupUser(userData) {
   return function (dispatch) {
     axios.post(`${ROOT_URL}/signup`, userData)
       .then(response => {
         // localStorage.setItem('token', response.data.token)
-        alert('회원가입이 완료되었습니다. 로그인 페이지로 넘어갑니다.')
-        browserHistory.push('signin')
+        alert('회원가입이 완료되었습니다. 로그인으로 넘어갑니다.')
+        dispatch({ type: types.REGISTERED_STATUS, status: false })
+        // browserHistory.push('signin')
       })
       .catch(response => dispatch(authError(response.data.error)))
   }
