@@ -6,7 +6,7 @@ import RegisterKinderClasses from './RegisterKinderClasses'
 class RegisterKinder extends Component {
   constructor(props) {
     super(props)
-    const { kinder, branchCode } = this.props
+    const { kinder } = this.props
     this.state = {
       Name: kinder.name,
       Address: kinder.address,
@@ -45,7 +45,7 @@ class RegisterKinder extends Component {
     updateKinder(this.state,branchCode,id)
   }
   render(){
-    const { parentId, childIds, classCount, kinder, id, kinders, code } = this.props
+    const { id, kinders, code } = this.props
     const index = kinders.map(item => item._id).indexOf(id);
     // TODO-2: 반복되는 input을 줄이는 방법
     return(

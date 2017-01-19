@@ -1,0 +1,53 @@
+.kinder-info-body{
+  padding: 0.5em;
+  margin: 1em;
+  border-bottom: 1px solid #d7d7d7;
+}
+.kinder-top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #1ECD97;
+  margin-bottom: 1em;
+}
+.kinder-no{
+  padding: 0.2em;
+  margin-right:1em;
+  width: 2em;
+  height: 2em;
+  font-size: 20px;
+  background-color: none;
+  border-radius: 5em;
+  border: 3px solid #1ECD97;
+  color: #1ECD97;
+  text-align: center;
+  font-weight: 500;
+}
+.kinder-body{
+  margin: 1em;
+}
+.kinder-body div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.2em 0;
+  margin: 0.2em;
+}
+.kinder-body div i{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.kinder-body div i,
+.kinder-body div p {
+  font-size: 16px;
+  margin-right: 5px;
+}
+.kinder-body div i p,
+.kinder-body div p {
+  margin: 0;
+}
+
+.kinder-class-body{
+
+}

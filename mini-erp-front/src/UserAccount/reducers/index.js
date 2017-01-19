@@ -71,7 +71,6 @@ const deleteKinder = (state, id) => (
 
 
 export default (state = initialState , action) => {
-  const { nodeId, classId } = action
   switch (action.type) {
     case INITIAL_KINDER:
       return { ...state, kinders:[...action.kinder]}
@@ -80,7 +79,7 @@ export default (state = initialState , action) => {
     case types.DELETE_KINDER:
       return {
         ...state,
-        kinders: (action.type == types.DELETE_KINDER ? deleteKinder(state.kinders, action.id): Kinder(state, action))
+        kinders: (action.type === types.DELETE_KINDER ? deleteKinder(state.kinders, action.id): Kinder(state, action))
       }
     case types.ADD_CLASS:
     case types.UPDATE_KINDER_CLASS:
@@ -89,7 +88,7 @@ export default (state = initialState , action) => {
         ...state,
         kinders: state.kinders.map((item, index) => ({
           ...item,
-          kinderClasses: action.type == types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index==action.id ? KinderClass(item, action) : item.kinderClasses)
+          kinderClasses: action.type === types.DELETE_KINDER_CLASS ? deleteKinder(item.kinderClasses, action.id) : (index === action.id ? KinderClass(item, action) : item.kinderClasses)
         }))
       }
     case types.EDITING_KINDER:

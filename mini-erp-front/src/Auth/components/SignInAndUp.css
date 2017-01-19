@@ -1,8 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-/*
-.login-form {
-  display: none;
-}*/
+
 .SignIn-Container{
   position: relative;
   z-index: 1;

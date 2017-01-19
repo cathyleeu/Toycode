@@ -1,0 +1,69 @@
+.kinder-list-cont{
+  padding: 1em;
+  width: 100%;
+  box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+  margin-bottom: 1em;
+}
+.branchKinder-header{
+  display: flex;
+  flex-direction: row;
+  margin: 1em 0;
+  align-items: center;
+  justify-content: space-between;
+}
+.branchKinder-header-btnList{
+  display: flex;
+  flex-direction: row;
+}
+
+.button-edit,
+.button-save,
+.button-cancle,
+.button-delete,
+.button-addClass,
+.button-addKinder{
+  outline: none;
+  text-align: center;
+  cursor: pointer;
+  font-size:12px;
+  padding:0.5em 1.5em;
+  border-radius:20px;
+  background: none;
+  display: block;
+  font-family: "Lato";
+}
+
+.button-addKinder{
+  border: 2px solid #4884ce;
+  color: #4884ce;
+}
+.button-addKinder:hover{
+  background: #4884ce;
+  color: white;
+}
+
+.button-cancle{
+  border: 2px solid #bdbdbd;
+  color: #bdbdbd;
+}
+.button-cancle:hover{
+  background: #bdbdbd;
+  color: white;
+}
+.button-save{
+  border: 2px solid #c7ce48;
+  color: #c7ce48;
+}
+.button-save:hover{
+  background: #c7ce48;
+  color: white;
+}
+
+.button-edit{
+  border: 2px solid #1ECD97;
+  color: #1ECD97;
+}
+.button-edit:hover{
+  background: #1ECD97;
+  color: white;
+}

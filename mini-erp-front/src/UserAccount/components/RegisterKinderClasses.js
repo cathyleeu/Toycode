@@ -25,7 +25,7 @@ class RegisterKinderClasses extends Component {
     updateKinderClass(classname,students,index,parentId,id)
   }
   render(){
-    const { counter, parentId, id} = this.props
+    const { id } = this.props
     return(
       <div className="row col-md-12">
         <label htmlFor={`${id}_name`}>반 이름</label>
