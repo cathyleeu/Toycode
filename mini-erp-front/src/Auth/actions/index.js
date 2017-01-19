@@ -29,14 +29,25 @@ export function signinUser(userData) {
       })
   }
 }
+export const toggleSignin = () => ({
+  type: types.REGISTERED_STATUS,
+  status: false
+})
+
+export const toggleSignup = () => ({
+  type: types.REGISTER_STATUS,
+  status: true
+})
+
 
 export function signupUser(userData) {
   return function (dispatch) {
     axios.post(`${ROOT_URL}/signup`, userData)
       .then(response => {
         // localStorage.setItem('token', response.data.token)
-        alert('회원가입이 완료되었습니다. 로그인 페이지로 넘어갑니다.')
-        browserHistory.push('signin')
+        alert('회원가입이 완료되었습니다. 로그인으로 넘어갑니다.')
+        dispatch({ type: types.REGISTERED_STATUS, status: false })
+        // browserHistory.push('signin')
       })
       .catch(response => dispatch(authError(response.data.error)))
   }
@@ -55,17 +66,17 @@ export function fetchUser() {
   const user = localStorage.getItem('email')
   return function (dispatch) {
     axios.get(`${ROOT_URL}/user/${user}`).then((user) => {
-      // dispatch(fetchKinder(user))
+      dispatch(fetchKinder(user))
       dispatch(completedFetchUser(user))
     })
   }
 }
-// function fetchKinder(user) {
-//   return {
-//     type: types.INITIAL_KINDER,
-//     kinder: user.data[0].kinders
-//   }
-// }
+function fetchKinder(user) {
+  return {
+    type: types.INITIAL_KINDER,
+    kinder: user.data[0].kinders
+  }
+}
 
 export function completedFetchUser(user) {
   return {
@@ -77,7 +88,8 @@ export function completedFetchUser(user) {
 export function signoutUser(){
   localStorage.removeItem('token')
   localStorage.removeItem('email')
-  return {
-    type: types.UNAUTH_USER
+  return function (dispatch) {
+    dispatch({type: types.UNAUTH_USER})
+    browserHistory.push('/')
   }
 }

@@ -16,7 +16,12 @@ class Address extends Component {
     const {user, userEmail, userCode, requestInvoice, selected} = this.props
     // debugger
     const invoice = {
-      //TODO: user 정보 더 받아오기 user.email 식으로 기존 내용 다양하게 정리
+      /*TODO
+        1: 사용자가 주소입력 할 수 있도록 onChange설정하기
+        2: 그래도, 처음에는 (회원가입)입력한 값으로 받기
+        3: 주소 검색 API 붙이기
+        4: UI 정리하기...ㅠㅠ
+      */
       userEmail: userEmail,
       userCode: userCode,
       delivery: {
@@ -34,23 +39,21 @@ class Address extends Component {
     }
     return(
       <div className="col-md-12">
-        <div className="row">
-          <div className="col-md-6">
-            <label>우편번호</label>
-            <Input type={'number'} placeholder={'우편번호'} className={'Added-Input'}/>
-          </div>
-          <Input type={'submit'} value={'주소검색'} className={'col-md-4 form-control'}/>
+        <label>우편번호</label>
+        <div className="row address col-md-12">
+          <Input type={'number'} placeholder={'우편번호'} className={'col-md-5 Added-Input'}/>
+          <Input type={'submit'} value={'주소검색'} className={'col-md-3 Added-Input'}/>
         </div>
         <label>배송지</label>
         <Input type={'text'} value={user.Address} placeholder={'배송지'} className={'Added-Input'}/>
-        <div className="row">
-          <div className="col-md-6">
+        <div className="row address col-md-12">
+          <div>
             <label>수령인</label>
-            <Input type={'text'} value={user.Name} placeholder={'받는이'} className={'Added-Input'}/>
+            <Input type={'text'} value={user.Name} placeholder={'받는이'} className={'col-md-5 Added-Input'}/>
           </div>
-          <div className="col-md-6">
+          <div>
             <label>연락처</label>
-            <Input type={'text'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'Added-Input'}/>
+            <Input type={'text'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'col-md-5 Added-Input'}/>
           </div>
         </div>
 

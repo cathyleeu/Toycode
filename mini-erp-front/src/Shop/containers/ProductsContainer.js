@@ -24,7 +24,7 @@ const ProductsContainer = ({books, selected, addToCartUnsafe}) => (
 
 function mapStateToProps(state){
   return {
-    books: state.books,
+    books: state.shop.products,
     selected: getAddedCart(state)
   }
 }

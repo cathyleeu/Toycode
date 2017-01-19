@@ -5,6 +5,7 @@ import requireAuth from './services/require_auth'
 import App from './App'
 import { Shop } from './Shop'
 import { Auth } from './Auth'
+import { UserAccount } from './UserAccount'
 import Feature from './Feature'
 
 
@@ -12,10 +13,9 @@ const Routers = ({auth}) => (
   <Router history={browserHistory}>
     <Route path='/' component={App}>
       {auth.authenticated?<IndexRoute component={Feature}/> :<IndexRoute component={Auth}/>}
-      <Route path='shop' component={requireAuth(Shop)}/>
-      {/* <Route path='signin' component={Signin}/>
-      <Route path='signup' component={Signup}/> */}
       <Route path='feature' component={requireAuth(Feature)}/>
+      <Route path='shop' component={requireAuth(Shop)}/>
+      <Route path='account' component={requireAuth(UserAccount)}/>
     </Route>
   </Router>
 )
