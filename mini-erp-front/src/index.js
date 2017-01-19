@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk'
 import Async from './middlewares/async'
 import reducers from './RootReducer';
+import { getInvoices } from './Shop/actions/cart'
 import { fetchBooks } from './Shop/actions/products'
 import { fetchUser } from './Auth/actions'
 import './index.css';
@@ -19,7 +20,7 @@ const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? win
 const token = localStorage.getItem('token')
 if (token) {
   store.dispatch(fetchUser())
-  // store.dispatch(getInvoices())
+  store.dispatch(getInvoices())
   store.dispatch({ type: types.AUTH_USER })
 }
 store.dispatch(fetchBooks())
@@ -30,8 +31,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
-// ReactDOM.render(
-//   <App />,
-//   document.getElementById('root')
-// );

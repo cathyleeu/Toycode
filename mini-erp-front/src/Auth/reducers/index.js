@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
     case types.STATUS_ON_LOGIN:
       return { ...state, user: action.user}
     case types.UNAUTH_USER:
-      return { ...state, authenticated: false, email: '', user: '' }
+      return { ...state, authenticated: false, email: '', user: '', status: false }
     case types.AUTH_ERROR:
       return { ...state, error: action.payload }
     default:

@@ -1,15 +1,12 @@
 import { combineReducers } from 'redux';
 import cart from './Shop/reducers/cart'
-import books from './Shop/reducers/books'
+import shop from './Shop/reducers'
 import auth from './Auth/reducers'
+import userAccount from './UserAccount/reducers'
 
 const rootReducer = combineReducers({
-  auth,
-  books,
-  cart
+  auth, shop, cart, userAccount
   // products,
-  // kindergarten,
-  // invoices
 });
 
 

@@ -66,17 +66,17 @@ export function fetchUser() {
   const user = localStorage.getItem('email')
   return function (dispatch) {
     axios.get(`${ROOT_URL}/user/${user}`).then((user) => {
-      // dispatch(fetchKinder(user))
+      dispatch(fetchKinder(user))
       dispatch(completedFetchUser(user))
     })
   }
 }
-// function fetchKinder(user) {
-//   return {
-//     type: types.INITIAL_KINDER,
-//     kinder: user.data[0].kinders
-//   }
-// }
+function fetchKinder(user) {
+  return {
+    type: types.INITIAL_KINDER,
+    kinder: user.data[0].kinders
+  }
+}
 
 export function completedFetchUser(user) {
   return {
@@ -88,7 +88,8 @@ export function completedFetchUser(user) {
 export function signoutUser(){
   localStorage.removeItem('token')
   localStorage.removeItem('email')
-  return {
-    type: types.UNAUTH_USER
+  return function (dispatch) {
+    dispatch({type: types.UNAUTH_USER})
+    browserHistory.push('/')
   }
 }
