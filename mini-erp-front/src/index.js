@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Routers from './Routers'
-
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk'
@@ -19,10 +18,10 @@ const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? win
 
 const token = localStorage.getItem('token')
 if (token) {
-  store.dispatch(fetchUser())
-  store.dispatch(getInvoices())
   store.dispatch({ type: types.AUTH_USER })
 }
+store.dispatch(fetchUser())
+store.dispatch(getInvoices())
 store.dispatch(fetchBooks())
 
 ReactDOM.render(

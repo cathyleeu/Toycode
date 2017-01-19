@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import AddedProducts from './AddedProducts'
 import Invoice from './Invoice'
 import './Cart.css'
@@ -15,11 +15,6 @@ const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice,user}) 
         />
 
       )
-  const each = selected.map(each => (
-    <div key={each.id} value={each.total}>
-      <p>{each.title} {each.amount} {each.amount*each.price}</p>
-    </div>
-  ));
   const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);
   const emptyCart = (
     <div className="Empty-Container">
@@ -39,7 +34,7 @@ const Cart = ({books, selected, goodsSelect, goodsDelete, requestInvoice,user}) 
   )
   return (
     <div className="Container">
-      { nodes.length == 0 ? emptyCart : selectedCart }
+      { nodes.length === 0 ? emptyCart : selectedCart }
     </div>
   )
 }

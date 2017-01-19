@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import { RegisterKinder, RegisteredKinderInfo } from '../components'
+import { RegisterKinder, RegisteredKinderInfo, UserInfo } from '../components'
+import './BranchContainer.css'
 
 class BranchContainer extends Component{
-  constructor(props){
-    super(props)
-  }
   handleAddChildClick = e => {
     e.preventDefault()
     const { addChild, createKinder, user } = this.props
@@ -20,49 +18,46 @@ class BranchContainer extends Component{
   render() {
     const { kinders, user, editKinder, completedAddKinder, kindergartens } = this.props
     return (
-      <div className="row">
+      <div>
         {/* TODO-3: user값을 컴포넌트가 렌더링 하기전에 들고와야함. - 임시방편 */}
-        {user && (
+        {user && <UserInfo user={user} />}
+        <div className="branchKinder-header">
+          <h5> 지사 소속 유치원 리스트</h5>
           <div>
-            <div>지사명:{user.branch.Name}</div>
-            <div>지사주소:{user.branch.Address}</div>
-            <div>사업자주소:{user.branch.License}</div>
+            {kinders.status ?(
+              <div className="branchKinder-header-btnList">
+                <button
+                  className="button-addKinder"
+                  onClick={this.handleAddChildClick}>
+                  유치원 추가</button>
+                <button
+                  className="button-save"
+                  onClick={() => completedAddKinder(kinders)}>저장</button>
+                <button
+                  className="button-cancle"
+                  onClick={() => editKinder(kinders.status)}>
+                  취소</button>
+              </div>
+            ):(
+              <button
+                className="button-edit"
+                onClick={() => editKinder(kinders.status)}>수정</button>
+            )}
           </div>
-        )}
-
-        <div className="row col-md-12">
-          <h5 className="col-md-9"> 지사 소속 유치원 리스트</h5>
-          {kinders.status ?(
-            <div className="row col-md-3">
-              <button
-                className="btn btn-outline-secondary col-md-4"
-                onClick={() => editKinder(kinders.status)}>
-                취소</button>
-              <button
-                className="btn btn-success col-md-4"
-                onClick={() => completedAddKinder(kinders)}>저장</button>
-              <button
-                className="btn btn-danger col-md-4"
-                onClick={this.handleAddChildClick}>
-                유치원 추가</button>
-            </div>
-          ):(
-            <button
-              className="btn btn-info col-md-1"
-              onClick={() => editKinder(kinders.status)}>수정</button>
-          )}
         </div>
-        <div className="col-md-12">
+
+        <div className="kinder-list-cont col-md-12">
           {kinders.status ? (
             <div>
               {kindergartens.map(this.renderChild)}
             </div>
           ): (
             <div>
-              {user && user.kinders.map((kinder, i) => <RegisteredKinderInfo key={i} kinder={kinder}/>)}
+              {user && user.kinders.map((kinder, i) => <RegisteredKinderInfo key={i} kinderNo={i+1}kinder={kinder}/>)}
             </div>
           )}
         </div>
+
       </div>
     )
   }

@@ -28,4 +28,3 @@ function mapStateToProps(state){
 }
 
 export default connect(mapStateToProps)(Routers)
-// export default Routers

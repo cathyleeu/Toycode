@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import BranchContainer from './BranchContainer'
 import RequestedIVesContainer from './RequestedIVesContainer'
 
 const AccountContainer = ({invoices,kinders,editKinder,completedAddKinder,createKinder,addChild,user}) => (
-  <div className="has-Header">
+  <div className="has-Header Container">
     <BranchContainer
       kinders={kinders}
       editKinder={editKinder}
@@ -15,7 +15,7 @@ const AccountContainer = ({invoices,kinders,editKinder,completedAddKinder,create
       user={user}
       kindergartens={kinders.kinders}
      />
-    {invoices && <RequestedIVesContainer invoices={invoices} />}
+    <RequestedIVesContainer invoices={invoices} />
   </div>
 )
 

@@ -32,7 +32,7 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
       }]
     case types.SELECTED_GOODS:
       return state.map((goods) => {
-        if(goods.id == action.id){
+        if(goods.id === action.id){
           return { ...goods, amount: action.orderQutt }
         } else { return goods }})
     case types.DELETE_GOODS:
