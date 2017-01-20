@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Input from './Input'
+import './Address.css'
 
 
 class Address extends Component {
@@ -38,33 +39,40 @@ class Address extends Component {
       totalSales: selected.map(each => each.amount*each.price).reduce((a,b)=>a+b)
     }
     return(
-      <div className="col-md-12">
-        <label>우편번호</label>
-        <div className="row address col-md-12">
-          <Input type={'number'} placeholder={'우편번호'} className={'col-md-5 Added-Input'}/>
-          <Input type={'submit'} value={'주소검색'} className={'col-md-3 Added-Input'}/>
+      <div className="col-md-12 delivery-body">
+        <div className="delivery-zipcode">
+          <label>우편번호</label>
+          <div className="zipcode">
+            <Input type={'number'} placeholder={'우편번호'} className={'col-md-5 Added-Input'}/>
+            <button className="col-md-2">주소검색</button>
+          </div>
         </div>
-        <label>배송지</label>
-        <Input type={'text'} value={user.Address} placeholder={'배송지'} className={'Added-Input'}/>
-        <div className="row address col-md-12">
-          <div>
-            <label>수령인</label>
-            <Input type={'text'} value={user.Name} placeholder={'받는이'} className={'col-md-5 Added-Input'}/>
-          </div>
-          <div>
-            <label>연락처</label>
-            <Input type={'text'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'col-md-5 Added-Input'}/>
-          </div>
+        <div className="delivery-address">
+          <label>배송지</label>
+          <Input type={'text'} value={user.Address} placeholder={'배송지'} className={'Added-Input'}/>
         </div>
 
-        <label>배송메모</label>
-        <textarea
-          rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.'
-          value={this.state.rqcontent} onChange={this.handleChange}
-          className="form-control"></textarea>
-        <button
-          className="btn btn-success col-md-3"
-          onClick={() => requestInvoice(invoice)}>주문하기</button>
+        <div className="delivery-recipient">
+          <div className="name">
+            <label>수령인</label>
+            <Input type={'text'} value={user.Name} placeholder={'받는이'} className={'Added-Input'}/>
+          </div>
+          <div className="phone">
+            <label>연락처</label>
+            <Input type={'text'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'Added-Input'}/>
+          </div>
+        </div>
+        <div className="delivery-inquiry">
+          <label>요청사항</label>
+          <textarea
+            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.'
+            value={this.state.rqcontent} onChange={this.handleChange} />
+        </div>
+        {invoice.totalSales ?(
+          <button
+            className="btn btn-success col-md-3"
+            onClick={() => requestInvoice(invoice)}>주문하기</button>
+        ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}
       </div>
     )
   }
