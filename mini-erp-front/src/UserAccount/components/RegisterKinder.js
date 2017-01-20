@@ -9,11 +9,11 @@ class RegisterKinder extends Component {
     super(props)
     const { kinder } = this.props
     this.state = {
-      Name: kinder.name,
-      Address: kinder.address,
-      Phone: kinder.phone,
-      Manager: kinder.manager,
-      ManegerPh: kinder.managerPh
+      Name: kinder.name || '',
+      Address: kinder.address || '',
+      Phone: kinder.phone || '',
+      Manager: kinder.manager || '',
+      ManegerPh: kinder.managerPh || ''
     }
   }
   handleAddChildClick = e => {

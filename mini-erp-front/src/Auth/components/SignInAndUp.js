@@ -48,55 +48,60 @@ class SignInAndUp extends Component {
     const { auth } = this.props
     const SignUpFieldSet = (
       <div className="col-md-6">
-        <fieldset className="form-group">
-         <label>비밀번호확인</label>
-         <input
-          value={this.state.passwordConfirm}
-          name="passwordConfirm"
-          type="password"
-          onChange={this.onChange}
-          placeholder="비밀번호 확인입력"
-          required/>
-        </fieldset>
-        <div className="row">
-          <fieldset className="form-group col-md-6">
-           <label>지사상호명</label>
+        <fieldset className="rg-address-info form-group">
+         <label htmlFor="address">주소</label>
+         <div className="rg-address-zip">
            <input
-            value={this.state.Name}
-            name="Name"
+            value={this.state.Address}
+            name="Zipcode"
             type="text"
             onChange={this.onChange}
-            placeholder="지사명을 입력하세요"
+            placeholder="우편주소"
             required/>
-          </fieldset>
-          <fieldset className="form-group col-md-6">
-           <label>사업자 등록번호</label>
-           <input
-            value={this.state.License}
-            name="License"
-            type="text"
-            onChange={this.onChange}
-            placeholder="사업자 등록번호를 입력하세요"
-            required/>
-          </fieldset>
-        </div>
-        <fieldset className="form-group">
-         <label>사업장 주소</label>
-         <input
-          value={this.state.Address}
-          name="Address"
-          type="text"
-          onChange={this.onChange}
-          placeholder="사업장 주소를 입력하세요"
-          required/>
+            <button>주소검색</button>
+          </div>
+          <input
+           value={this.state.Address}
+           name="Address"
+           id="address"
+           className="rg-address"
+           type="text"
+           onChange={this.onChange}
+           placeholder="사업장 주소를 입력하세요"
+           required/>
         </fieldset>
+
+          <fieldset className="rg-branch-info form-group">
+           <label htmlFor="branch-name">지사정보</label>
+           <div className="rg-branch-no">
+             <input
+              value={this.state.License}
+              name="License"
+              type="text"
+              onChange={this.onChange}
+              placeholder="사업자 번호등록"
+              required/>
+              <button>번호등록</button>
+            </div>
+            <input
+             value={this.state.Name}
+             className="rg-branch-name"
+             id="branch-name"
+             name="Name"
+             type="text"
+             onChange={this.onChange}
+             placeholder="지사명"
+             required/>
+          </fieldset>
+
+
       </div>
     )
     return (
       <div className={ auth.status ? "SignUp-Container" : "SignIn-Container"}>
         <img src={logo} className="Auth-logo" role="presentation"/>
         <form onSubmit={this.onSubmit} className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
-          <div className={ auth.status ? "col-md-6" : "col-md-12"}>
+          <div className={ auth.status ? "rg-user-info col-md-6" : "rg-user-info col-md-12"}>
             <fieldset className="form-group">
              <label htmlFor="email">이메일</label>
              <input
@@ -121,10 +126,23 @@ class SignInAndUp extends Component {
               required
               />
             </fieldset>
+            {auth.status && (
+              <fieldset className="form-group">
+               <label htmlFor="passwordConfirm">비밀번호확인</label>
+               <input
+                value={this.state.passwordConfirm}
+                id="passwordConfirm"
+                name="passwordConfirm"
+                type="password"
+                onChange={this.onChange}
+                placeholder="비밀번호 확인입력"
+                required/>
+              </fieldset>
+            )}
           </div>
           { auth.status && SignUpFieldSet }
           { this.renderAlert()}
-          <div className="Form-Bottom col-md-12">
+          <div className="rg-submit col-md-12">
             <button action="submit">{ auth.status ? "회원가입" : "로그인"}</button>
             <div className="message">{ auth.status ? "이미 회원이신가요?" : "회원이 아니신가요?"}
               <a onClick={this.isSignInAndUp}>{ auth.status ? "로그인하기" : "회원가입 하기"}</a>
