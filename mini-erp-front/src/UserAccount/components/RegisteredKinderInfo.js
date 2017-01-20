@@ -2,8 +2,8 @@ import React from 'react'
 import './RegisteredKinderInfo.css'
 
 const RegisteredKinderInfo = ({kinder, kinderNo}) => (
-  <div className="row kinder-info-body">
-     <div className="col-md-6">
+  <div className="kinder-info-body">
+     <div className="kinder-temp">
        <div className="kinder-top">
          <p className="kinder-no">{kinderNo}</p>
          <p className="kinder-Name">{kinder.name}</p>
@@ -27,7 +27,7 @@ const RegisteredKinderInfo = ({kinder, kinderNo}) => (
          </div>
        </div>
      </div>
-     <div className="col-md-6 kinder-class-body">
+     <div className="kinder-class-body">
      {kinder.kinderClasses.map((kinderClass,i) => (
         <div className="col-md-12 row" key={i}>
           {/* <p>{i+1}</p> */}

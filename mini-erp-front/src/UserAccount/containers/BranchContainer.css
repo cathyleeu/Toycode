@@ -33,10 +33,34 @@
   font-family: "Lato";
 }
 
+.button-edit:focus,
+.button-save:focus,
+.button-cancle:focus,
+.button-delete:focus,
+.button-addClass:focus,
+.button-addKinder:focus {
+  outline: none;
+}
+
+.button-delete {
+  border: 2px solid #c82222;
+  color: #c82222;
+}
+.button-delete:hover {
+  background: #c82222;
+  color: white;
+}
+
+.button-addClass,
 .button-addKinder{
   border: 2px solid #4884ce;
   color: #4884ce;
 }
+.button-addClass i {
+  margin-right: 0.2em;
+}
+
+.button-addClass:hover,
 .button-addKinder:hover{
   background: #4884ce;
   color: white;

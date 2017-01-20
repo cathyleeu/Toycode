@@ -1,0 +1,28 @@
+.kinder-body div input,
+.kinder-top input{
+  font-family: "Roboto", sans-serif;
+  height: 100%;
+  border: 0;
+  margin-right: 5px;
+  padding: 0.7rem;
+  font-size: 12px;
+  border: 1px solid #f2f2f2;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+.kinder-top input {
+  margin-top: -15px;
+  width: 58%;
+}
+
+.rg .kinder-top {
+  justify-content: space-between;
+}
+
+.kinder-btns{
+  display: flex;
+  flex-direction: row;
+  margin-top: -15px;
+  justify-content: space-between;
+  width: 30%;
+}
