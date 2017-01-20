@@ -1,25 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.SignUp-Container,
 .SignIn-Container{
   position: relative;
   z-index: 1;
   background: #FFFFFF;
-  max-width: 400px;
-  width: 40%;
   padding: 2%;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
-.SignUp-Container{
-	position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  max-width: 700px;
-  width: 60%;
-  padding: 2%;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
+.SignIn-Container{ max-width: 400px; width: 40%; }
+.SignUp-Container{ max-width: 700px; width: 60%; }
 
 .SignUp-Form label,
 .SignIn-Form label{
@@ -27,25 +18,50 @@
   align-self: flex-start;
   font-size: 13px;
 }
-.SignUp-Form input,
-.SignIn-Form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
+
+.rg-branch-no,
+.rg-address-zip {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.rg-branch-no input,
+.rg-user-info input,
+.rg-address-zip input,
+.rg-address-info input,
+.rg-branch-info input {
   border: 0;
   margin: 0 0 1%;
   padding: 10px;
   box-sizing: border-box;
   font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  height: 40px;
+  background: #f2f2f2;
 }
 
-.Form-Bottom button {
+.rg-user-info input,
+.rg-address-info input,
+.rg-branch-info input {
+  width: 100%;
+}
+
+.rg-branch-no input,
+.rg-address-zip input {
+  width: 70%;
+}
+
+
+.rg-branch-no button,
+.rg-user-info button,
+.rg-address-zip button,
+.rg-submit button {
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
-  width: 60%;
   border: 0;
   padding: 10px;
   color: #FFFFFF;
@@ -54,20 +70,31 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
-
-
-.Form-Bottom .message {
-  margin-top: 6%;
-  color: #b3b3b3;
-  font-size: 12px;
+.rg-user-info button,
+.rg-submit button {
+  background: #4CAF50;
+  width: 60%;
 }
 
-.Form-Bottom .message a{
+.rg-submit .message {
+  margin-top: 4%;
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
+.rg-submit .message a{
   color: #4CAF50;
 	margin-left: 3%;
   text-decoration: none;
+  cursor: pointer;
+}
+.rg-submit .message a:hover{
+  font-weight: 700;
+  color: #4CAF50;
 }
 
-
-
-/*.Signup-enter*/
+.rg-branch-no button,
+.rg-address-zip button {
+  background: #5d5656;
+  width: 28%;
+}

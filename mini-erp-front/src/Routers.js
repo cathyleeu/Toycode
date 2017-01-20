@@ -12,7 +12,7 @@ import Feature from './Feature'
 const Routers = ({auth}) => (
   <Router history={browserHistory}>
     <Route path='/' component={App}>
-      {auth.authenticated?<IndexRoute component={Feature}/> :<IndexRoute component={Auth}/>}
+      { auth.authenticated ? <IndexRoute component={Feature}/> : <IndexRoute component={Auth}/> }
       <Route path='feature' component={requireAuth(Feature)}/>
       <Route path='shop' component={requireAuth(Shop)}/>
       <Route path='account' component={requireAuth(UserAccount)}/>
