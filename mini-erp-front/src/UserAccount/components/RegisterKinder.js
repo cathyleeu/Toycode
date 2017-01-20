@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import RegisterKinderClasses from './RegisterKinderClasses'
+import './RegisterKinder.css'
 
 class RegisterKinder extends Component {
   constructor(props) {
@@ -45,79 +46,82 @@ class RegisterKinder extends Component {
     updateKinder(this.state,branchCode,id)
   }
   render(){
-    const { id, kinders, code } = this.props
+    const { id, kinders, code, kinderNo } = this.props
     const index = kinders.map(item => item._id).indexOf(id);
     // TODO-2: 반복되는 input을 줄이는 방법
     return(
-      <div className="row col-md-12">
-        <div className="col-md-5">
-          <div>
-            <label htmlFor={`${code}_name`}>원 명</label>
-            <input
-              type="text"
-              id={`${code}_name`}
-              value={this.state.Name}
-              name="Name"
-              onBlur={this.isOnBlur}
-              onChange={this.isHandleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor={`${code}_adres`}>원 주소</label>
-            <input
-              type="text"
-              id={`${code}_adres`}
-              value={this.state.Address}
-              name="Address"
-              onBlur={this.isOnBlur}
-              onChange={this.isHandleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor={`${code}_ph`}>원 전화번호</label>
-            <input
-              type="tel"
-              id={`${code}_ph`}
-              value={this.state.Phone}
-              name="Phone"
-              onBlur={this.isOnBlur}
-              onChange={this.isHandleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor={`${code}_mng`}>원 담당자</label>
-            <input
-              type="text"
-              id={`${code}_mng`}
-              value={this.state.Manager}
-              name="Manager"
-              onBlur={this.isOnBlur}
-              onChange={this.isHandleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor={`${code}_mngPh`}>원 담당자 전화번호</label>
-            <input
-              type="tel"
-              id={`${code}_mngPh`}
-              value={this.state.ManegerPh}
-              name="ManegerPh"
-              onBlur={this.isOnBlur}
-              onChange={this.isHandleChange}
-            />
-          </div>
-          <div className="row">
-            <button
-              className="btn btn-danger col-md-3"
-              onClick={this.handleRemoveClick}> 삭제 </button>
-            <button
-              className="btn btn-success col-md-3"
-              onClick={this.handleAddChildClick}>반 추가 </button>
-          </div>
-        </div>
-        <div className="row col-md-7">
-          {kinders[index].kinderClasses.map(this.renderChild)}
-        </div>
+      <div className="kinder-info-body">
+       <div className="kinder-temp rg">
+         <div className="kinder-top">
+           <p className="kinder-no">{kinderNo}</p>
+           <input
+             type="text"
+             id={`${code}_name`}
+             value={this.state.Name}
+             name="Name"
+             onBlur={this.isOnBlur}
+             onChange={this.isHandleChange}
+           />
+           <div className="kinder-btns">
+              <button
+                className="button-delete"
+                onClick={this.handleRemoveClick}><i className="fa fa-trash"></i>원 삭제</button>
+              <button
+                className="button-addClass"
+                onClick={this.handleAddChildClick}><i className="fa fa-plus"></i>반 추가</button>
+           </div>
+         </div>
+         <div className="kinder-body">
+           <div>
+             <i className="fa fa-building" aria-hidden="true"><p>주소:</p></i>
+             <input
+               type="text"
+               id={`${code}_adres`}
+               value={this.state.Address}
+               name="Address"
+               onBlur={this.isOnBlur}
+               onChange={this.isHandleChange}
+             />
+           </div>
+           <div>
+             <i className="fa fa-phone" aria-hidden="true"><p>원 전화:</p></i>
+             <input
+               type="tel"
+               id={`${code}_ph`}
+               value={this.state.Phone}
+               name="Phone"
+               onBlur={this.isOnBlur}
+               onChange={this.isHandleChange}
+             />
+           </div>
+           <div>
+             <i className="fa fa-user-circle-o" aria-hidden="true"><p>담당자 성함:</p></i>
+             <input
+               type="text"
+               id={`${code}_mng`}
+               value={this.state.Manager}
+               name="Manager"
+               onBlur={this.isOnBlur}
+               onChange={this.isHandleChange}
+             />
+           </div>
+           <div>
+             <i className="fa fa-mobile" aria-hidden="true"><p>담당자 전화번호:</p></i>
+             <input
+               type="tel"
+               id={`${code}_mngPh`}
+               value={this.state.ManegerPh}
+               name="ManegerPh"
+               onBlur={this.isOnBlur}
+               onChange={this.isHandleChange}
+             />
+           </div>
+         </div>
+       </div>
+
+       <div className="kinder-class-body">
+         {kinders[index].kinderClasses.map(this.renderChild)}
+       </div>
       </div>
     )
   }

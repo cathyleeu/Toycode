@@ -12,7 +12,7 @@ class BranchContainer extends Component{
   renderChild = (kinder, i) => {
     const { user } = this.props
     return (
-        <RegisterKinder id={kinder._id} key={i} code={kinder.code} kinder={kinder} branchCode={user.Code} />
+        <RegisterKinder id={kinder._id} key={i} code={kinder.code} kinder={kinder} branchCode={user.Code} kinderNo={i+1} />
     )
   }
   render() {

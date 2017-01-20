@@ -47,9 +47,10 @@ class RegisterKinderClasses extends Component {
             onChange={this.isHandleChange}
           />
           <button
-            className="btn btn-outline-secondary"
+            className="button-delete"
             onClick={this.handleRemoveClick}>
-            삭제
+            <i className="fa fa-trash"></i>
+            반 삭제
           </button>
       </div>
     )

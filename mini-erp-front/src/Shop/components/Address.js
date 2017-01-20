@@ -39,7 +39,7 @@ class Address extends Component {
       totalSales: selected.map(each => each.amount*each.price).reduce((a,b)=>a+b)
     }
     return(
-      <div className="col-md-12 delivery-body">
+      <div className="col-md-12 delivery">
         <div className="delivery-zipcode">
           <label>우편번호</label>
           <div className="zipcode">
@@ -51,7 +51,6 @@ class Address extends Component {
           <label>배송지</label>
           <Input type={'text'} value={user.Address} placeholder={'배송지'} className={'Added-Input'}/>
         </div>
-
         <div className="delivery-recipient">
           <div className="name">
             <label>수령인</label>
@@ -70,7 +69,7 @@ class Address extends Component {
         </div>
         {invoice.totalSales ?(
           <button
-            className="btn btn-success col-md-3"
+            className="col-md-3"
             onClick={() => requestInvoice(invoice)}>주문하기</button>
         ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}
       </div>
