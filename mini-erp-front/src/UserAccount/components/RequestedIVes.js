@@ -24,7 +24,7 @@ const RequestedIVes = ({invoice}) => {
         <strong>{invoice.totalSales}</strong>
       </div>
     </div>
-    <div className="requestedIVes-inquire-body col-md-12">
+    <div className="requestedIVes-inquiry-body col-md-12">
       <strong>고객문의사항</strong>
       <p>{invoice.requestDesc}</p>
     </div>
