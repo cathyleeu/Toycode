@@ -8,6 +8,7 @@ const Input = (props) => (
     placeholder={props.placeholder}
     onChange={props.onChange}
     onBlur={props.onBlur}
+    name={props.name}
   />
 )
 

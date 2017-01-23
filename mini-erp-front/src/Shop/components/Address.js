@@ -20,6 +20,9 @@ class Address extends Component {
     this.state = {
       rqcontent: '',
 			location: '',
+			zipNo: '',
+			address: this.props.user.Address,
+			detailAddr: '',
       isModalOpen: false
     }
   }
@@ -30,11 +33,21 @@ class Address extends Component {
     this.setState({ isModalOpen: true })
   }
   closeModal = () => {
-		this.setState({ isModalOpen: false })
+		const { searchAddress } = this.props
+		this.setState({ isModalOpen: false, location: ''}, searchAddress(''))
 	}
 	isSearchAddress = () => {
 		const { searchAddress } = this.props
 		searchAddress(this.state.location)
+	}
+	isSelectedAddress = (result) => {
+		const {selectedJuso} = this.props
+		selectedJuso(result)
+		this.closeModal()
+		this.setState({
+			zipNo: result.zipNo,
+			address: result.roadAddr
+		})
 	}
   render(){
     const {user, userEmail, userCode, requestInvoice, selected, juso} = this.props
@@ -50,7 +63,7 @@ class Address extends Component {
       userCode: userCode,
       delivery: {
         to: user.Name,
-        address: user.Address,
+        address: this.state.address,
         phone: "010-999"
       },
       requestedGoods: selected.map(each => (
@@ -66,7 +79,7 @@ class Address extends Component {
         <div className="delivery-zipcode">
           <label>우편번호</label>
           <div className="zipcode">
-            <Input type={'number'} placeholder={'우편번호'} className={'col-md-5 Added-Input'}/>
+            <Input type={'text'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={this.state.zipNo}/>
             <button onClick={this.openModal} className="col-md-2">주소검색</button>
             <AddressSearch
               isModalOpen={this.state.isModalOpen}
@@ -81,7 +94,7 @@ class Address extends Component {
 							</div>
 							<div>
 								{juso && juso.map((result, i)=> (
-									<div key={i}>
+									<div key={i} onClick={() => this.isSelectedAddress(result)}>
 										<p>{result.roadAddr}</p>
 									</div>
 								))}
@@ -92,7 +105,8 @@ class Address extends Component {
         </div>
         <div className="delivery-address">
           <label>배송지</label>
-          <Input type={'text'} value={user.Address} placeholder={'배송지'} className={'Added-Input'}/>
+          <Input type={'text'} value={this.state.address} placeholder={'배송지'} className={'Added-Input'}/>
+					<Input type={'text'} value={this.state.detailAddr} placeholder={'상세주소를 입력해주세요.'} className={'Added-Input'} onChange={this.handleChange} name={'detailAddr'}/>
         </div>
         <div className="delivery-recipient">
           <div className="name">
@@ -122,7 +136,8 @@ class Address extends Component {
 
 function mapStateToProps(state){
   return {
-    juso: state.commonData.juso
+    juso: state.commonData.juso,
+		selectedJuso: state.commonData.selectedJuso
   }
 }
 
