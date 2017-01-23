@@ -31,35 +31,40 @@ class RegisterKinderClasses extends Component {
     const register = !status ? 'none' : ''
     return(
       <div className="row col-md-12">
-        <label htmlFor={`${id}_name`}>반 이름</label>
-          <p style={{display: registered}}>{classname}</p>
-          <input
-            style={{display: register}}
-            type="text"
-            name='classname'
-            id={`${id}_name`}
-            onBlur={this.isOnBlur}
-            value={this.state.classname}
-            onChange={this.isHandleChange}
-          />
-          <label htmlFor={`${id}_students`}>학생 수</label>
-          <p style={{display: registered}}>{students}</p>
-          <input
-            style={{display: register}}
-            type="number"
-            name='students'
-            id={`${id}_students`}
-            onBlur={this.isOnBlur}
-            value={this.state.students}
-            onChange={this.isHandleChange}
-          />
-          <button
-            style={{display: register}}
-            className="button-delete"
-            onClick={this.handleRemoveClick}>
-            <i className="fa fa-trash"></i>
-            반 삭제
-          </button>
+        <label htmlFor={`${id}_name`}>
+          <i className="fa fa-graduation-cap"></i>
+          반 이름</label>
+        <p style={{display: registered}}>{classname}</p>
+        <input
+          style={{display: register}}
+          type="text"
+          name='classname'
+          id={`${id}_name`}
+          onBlur={this.isOnBlur}
+          value={this.state.classname}
+          onChange={this.isHandleChange}
+        />
+        <label htmlFor={`${id}_students`}>
+          <i className="fa fa-users" aria-hidden="true"></i>
+          학생
+        </label>
+        <p style={{display: registered}}>{students}</p>
+        <input
+          style={{display: register}}
+          type="number"
+          name='students'
+          id={`${id}_students`}
+          onBlur={this.isOnBlur}
+          value={this.state.students}
+          onChange={this.isHandleChange}
+        />
+        <button
+          style={{display: register}}
+          className="button-delete"
+          onClick={this.handleRemoveClick}>
+          <i className="fa fa-trash"></i>
+          반 삭제
+        </button>
       </div>
     )
   }

@@ -66,7 +66,6 @@ const ROOT_URL = 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}`, KinData)
-  // dispatch(fetchUser())
   dispatch({type: types.COMPLETE_ADD_KINDER, status: false})
   alert('수정이 완료되었습니다.')
 }

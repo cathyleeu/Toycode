@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import Input from './Input'
 import './Address.css'
 import AddressSearch from './AddressSearch'
-
-
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 
 // overwrite style
@@ -19,11 +19,12 @@ class Address extends Component {
     super(props)
     this.state = {
       rqcontent: '',
+			location: '',
       isModalOpen: false
     }
   }
   handleChange = e => {
-    this.setState({rqcontent:e.target.value})
+    this.setState({[e.target.name]:e.target.value})
   }
   openModal = () => {
     this.setState({ isModalOpen: true })
@@ -31,8 +32,12 @@ class Address extends Component {
   closeModal = () => {
 		this.setState({ isModalOpen: false })
 	}
+	isSearchAddress = () => {
+		const { searchAddress } = this.props
+		searchAddress(this.state.location)
+	}
   render(){
-    const {user, userEmail, userCode, requestInvoice, selected} = this.props
+    const {user, userEmail, userCode, requestInvoice, selected, juso} = this.props
     // debugger
     const invoice = {
       /*TODO
@@ -67,7 +72,21 @@ class Address extends Component {
               isModalOpen={this.state.isModalOpen}
               closeModal={this.closeModal}
               style={modalStyle}>
-              <button onClick={this.closeModal}>close</button>
+							<div>
+								<i className="fa fa-times-circle" aria-hidden="true" onClick={this.closeModal}>close</i>
+							</div>
+							<div>
+								<input type="search" value={this.state.location} onChange={this.handleChange} name="location"/>
+								<i className="fa fa-search" aria-hidden="true" onClick={this.isSearchAddress}></i>
+							</div>
+							<div>
+								{juso && juso.map((result, i)=> (
+									<div key={i}>
+										<p>{result.roadAddr}</p>
+									</div>
+								))}
+							</div>
+
             </AddressSearch>
           </div>
         </div>
@@ -88,7 +107,7 @@ class Address extends Component {
         <div className="delivery-inquiry">
           <label>요청사항</label>
           <textarea
-            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.'
+            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' name="rqcontent"
             value={this.state.rqcontent} onChange={this.handleChange} />
         </div>
         {invoice.totalSales ?(
@@ -100,4 +119,13 @@ class Address extends Component {
     )
   }
 }
-export default Address
+
+function mapStateToProps(state){
+  return {
+    juso: state.commonData.juso
+  }
+}
+
+
+export default connect(mapStateToProps,actions)(Address)
+// export default Address
