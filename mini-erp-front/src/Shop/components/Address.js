@@ -1,18 +1,36 @@
 import React, {Component} from 'react'
 import Input from './Input'
 import './Address.css'
+import AddressSearch from './AddressSearch'
+
+
+
+
+// overwrite style
+const modalStyle = {
+	overlay: {
+		backgroundColor: 'rgba(0, 0, 0,0.5)'
+	}
+};
 
 
 class Address extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      rqcontent: ''
+      rqcontent: '',
+      isModalOpen: false
     }
   }
   handleChange = e => {
     this.setState({rqcontent:e.target.value})
   }
+  openModal = () => {
+    this.setState({ isModalOpen: true })
+  }
+  closeModal = () => {
+		this.setState({ isModalOpen: false })
+	}
   render(){
     const {user, userEmail, userCode, requestInvoice, selected} = this.props
     // debugger
@@ -44,7 +62,13 @@ class Address extends Component {
           <label>우편번호</label>
           <div className="zipcode">
             <Input type={'number'} placeholder={'우편번호'} className={'col-md-5 Added-Input'}/>
-            <button className="col-md-2">주소검색</button>
+            <button onClick={this.openModal} className="col-md-2">주소검색</button>
+            <AddressSearch
+              isModalOpen={this.state.isModalOpen}
+              closeModal={this.closeModal}
+              style={modalStyle}>
+              <button onClick={this.closeModal}>close</button>
+            </AddressSearch>
           </div>
         </div>
         <div className="delivery-address">

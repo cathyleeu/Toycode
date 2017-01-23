@@ -10,9 +10,9 @@ class BranchContainer extends Component{
     addChild(branchCode)
   }
   renderChild = (kinder, i) => {
-    const { user } = this.props
+    const { user, kinders } = this.props
     return (
-        <RegisterKinder id={kinder._id} key={i} code={kinder.code} kinder={kinder} branchCode={user.Code} kinderNo={i+1} />
+      <RegisterKinder id={kinder._id} key={i} code={kinder.code} branchCode={kinder.parentId} kinder={kinder}  kinderNo={i+1} status={kinders.status ? true : false } />
     )
   }
   render() {
@@ -24,7 +24,7 @@ class BranchContainer extends Component{
         <div className="branchKinder-header">
           <h5> 지사 소속 유치원 리스트</h5>
           <div>
-            {kinders.status ?(
+            {kinders.status ? (
               <div className="branchKinder-header-btnList">
                 <button
                   className="button-addKinder"
@@ -47,20 +47,24 @@ class BranchContainer extends Component{
         </div>
 
         <div className="kinder-list-cont col-md-12">
-          {kinders.status ? (
             <div>
               {kindergartens.map(this.renderChild)}
             </div>
-          ): (
-            <div>
-              {user && user.kinders.map((kinder, i) => <RegisteredKinderInfo key={i} kinderNo={i+1}kinder={kinder}/>)}
-            </div>
-          )}
         </div>
 
       </div>
     )
   }
 }
+
+// {kinders.status ? (
+//   <div>
+//     {kindergartens.map(this.renderChild)}
+//   </div>
+// ): (
+//   <div>
+//     {user && user.kinders.map((kinder, i) => <RegisteredKinderInfo key={i} kinderNo={i+1}kinder={kinder}/>)}
+//   </div>
+// )}
 
 export default BranchContainer

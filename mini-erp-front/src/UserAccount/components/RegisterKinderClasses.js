@@ -25,11 +25,16 @@ class RegisterKinderClasses extends Component {
     updateKinderClass(classname,students,index,parentId,id)
   }
   render(){
-    const { id } = this.props
+    const { id, status } = this.props
+    const { classname, students } = this.state
+    const registered = status ? 'none' : ''
+    const register = !status ? 'none' : ''
     return(
       <div className="row col-md-12">
         <label htmlFor={`${id}_name`}>반 이름</label>
+          <p style={{display: registered}}>{classname}</p>
           <input
+            style={{display: register}}
             type="text"
             name='classname'
             id={`${id}_name`}
@@ -38,7 +43,9 @@ class RegisterKinderClasses extends Component {
             onChange={this.isHandleChange}
           />
           <label htmlFor={`${id}_students`}>학생 수</label>
+          <p style={{display: registered}}>{students}</p>
           <input
+            style={{display: register}}
             type="number"
             name='students'
             id={`${id}_students`}
@@ -47,6 +54,7 @@ class RegisterKinderClasses extends Component {
             onChange={this.isHandleChange}
           />
           <button
+            style={{display: register}}
             className="button-delete"
             onClick={this.handleRemoveClick}>
             <i className="fa fa-trash"></i>

@@ -1,3 +1,69 @@
+.kinder-info-body{
+  margin: 1em 1em 2em;
+  border-bottom: 1px dashed #d7d7d7;
+  display: flex;
+  flex-direction: row
+}
+.kinder-top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #1ECD97;
+  margin: 0 1em 1em 0;
+  width: 95%;
+}
+.kinder-no{
+  padding: 0.2em;
+  margin-right:1em;
+  width: 2em;
+  height: 2em;
+  font-size: 20px;
+  background-color: none;
+  border-radius: 5em;
+  border: 3px solid #1ECD97;
+  color: #1ECD97;
+  text-align: center;
+  font-weight: 500;
+}
+.kinder-temp{
+  width: 49%
+}
+.kinder-body{
+  margin: 1em;
+}
+.kinder-body div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.2em 0;
+  margin: 0.6em 0;
+  height: 40px;
+}
+.kinder-body div i{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.kinder-body div i,
+.kinder-body div p {
+  font-size: 14px;
+  margin-right: 5px;
+}
+.kinder-no
+.kinder-body div i p,
+.kinder-body div p {
+  margin: 0;
+}
+
+.kinder-class-body{
+  width: 49%;
+}
+
+
+
+
+
+
 .kinder-body div input,
 .kinder-top input{
   font-family: "Roboto", sans-serif;
@@ -13,10 +79,6 @@
 .kinder-top input {
   margin-top: -15px;
   width: 58%;
-}
-
-.rg .kinder-top {
-  justify-content: space-between;
 }
 
 .kinder-btns{
