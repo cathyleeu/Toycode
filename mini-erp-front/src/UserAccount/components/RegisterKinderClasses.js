@@ -26,17 +26,15 @@ class RegisterKinderClasses extends Component {
   }
   render(){
     const { id, status } = this.props
-    const { classname, students } = this.state
-    const registered = status ? 'none' : ''
-    const register = !status ? 'none' : ''
+    const disabled = !status ? 'none' : ''
     return(
       <div className="row col-md-12">
         <label htmlFor={`${id}_name`}>
           <i className="fa fa-graduation-cap"></i>
           반 이름</label>
-        <p style={{display: registered}}>{classname}</p>
         <input
-          style={{display: register}}
+          style={{border: disabled}}
+          disabled={!status}
           type="text"
           name='classname'
           id={`${id}_name`}
@@ -48,9 +46,9 @@ class RegisterKinderClasses extends Component {
           <i className="fa fa-users" aria-hidden="true"></i>
           학생
         </label>
-        <p style={{display: registered}}>{students}</p>
         <input
-          style={{display: register}}
+          style={{border: disabled}}
+          disabled={!status}
           type="number"
           name='students'
           id={`${id}_students`}
@@ -59,7 +57,7 @@ class RegisterKinderClasses extends Component {
           onChange={this.isHandleChange}
         />
         <button
-          style={{display: register}}
+          style={{display: disabled}}
           className="button-delete"
           onClick={this.handleRemoveClick}>
           <i className="fa fa-trash"></i>

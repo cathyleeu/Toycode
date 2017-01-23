@@ -47,27 +47,25 @@ class RegisterKinder extends Component {
   }
   render(){
     const { id, kinders, code, kinderNo, status } = this.props
-    const {Name, Address, Phone, Manager, ManagerPh } = this.state
     const index = kinders.map(item => item._id).indexOf(id);
     // TODO-2: 반복되는 input을 줄이는 방법
-    const registered = status ? 'none' : ''
-    const register = !status ? 'none' : ''
+    const disabled = !status ? 'none' : ''
     return(
       <div className="kinder-info-body">
        <div className="kinder-temp">
          <div className="kinder-top">
            <p className="kinder-no">{kinderNo}</p>
-           <p style={{display: registered}}>{Name}</p>
-           <input
+             <input
              type="text"
              id={`${code}_name`}
              value={this.state.Name}
              name="Name"
+             style={{border: disabled}}
+             disabled={!status}
              onBlur={this.isOnBlur}
              onChange={this.isHandleChange}
-             style={{display: register}}
            />
-           <div className="kinder-btns" style={{display: register}}>
+           <div className="kinder-btns" style={{display:disabled}}>
               <button
                 className="button-delete"
                 onClick={this.handleRemoveClick}><i className="fa fa-trash"></i>원 삭제</button>
@@ -79,52 +77,52 @@ class RegisterKinder extends Component {
          <div className="kinder-body">
            <div>
              <i className="fa fa-building" aria-hidden="true"><p>주소:</p></i>
-             <p style={{display: registered}}>{Address}</p>
              <input
-               style={{display: register}}
                type="text"
                id={`${code}_adres`}
                value={this.state.Address}
                name="Address"
                onBlur={this.isOnBlur}
+               style={{border: disabled}}
+               disabled={!status}
                onChange={this.isHandleChange}
              />
            </div>
            <div>
              <i className="fa fa-phone" aria-hidden="true"><p>원 전화:</p></i>
-             <p style={{display: registered}}>{Phone}</p>
              <input
-               style={{display: register}}
                type="tel"
                id={`${code}_ph`}
                value={this.state.Phone}
                name="Phone"
+               style={{border: disabled}}
+               disabled={!status}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
              />
            </div>
            <div>
              <i className="fa fa-user-circle-o" aria-hidden="true"><p>담당자 성함:</p></i>
-             <p style={{display: registered}}>{Manager}</p>
              <input
-               style={{display: register}}
                type="text"
                id={`${code}_mng`}
                value={this.state.Manager}
                name="Manager"
+               style={{border: disabled}}
+               disabled={!status}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
              />
            </div>
            <div>
              <i className="fa fa-mobile" aria-hidden="true"><p>담당자 전화번호:</p></i>
-             <p style={{display: registered}}>{ManagerPh}</p>
              <input
-               style={{display: register}}
                type="tel"
                id={`${code}_mngPh`}
                value={this.state.ManagerPh}
                name="ManagerPh"
+               style={{border: disabled}}
+               disabled={!status}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
              />

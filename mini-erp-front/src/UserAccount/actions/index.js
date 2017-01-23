@@ -18,7 +18,7 @@ export const updateKinder = (kinder, branchCode, id) => ({
   address: kinder.Address,
   phone : kinder.Phone,
   manager: kinder.Manager,
-  managerPh: kinder.ManegerPh,
+  managerPh: kinder.ManagerPh,
   branchCode,
   id
 })
