@@ -15,3 +15,8 @@ export const DELETE_KINDER_CLASS = 'DELETE_KINDER_CLASS'
 //유치원 DB로 전달할 때
 export const COMPLETE_ADD_KINDER = 'COMPLETE_ADD_KINDER'
 export const EDITING_KINDER = 'EDITING_KINDER'
+
+//User 정보 수정
+export const EDITING_USER = 'EDITING_USER'
+export const UPDATE_USER = 'UPDATE_USER'
+export const EDITED_USER = 'EDITED_USER'

@@ -91,13 +91,43 @@ exports.userKinder = (req, res) => {
   User.find((err, users) => res.json(users)).where({email: user}).select('kinders')
 }
 //TODO: update specific field
+
+exports.userInfoUpdate = (req, res) => {
+  const user = req.params.user
+  const A_manager = req.body.account.manager
+  const A_email = req.body.account.email
+  const A_phone = req.body.account.phone
+  const E_manager = req.body.edu.manager
+  const E_email = req.body.edu.email
+  const E_phone = req.body.edu.phone
+
+  User.findOneAndUpdate({email: user}, {$set: {
+    account: {
+      Manager: A_manager,
+      Email: A_email,
+      Phone: A_phone
+    },
+    education:{
+      Manager: E_manager,
+      Email: E_email,
+      Phone: E_phone
+    }
+  }}, function(err, data){
+    if(err) {
+      console.log("err:",err)
+      res.status(500).send()
+    }
+    res.json()
+  })
+
+}
 exports.userKinderUpdate = (req, res) => {
 
   const user = req.params.user
   const kinders = req.body.kinders.map((kinder, i) => {
     const kinderId = 'K'+(i+1)
     const kinderCode = kinder.parentId+'-'+kinderId
-    //TODO: castError 
+    //TODO: castError
     return({
       code: kinderCode,
       parentId: kinder.parentId,

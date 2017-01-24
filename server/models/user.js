@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt-nodejs');
 const kinderSchema = new Schema({
   parentId:String,
   code: String,
+  // address:{},
   zipNo:String,
   roadAddr:String,
   detailAddr:String,
