@@ -9,6 +9,7 @@ const Input = (props) => (
     onChange={props.onChange}
     onBlur={props.onBlur}
     name={props.name}
+    id={props.id}
   />
 )
 

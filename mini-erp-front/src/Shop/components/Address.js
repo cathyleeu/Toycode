@@ -6,14 +6,6 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
 
-// overwrite style
-const modalStyle = {
-	overlay: {
-		backgroundColor: 'rgba(0, 0, 0,0.5)'
-	}
-};
-
-
 class Address extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +13,7 @@ class Address extends Component {
       rqcontent: '',
 			location: '',
 			zipNo: '',
-			address: this.props.user.Address,
+			roadAddr: this.props.user.Address,
 			detailAddr: '',
       isModalOpen: false
     }
@@ -46,24 +38,27 @@ class Address extends Component {
 		this.closeModal()
 		this.setState({
 			zipNo: result.zipNo,
-			address: result.roadAddr
+			roadAddr: result.roadAddr
 		})
 	}
+	/*TODO
+		1: 사용자가 주소입력 할 수 있도록 onChange설정하기
+		2: 그래도, 처음에는 (회원가입)입력한 값으로 받기
+		3: 주소 검색 API 붙이기
+		4: UI 정리하기...ㅠㅠ
+	*/
   render(){
     const {user, userEmail, userCode, requestInvoice, selected, juso} = this.props
-    // debugger
     const invoice = {
-      /*TODO
-        1: 사용자가 주소입력 할 수 있도록 onChange설정하기
-        2: 그래도, 처음에는 (회원가입)입력한 값으로 받기
-        3: 주소 검색 API 붙이기
-        4: UI 정리하기...ㅠㅠ
-      */
       userEmail: userEmail,
       userCode: userCode,
       delivery: {
         to: user.Name,
-        address: this.state.address,
+        address: {
+					zipNo: this.state.zipNo,
+					roadAddr: this.state.roadAddr,
+					detailAddr: this.state.detailAddr
+				},
         phone: "010-999"
       },
       requestedGoods: selected.map(each => (
@@ -77,51 +72,48 @@ class Address extends Component {
     return(
       <div className="col-md-12 delivery">
         <div className="delivery-zipcode">
-          <label>우편번호</label>
+          <label htmlFor="zipcode">우편번호</label>
           <div className="zipcode">
-            <Input type={'text'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={this.state.zipNo}/>
+            <Input type={'text'} id={'zipcode'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={this.state.zipNo}/>
             <button onClick={this.openModal} className="col-md-2">주소검색</button>
             <AddressSearch
               isModalOpen={this.state.isModalOpen}
-              closeModal={this.closeModal}
-              style={modalStyle}>
-							<div>
-								<i className="fa fa-times-circle" aria-hidden="true" onClick={this.closeModal}>close</i>
+              closeModal={this.closeModal}>
+							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+							<div className="search-address-top">
+								<input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
+								<i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>
 							</div>
-							<div>
-								<input type="search" value={this.state.location} onChange={this.handleChange} name="location"/>
-								<i className="fa fa-search" aria-hidden="true" onClick={this.isSearchAddress}></i>
+							<div className="search-address-results">
+								{/* <div className="search-address-results-header"><p>주소</p></div> */}
+									{juso && juso.map((result, i)=> (
+										<div className="search-address-result" key={i} onClick={() => this.isSelectedAddress(result)}>
+											<p>{result.roadAddr}</p>
+										</div>
+									))}
 							</div>
-							<div>
-								{juso && juso.map((result, i)=> (
-									<div key={i} onClick={() => this.isSelectedAddress(result)}>
-										<p>{result.roadAddr}</p>
-									</div>
-								))}
-							</div>
-
             </AddressSearch>
           </div>
         </div>
         <div className="delivery-address">
-          <label>배송지</label>
-          <Input type={'text'} value={this.state.address} placeholder={'배송지'} className={'Added-Input'}/>
-					<Input type={'text'} value={this.state.detailAddr} placeholder={'상세주소를 입력해주세요.'} className={'Added-Input'} onChange={this.handleChange} name={'detailAddr'}/>
+          <label htmlFor="delivery">배송지</label>
+          <Input type={'text'} value={this.state.roadAddr} placeholder={'배송지'} className={'Added-Input'} />
+					<Input type={'text'} value={this.state.detailAddr} placeholder={'상세주소를 입력해주세요.'} className={'Added-Input'} id={'delivery'} onChange={this.handleChange} name={'detailAddr'}/>
         </div>
         <div className="delivery-recipient">
           <div className="name">
-            <label>수령인</label>
-            <Input type={'text'} value={user.Name} placeholder={'받는이'} className={'Added-Input'}/>
+            <label htmlFor="name">수령인</label>
+            <Input type={'text'} id={'name'} value={user.Name} placeholder={'받는이'} className={'Added-Input'}/>
           </div>
           <div className="phone">
-            <label>연락처</label>
-            <Input type={'text'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'Added-Input'}/>
+            <label htmlFor="phone">연락처</label>
+            <Input type={'text'} id={'phone'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'Added-Input'}/>
           </div>
         </div>
         <div className="delivery-inquiry">
-          <label>요청사항</label>
+          <label htmlFor="rqcontent">요청사항</label>
           <textarea
-            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' name="rqcontent"
+            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' name="rqcontent" id="rqcontent"
             value={this.state.rqcontent} onChange={this.handleChange} />
         </div>
         {invoice.totalSales ?(
