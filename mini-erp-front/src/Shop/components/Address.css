@@ -26,6 +26,11 @@ height: 30px;
   margin-bottom: -5px;
 }
 
+.delivery > div {
+  margin: 1em 0;
+  height: auto;
+}
+
 .delivery-zipcode,
 .delivery-address,
 .delivery-recipient{
@@ -49,7 +54,7 @@ height: 30px;
   max-width: 60rem;
   /*font: 900 5vw "Source Sans Pro";*/
   padding: 0.7rem;
-  transition: text-shadow $transition;
+  transition: text-shadow;
   resize: none;
   border-radius: 1px;
   border: 1px solid #f2f2f2;
@@ -57,4 +62,51 @@ height: 30px;
 
 .delivery-inquiry textarea:focus {
   outline: 0;
+}
+
+
+.search-close{
+  display: flex;
+  justify-content: flex-end;
+}
+.search-address-top{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #dbdbdb;
+  height: 40px;
+  padding: 0.2em;
+  margin: 0.5em 1em;
+  align-items: center;
+}
+
+.search-input{
+  outline: none;
+  border: none;
+  width: 90%;
+}
+
+.search-icon{
+  width: 15px;
+  height: 15px;
+}
+.search-address-results{
+  margin: 1em 1em 0;
+}
+/*.search-address-results-header{
+  height: 30px;
+  border-bottom: 3px dashed #4884ce;
+  margin-bottom: 0.5em;
+  padding: 0.2em;
+  text-align: center;
+}*/
+.search-address-results p,
+.search-address-results-header p {
+  margin:0;
+  font-size: 15px;
+}
+.search-address-result{
+  padding: 0.3em 0.7em;
+  width: 100%;
+  margin: 0.4em 0;
+  border-left: 3px solid #4884ce;
 }
