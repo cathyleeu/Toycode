@@ -5,7 +5,9 @@ exports.newInvoice = function (req, res, next) {
   const userEmail = req.body.userEmail;
   const userCode = req.body.userCode;
   const to = req.body.delivery.to
-  const address = req.body.delivery.address
+  const zipNo = req.body.delivery.address.zipNo
+  const roadAddr = req.body.delivery.address.roadAddr
+  const detailAddr = req.body.delivery.address.detailAddr
   const phone = req.body.delivery.phone
   const requestedGoods = req.body.requestedGoods
   const requestDesc = req.body.requestDesc
@@ -22,7 +24,11 @@ exports.newInvoice = function (req, res, next) {
       userCode: userCode,
       delivery: {
         to : to,
-        address: address,
+        address: {
+          zipNo:zipNo,
+          roadAddr: roadAddr,
+          detailAddr: detailAddr
+        },
         phone : phone
       },
       requestedGoods: requestedGoods,
