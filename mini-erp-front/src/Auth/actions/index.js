@@ -66,8 +66,8 @@ export function fetchUser() {
   const user = localStorage.getItem('email')
   return function (dispatch) {
     axios.get(`${ROOT_URL}/user/${user}`).then((user) => {
-      dispatch(fetchKinder(user))
       dispatch(completedFetchUser(user))
+      dispatch(fetchKinder(user))
     })
   }
 }

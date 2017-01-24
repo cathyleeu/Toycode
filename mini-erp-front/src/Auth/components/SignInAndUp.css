@@ -28,11 +28,13 @@
   margin-bottom: 0.5rem;
 }
 
-.rg-branch-no input,
-.rg-user-info input,
-.rg-address-zip input,
-.rg-address-info input,
-.rg-branch-info input {
+.rg-user-email > input,
+.rg-user-pw > input,
+.rg-user-pwCnfrm > input,
+.rg-branch-no > input,
+.rg-address-zip > input,
+.rg-address-info > input,
+.rg-branch-info > input {
   border: 0;
   margin: 0 0 1%;
   padding: 10px;
@@ -44,21 +46,23 @@
   background: #f2f2f2;
 }
 
-.rg-user-info input,
-.rg-address-info input,
-.rg-branch-info input {
+.rg-user-email > input,
+.rg-user-pw > input,
+.rg-user-pwCnfrm > input,
+.rg-address-info > input,
+.rg-branch-info > input {
   width: 100%;
 }
 
-.rg-branch-no input,
-.rg-address-zip input {
+.rg-branch-no > input,
+.rg-address-zip > input {
   width: 70%;
 }
 
 
 .rg-branch-no button,
 .rg-user-info button,
-.rg-address-zip button,
+.rg-address-zip .searchBtn,
 .rg-submit button {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -94,7 +98,7 @@
 }
 
 .rg-branch-no button,
-.rg-address-zip button {
+.rg-address-zip .searchBtn {
   background: #5d5656;
   width: 28%;
 }

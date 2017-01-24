@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { RegisterKinder, RegisteredKinderInfo, UserInfo } from '../components'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 import './BranchContainer.css'
 
 class BranchContainer extends Component{
@@ -12,11 +14,12 @@ class BranchContainer extends Component{
   renderChild = (kinder, i) => {
     const { user, kinders } = this.props
     return (
-      <RegisterKinder id={kinder._id} key={i} code={kinder.code} branchCode={kinder.parentId} kinder={kinder}  kinderNo={i+1} status={kinders.status ? true : false } />
+      <RegisterKinder id={kinder._id} key={i} code={kinder.code} branchCode={user.Code} kinder={kinder}  kinderNo={i+1} status={kinders.status ? true : false } />
     )
   }
   render() {
-    const { kinders, user, editKinder, completedAddKinder, kindergartens } = this.props
+    const { kinders, user, editKinder, completedAddKinder } = this.props
+    const kindergartens = kinders.kinders
     return (
       <div>
         {/* TODO-3: user값을 컴포넌트가 렌더링 하기전에 들고와야함. - 임시방편 */}
@@ -57,14 +60,10 @@ class BranchContainer extends Component{
   }
 }
 
-// {kinders.status ? (
-//   <div>
-//     {kindergartens.map(this.renderChild)}
-//   </div>
-// ): (
-//   <div>
-//     {user && user.kinders.map((kinder, i) => <RegisteredKinderInfo key={i} kinderNo={i+1}kinder={kinder}/>)}
-//   </div>
-// )}
-
-export default BranchContainer
+function mapStateToProps(state, ownProps){
+  return {
+    user: state.auth.user,
+    kinders: state.userAccount
+  }
+}
+export default connect(mapStateToProps, actions)(BranchContainer)

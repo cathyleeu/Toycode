@@ -12,9 +12,9 @@ class Address extends Component {
     this.state = {
       rqcontent: '',
 			location: '',
-			zipNo: '',
-			roadAddr: this.props.user.Address,
-			detailAddr: '',
+			zipNo: this.props.user.Address.zipNo || '',
+			roadAddr: this.props.user.Address.roadAddr|| '',
+			detailAddr: this.props.user.Address.detailAddr|| '',
       isModalOpen: false
     }
   }

@@ -15,7 +15,9 @@ export function createKinder(_id){
 export const updateKinder = (kinder, branchCode, id) => ({
   type: types.UPDATE_KINDER,
   name: kinder.Name,
-  address: kinder.Address,
+  zipNo: kinder.zipNo,
+  detailAddr: kinder.detailAddr,
+  roadAddr: kinder.roadAddr,
   phone : kinder.Phone,
   manager: kinder.Manager,
   managerPh: kinder.ManagerPh,

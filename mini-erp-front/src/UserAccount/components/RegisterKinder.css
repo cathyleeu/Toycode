@@ -31,26 +31,32 @@
 .kinder-body{
   margin: 1em;
 }
-.kinder-body div{
+
+.kinder-phone,
+.kinder-manager,
+.kinder-address,
+.kinder-address-zip,
+.kinder-manager-mobile {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.2em 0;
-  margin: 0.6em 0;
+}
+
+.kinder-phone,
+.kinder-manager,
+.kinder-address-zip,
+.kinder-address-roadAddr,
+.kinder-manager-mobile,
+.kinder-address-detailAddr{
   height: 40px;
+  margin: 0.3em 0;
 }
-.kinder-body div i{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.kinder-body div i,
+
 .kinder-body div p {
   font-size: 14px;
   margin-right: 5px;
 }
 .kinder-no
-.kinder-body div i p,
 .kinder-body div p {
   margin: 0;
 }
@@ -59,13 +65,37 @@
   width: 49%;
 }
 
+.kinder-phone > i,
+.kinder-manager > i,
+.kinder-address > i,
+.kinder-manager-mobile > i{
+  width: 10%;
+  font-size: 20px;
+}
 
+.kinder-phone input,
+.kinder-manager input,
+.kinder-address-body,
+.kinder-manager-mobile input{
+  width: 85%;
+  outline: none;
+}
 
+.kinder-address-zip > input,
+.kinder-address-roadAddr input,
+.kinder-address-detailAddr input{
+  width: 100%;
+  outline: none;
+}
 
-
-
-.kinder-body div input,
-.kinder-top input{
+.kinder-top input,
+.kinder-phone input,
+.kinder-manager input,
+.kinder-address-zip > input,
+.kinder-address-roadAddr > input,
+.kinder-address-detailAddr > input,
+.kinder-address-body > input,
+.kinder-manager-mobile input{
   font-family: "Roboto", sans-serif;
   height: 100%;
   border: 0;
@@ -81,10 +111,25 @@
   width: 58%;
 }
 
+
 .kinder-btns{
   display: flex;
   flex-direction: row;
   margin-top: -15px;
   justify-content: space-between;
   width: 30%;
+}
+
+.kinder-address-zip button {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 12px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
 }

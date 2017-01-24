@@ -19,8 +19,8 @@ const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? win
 const token = localStorage.getItem('token')
 if (token) {
   store.dispatch({ type: types.AUTH_USER })
+  store.dispatch(fetchUser())
 }
-store.dispatch(fetchUser())
 store.dispatch(getInvoices())
 store.dispatch(fetchBooks())
 

@@ -5,8 +5,8 @@ class RegisterKinderClasses extends Component {
     super(props)
     const {kinderClass} = this.props
     this.state={
-      classname: kinderClass.className,
-      students: kinderClass.students
+      classname: kinderClass.className || '',
+      students: kinderClass.students || ''
     }
 
   }
