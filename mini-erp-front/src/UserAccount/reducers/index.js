@@ -51,7 +51,9 @@ const Kinder = (state, action) => {
         if(kinder._id === action.id){
           return {...kinder,
             name: action.name,
-            address: action.address,
+            zipNo: action.zipNo,
+            roadAddr: action.roadAddr,
+            detailAddr: action.detailAddr,
             phone: action.phone,
             manager: action.manager,
             managerPh: action.managerPh,

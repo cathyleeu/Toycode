@@ -17,8 +17,10 @@ exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const Name = req.body.Name;
-  const Address = req.body.Address;
-  const License = req.body.License;
+  const zipNo = req.body.zipNo;
+  const roadAddr = req.body.roadAddr;
+  const detailAddr = req.body.detailAddr;
+  // const License = req.body.License;
 
 
   if(!email || !password){
@@ -47,8 +49,12 @@ exports.signup = (req, res, next) => {
         Code: resultId,
         branch: {
           Name: Name,
-          License: License,
-          Address: Address
+          // License: License,
+          Address: {
+            zipNo:zipNo,
+            roadAddr:roadAddr,
+            detailAddr:detailAddr
+          }
         }
       })
       user.save(function (err) {
@@ -88,15 +94,22 @@ exports.userKinder = (req, res) => {
 exports.userKinderUpdate = (req, res) => {
 
   const user = req.params.user
-  //TODO: Code를 자동생성하는 것으로 쓸 방법... ㅎㅎㅎ
   const kinders = req.body.kinders.map((kinder, i) => {
     const kinderId = 'K'+(i+1)
     const kinderCode = kinder.parentId+'-'+kinderId
+    //TODO: castError 
     return({
       code: kinderCode,
       parentId: kinder.parentId,
       manager: kinder.manager,
-      address: kinder.address,
+      zipNo: kinder.zipNo,
+      roadAddr: kinder.roadAddr,
+      detailAddr:kinder.detailAddr,
+      // address: {
+      //   zipNo: kinder.zipNo,
+      //   roadAddr: kinder.roadAddr,
+      //   detailAddr:kinder.detailAddr
+      // },
       managerPh: kinder.managerPh,
       name: kinder.name,
       phone: kinder.phone,

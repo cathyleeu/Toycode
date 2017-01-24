@@ -1,5 +1,7 @@
 import React from 'react';
 import RequestedIVes from '../components/RequestedIVes'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 import './RequestedIVesContainer.css'
 
 
@@ -22,4 +24,10 @@ const RequestedIVesContainer = ({invoices}) => (
 )
 
 
-export default RequestedIVesContainer
+
+function mapStateToProps(state, ownProps){
+  return {
+    invoices: state.shop.userInvoices
+  }
+}
+export default connect(mapStateToProps, actions)(RequestedIVesContainer)

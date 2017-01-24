@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../actions'
+// import * as actions from '../actions'
+import {toggleSignup, toggleSignin, signupUser, signinUser} from '../actions'
+import {searchAddress, selectedJuso} from '../../actions'
 import './SignInAndUp.css'
 import logo from '../../../public/logo.png'
+import AddressSearch from '../../Shop/components/AddressSearch'
 
 
 class SignInAndUp extends Component {
@@ -14,7 +17,11 @@ class SignInAndUp extends Component {
       passwordConfirm: '',
       Name: '',
       License:'',
-      Address: ''
+      zipNo: '',
+      roadAddr: '',
+      detailAddr:'',
+      isModalOpen: false,
+      location: ''
     }
   }
   onChange = e => {
@@ -31,6 +38,26 @@ class SignInAndUp extends Component {
       )
     }
   }
+  openModal = () => {
+    this.setState({ isModalOpen: true })
+  }
+  closeModal = () => {
+		const { searchAddress } = this.props
+		this.setState({ isModalOpen: false, location: ''}, searchAddress(''))
+	}
+  isSearchAddress = () => {
+		const { searchAddress } = this.props
+		searchAddress(this.state.location)
+	}
+  isSelectedAddress = (result) => {
+		const {selectedJuso} = this.props
+		selectedJuso(result)
+		this.closeModal()
+		this.setState({
+			zipNo: result.zipNo,
+			roadAddr: result.roadAddr
+		})
+	}
   onSubmit = e => {
     e.preventDefault()
     const { signupUser, signinUser, auth } = this.props
@@ -45,56 +72,67 @@ class SignInAndUp extends Component {
     auth.status ? toggleSignin() : toggleSignup()
   }
   render() {
-    const { auth } = this.props
+    const { auth, juso, selectedJuso } = this.props
     const SignUpFieldSet = (
       <div className="col-md-6">
         <fieldset className="rg-address-info form-group">
          <label htmlFor="address">주소</label>
          <div className="rg-address-zip">
            <input
-            value={this.state.Address}
+            value={this.state.zipNo}
             name="Zipcode"
             type="text"
             onChange={this.onChange}
             placeholder="우편주소"
             required/>
-            <button>주소검색</button>
+            <div className="searchBtn" onClick={this.openModal}>주소검색</div>
+            <AddressSearch
+              isModalOpen={this.state.isModalOpen}
+              closeModal={this.closeModal}>
+							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+							<div className="search-address-top">
+								<input className="search-input" type="search" value={this.state.location} onChange={this.onChange} name="location" placeholder="ex) 강남구 강남대로 408" />
+								<i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>
+							</div>
+							<div className="search-address-results">
+									{juso && juso.map((result, i)=> (
+										<div className="search-address-result" key={i} onClick={() => this.isSelectedAddress(result)}>
+											<p>{result.roadAddr}</p>
+										</div>
+									))}
+							</div>
+            </AddressSearch>
           </div>
           <input
-           value={this.state.Address}
-           name="Address"
-           id="address"
+           value={this.state.roadAddr}
+           name="roadAddr"
            className="rg-address"
            type="text"
            onChange={this.onChange}
-           placeholder="사업장 주소를 입력하세요"
+           placeholder="주소를 입력하세요"
+           required/>
+           <input
+            value={this.state.detailAddr}
+            name="detailAddr"
+            id="address"
+            className="rg-address"
+            type="text"
+            onChange={this.onChange}
+            placeholder="상세 주소를 입력하세요"
+            required/>
+        </fieldset>
+        <fieldset className="rg-branch-info form-group">
+         <label htmlFor="branch-name">지사정보</label>
+          <input
+           value={this.state.Name}
+           className="rg-branch-name"
+           id="branch-name"
+           name="Name"
+           type="text"
+           onChange={this.onChange}
+           placeholder="지사명"
            required/>
         </fieldset>
-
-          <fieldset className="rg-branch-info form-group">
-           <label htmlFor="branch-name">지사정보</label>
-           <div className="rg-branch-no">
-             <input
-              value={this.state.License}
-              name="License"
-              type="text"
-              onChange={this.onChange}
-              placeholder="사업자 번호등록"
-              required/>
-              <button>번호등록</button>
-            </div>
-            <input
-             value={this.state.Name}
-             className="rg-branch-name"
-             id="branch-name"
-             name="Name"
-             type="text"
-             onChange={this.onChange}
-             placeholder="지사명"
-             required/>
-          </fieldset>
-
-
       </div>
     )
     return (
@@ -102,7 +140,7 @@ class SignInAndUp extends Component {
         <img src={logo} className="Auth-logo" role="presentation"/>
         <form onSubmit={this.onSubmit} className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
           <div className={ auth.status ? "rg-user-info col-md-6" : "rg-user-info col-md-12"}>
-            <fieldset className="form-group">
+            <fieldset className="form-group rg-user-email">
              <label htmlFor="email">이메일</label>
              <input
                value={this.state.email}
@@ -114,7 +152,7 @@ class SignInAndUp extends Component {
                required
              />
             </fieldset>
-            <fieldset className="form-group">
+            <fieldset className="form-group rg-user-pw">
              <label htmlFor="password">비밀번호</label>
              <input
               id="password"
@@ -127,7 +165,7 @@ class SignInAndUp extends Component {
               />
             </fieldset>
             {auth.status && (
-              <fieldset className="form-group">
+              <fieldset className="form-group rg-user-pwCnfrm">
                <label htmlFor="passwordConfirm">비밀번호확인</label>
                <input
                 value={this.state.passwordConfirm}
@@ -156,9 +194,25 @@ class SignInAndUp extends Component {
 function mapStateToProps(state){
   return{
     auth: state.auth,
-    errorMessage: state.auth.error
+    errorMessage: state.auth.error,
+    juso: state.commonData.juso,
+		selectedJuso: state.commonData.selectedJuso
   }
 }
 
 
-export default connect(mapStateToProps, actions)(SignInAndUp)
+export default connect(mapStateToProps, {signupUser, signinUser, searchAddress, toggleSignup, toggleSignin, selectedJuso})(SignInAndUp)
+
+
+
+
+{/* <div className="rg-branch-no">
+  <input
+   value={this.state.License}
+   name="License"
+   type="text"
+   onChange={this.onChange}
+   placeholder="사업자 번호등록"
+   required/>
+   <button>번호등록</button>
+ </div> */}
