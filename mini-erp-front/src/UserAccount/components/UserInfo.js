@@ -97,32 +97,4 @@ class UserInfo extends Component {
   }
 }
 
-
-
-//
-// const UserInfo = ({user}) => (
-//   <div className="user-info-cont">
-//     <p>지사명:{user.branch.Name}</p>
-//     <div>지사주소
-//       <p>{user.branch.Address.zipNo}</p>
-//       <p>{user.branch.Address.roadAddr}</p>
-//       <p>{user.branch.Address.detailAddr}</p>
-//     </div>
-//     <div> 회계담당자
-//       <input
-//       type="text"
-//       value={this.state.a_manager}
-//       name="a_manager"
-//       style={{border: disabled}}
-//       disabled={!userEdit}
-//       onBlur={this.isOnBlur}
-//       onChange={this.isHandleChange}
-//     </div>
-//     <div> 교육담당자
-//
-//     </div>
-//     {/* <p>사업자번호:{user.branch.License}</p> */}
-//   </div>
-// )
-
 export default UserInfo

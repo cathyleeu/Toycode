@@ -9,12 +9,14 @@ import * as actions from '../../actions'
 class Address extends Component {
   constructor(props) {
     super(props)
+    const { address, acct } = this.props
     this.state = {
       rqcontent: '',
 			location: '',
-			zipNo: this.props.user.Address.zipNo || '',
-			roadAddr: this.props.user.Address.roadAddr|| '',
-			detailAddr: this.props.user.Address.detailAddr|| '',
+      phone: acct.Phone || '',
+			zipNo: address.zipNo || '',
+			roadAddr: address.roadAddr|| '',
+			detailAddr: address.detailAddr|| '',
       isModalOpen: false
     }
   }
@@ -59,7 +61,7 @@ class Address extends Component {
 					roadAddr: this.state.roadAddr,
 					detailAddr: this.state.detailAddr
 				},
-        phone: "010-999"
+        phone: this.state.phone
       },
       requestedGoods: selected.map(each => (
         { name : each.title,
@@ -85,12 +87,11 @@ class Address extends Component {
 								<i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>
 							</div>
 							<div className="search-address-results">
-								{/* <div className="search-address-results-header"><p>주소</p></div> */}
-									{juso && juso.map((result, i)=> (
-										<div className="search-address-result" key={i} onClick={() => this.isSelectedAddress(result)}>
-											<p>{result.roadAddr}</p>
-										</div>
-									))}
+								{juso && juso.map((result, i)=> (
+									<div className="search-address-result" key={i} onClick={() => this.isSelectedAddress(result)}>
+										<p>{result.roadAddr}</p>
+									</div>
+								))}
 							</div>
             </AddressSearch>
           </div>
@@ -107,7 +108,7 @@ class Address extends Component {
           </div>
           <div className="phone">
             <label htmlFor="phone">연락처</label>
-            <Input type={'text'} id={'phone'} value={invoice.delivery.phone} placeholder={'전화번호'} className={'Added-Input'}/>
+            <Input type={'text'} id={'phone'} value={this.state.phone} name={'phone'} placeholder={'전화번호'} className={'Added-Input'} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="delivery-inquiry">
