@@ -47,7 +47,6 @@ const cart = (state = initialState, action) => {
   switch (action.type) {
     case types.CHECKOUT_REQUEST:
       return state
-    //TODO:   CHECKOUT_SUCCESS때 주문페이지를 빈 페이지로 만들어야함.
     case types.CHECKOUT_SUCCESS:
       return state={}
     case types.CHECKOUT_FAILURE:
