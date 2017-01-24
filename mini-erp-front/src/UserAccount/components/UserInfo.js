@@ -4,13 +4,14 @@ import './UserInfo.css'
 class UserInfo extends Component {
   constructor(props) {
     super(props)
+    const { edu, acct } = this.props
     this.state = {
-      a_manager: '',
-      a_email: '',
-      a_phone: '',
-      e_manager: '',
-      e_email: '',
-      e_phone: ''
+      a_manager: acct.Manager || '',
+      a_email: acct.Email || '',
+      a_phone: acct.Phone || '',
+      e_manager: edu.Manager || '',
+      e_email: edu.Email || '',
+      e_phone: edu.Phone || ''
     }
   }
   isHandleChange = e => {

@@ -40,7 +40,7 @@ class BranchContainer extends Component{
               onClick={() => editUser(kinders.userEdit)}>수정</button>
           )}
         </div>
-        {user && <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} />}
+        {user && <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={user.education} acct={user.account}/>}
         <div className="branchKinder-header">
           <h5> 지사 소속 유치원 리스트</h5>
           <div>
