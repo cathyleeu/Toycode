@@ -14,7 +14,11 @@ const kinders = {
 
 const initialState = {
   kinders: [...kinders],
-  status: false
+  branchEdit: false,
+  userEdit: false,
+  managers:{
+
+  }
 }
 
 const KinderClass = (state , action) => {
@@ -95,7 +99,24 @@ export default (state = initialState , action) => {
       }
     case types.EDITING_KINDER:
     case types.COMPLETE_ADD_KINDER:
-      return { ...state, status: action.status}
+      return { ...state, branchEdit: action.branchEdit}
+    case types.EDITING_USER:
+    case types.EDITED_USER:
+      return { ...state, userEdit: action.userEdit}
+    case types.UPDATE_USER:
+      return { ...state, managers: {
+        account:{
+          manager: action.a_manager,
+          email: action.a_email,
+          phone: action.a_phone
+        },
+        edu:{
+          manager: action.e_manager,
+          email: action.e_email,
+          phone: action.e_phone
+        }
+      }
+    }
     default:
       return state
   }

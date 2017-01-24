@@ -35,11 +35,11 @@ class RegisterKinder extends Component {
     deleteKinder(id)
   }
   renderChild = (kinderClass, i) => {
-    const { id, removeChild, kinders, deleteKinderClass, updateKinderClass, status } = this.props
+    const { id, removeChild, kinders, deleteKinderClass, updateKinderClass, branchEdit } = this.props
     const index = kinders.map(item => item._id).indexOf(id);
     return (
       <div key={i}>
-        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} status={status} />
+        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit} />
       </div>
     )
   }
@@ -72,10 +72,10 @@ class RegisterKinder extends Component {
     updateKinder(this.state,branchCode,id)
   }
   render(){
-    const { id, kinders, code, kinderNo, status, juso } = this.props
+    const { id, kinders, code, kinderNo, branchEdit, juso } = this.props
     const index = kinders.map(item => item._id).indexOf(id);
     // TODO-2: 반복되는 input을 줄이는 방법
-    const disabled = !status ? 'none' : ''
+    const disabled = !branchEdit ? 'none' : ''
     return(
       <div className="kinder-info-body">
        <div className="kinder-temp">
@@ -87,7 +87,7 @@ class RegisterKinder extends Component {
              value={this.state.Name}
              name="Name"
              style={{border: disabled}}
-             disabled={!status}
+             disabled={!branchEdit}
              onBlur={this.isOnBlur}
              onChange={this.isHandleChange}
            />
@@ -112,10 +112,10 @@ class RegisterKinder extends Component {
                    name="zipNo"
                    onBlur={this.isOnBlur}
                    style={{border: disabled}}
-                   disabled={!status}
+                   disabled={!branchEdit}
                    onChange={this.isHandleChange}
                  />
-                 {status && <button onClick={this.openModal}>주소검색</button>}
+                 {branchEdit && <button onClick={this.openModal}>주소검색</button>}
                  <AddressSearch
                    isModalOpen={this.state.isModalOpen}
                    closeModal={this.closeModal}>
@@ -142,7 +142,7 @@ class RegisterKinder extends Component {
                    name="roadAddr"
                    onBlur={this.isOnBlur}
                    style={{border: disabled}}
-                   disabled={!status}
+                   disabled={!branchEdit}
                    onChange={this.isHandleChange}
                  />
                </div>
@@ -154,7 +154,7 @@ class RegisterKinder extends Component {
                    name="detailAddr"
                    onBlur={this.isOnBlur}
                    style={{border: disabled}}
-                   disabled={!status}
+                   disabled={!branchEdit}
                    onChange={this.isHandleChange}
                  />
                </div>
@@ -168,7 +168,7 @@ class RegisterKinder extends Component {
                value={this.state.Phone}
                name="Phone"
                style={{border: disabled}}
-               disabled={!status}
+               disabled={!branchEdit}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
              />
@@ -181,7 +181,7 @@ class RegisterKinder extends Component {
                value={this.state.Manager}
                name="Manager"
                style={{border: disabled}}
-               disabled={!status}
+               disabled={!branchEdit}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
              />
@@ -194,7 +194,7 @@ class RegisterKinder extends Component {
                value={this.state.ManagerPh}
                name="ManagerPh"
                style={{border: disabled}}
-               disabled={!status}
+               disabled={!branchEdit}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
              />

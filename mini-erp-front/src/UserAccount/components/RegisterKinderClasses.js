@@ -25,8 +25,8 @@ class RegisterKinderClasses extends Component {
     updateKinderClass(classname,students,index,parentId,id)
   }
   render(){
-    const { id, status } = this.props
-    const disabled = !status ? 'none' : ''
+    const { id, branchEdit } = this.props
+    const disabled = !branchEdit ? 'none' : ''
     return(
       <div className="row col-md-12">
         <label htmlFor={`${id}_name`}>
@@ -34,7 +34,7 @@ class RegisterKinderClasses extends Component {
           반 이름</label>
         <input
           style={{border: disabled}}
-          disabled={!status}
+          disabled={!branchEdit}
           type="text"
           name='classname'
           id={`${id}_name`}
@@ -48,7 +48,7 @@ class RegisterKinderClasses extends Component {
         </label>
         <input
           style={{border: disabled}}
-          disabled={!status}
+          disabled={!branchEdit}
           type="number"
           name='students'
           id={`${id}_students`}
