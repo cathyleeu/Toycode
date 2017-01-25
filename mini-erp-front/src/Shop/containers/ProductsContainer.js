@@ -12,9 +12,8 @@ const ProductsContainer = ({books, selected, addToCartUnsafe}) => (
           key={index}
           book={book}
           onAddToCartClicked={() => {
-            {selected.map((Id) => Id.id).indexOf(book.id) === -1 &&
+            selected.map((Id) => Id.id).indexOf(book.id) === -1 &&
               addToCartUnsafe(book.id, book.title, book.price)
-            }
           }}
         />
       )}

@@ -1,7 +1,8 @@
-const jwt = require('jwt-simple');
-const User = require('../models/user');
-const Code = require('../models/code');
-const config = require('../config');
+const jwt = require('jwt-simple'),
+      User = require('../models/user'),
+      Code = require('../models/code'),
+      config = require('../config');
+
 
 // sub : subject 어떤것이 token을 원하는감? ㅎㅎ
 // iat : issued at time

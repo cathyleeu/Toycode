@@ -11,6 +11,7 @@ export default function(state = initialState, action) {
      return { ...state, products:action.books}
    case types.COMPLETE_INVOICES_FETCH:
      return { ...state, userInvoices:action.invoices}
+   default:
+     return state
   }
-  return state
 }

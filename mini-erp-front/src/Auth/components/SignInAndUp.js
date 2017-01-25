@@ -72,7 +72,7 @@ class SignInAndUp extends Component {
     auth.status ? toggleSignin() : toggleSignup()
   }
   render() {
-    const { auth, juso, selectedJuso } = this.props
+    const { auth, juso } = this.props
     const SignUpFieldSet = (
       <div className="col-md-6">
         <fieldset className="rg-address-info form-group">
@@ -206,7 +206,7 @@ export default connect(mapStateToProps, {signupUser, signinUser, searchAddress, 
 
 
 
-{/* <div className="rg-branch-no">
+/* <div className="rg-branch-no">
   <input
    value={this.state.License}
    name="License"
@@ -215,4 +215,4 @@ export default connect(mapStateToProps, {signupUser, signinUser, searchAddress, 
    placeholder="사업자 번호등록"
    required/>
    <button>번호등록</button>
- </div> */}
+ </div> */

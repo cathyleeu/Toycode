@@ -5,4 +5,47 @@
   max-height: 400px;
   box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
   margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.user-info-addr,
+.user-info-mngs {
+  width: 50%;
+  height: 100%;
+}
+.user-info-mngs-acct,
+.user-info-mngs-edu {
+  margin: 1em 0;
+}
+
+.user-info-mngs-header{
+  width: 100%;
+  border-left: 3px solid #dbdbdb;
+  padding: 0.5em;
+}
+
+.user-info-mngs-body{
+  padding: 0 0 0 2em;
+}
+.user-info-mngs-body i {
+  margin-right: 1em;
+  font-size: 18px;
+  width: 20px;
+  height: 20px;
+}
+.user-info-mngs-body input {
+  outline: none;
+}
+
+.user-info-mngs-acct-name,
+.user-info-mngs-acct-email,
+.user-info-mngs-acct-phone,
+.user-info-mngs-edu-name,
+.user-info-mngs-edu-email,
+.user-info-mngs-edu-phone{
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
