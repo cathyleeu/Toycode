@@ -15,7 +15,9 @@ export default function(state = initialState, action) {
      return {...state, selectedJuso:{
        zipNo: action.zipNo,
        roadAddr: action.roadAddr
-     }}
+     }
+   }
+   default:
+    return state
   }
-  return state
 }

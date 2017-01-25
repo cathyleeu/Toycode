@@ -15,7 +15,7 @@ class AddedProduct extends Component {
   }
   isOnBlur = () => {
     const {goodsSelect} = this.props
-    goodsSelect(this.props.id, parseInt(this.state.orderQuantity))
+    goodsSelect(this.props.id, parseInt(this.state.orderQuantity, 10))
   }
   render(){
     const {title, goodsDelete, id} = this.props

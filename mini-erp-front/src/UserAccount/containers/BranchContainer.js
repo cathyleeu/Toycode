@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { RegisterKinder, RegisteredKinderInfo, UserInfo } from '../components'
+import { RegisterKinder, UserInfo } from '../components'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import './BranchContainer.css'

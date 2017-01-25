@@ -114,7 +114,7 @@ class Address extends Component {
         <div className="delivery-inquiry">
           <label htmlFor="rqcontent">요청사항</label>
           <textarea
-            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' name="rqcontent" id="rqcontent"
+            rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' id="rqcontent"
             value={this.state.rqcontent} onChange={this.handleChange} />
         </div>
         {invoice.totalSales ?(
