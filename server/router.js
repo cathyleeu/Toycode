@@ -13,6 +13,8 @@ module.exports = function(app) {
   })
   app.post('/signin', requireSignin, Auth.signin)
   app.post('/signup', Auth.signup)
+  app.get('/signup/:url', Auth.confirmSignUp)
+
   app.get('/user/:user',  Auth.userOn)
   app.put('/user/:user',  Auth.userKinderUpdate)
   app.put('/user/info/:user',  Auth.userInfoUpdate)

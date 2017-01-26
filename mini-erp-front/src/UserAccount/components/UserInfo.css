@@ -28,6 +28,7 @@
 .user-info-mngs-body{
   padding: 0 0 0 2em;
 }
+/*.user-info-mngs-body span,*/
 .user-info-mngs-body i {
   margin-right: 1em;
   font-size: 18px;

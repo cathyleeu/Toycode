@@ -27,11 +27,10 @@ const userSchema = new Schema({
   Code: { type: String, unique: true },
   branch: {
     Name: String,
-    // License: { type: String, unique: true },
-    Address: {
-      zipNo:  {type: String, required: true},
-      roadAddr: {type: String, required: true},
-      detailAddr: {type: String, required: true}
+    Address:{
+      zipNo:  String,
+      roadAddr: String,
+      detailAddr: String
     }
   },
   account: {
@@ -48,6 +47,8 @@ const userSchema = new Schema({
   createdOn: {type: Date, default: Date.now}
 }, {collection:'user'});
 
+
+// License: { type: String, unique: true },
 
 
  // on Save Hook, 비밀번호 암호화

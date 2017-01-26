@@ -187,6 +187,7 @@ class RegisterKinder extends Component {
              />
            </div>
            <div className="kinder-manager-mobile">
+             {/* <span>&#128241;</span> */}
              <i className="fa fa-mobile" aria-hidden="true"></i>
              <input
                type="tel"

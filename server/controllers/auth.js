@@ -1,8 +1,52 @@
 const jwt = require('jwt-simple'),
       User = require('../models/user'),
       Code = require('../models/code'),
+      mongoose = require('mongoose'),
+      nev = require('email-verification')(mongoose),
+      siteUrl = 'http://localhost:3090',
       config = require('../config');
 
+
+nev.configure({
+    verificationURL: siteUrl + '/signup/${URL}',
+    persistentUserModel: User,
+    tempUserCollection: 'tempUsers',
+
+    transportOptions: {
+      service: 'Gmail',
+      auth: {
+        user: 'toycodeinc@gmail.com',
+        pass: 'c0d1ng!@'
+      }
+    },
+    verifyMailOptions: {
+      from: '키즈코딩 <toycodeinc_do_not_reply@gmail.com>',
+      subject: '키즈코딩 회원 이메일 인증',
+      html: '<p>다음의 링크를 클릭하시면 이메일 인증이 완료됩니다 : </p><p>${URL}</p>',
+      text: '다음의 링크를 클릭하시면 이메일 인증이 완료됩니다 : ${URL}'
+    }
+}, function(err, options) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+
+  console.log('configured: ' + (typeof options === 'object'));
+});
+
+
+
+
+
+
+nev.generateTempUserModel(User, function(err, tempUserModel) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+
+  console.log('generated temp user model: ' + (typeof tempUserModel === 'function'));
+});
 
 // sub : subject 어떤것이 token을 원하는감? ㅎㅎ
 // iat : issued at time
@@ -12,6 +56,7 @@ function tokenForUser(user) {
 }
 
 exports.signin = (req, res, next) => res.send({ token: tokenForUser(req.user) })
+
 
 
 exports.signup = (req, res, next) => {
@@ -29,7 +74,7 @@ exports.signup = (req, res, next) => {
   }
   // 유저가 이메일 있는가 확인 (가입 되었는가 확인)
 
-
+// 에러남
   User.findOne({ email: email }, function (err, existingUser) {
     if(err){
       return next(err)
@@ -50,34 +95,90 @@ exports.signup = (req, res, next) => {
         Code: resultId,
         branch: {
           Name: Name,
-          // License: License,
-          Address: {
+          Address:{
             zipNo:zipNo,
             roadAddr:roadAddr,
             detailAddr:detailAddr
           }
+        },
+        account:{
+          Manager: '',
+          Email: '',
+          Phone: ''
+        },
+        education:{
+          Manager: '',
+          Email: '',
+          Phone: ''
         }
       })
-      user.save(function (err) {
+
+      nev.createTempUser(user, function(err, existingPersistentUser, newTempUser) {
         if(err){
-          return next(err)
+          console.log(err)
+          return res.status(404).send('ERROR: creating temp user FAILED');
         }
-        codeRes = codeRes || new Code({
-          dbcollection: 'User',
-          count: count
-        });
-        codeRes.count++
-        codeRes.save(function(err) {
-          if(err){
-            return next(err)
-          }
-          res.json({token:tokenForUser(user)})
-        });
+        // new user created
+
+        if (newTempUser) {
+          console.log("newTempUser:")
+          console.log(newTempUser)
+          var URL = newTempUser[nev.options.URLFieldName];
+          // nev.getNestedValue(user,"branch.Name")
+          nev.sendVerificationEmail(email, URL, function(err, info) {
+            if (err) {
+              return res.status(404).send('ERROR: sending verification email FAILED');
+            }
+            codeRes = codeRes || new Code({
+              dbcollection: 'User',
+              count: count
+            });
+            codeRes.count++
+            codeRes.save(function(err) {
+              if(err){
+                return next(err)
+              }
+              res.json({
+                msg: '이메일을 인증을 확인부탁',
+                token:tokenForUser(user),
+                info: info
+              })
+            });
+          });
+        // user already exists in temporary collection!
+        } else {
+          res.json({
+            msg: 'You have already signed up. Please check your email to verify your account.'
+          });
+        }
       })
     });
   })
-  //유저 생성이 된 것에 응답하는것
 };
+
+exports.confirmSignUp = (req, res) => {
+  const url = req.params.url
+  console.log(url)
+  nev.confirmTempUser(url, function(err, user) {
+    console.log("user")  //null로 나온다..ㅎㅎㅎ
+    console.log(user)
+    if (user) {
+        nev.sendConfirmationEmail(user.email, function(err, info) {
+          if (err) {
+            return res.status(404).send('ERROR: sending confirmation email FAILED');
+          }
+          res.json({
+            msg: 'CONFIRMED!',
+            info: info
+          })
+        });
+    }
+    else {
+      console.log("나는에러다다다다", err)
+      return res.status(404).send('ERROR: confirming temp user FAILED');
+    }
+ })
+}
 
 
 //해당 유저의 내용만 받아오기
