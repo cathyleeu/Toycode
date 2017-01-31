@@ -6,6 +6,45 @@ const jwt = require('jwt-simple'),
       siteUrl = 'http://localhost:3090',
       config = require('../config');
 
+// email-verification에서 User모델의 nested values를 처리하지 못하는 문제 수정
+nev.generateTempUserModel = function(User, callback) {
+  if (!User) {
+    return callback(new TypeError('Persistent user model undefined.'), null);
+  }
+  var tempUserSchemaObject = {}, // a copy of the schema
+    tempUserSchema;
+
+  // copy over the attributes of the schema
+  // Object.keys(User.schema.paths).forEach(function(field) {
+  //   tempUserSchemaObject[field] = User.schema.paths[field].options;
+  // });
+
+  //modified from User.schema.path to User.schema.obj for copying nested values
+
+  Object.keys(User.schema.obj).forEach(function(field) {
+    tempUserSchemaObject[field] = User.schema.obj[field];
+  });
+  tempUserSchemaObject[nev.options.URLFieldName] = String;
+
+
+  // create a TTL
+  tempUserSchemaObject.createdAt = {
+    type: Date,
+    expires: nev.options.expirationTime.toString() + 's',
+    default: Date.now
+  };
+
+  tempUserSchema = mongoose.Schema(tempUserSchemaObject);
+
+  // copy over the methods of the schema
+  Object.keys(User.schema.methods).forEach(function(meth) { // tread lightly
+    tempUserSchema.methods[meth] = User.schema.methods[meth];
+  });
+
+  nev.options.tempUserModel = mongoose.model(nev.options.tempUserCollection, tempUserSchema);
+
+  return callback(null, mongoose.model(nev.options.tempUserCollection));
+};
 
 nev.configure({
     verificationURL: siteUrl + '/signup/${URL}',

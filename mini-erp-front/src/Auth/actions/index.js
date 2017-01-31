@@ -45,7 +45,7 @@ export function signupUser(userData) {
     axios.post(`${ROOT_URL}/signup`, userData)
       .then(response => {
         // localStorage.setItem('token', response.data.token)
-        alert('회원가입이 완료되었습니다. 로그인으로 넘어갑니다.')
+        alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
         dispatch({ type: types.REGISTERED_STATUS, status: false })
         // browserHistory.push('signin')
       })
