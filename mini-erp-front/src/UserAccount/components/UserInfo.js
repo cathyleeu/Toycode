@@ -51,6 +51,7 @@ class UserInfo extends Component {
                   onChange={this.isHandleChange} />
               </div>
               <div className="user-info-mngs-acct-email">
+                {/* <span>&#9742;</span> */}
                 <i className="fa fa-envelope" aria-hidden="true"></i>
                 <input
                   type="text"
