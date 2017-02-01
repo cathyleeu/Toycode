@@ -224,7 +224,7 @@ exports.confirmSignUp = (req, res) => {
 exports.userOn = (req, res ) => {
   console.log(req.params.user)
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user}).select('email kinders branch Code account education')
+  User.find((err, users) => res.json(users)).where({email: user}).select('admin email kinders branch Code account education')
 }
 
 exports.userKinder = (req, res) => {

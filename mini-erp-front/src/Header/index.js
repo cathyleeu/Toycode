@@ -1,17 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router'
-import { connect } from 'react-redux'
-import * as actions from '../Auth/actions'
 import './index.css'
 import logo from '../../public/logo.png'
 
 
-const Header = ({auth, signoutUser}) => {
-  const lists = [
+const Header = ({auth, signoutUser, admin}) => {
+  const userHeader = [
     {route: '/shop' , title: '주문'},
     {route: '/account' , title: '마이페이지'}
   ]
-  const headerList = lists.map((list,i) => (
+  const adminHeader = [
+    {route: '/realtime' , title: '주문상황'},
+    {route: '/userlist' , title: '지사상황'}
+  ]
+  const userHeaderList = userHeader.map((list,i) => (
+    <li key={i}>
+      <Link to={list.route} className="navLink"><p>{list.title}</p></Link>
+    </li>
+  ))
+  const adminHeaderList = adminHeader.map((list,i) => (
     <li key={i}>
       <Link to={list.route} className="navLink"><p>{list.title}</p></Link>
     </li>
@@ -25,7 +32,7 @@ const Header = ({auth, signoutUser}) => {
               <img src={logo} className="logo" alt="logo" />
             </logo>
             <ul className="header-menu">
-              {headerList}
+              {admin ? adminHeaderList : userHeaderList }
             </ul>
             <div className="Logout" onClick={() => signoutUser()}>로그아웃</div>
           </nav>
@@ -35,11 +42,4 @@ const Header = ({auth, signoutUser}) => {
   )
 }
 
-
-function mapStateToProps(state){
-  return {
-    auth: state.auth
-  }
-}
-
-export default connect(mapStateToProps, actions)(Header)
+export default Header
