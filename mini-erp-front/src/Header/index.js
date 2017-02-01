@@ -10,8 +10,8 @@ const Header = ({auth, signoutUser, admin}) => {
     {route: '/account' , title: '마이페이지'}
   ]
   const adminHeader = [
-    {route: '/realtime' , title: '주문상황'},
-    {route: '/userlist' , title: '지사상황'}
+    {route: '/cst-iv-list' , title: '주문상황'},
+    {route: '/cst-list' , title: '지사상황'}
   ]
   const userHeaderList = userHeader.map((list,i) => (
     <li key={i}>
