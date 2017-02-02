@@ -12,8 +12,10 @@ const Schema = mongoose.Schema;
 
 const invoiceSchema = new Schema({
   invoiceId: String,
+  userName: {type: String, required: true},
   userEmail : {type: String, required: true},
   userCode: {type: String, required: true},
+  status: {type: String, default: '상품준비중'},
   delivery: {
     trackingNo: String,
     to: {type: String, required: true},

@@ -125,7 +125,6 @@ class RegisterKinder extends Component {
      								<i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>
      							</div>
      							<div className="search-address-results">
-     								{/* <div className="search-address-results-header"><p>주소</p></div> */}
      									{juso && juso.map((result, i)=> (
      										<div className="search-address-result" key={i} onClick={() => this.isSelectedAddress(result)}>
      											<p>{result.roadAddr}</p>
@@ -187,7 +186,6 @@ class RegisterKinder extends Component {
              />
            </div>
            <div className="kinder-manager-mobile">
-             {/* <span>&#128241;</span> */}
              <i className="fa fa-mobile" aria-hidden="true"></i>
              <input
                type="tel"

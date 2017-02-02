@@ -16,8 +16,8 @@ module.exports = function(app) {
   app.get('/signup/:url', Auth.confirmSignUp)
 
   app.get('/user/:user',  Auth.userOn)
-  app.put('/user/:user',  Auth.userKinderUpdate)
-  app.put('/user/info/:user',  Auth.userInfoUpdate)
+  app.put('/user/:user/kinder',  Auth.userKinderUpdate)
+  app.put('/user/:user/info',  Auth.userInfoUpdate)
   app.get('/user/:user/kinder',  Auth.userKinder)
   app.get('/user',  Auth.allUsers)
 

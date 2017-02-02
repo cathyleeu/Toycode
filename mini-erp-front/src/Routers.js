@@ -7,7 +7,7 @@ import App from './App'
 import { Shop } from './Shop'
 import { Auth } from './Auth'
 import { UserAccount } from './UserAccount'
-import { CstIv } from './CustomerInvoices'
+import { AllIVes } from './CustomerInvoices'
 import { CustomerLists } from './CustomerLists'
 import { Catalog } from './Catalog'
 import Feature from './Feature'
@@ -40,7 +40,7 @@ class Routers extends Component {
               <Route path='feature' component={requireAuth(Feature)}/>
               <Route path='shop' component={requireAuth(Shop)}/>
               <Route path='account' component={requireAuth(UserAccount)}/>
-              <Route path='cst-iv-list' component={requireAuth(CstIv)}/>
+              <Route path='allIves' component={requireAuth(AllIVes)}/>
               <Route path='cst-list' component={requireAuth(CustomerLists)}/>
               <Route path="catalog" component={requireAuth(Catalog)} />
             </Route>

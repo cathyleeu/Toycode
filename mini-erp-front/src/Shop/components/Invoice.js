@@ -11,6 +11,7 @@ const Invoice = ({nodes,total,requestInvoice,user,selected}) => (
     <div className="col-md-6">
       <Address
         requestInvoice={requestInvoice}
+        userName={user.user.branch.Name}
         userEmail={user.user.email}
         userCode={user.user.Code}
         user={user.user.branch}
