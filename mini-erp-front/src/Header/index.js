@@ -10,7 +10,7 @@ const Header = ({auth, signoutUser, admin}) => {
     {route: '/account' , title: '마이페이지'}
   ]
   const adminHeader = [
-    {route: '/cst-iv-list' , title: '주문상황'},
+    {route: '/allIves' , title: '주문상황'},
     {route: '/cst-list' , title: '지사상황'},
     {route: '/catalog' , title: '상품목록'}
   ]

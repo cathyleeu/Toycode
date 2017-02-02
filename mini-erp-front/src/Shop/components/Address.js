@@ -50,8 +50,9 @@ class Address extends Component {
 		4: UI 정리하기...ㅠㅠ
 	*/
   render(){
-    const {user, userEmail, userCode, requestInvoice, selected, juso} = this.props
+    const {user, userEmail, userCode, requestInvoice, selected, juso, userName} = this.props
     const invoice = {
+      userName: userName,
       userEmail: userEmail,
       userCode: userCode,
       delivery: {

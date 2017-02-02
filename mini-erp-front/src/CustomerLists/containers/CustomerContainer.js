@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import './CustomerContainer.css'
+import { AllUserLists, SearchAllUser } from '../components'
 
 
 
@@ -13,23 +14,8 @@ class CustomerContainer extends Component {
     const {allUsers} = this.props
     return(
       <div className="has-Header Container">
-        <h5>지사 상황</h5>
-        <div className="cst-container">
-          고객리스트
-          { allUsers.map(
-            (user , i) => (
-                <div key={i}>
-                  <p>{user.Code}</p>
-                  <p>{user.email}</p>
-                  <p>{user.branch.Name}</p>
-                  <p>{user.branch.Address.detailAddr}</p>
-                  <p>{user.branch.Address.roadAddr}</p>
-                  <p>{user.branch.Address.zipNo}</p>
-                </div>
-              )
-            )
-          }
-        </div>
+        <SearchAllUser />
+        <AllUserLists allUsers={allUsers}/>
       </div>
     )
   }

@@ -2,6 +2,7 @@ const Invoices = require('../models/invoices');
 const Code = require('../models/code');
 
 exports.newInvoice = function (req, res, next) {
+  const userName = req.body.userName;
   const userEmail = req.body.userEmail;
   const userCode = req.body.userCode;
   const to = req.body.delivery.to
@@ -20,6 +21,7 @@ exports.newInvoice = function (req, res, next) {
 
     const invoice = new Invoices({
       invoiceId : resultId,
+      userName : userName,
       userEmail : userEmail,
       userCode: userCode,
       delivery: {
