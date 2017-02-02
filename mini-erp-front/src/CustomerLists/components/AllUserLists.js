@@ -7,44 +7,33 @@ const AllUserLists = ({allUsers}) => (
       (user , i) => (
           <div key={i} className="cst-container">
             <div className="User-Info">
-              <p>{user.branch.Name}</p>
-              <p>{user.Code}</p>
-              <p>{user.email}</p>
+              <p> 지사명 : {user.branch.Name} | {user.Code} | {user.email}</p>
             </div>
 
             <div className="User-Addr">
-              <p>{user.branch.Address.detailAddr}</p>
-              <p>{user.branch.Address.roadAddr}</p>
-              <p>{user.branch.Address.zipNo}</p>
+              <p>지사 주소 : {user.branch.Address.zipNo}</p>
+              <p>{user.branch.Address.roadAddr} | {user.branch.Address.detailAddr}</p>
             </div>
             <div className="User-Edu-Manager">
-              <p>{user.education.Manager}</p>
-              <p>{user.education.Phone}</p>
-              <p>{user.education.Email}</p>
+              <p>교육 담당자 : {user.education.Manager} | {user.education.Phone} | {user.education.Email}</p>
             </div>
             <div className="User-Acct-Manager">
-              <p>{user.account.Manager}</p>
-              <p>{user.account.Phone}</p>
-              <p>{user.account.Email}</p>
+              <p>회계 담당자 : {user.account.Manager} | {user.account.Phone} | {user.account.Email}</p>
             </div>
             {user.kinders.map((kinder, i) => (
               <div className="User-Kinders" key={i}>
                 <div className="User-Kinder-Info">
-                  <p>{kinder.name}</p>
-                  <p>{kinder.phone}</p>
-                  <p>{kinder.manager}</p>
-                  <p>{kinder.managerPh}</p>
+                  <p>유치원 명: {kinder.name} | {kinder.phone}</p>
+                  <p>유치원 담당자 : {kinder.manager} | {kinder.managerPh}</p>
                 </div>
                 <div className="Uesr-Kinder-Addr">
-                  <p>{kinder.zipNo}</p>
-                  <p>{kinder.roadAddr}</p>
-                  <p>{kinder.detailAddr}</p>
+                  <p>유치원 주소 : {kinder.zipNo}</p>
+                  <p> {kinder.roadAddr} | {kinder.detailAddr}</p>
                 </div>
                 <div className="User-Kinder-Classes">
                   {kinder.kinderClasses.map((kinderClass, i) => (
                     <div className="User-Kinder-Class" key={i}>
-                      <p>{kinderClass.className}</p>
-                      <p>{kinderClass.students}</p>
+                      <p>{kinderClass.className} | {kinderClass.students}명</p>
                     </div>
                   ))}
                 </div>
