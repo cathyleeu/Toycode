@@ -16,9 +16,7 @@ const initialState = {
   kinders: [...kinders],
   branchEdit: false,
   userEdit: false,
-  managers:{
-
-  }
+  managers: {}
 }
 
 const KinderClass = (state , action) => {

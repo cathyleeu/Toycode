@@ -63,7 +63,7 @@ export const editKinder = (status) => ({
 })
 
 
-//TODO: pending 문제 해결해야함.
+
 const ROOT_URL = 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')

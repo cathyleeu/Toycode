@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import { RegisterKinder, UserInfo } from '../components'
-import { connect } from 'react-redux'
-import * as actions from '../actions'
 import './BranchContainer.css'
 
 class BranchContainer extends Component{
@@ -22,7 +20,6 @@ class BranchContainer extends Component{
     const kindergartens = kinders.kinders
     return (
       <div>
-        {/* TODO-3: user값을 컴포넌트가 렌더링 하기전에 들고와야함. - 임시방편 */}
         <div className="userInfo-header">
           <h5>지사 정보</h5>
           {kinders.userEdit ? (
@@ -40,7 +37,7 @@ class BranchContainer extends Component{
               onClick={() => editUser(kinders.userEdit)}>수정</button>
           )}
         </div>
-        {user && <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={user.education} acct={user.account}/>}
+        <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={user.education} acct={user.account}/>
         <div className="branchKinder-header">
           <h5> 지사 소속 유치원 리스트</h5>
           <div>
@@ -77,12 +74,6 @@ class BranchContainer extends Component{
   }
 }
 
-function mapStateToProps(state, ownProps){
-  return {
-    user: state.auth.user,
-    kinders: state.userAccount
-  }
-}
 
 
-export default connect(mapStateToProps, actions)(BranchContainer)
+export default BranchContainer
