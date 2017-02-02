@@ -238,12 +238,12 @@ exports.userKinder = (req, res) => {
 
 exports.userInfoUpdate = (req, res) => {
   const user = req.params.user
-  const A_manager = req.body.account.manager
-  const A_email = req.body.account.email
-  const A_phone = req.body.account.phone
-  const E_manager = req.body.edu.manager
-  const E_email = req.body.edu.email
-  const E_phone = req.body.edu.phone
+  const A_manager = req.body.account.Manager
+  const A_email = req.body.account.Email
+  const A_phone = req.body.account.Phone
+  const E_manager = req.body.education.Manager
+  const E_email = req.body.education.Email
+  const E_phone = req.body.education.Phone
 
   User.findOneAndUpdate({email: user}, {$set: {
     account: {

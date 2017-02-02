@@ -1,5 +1,5 @@
 import * as types from '../constants/types'
-import { INITIAL_KINDER } from '../../Auth/constants/types'
+import { STATUS_ON_LOGIN } from '../../Auth/constants/types'
 
 const kinderClasses = {
   _id: null,
@@ -76,8 +76,14 @@ const deleteKinder = (state, id) => (
 
 export default (state = initialState , action) => {
   switch (action.type) {
-    case INITIAL_KINDER:
-      return { ...state, kinders:[...action.kinder]}
+    case STATUS_ON_LOGIN:
+      return { ...state,
+              kinders:[...action.kinder],
+              managers: {
+                  account: action.account,
+                  education:action.education
+                }
+              }
     case types.ADD_KINDER:
     case types.UPDATE_KINDER:
     case types.DELETE_KINDER:
@@ -104,14 +110,14 @@ export default (state = initialState , action) => {
     case types.UPDATE_USER:
       return { ...state, managers: {
         account:{
-          manager: action.a_manager,
-          email: action.a_email,
-          phone: action.a_phone
+          Manager: action.a_manager,
+          Email: action.a_email,
+          Phone: action.a_phone
         },
-        edu:{
-          manager: action.e_manager,
-          email: action.e_email,
-          phone: action.e_phone
+        education:{
+          Manager: action.e_manager,
+          Email: action.e_email,
+          Phone: action.e_phone
         }
       }
     }

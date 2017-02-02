@@ -66,7 +66,6 @@ export function fetchUserInfo() {
     return axios.get(`${ROOT_URL}/user/${user}`)
       .then((response) => {
         dispatch(receiveUserInfo(response.data[0]))
-        dispatch(fetchKinder(response))
       })
   }
 }
@@ -74,18 +73,13 @@ export function fetchUserInfo() {
 function receiveUserInfo(response) {
   return {
     type: types.STATUS_ON_LOGIN,
-    response
+    response,
+    kinder: response.kinders,
+    education: response.education,
+    account: response.account
   }
 }
 
-
-
-function fetchKinder(user) {
-  return {
-    type: types.INITIAL_KINDER,
-    kinder: user.data[0].kinders
-  }
-}
 
 
 export function signoutUser(){

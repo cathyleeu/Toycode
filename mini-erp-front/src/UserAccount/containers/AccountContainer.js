@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import * as actions from '../actions'
 import BranchContainer from './BranchContainer'
 import RequestedIVesContainer from './RequestedIVesContainer'
 
 
-const AccountContainer = ({user,kinders}) => (
+const AccountContainer = ({user}) => (
   <div>
     {user._id && (
       <div className="has-Header Container">
-        <BranchContainer user={user} kinders={kinders}/>
+        <BranchContainer user={user} />
         <RequestedIVesContainer />
       </div>
     )}
@@ -21,11 +20,10 @@ const AccountContainer = ({user,kinders}) => (
 
 function mapStateToProps(state, ownProps){
   return {
-    user: state.auth.user,
-    kinders: state.userAccount
+    user: state.auth.user
   }
 }
 
 
-export default connect(mapStateToProps, actions)(AccountContainer)
+export default connect(mapStateToProps)(AccountContainer)
 // export default AccountContainer

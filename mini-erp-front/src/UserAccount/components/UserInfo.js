@@ -8,10 +8,10 @@ class UserInfo extends Component {
     this.state = {
       a_manager: acct.Manager || '',
       a_email: acct.Email || '',
-      a_phone: acct.Phone || '',
-      e_manager: edu.Manager || '',
-      e_email: edu.Email || '',
-      e_phone: edu.Phone || ''
+      a_phone: acct.Phone ||'',
+      e_manager: edu.Manager ||'',
+      e_email: edu.Email ||'',
+      e_phone: edu.Phone ||''
     }
   }
   isHandleChange = e => {
@@ -22,6 +22,7 @@ class UserInfo extends Component {
     const {updateUser} = this.props
     updateUser(this.state)
   }
+
   render(){
     const { user, userEdit } = this.props
     const disabled = !userEdit ? 'none' : ''
@@ -51,7 +52,6 @@ class UserInfo extends Component {
                   onChange={this.isHandleChange} />
               </div>
               <div className="user-info-mngs-acct-email">
-                {/* <span>&#9742;</span> */}
                 <i className="fa fa-envelope" aria-hidden="true"></i>
                 <input
                   type="text"

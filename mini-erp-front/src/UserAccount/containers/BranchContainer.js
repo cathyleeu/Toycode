@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { RegisterKinder, UserInfo } from '../components'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 import './BranchContainer.css'
 
 class BranchContainer extends Component{
@@ -10,6 +12,7 @@ class BranchContainer extends Component{
     addChild(branchCode)
   }
   renderChild = (kinder, i) => {
+    //map을 이용해서 각 유치원 등록 페이지를 불러오는 부분
     const { user, kinders } = this.props
     return (
       <RegisterKinder id={kinder._id} key={i} code={kinder.code} branchCode={user.Code} kinder={kinder}  kinderNo={i+1} branchEdit={kinders.branchEdit ? true : false } />
@@ -37,7 +40,7 @@ class BranchContainer extends Component{
               onClick={() => editUser(kinders.userEdit)}>수정</button>
           )}
         </div>
-        <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={user.education} acct={user.account}/>
+        <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={kinders.managers.education} acct={kinders.managers.account} />
         <div className="branchKinder-header">
           <h5> 지사 소속 유치원 리스트</h5>
           <div>
@@ -74,6 +77,11 @@ class BranchContainer extends Component{
   }
 }
 
+function mapStateToProps(state, ownProps){
+  return {
+    kinders: state.userAccount
+  }
+}
 
 
-export default BranchContainer
+export default connect(mapStateToProps, actions)(BranchContainer)

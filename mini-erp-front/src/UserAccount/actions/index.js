@@ -67,7 +67,7 @@ export const editKinder = (status) => ({
 const ROOT_URL = 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
-  axios.put(`${ROOT_URL}/user/${user}`, KinData)
+  axios.put(`${ROOT_URL}/user/${user}/kinder`, KinData)
   dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})
   alert('수정이 완료되었습니다.')
 }
@@ -77,7 +77,8 @@ export const editUser = (status) => ({
   userEdit: !status
 })
 
-export const updateUser = (info) => ({
+export const updateUser = (info) => {
+  return({
   type: types.UPDATE_USER,
   a_manager: info.a_manager,
   a_email: info.a_email,
@@ -86,10 +87,10 @@ export const updateUser = (info) => ({
   e_email: info.e_email,
   e_phone: info.e_phone
 })
-
+}
 export const editedUser = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
-  axios.put(`${ROOT_URL}/user/info/${user}`, KinData)
+  axios.put(`${ROOT_URL}/user/${user}/info`, KinData)
   dispatch({type: types.EDITED_USER, userEdit: false})
   alert('수정이 완료되었습니다.')
 }
