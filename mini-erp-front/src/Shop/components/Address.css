@@ -14,6 +14,7 @@ height: 30px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+  margin-right: 0.5em;
 }
 .delivery button{
   background: #4884ce;

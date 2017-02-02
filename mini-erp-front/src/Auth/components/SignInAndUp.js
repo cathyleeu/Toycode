@@ -5,7 +5,7 @@ import {toggleSignup, toggleSignin, signupUser, signinUser} from '../actions'
 import {searchAddress, selectedJuso} from '../../actions'
 import './SignInAndUp.css'
 import logo from '../../../public/logo.png'
-import AddressSearch from '../../Shop/components/AddressSearch'
+import AddrModal from '../../Shop/components/AddrModal'
 
 
 class SignInAndUp extends Component {
@@ -86,7 +86,7 @@ class SignInAndUp extends Component {
             placeholder="우편주소"
             required/>
             <div className="searchBtn" onClick={this.openModal}>주소검색</div>
-            <AddressSearch
+            <AddrModal
               isModalOpen={this.state.isModalOpen}
               closeModal={this.closeModal}>
 							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
@@ -101,7 +101,7 @@ class SignInAndUp extends Component {
 										</div>
 									))}
 							</div>
-            </AddressSearch>
+            </AddrModal>
           </div>
           <input
            value={this.state.roadAddr}

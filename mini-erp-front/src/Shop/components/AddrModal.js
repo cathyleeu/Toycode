@@ -1,5 +1,5 @@
 import React from 'react'
-import './AddressSearch.css'
+import './AddrModal.css'
 
 const AddressSearch = ({isModalOpen, closeModal, children}) => (
 
@@ -7,7 +7,7 @@ const AddressSearch = ({isModalOpen, closeModal, children}) => (
 			<div className="overlay" onClick={closeModal}></div>
 			<div onClick={closeModal}></div>
 			<div className="searchModal">
-					{children}
+				{children}
 			</div>
 		</div>
 	)

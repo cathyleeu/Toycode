@@ -4,7 +4,7 @@ import {addClass, updateKinder, updateKinderClass, createKinderClass, deleteKind
 import {searchAddress, selectedJuso} from '../../actions'
 import RegisterKinderClasses from './RegisterKinderClasses'
 import './RegisterKinder.css'
-import AddressSearch from '../../Shop/components/AddressSearch'
+import AddrModal from '../../Shop/components/AddrModal'
 
 class RegisterKinder extends Component {
   constructor(props) {
@@ -116,7 +116,7 @@ class RegisterKinder extends Component {
                    onChange={this.isHandleChange}
                  />
                  {branchEdit && <button onClick={this.openModal}>주소검색</button>}
-                 <AddressSearch
+                 <AddrModal
                    isModalOpen={this.state.isModalOpen}
                    closeModal={this.closeModal}>
      							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
@@ -131,7 +131,7 @@ class RegisterKinder extends Component {
      										</div>
      									))}
      							</div>
-                 </AddressSearch>
+                </AddrModal>
                </div>
                <div className="kinder-address-roadAddr">
                  <input

@@ -14,7 +14,8 @@ export default function(state = initialState, action) {
    case types.SELECTED_JUSO:
      return {...state, selectedJuso:{
        zipNo: action.zipNo,
-       roadAddr: action.roadAddr
+       roadAddr: action.roadAddr,
+       detailAddr: action.detailAddr || ''
      }
    }
    default:
