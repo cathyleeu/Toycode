@@ -24,5 +24,6 @@ export function searchAddress(location){
 export const selectedJuso = (selectedJuso) => ({
   type: types.SELECTED_JUSO,
   zipNo: selectedJuso.zipNo,
-  roadAddr: selectedJuso.roadAddr
+  roadAddr: selectedJuso.roadAddr,
+  detailAddr: selectedJuso.detailAddr || ''
 })

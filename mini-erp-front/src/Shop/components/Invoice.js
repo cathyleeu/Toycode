@@ -18,6 +18,7 @@ const Invoice = ({nodes,total,requestInvoice,user,selected}) => (
         address={user.user.branch.Address}
         acct={user.user.account}
         selected={selected}
+        userKinders={user.user.kinders}
       />
     </div>
   </div>

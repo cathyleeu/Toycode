@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Input from './Input'
 import './Address.css'
-import AddressSearch from './AddressSearch'
+import AddrModal from './AddrModal'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
@@ -17,18 +17,22 @@ class Address extends Component {
 			zipNo: address.zipNo || '',
 			roadAddr: address.roadAddr|| '',
 			detailAddr: address.detailAddr|| '',
-      isModalOpen: false
+      isAddrOpen: false,
+      isAddrBookOpen: false
     }
   }
   handleChange = e => {
     this.setState({[e.target.name]:e.target.value})
   }
-  openModal = () => {
-    this.setState({ isModalOpen: true })
+  openAddr = () => {
+    this.setState({ isAddrOpen: true })
+  }
+  openAddrBook = () => {
+    this.setState({ isAddrBookOpen: true })
   }
   closeModal = () => {
 		const { searchAddress } = this.props
-		this.setState({ isModalOpen: false, location: ''}, searchAddress(''))
+		this.setState({ isAddrOpen: false, isAddrBookOpen: false, location: ''}, searchAddress(''))
 	}
 	isSearchAddress = () => {
 		const { searchAddress } = this.props
@@ -37,10 +41,13 @@ class Address extends Component {
 	isSelectedAddress = (result) => {
 		const {selectedJuso} = this.props
 		selectedJuso(result)
+    console.log(selectedJuso(result))
+    console.log(this.state)
 		this.closeModal()
 		this.setState({
 			zipNo: result.zipNo,
-			roadAddr: result.roadAddr
+			roadAddr: result.roadAddr,
+      detailAddr: result.detailAddr || ''
 		})
 	}
 	/*TODO
@@ -50,7 +57,7 @@ class Address extends Component {
 		4: UI 정리하기...ㅠㅠ
 	*/
   render(){
-    const {user, userEmail, userCode, requestInvoice, selected, juso, userName} = this.props
+    const {user, userEmail, userCode, requestInvoice, selected, juso, userName, userKinders} = this.props
     const invoice = {
       userName: userName,
       userEmail: userEmail,
@@ -78,9 +85,9 @@ class Address extends Component {
           <label htmlFor="zipcode">우편번호</label>
           <div className="zipcode">
             <Input type={'text'} id={'zipcode'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={this.state.zipNo}/>
-            <button onClick={this.openModal} className="col-md-2">주소검색</button>
-            <AddressSearch
-              isModalOpen={this.state.isModalOpen}
+            <button onClick={this.openAddr} className="col-md-3">주소검색</button>
+            <AddrModal
+              isModalOpen={this.state.isAddrOpen}
               closeModal={this.closeModal}>
 							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
 							<div className="search-address-top">
@@ -94,7 +101,30 @@ class Address extends Component {
 									</div>
 								))}
 							</div>
-            </AddressSearch>
+            </AddrModal>
+            <button onClick={this.openAddrBook} className="col-md-2">주소록</button>
+            <AddrModal
+              isModalOpen={this.state.isAddrBookOpen}
+              closeModal={this.closeModal}>
+							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+              <div>
+                <p>지사주소</p>
+                <div onClick={() => this.isSelectedAddress(user.Address)}>
+                  <p>{user.Address.zipNo}</p>
+                  <p>{user.Address.roadAddr} | {user.Address.detailAddr}</p>
+                </div>
+                <div>
+                  <p>소속유치원 주소</p>
+                  {userKinders.map((kinder, i) => (
+                    <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
+                      <p>{kinder.name}</p>
+                      <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </AddrModal>
+
           </div>
         </div>
         <div className="delivery-address">
