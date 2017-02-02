@@ -1,0 +1,39 @@
+.IV-Goods-abbr {
+  width: 100%;
+  overflow: hidden;
+  background: white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 1em;
+  padding-right: 2.1em;
+}
+
+.IV-Goods-detail {
+  height: 0;
+  overflow: hidden;
+  transition: all .2s ease-in;
+}
+.IV-Goods-detail-info{
+  display: flex;
+  flex-direction: row;
+}
+
+
+.IV-Goods button {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  color:black;
+  cursor: pointer;
+  /*text-indent: -9999%;*/
+}
+
+.IV-Goods.open .IV-Goods-detail {
+  height: 130px;
+}
+
+.IV-Goods-abbr-top{
+  display: flex;
+  flex-direction: row;
+}
