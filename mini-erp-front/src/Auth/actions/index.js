@@ -12,13 +12,11 @@ export function signinUser(userData) {
     axios.post(`${ROOT_URL}/signin`, userData)
       .then(response => {
         // 요청이 좋다면?
-          //유저상태 업데이트
-          dispatch({ type: types.AUTH_USER })
           // JWT token 저장
-          // console.log(userData)
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('email', userData.email)
-          dispatch(fetchUser())
+          //유저상태 업데이트
+          dispatch(fetchUserInfo())
           // feature페이지 re다이렉트
           browserHistory.push('feature')
       })
@@ -44,10 +42,8 @@ export function signupUser(userData) {
   return function (dispatch) {
     axios.post(`${ROOT_URL}/signup`, userData)
       .then(response => {
-        // localStorage.setItem('token', response.data.token)
         alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
         dispatch({ type: types.REGISTERED_STATUS, status: false })
-        // browserHistory.push('signin')
       })
       .catch(response => dispatch(authError(response.data.error)))
   }
@@ -62,15 +58,28 @@ export function authError(error) {
   }
 }
 
-export function fetchUser() {
-  const user = localStorage.getItem('email')
+
+export function fetchUserInfo() {
   return function (dispatch) {
-    axios.get(`${ROOT_URL}/user/${user}`).then((user) => {
-      dispatch(completedFetchUser(user))
-      dispatch(fetchKinder(user))
-    })
+    // dispatch({ type: types.AUTH_USER })
+    const user = localStorage.getItem('email')
+    return axios.get(`${ROOT_URL}/user/${user}`)
+      .then((response) => {
+        dispatch(receiveUserInfo(response.data[0]))
+        dispatch(fetchKinder(response))
+      })
   }
 }
+
+function receiveUserInfo(response) {
+  return {
+    type: types.STATUS_ON_LOGIN,
+    response
+  }
+}
+
+
+
 function fetchKinder(user) {
   return {
     type: types.INITIAL_KINDER,
@@ -78,18 +87,12 @@ function fetchKinder(user) {
   }
 }
 
-export function completedFetchUser(user) {
-  return {
-    type: types.STATUS_ON_LOGIN,
-    user: user.data[0]
-  }
-}
 
 export function signoutUser(){
   localStorage.removeItem('token')
   localStorage.removeItem('email')
   return function (dispatch) {
-    dispatch({type: types.UNAUTH_USER})
-    browserHistory.push('/')
+    browserHistory.push('logout')
+    dispatch({type: types.UNAUTH_USER});
   }
 }

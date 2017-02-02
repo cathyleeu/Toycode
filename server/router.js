@@ -18,8 +18,8 @@ module.exports = function(app) {
   app.get('/user/:user',  Auth.userOn)
   app.put('/user/:user',  Auth.userKinderUpdate)
   app.put('/user/info/:user',  Auth.userInfoUpdate)
-  // app.delete('/user/:user',  Auth.userKinderDelete)
   app.get('/user/:user/kinder',  Auth.userKinder)
+  app.get('/user',  Auth.allUsers)
 
   app.post('/books', Books.newbook)
   app.get('/books', Books.getbooks)
@@ -28,7 +28,7 @@ module.exports = function(app) {
   //   res.end()
   // })
 
-  app.get('/invoices', Invoices.getInvoices)
+  app.get('/invoices', Invoices.getAllInvoices)
   app.get('/invoices/:user', Invoices.getUserInvoices)
   app.post('/invoices', Invoices.newInvoice)
   // app.put('/books/:book_id', function(req, res){

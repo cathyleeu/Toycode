@@ -22,6 +22,7 @@ const kinderSchema = new Schema({
 })
 
 const userSchema = new Schema({
+  admin: {type: Boolean, default: false},
   email : { type: String, unique: true, lowercase: true},
   password: String,
   Code: { type: String, unique: true },

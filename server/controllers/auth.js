@@ -220,11 +220,14 @@ exports.confirmSignUp = (req, res) => {
 }
 
 
+exports.allUsers = (req, res) => {
+  User.find((err, users) => res.json(users)).where({admin: false}).select('admin email kinders branch Code account education')
+}
+
 //해당 유저의 내용만 받아오기
-exports.userOn = (req, res ) => {
-  console.log(req.params.user)
+exports.userOn = (req, res) => {
   const user = req.params.user
-  User.find((err, users) => res.json(users)).where({email: user}).select('email kinders branch Code account education')
+  User.find((err, users) => res.json(users)).where({email: user}).select('admin email kinders branch Code account education')
 }
 
 exports.userKinder = (req, res) => {

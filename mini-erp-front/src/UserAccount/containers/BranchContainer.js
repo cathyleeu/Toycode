@@ -83,4 +83,6 @@ function mapStateToProps(state, ownProps){
     kinders: state.userAccount
   }
 }
+
+
 export default connect(mapStateToProps, actions)(BranchContainer)

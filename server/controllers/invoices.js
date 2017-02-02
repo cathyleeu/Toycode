@@ -54,7 +54,7 @@ exports.newInvoice = function (req, res, next) {
   })
 }
 
-exports.getInvoices = function (req, res) {
+exports.getAllInvoices = function (req, res) {
   Invoices.find(function (err, invoices) {
     if(err){
       return res.status(500).send({error: 'database failure'});
