@@ -57,7 +57,7 @@ class Address extends Component {
 		4: UI 정리하기...ㅠㅠ
 	*/
   render(){
-    const {user, userEmail, userCode, requestInvoice, selected, juso, userName, userKinders} = this.props
+    const {user, userEmail, userCode, requestInvoice, selected, juso, userName, userKinders, kinderAddr} = this.props
     const invoice = {
       userName: userName,
       userEmail: userEmail,
@@ -115,7 +115,7 @@ class Address extends Component {
                 </div>
                 <div>
                   <p>소속유치원 주소</p>
-                  {userKinders.map((kinder, i) => (
+                  {kinderAddr.map((kinder, i) => (
                     <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
                       <p>{kinder.name}</p>
                       <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>

@@ -6,7 +6,7 @@ import Cart from '../components/Cart'
 import { bindActionCreators } from 'redux'
 
 
-const CartContainer = ({books, goodsSelect, selected, goodsDelete, requestInvoice, user, getInvoices}) => (
+const CartContainer = ({books, goodsSelect, selected, goodsDelete, requestInvoice, user, getInvoices, kinderAddr}) => (
    <Cart
     books={books}
     goodsSelect={goodsSelect}
@@ -15,6 +15,7 @@ const CartContainer = ({books, goodsSelect, selected, goodsDelete, requestInvoic
     requestInvoice={requestInvoice}
     user={user}
     getInvoices={getInvoices}
+    kinderAddr={kinderAddr}
    />
 )
 
@@ -22,7 +23,8 @@ function mapStateToProps(state){
   return {
     books: getCartProducts(state),
     selected: getAddedCart(state),
-    user: state.auth
+    user: state.auth,
+    kinderAddr: state.userAccount.kinders
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import Address from './Address'
 import './Invoice.css'
 
-const Invoice = ({nodes,total,requestInvoice,user,selected}) => (
+const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => (
   <div className="Invoice-Container">
     <div className="col-md-6">
       {nodes}
@@ -19,6 +19,7 @@ const Invoice = ({nodes,total,requestInvoice,user,selected}) => (
         acct={user.user.account}
         selected={selected}
         userKinders={user.user.kinders}
+        kinderAddr={kinderAddr}
       />
     </div>
   </div>
