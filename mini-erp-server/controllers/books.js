@@ -1,4 +1,5 @@
 const Books = require('../models/books');
+const Code = require('../models/code');
 
 const isRegisteredNewGoods = async (ctx, next) => {
   try{
@@ -8,13 +9,13 @@ const isRegisteredNewGoods = async (ctx, next) => {
       code : code,
       quantity : quantity,
       price : price
-    })
+    });
     ctx.body = await book.save();
+    // ctx.body = await new Books().save()
   } catch(err){
     ctx.body = await next(err);
   }
 };
-
 const isFetchedAll = async ctx => {
   try {
     ctx.body = await Books.find().sort({"id": 1 });
@@ -23,7 +24,7 @@ const isFetchedAll = async ctx => {
     ctx.body = err;
     console.log(err);
   }
-}
+};
 
 module.exports = {
   isRegisteredNewGoods, isFetchedAll

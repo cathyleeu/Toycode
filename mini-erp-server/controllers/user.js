@@ -117,8 +117,6 @@ function tokenForUser(user) {
 }
 
 const signin = async ctx => { ctx.body = { token: tokenForUser(ctx.request.body.user) };};
-
-
 const signup = async (ctx, next) => {
   try {
     const { email, password, Name, zipNo, roadAddr, detailAddr } = ctx.request.body;
