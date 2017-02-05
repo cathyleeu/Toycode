@@ -14,7 +14,7 @@ exports.newInvoice = function (req, res, next) {
   const requestDesc = req.body.requestDesc
   const totalSales = req.body.totalSales
 
-  Code.findOne({dbcollection: 'Invoices'}, function(err, codeRes) {
+  Code.findOne({dbcollection: 'Invoices'}).then(codeRes => {
     let count = codeRes ? codeRes.count : 1,
         zero = new Array(9).join(0),
         resultId = "IV" + (zero + count).slice(-zero.length);
@@ -37,35 +37,36 @@ exports.newInvoice = function (req, res, next) {
       requestDesc: requestDesc,
       totalSales: totalSales
     })
-    invoice.save(function(err){
-      if(err){
-        return next(err)
-      }
+    invoice.save().then(() => {
       codeRes = codeRes || new Code({
         dbcollection: 'Invoices',
         count: count
       });
       codeRes.count++
-      codeRes.save(function(err) {
-        if(err){
-          return next(err)
-        }
+      codeRes.save().then((invoice)=> {
         res.json(invoice)
-      });
-    })
-  })
+        }, err => {
+          return next(err)
+        })
+      }, err => {
+        return next(err)
+      })
+  }, err => {
+    res.status(500).send({error: 'cannot find Invoices'});
+  });
 }
 
-exports.getAllInvoices = function (req, res) {
-  Invoices.find(function (err, invoices) {
-    if(err){
-      return res.status(500).send({error: 'database failure'});
-    }
-    return res.json(invoices)
-  })
+exports.getAllInvoices = (req, res) => {
+  Invoices.find().then(invoices => {
+    res.json(invoices);
+  }, err => {
+    res.status(500).send({error: 'database failure'});
+  });
 }
 
 exports.getUserInvoices = (req, res) => {
   const user = req.params.user
-  Invoices.find((err, users) => res.json(users)).where({userEmail: user}).sort({createdOn: -1})
+  Invoices.find().where({userEmail: user}).sort({createdOn: -1}).then(users => {
+    res.json(users)
+  })
 }

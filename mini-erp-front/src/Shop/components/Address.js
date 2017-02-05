@@ -51,13 +51,10 @@ class Address extends Component {
 		})
 	}
 	/*TODO
-		1: 사용자가 주소입력 할 수 있도록 onChange설정하기
-		2: 그래도, 처음에는 (회원가입)입력한 값으로 받기
-		3: 주소 검색 API 붙이기
 		4: UI 정리하기...ㅠㅠ
 	*/
   render(){
-    const {user, userEmail, userCode, requestInvoice, selected, juso, userName, userKinders, kinderAddr} = this.props
+    const {user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr} = this.props
     const invoice = {
       userName: userName,
       userEmail: userEmail,
@@ -117,7 +114,7 @@ class Address extends Component {
                   <p>소속유치원 주소</p>
                   {kinderAddr.map((kinder, i) => (
                     <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
-                      <p>{kinder.name}</p>
+
                       <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
                     </div>
                   ))}

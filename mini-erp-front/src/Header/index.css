@@ -35,4 +35,5 @@ li p {
 .Logout{
   float: right;
   width: 10%;
+  cursor: pointer;
 }
