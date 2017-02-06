@@ -75,9 +75,6 @@ nev.configure({
 
 
 
-
-
-
 nev.generateTempUserModel(User, function(err, tempUserModel) {
   if (err) {
     console.log(err);
