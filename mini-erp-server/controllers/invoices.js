@@ -46,8 +46,11 @@ const isRegisteredNewIVes = ctx => {
     console.log(err);
   }
 };
-const isFetchedAll = async ctx => {
+
+
+const isFetchedAllIVes = async ctx => {
   try {
+    console.log("aaa")
     ctx.body = await Invoices.find().sort({createdOn: -1});
   } catch (err) {
     ctx.status = 500;
@@ -65,4 +68,4 @@ const isFetchedByUser = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNewIVes, isFetchedAll, isFetchedByUser };
+module.exports = { isRegisteredNewIVes, isFetchedAllIVes , isFetchedByUser };
