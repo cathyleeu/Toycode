@@ -1,8 +1,8 @@
 import React from 'react'
 
-const CatalogContainer = () => (
+const StatementContainer = () => (
   <div className="has-Header">
-    <p>for CatalogContainer</p>
+    <p>for StatementContainer</p>
     <div>Catalog Header
       <p> search goods</p>
       <p> register goods to button</p>
@@ -13,4 +13,4 @@ const CatalogContainer = () => (
   </div>
 )
 
-export default CatalogContainer
+export default StatementContainer

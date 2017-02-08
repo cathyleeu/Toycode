@@ -1,7 +1,7 @@
 const Invoices = require('../models/invoices');
 const Code = require('../models/code');
 
-const isRegisteredNewIVes = async ctx => {
+const isRegisteredNewIVes = async (ctx, next) => {
   try {
     const {userName, userEmail, userCode, delivery, requestedGoods, requestDesc, totalSales} = ctx.request.body;
     const {to, phone, address} = delivery;

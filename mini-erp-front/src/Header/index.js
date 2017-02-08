@@ -12,7 +12,8 @@ const Header = ({auth, signoutUser, admin}) => {
   const adminHeader = [
     {route: '/allIves' , title: '주문상황'},
     {route: '/cst-list' , title: '지사상황'},
-    {route: '/catalog' , title: '상품목록'}
+    {route: '/catalog' , title: '상품목록'},
+    {route: '/statement' , title: '매출장부'}
   ]
   const userHeaderList = userHeader.map((list,i) => (
     <li key={i}>
