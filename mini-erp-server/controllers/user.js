@@ -3,7 +3,7 @@ const jwt = require('jwt-simple'),
       Code = require('../models/code'),
       mongoose = require('mongoose'),
       nev = require('email-verification')(mongoose),
-      siteUrl = 'http://localhost:3000',
+      siteUrl = 'http://localhost:3090',
       config = require('../config'),
       co = require('co');
 
@@ -11,7 +11,7 @@ const jwt = require('jwt-simple'),
 const passport = require('koa-passport');
 const passportConfig = require('../services/passport');
 
-const requireAuth = passport.authenticate('jwt', {session: false})
+// const requireAuth = passport.authenticate('jwt', {session: false})
 
 
 function createTempUser(newUser) {
@@ -36,6 +36,17 @@ function sendVerificationEmail(email, url) {
     });
   });
 }
+function sendConfirmationEmail(email){
+  return new Promise((resolve, reject) => {
+    nev.sendConfirmationEmail(email, (err, info) => {
+      if(err){
+        reject({ err });
+      } else {
+        resolve(info);
+      }
+    })
+  })
+}
 function confirmTempUser(url) {
   return new Promise( function (resolve, reject) {
     nev.confirmTempUser(url, function (err, user){
@@ -46,22 +57,7 @@ function confirmTempUser(url) {
     });
   });
 }
-// function authenticate_local() {
-//   return new Promise((resolve, reject) => {
-//     console.log("aaa");
-//       passport.authenticate('local', (user, info, status) => {
-//       console.log("local",user)
-//       resolve({ user, info, status});
-//     });
-//   });
-// }
-// function authenticate_jwt() {
-//   return new Promise( function (resolve, reject) {
-//     passport.authenticate('jwt', (session) => {
-//       resolve({ session: false });
-//     });
-//   });
-// }
+
 
 nev.generateTempUserModel = function(User, callback) {
   if (!User) {
@@ -112,8 +108,8 @@ nev.configure({
     verifyMailOptions: {
       from: '키즈코딩 <toycodeinc_do_not_reply@gmail.com>',
       subject: '키즈코딩 회원 이메일 인증',
-      html: '<p>다음의 링크를 클릭하시면 이메일 인증이 완료됩니다 : </p><p>${URL}</p>',
-      text: '다음의 링크를 클릭하시면 이메일 인증이 완료됩니다 : ${URL}'
+      html: '<p>아래의 "인증하기"를 클릭하시면 이메일 인증이 완료됩니다 : </p><a href="${URL}">[인증하기]</a></p>',
+      text: ''
     }
 }, function(err, options) {
   if (err) {
@@ -140,9 +136,9 @@ function tokenForUser(user) {
   return jwt.encode({sub: user._id, iat: timestamp }, config.secret)
 }
 
-const intro = function(ctx,next){
-
-}
+// const intro = function(ctx,next){
+//
+// }
 
 
 const signin = async(ctx, next) => {
@@ -157,7 +153,6 @@ const signin = async(ctx, next) => {
   })
   await co(gen.call(ctx, next));
 };
-
 
 
 const signup = async (ctx, next) => {
@@ -235,6 +230,30 @@ const signup = async (ctx, next) => {
 
   // TODO: async await에서 Promise reject의 경우 처리 필요
 };
+
+const confirmSignUp = async ctx => {
+  try {
+    const url = ctx.params.url;
+    const user = await confirmTempUser(url);
+    console.log("confirm",user)
+    // TODO: 클릭이 완료되면 로그인 페이지로 자동 이동하기 ㅎㅎㅎㅎctx.render = "http:localhost:3000/login"
+    ctx.body = "이메일 인증이 완료되었습니다."
+    // if(user) {
+    //   try {
+    //     const email = await sendConfirmationEmail(user.email)
+    //     ctx.body = "이메일 인증 완료"
+    //   } catch (err) {
+    //     ctx.status = 404;
+    //     ctx.body = {err:"인증 메일 확인 전송에 실패했습니다."};
+    //     console.log("이메일 확인 인증",err);
+    //   }
+    // }
+  } catch (err) {
+    ctx.status = 404;
+    ctx.body = {err:"메일 인증에 실패했습니다."};
+  }
+}
+
 
 // TODO:codeName 으로 불러오기
 const allUsers = async ctx => {
@@ -315,5 +334,5 @@ const hello = async ctx => {
 };
 
 module.exports = {
-  intro, hello, signin, signup, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate
+  hello, signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate
 };

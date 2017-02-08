@@ -37,12 +37,12 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 });
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods())
-
 app.use(convert(session()))
 app.use(convert(passport.initialize()))
 app.use(convert(passport.session()))
 
-app.listen(3000);
+app
+  .use(router.routes())
+  .use(router.allowedMethods())
+
+app.listen(3090);

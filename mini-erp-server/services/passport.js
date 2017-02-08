@@ -3,12 +3,10 @@ const User = require('../models/user');
 const config = require('../config');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const co = require('co');
 
 
-
-passport.serializeUser(function(user, done) { done(null, user._id) })
-passport.deserializeUser(function(id, done) { User.findById(id, done); })
+passport.serializeUser((user, done) => { done(null, user._id) })
+passport.deserializeUser((id, done) => { User.findById(id, done); })
 
 
 
