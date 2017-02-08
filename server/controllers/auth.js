@@ -88,10 +88,14 @@ nev.generateTempUserModel(User, function(err, tempUserModel) {
 // iat : issued at time
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
-  return jwt.encode({sub: user.id, iat: timestamp }, config.secret)
+  return jwt.encode({sub: user._id, iat: timestamp }, config.secret)
 }
 
-exports.signin = (req, res, next) => res.send({ token: tokenForUser(req.user) })
+// const requireSignin = passport.authenticate('local', {session: false})
+exports.signin = (req, res, next) => {
+  // console.log("signin",req.user)
+  return res.send({ token: tokenForUser(req.user) })
+}
 
 
 

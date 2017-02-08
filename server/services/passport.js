@@ -13,20 +13,26 @@ const localLogin = new LocalStrategy(localOptions, function (email, password, do
   // 일치할 경우
   // 아닐경우
   User.findOne({ email: email }, function(err, user){
+    console.log("local",user);
     if(err){
+      console.log("local-err", err);
       return done(err)
     }
     if(!user){
+      console.log("!user");
       return done(null, false)
     }
     // 비밀번호 비교
     user.comparePassword(password, function (err, isMatch) {
       if(err){
+        console.log("compare-err", err)
         return done(err)
       }
       if(!isMatch){
+        console.log("!isMatch", isMatch);
         return done(null, false)
       }
+      console.log("com",user);
       return done(null, user)
     })
   })
