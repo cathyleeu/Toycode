@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CatalogContainer = () => (
-  <div className="has-Header">
+  <div className="has-Header Container">
     <p>for CatalogContainer</p>
     <div>Catalog Header
       <p> search goods</p>

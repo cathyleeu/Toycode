@@ -1,7 +1,7 @@
 import React from 'react'
 
 const StatementContainer = () => (
-  <div className="has-Header">
+  <div className="has-Header Container">
     <p>for StatementContainer</p>
     <div>Catalog Header
       <p> search goods</p>
