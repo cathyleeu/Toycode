@@ -5,6 +5,7 @@ import './RequestedIVes.css'
 const RequestedIVes = ({invoice}) => {
   //TODO: mongoDB에서 momentJs 활용하여 한국시간으로 받아와야함
   const orderCreated = invoice.createdOn.split("T")
+  console.log(orderCreated)
   return(
   <div className="requestedIVes-body col-md-12">
     <div className="requestedIVes-contents">
@@ -24,10 +25,17 @@ const RequestedIVes = ({invoice}) => {
         <strong>{invoice.totalSales}</strong>
       </div>
     </div>
-    <div className="requestedIVes-inquiry-body col-md-12">
-      <strong>고객문의사항</strong>
-      <p>{invoice.requestDesc}</p>
+    <div className="requestedIVes-inquiry col-md-12">
+      <div className="requestedIVes-inquiry-ctx col-md-8">
+        <strong>고객문의사항</strong>
+        <p>{invoice.requestDesc}</p>
+      </div>
+      <div className="requestedIVes-inquiry-btn col-md-4">
+        <button>거래명세서</button>
+        <button>반품접수</button>
+      </div>
     </div>
+
   </div>
 )}
 

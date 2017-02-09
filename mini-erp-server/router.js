@@ -8,7 +8,7 @@ const Invoices = require('./controllers/invoices');
 
 // router.get('/', requireAuth, Users.intro);
 // router.get('/', Users.intro);
-router.post('/hello', Users.hello);
+
 
 // router.post('/signin', requireSignin, Users.signin)
 router.post('/signin', Users.signin)

@@ -21,8 +21,9 @@ const kinderSchema = new Schema({
   kinderClasses: []
 })
 
+// userType = [branch, admin, warehouse]
 const userSchema = new Schema({
-  admin: {type: Boolean, default: false},
+  userType: {type: String, default: 'branch'},
   email : { type: String, unique: true, lowercase: true},
   password: String,
   Code: { type: String, unique: true },
@@ -35,14 +36,14 @@ const userSchema = new Schema({
     }
   },
   account: {
-    Manager: String,
-    Email: String,
-    Phone: String
+    A_manager: String,
+    A_email: String,
+    A_phone: String
   },
   education:{
-    Manager: String,
-    Email: String,
-    Phone: String
+    E_manager: String,
+    E_email: String,
+    E_phone: String
   },
   kinders: [kinderSchema],
   createdOn: {type: Date, default: Date.now}

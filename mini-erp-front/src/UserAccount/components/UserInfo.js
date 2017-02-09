@@ -6,12 +6,12 @@ class UserInfo extends Component {
     super(props)
     const { edu, acct } = this.props
     this.state = {
-      a_manager: acct.Manager || '',
-      a_email: acct.Email || '',
-      a_phone: acct.Phone ||'',
-      e_manager: edu.Manager ||'',
-      e_email: edu.Email ||'',
-      e_phone: edu.Phone ||''
+      a_manager: acct.A_manager || '',
+      a_email: acct.A_email || '',
+      a_phone: acct.A_phone ||'',
+      e_manager: edu.E_manager ||'',
+      e_email: edu.E_email ||'',
+      e_phone: edu.E_phone ||''
     }
   }
   isHandleChange = e => {
