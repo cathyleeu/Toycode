@@ -13,10 +13,100 @@
 }
 
 
+/* ------transaction-modal-css ---------*/
+.transaction{
+  border: 1px solid #dfdfdf;
+  margin-top: 1em;
+}
+
+.transaction-top-h{
+  border-bottom: 1px solid #dfdfdf;
+  padding: 0.2em;
+}
+
+.line-r{
+  border-right:1px solid #dfdfdf;
+}
+
+.provider-l,
+.transaction-top-ctx-l{
+  border-right:1px solid #dfdfdf;
+  padding: 0.2em;
+}
+
+
+.transaction-top,
+.transaction-body-top,
+.transaction-body-ctx,
+.provider-r-1,
+.provider-r-2{
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.transaction-body-top,
+.transaction-body-ctx,
+.transaction-top-ctx,
+.transaction-btm,
+.provider-r-1,
+.provider-r-2,
+.provider-r-3{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/*{
+  padding: 0em;
+}*/
+
+.provider-r,
+.provider-r-1 strong,
+.provider-r-2 strong,
+.provider-r-3 strong,
+.transaction-btm,
+.transaction-btm strong,
+.transaction-top-ctx-r,
+.transaction-btm p,
+.transaction-top-ctx p,
+.transaction-top-h p,
+.transaction-body-top p,
+.transaction-body-ctx p,
+.transaction-top-h h6{
+  margin: 0;
+  padding: 0;
+}
+
+.transaction-top-ctx-r strong{
+  font-size: 14px;
+}
+
+.transaction-btm p,
+.transaction-btm strong,
+.transaction-body-ctx p,
+.transaction-body-top p,
+.transaction-top-ctx-r p,
+.transaction-top-ctx-l p,
+.transaction-top-h p{
+  font-size: 12px;
+}
+.transaction-body-ctx p,
+.transaction-body-top p,
+.provider-r-1 strong,
+.provider-r-2 strong,
+.provider-r-3 strong,
+.transaction-btm strong,
+.transaction-btm p,
+.transaction-top-h h6{
+  text-align: center;
+}
+.transaction-top-ctx,
+.transaction-top-ctx-r,
 .requestedIVes-inquiry{
   display: flex;
   flex-direction: row;
 }
+
+/* ---------------------------*/
 
 .requestedIVes-inquiry-ctx{
   border-left: 3px solid #1ECD97;
