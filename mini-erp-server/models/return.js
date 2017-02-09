@@ -4,7 +4,7 @@ const moment = require('moment');
 
 
 const returnSchema = new Schema({
-  returnId: String,
+  returnGoodsId: String,
   userName: {type: String, required: true},
   userEmail : {type: String, required: true},
   userCode: {type: String, required: true},
@@ -22,7 +22,7 @@ const returnSchema = new Schema({
   returningGoods:[],
   createdOn : { type: Date, default: Date.now },
   requestDesc: String,
-  totalSales: Number
+  totalRefund: Number
 });
 
 //TODO-4: 한국시간으로 받아오기

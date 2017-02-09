@@ -125,7 +125,6 @@ nev.generateTempUserModel(User, function(err, tempUserModel) {
     console.log(err);
     return;
   }
-
   console.log('generated temp user model: ' + (typeof tempUserModel === 'function'));
 });
 
@@ -158,40 +157,25 @@ const signin = async(ctx, next) => {
 const signup = async (ctx, next) => {
   try {
     const { email, password, Name, zipNo, roadAddr, detailAddr } = ctx.request.body;
-
     if(!email || !password){
       ctx.status = 422;
       ctx.body = {error: '아이디 또는 비밀번호를 입력해주세요.'};
       return;
     }
-
     let user = await User.findOne({email: email});
     let codeRes = await Code.findOne({dbcollection: 'User'});
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
         resultId = "A" + (zero+count).slice(-zero.length);
     user = new User({
-      email: email,
-      password: password,
+      email, password,
       Code: resultId,
       branch: {
-        Name: Name,
-        Address:{
-          zipNo:zipNo,
-          roadAddr:roadAddr,
-          detailAddr:detailAddr
-        }
+        Name,
+        Address:{ zipNo, roadAddr, detailAddr }
       },
-      account:{
-        Manager: '',
-        Email: '',
-        Phone: ''
-      },
-      education:{
-        Manager: '',
-        Email: '',
-        Phone: ''
-      }
+      account:{ A_manager: '', A_email: '', A_phone: '' },
+      education:{ E_manager: '', E_email: '', E_phone: '' }
     });
 
     const result = await createTempUser(user);
@@ -257,10 +241,10 @@ const confirmSignUp = async ctx => {
 
 // TODO:codeName 으로 불러오기
 const allUsers = async ctx => {
-  ctx.body = await User.find().where({admin: false}).select('admin email kinders branch Code account education');
+  ctx.body = await User.find().where({userType: 'branch'}).select('userType email kinders branch Code account education');
 }
 const loggedUser = async ctx => {
-  ctx.body = await User.find().where({email: ctx.params.user}).select('admin email kinders branch Code account education');
+  ctx.body = await User.find().where({email: ctx.params.user}).select('userType email kinders branch Code account education');
 }
 
 
@@ -269,22 +253,16 @@ const userKinders = async ctx => {
 }
 const userInfoUpdate = async ctx => {
   try {
+    // body에소 보내는 명과 model 스키마 명과 일치하는 것이 좋음!!
     const { A_manager, A_email, A_phone } = ctx.request.body.account;
     const { E_manager, E_email, E_phone } = ctx.request.body.education;
     ctx.body = await User.findOneAndUpdate(
       {email: ctx.params.user},
       {$set: {
-        account: {
-          Manager: A_manager,
-          Email: A_email,
-          Phone: A_phone
-        },
-        education:{
-          Manager: E_manager,
-          Email: E_email,
-          Phone: E_phone
-        }
-      }})
+        account: { A_manager, A_email, A_phone },
+        education:{ E_manager, E_email, E_phone }
+      }},
+      { new: true })
   } catch(err) {
     ctx.status = 500;
     ctx.body = err;
@@ -294,24 +272,13 @@ const userInfoUpdate = async ctx => {
 const userKinderUpdate = async ctx => {
   try{
     const kinders = ctx.request.body.kinders.map((kinder, i) => {
-      const kinderId = 'K'+(i+1)
-      const kinderCode = kinder.parentId+'-'+kinderId
-      //TODO: castError
+      const kinderId = 'K'+(i+1);
+      const kinderCode = kinder.parentId+'-'+kinderId;
+      const { parentId, manager, zipNo, roadAddr, detailAddr, managerPh, name, phone} = kinder;
       return({
-        code: kinderCode,
-        parentId: kinder.parentId,
-        manager: kinder.manager,
-        zipNo: kinder.zipNo,
-        roadAddr: kinder.roadAddr,
-        detailAddr:kinder.detailAddr,
-        // address: {
-        //   zipNo: kinder.zipNo,
-        //   roadAddr: kinder.roadAddr,
-        //   detailAddr:kinder.detailAddr
-        // },
-        managerPh: kinder.managerPh,
-        name: kinder.name,
-        phone: kinder.phone,
+        code: kinderCode, parentId, manager,
+        zipNo, roadAddr, detailAddr,
+        managerPh, name, phone,
         kinderClasses: kinder.kinderClasses.map((kinderClass, i) => ({
           _id: kinderId+'-KC'+(i+1),
           code: kinderCode+'-KC'+(i+1),
@@ -319,7 +286,7 @@ const userKinderUpdate = async ctx => {
           students: kinderClass.students
         }))
       })})
-      ctx.body = User.findOneAndUpdate({email: user}, {$set: {kinders: kinders}})
+      ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders}}, { new: true })
   } catch(err){
     ctx.status = 500;
     ctx.body = err;
@@ -327,12 +294,6 @@ const userKinderUpdate = async ctx => {
   }
 }
 
-
-const hello = async ctx => {
-  const user = await User.findOne({email: ctx.request.body.email});
-  ctx.body = 'Hello World, ' + ctx.request.body.email + " " + user.Code;
-};
-
 module.exports = {
-  hello, signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate
+  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate
 };

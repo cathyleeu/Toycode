@@ -11,6 +11,8 @@ import { AllIVes } from './CustomerInvoices'
 import { CustomerLists } from './CustomerLists'
 import { Catalog } from './Catalog'
 import { Statement } from './Statement'
+import { Transport } from './TransportGoods'
+import { Return } from './ReturnGoods'
 import Feature from './Feature'
 
 
@@ -45,6 +47,8 @@ class Routers extends Component {
               <Route path='cst-list' component={requireAuth(CustomerLists)}/>
               <Route path="catalog" component={requireAuth(Catalog)} />
               <Route path="statement" component={requireAuth(Statement)} />
+              <Route path="transport" component={requireAuth(Transport)} />
+              <Route path="return" component={requireAuth(Return)} />
             </Route>
           )
         }

@@ -110,14 +110,14 @@ export default (state = initialState , action) => {
     case types.UPDATE_USER:
       return { ...state, managers: {
         account:{
-          Manager: action.a_manager,
-          Email: action.a_email,
-          Phone: action.a_phone
+          A_manager: action.a_manager,
+          A_email: action.a_email,
+          A_phone: action.a_phone
         },
         education:{
-          Manager: action.e_manager,
-          Email: action.e_email,
-          Phone: action.e_phone
+          E_manager: action.e_manager,
+          E_email: action.e_email,
+          E_phone: action.e_phone
         }
       }
     }

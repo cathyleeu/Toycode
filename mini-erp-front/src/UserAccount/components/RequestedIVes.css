@@ -11,9 +11,19 @@
   flex-direction: row;
   margin-bottom: 0.5em;
 }
-.requestedIVes-inquiry-body{
+
+
+.requestedIVes-inquiry{
+  display: flex;
+  flex-direction: row;
+}
+
+.requestedIVes-inquiry-ctx{
   border-left: 3px solid #1ECD97;
   height: 60px;
+}
+.requestedIVes-inquiry-btn button{
+  margin-right: 0.5em;
 }
 
 .requestedIVes-goods-info p{

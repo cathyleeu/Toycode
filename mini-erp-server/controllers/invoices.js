@@ -11,24 +11,11 @@ const isRegisteredNewIVes = async (ctx, next) => {
     let codeRes = await Code.findOne({dbcollection: 'Invoices'});
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(9),
-        resultId = "IV" + (zero+count).slice(-zero.length);
+        invoiceId = "IV" + (zero+count).slice(-zero.length);
     const invoice = new Invoices({
-      invoiceId : resultId,
-      userName : userName,
-      userEmail : userEmail,
-      userCode: userCode,
-      delivery: {
-        to : to,
-        address: {
-          zipNo:zipNo,
-          roadAddr: roadAddr,
-          detailAddr: detailAddr
-        },
-        phone : phone
-      },
-      requestedGoods: requestedGoods,
-      requestDesc: requestDesc,
-      totalSales: totalSales
+      invoiceId, userName, userEmail, userCode,
+      delivery: { to, address: { zipNo, roadAddr, detailAddr }, phone },
+      requestedGoods, requestDesc, totalSales
     });
     codeRes = codeRes || new Code({
       dbcollection: 'Invoices',
