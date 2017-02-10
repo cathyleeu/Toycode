@@ -94,3 +94,17 @@ export const editedUser = (KinData) => (dispatch, getState) => {
   dispatch({type: types.EDITED_USER, userEdit: false})
   alert('수정이 완료되었습니다.')
 }
+
+
+export const requestRefund = (refundData) => ((dispatch) => {
+  axios.post(`${ROOT_URL}/return`, refundData)
+    .then(response => {
+      dispatch({ type: types.REFUND_REQUEST })
+      alert('환불신청이 접수되었습니다.')
+    })
+    .catch((e) => {
+      dispatch({ type: types.REFUND_FAILURE })
+      alert('환불신청 접수를 실패했습니다. 문의번호로 환불 접수해주세요.')
+      console.log('환불접수 에러',e);
+    })
+})

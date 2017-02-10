@@ -2,11 +2,17 @@ import React from 'react'
 import Address from './Address'
 import './Invoice.css'
 
-const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => (
+function Commas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => {
+  const commaTotal = Commas(total)
+  return(
   <div className="Invoice-Container">
     <div className="col-md-6">
       {nodes}
-      <div className="col-md-12 Invoice-Total"><p>총 가격:</p><p className="Invoice-Total-Price">{total}</p><p>원</p></div>
+      <div className="col-md-12 Invoice-Total"><p>총 가격:</p><p className="Invoice-Total-Price">{commaTotal}</p><p>원</p></div>
     </div>
     <div className="col-md-6">
       <Address
@@ -23,7 +29,7 @@ const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => (
       />
     </div>
   </div>
-)
+)}
 
 
 export default Invoice

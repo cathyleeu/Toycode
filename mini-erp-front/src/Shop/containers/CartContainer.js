@@ -7,16 +7,16 @@ import { bindActionCreators } from 'redux'
 
 
 const CartContainer = ({books, goodsSelect, selected, goodsDelete, requestInvoice, user, getInvoices, kinderAddr}) => (
-   <Cart
-    books={books}
-    goodsSelect={goodsSelect}
-    goodsDelete={goodsDelete}
-    selected={selected}
-    requestInvoice={requestInvoice}
-    user={user}
-    getInvoices={getInvoices}
-    kinderAddr={kinderAddr}
-   />
+    <Cart
+     books={books}
+     goodsSelect={goodsSelect}
+     goodsDelete={goodsDelete}
+     selected={selected}
+     requestInvoice={requestInvoice}
+     user={user}
+     getInvoices={getInvoices}
+     kinderAddr={kinderAddr}
+    />
 )
 
 function mapStateToProps(state){

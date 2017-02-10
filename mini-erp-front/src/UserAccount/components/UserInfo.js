@@ -49,7 +49,8 @@ class UserInfo extends Component {
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange} />
+                  onChange={this.isHandleChange}
+                  placeholder='회계담당자를 입력하세요.' />
               </div>
               <div className="user-info-mngs-acct-email">
                 <i className="fa fa-envelope" aria-hidden="true"></i>
@@ -60,7 +61,9 @@ class UserInfo extends Component {
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange} />
+                  onChange={this.isHandleChange}
+                  placeholder='회계담당자 이메일을 입력하세요.'
+                   />
               </div>
               <div className="user-info-mngs-acct-phone">
                 <i className="fa fa-phone" aria-hidden="true"></i>
@@ -71,7 +74,9 @@ class UserInfo extends Component {
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange} />
+                  onChange={this.isHandleChange}
+                  placeholder='회계담당자의 번호를 입력하세요.'
+                  required/>
               </div>
             </div>
           </div>
@@ -87,7 +92,8 @@ class UserInfo extends Component {
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange} />
+                  onChange={this.isHandleChange}
+                  placeholder='교육담당자를 입력하세요.'/>
               </div>
               <div className="user-info-mngs-edu-email">
                 <i className="fa fa-envelope" aria-hidden="true"></i>
@@ -98,7 +104,8 @@ class UserInfo extends Component {
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange} />
+                  onChange={this.isHandleChange}
+                  placeholder='교육담당자의 이메일을 입력하세요.'/>
               </div>
               <div className="user-info-mngs-edu-phone">
                 <i className="fa fa-phone" aria-hidden="true"></i>
@@ -109,7 +116,9 @@ class UserInfo extends Component {
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange} />
+                  onChange={this.isHandleChange}
+                  placeholder='교육담당자의 번호를 입력하세요.'
+                  required/>
               </div>
             </div>
           </div>

@@ -13,10 +13,11 @@ class Address extends Component {
     this.state = {
       rqcontent: '',
 			location: '',
-      phone: acct.Phone || '',
+      phone: acct.A_phone || '',
 			zipNo: address.zipNo || '',
 			roadAddr: address.roadAddr|| '',
 			detailAddr: address.detailAddr|| '',
+      recipient: acct.A_manager || '',
       isAddrOpen: false,
       isAddrBookOpen: false
     }
@@ -41,18 +42,15 @@ class Address extends Component {
 	isSelectedAddress = (result) => {
 		const {selectedJuso} = this.props
 		selectedJuso(result)
-    console.log(selectedJuso(result))
-    console.log(this.state)
 		this.closeModal()
 		this.setState({
 			zipNo: result.zipNo,
 			roadAddr: result.roadAddr,
-      detailAddr: result.detailAddr || ''
+      detailAddr: result.detailAddr || '',
+      recipient: result.manager || '',
+      phone: result.managerPh || ''
 		})
 	}
-	/*TODO
-		4: UI 정리하기...ㅠㅠ
-	*/
   render(){
     const {user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr} = this.props
     const invoice = {
@@ -132,7 +130,7 @@ class Address extends Component {
         <div className="delivery-recipient">
           <div className="name">
             <label htmlFor="name">수령인</label>
-            <Input type={'text'} id={'name'} value={user.Name} placeholder={'받는이'} className={'Added-Input'}/>
+            <Input type={'text'} id={'name'} value={this.state.recipient} placeholder={'받는이'} className={'Added-Input'} name={'recipient'} onChange={this.handleChange}/>
           </div>
           <div className="phone">
             <label htmlFor="phone">연락처</label>
@@ -148,7 +146,7 @@ class Address extends Component {
         {invoice.totalSales ?(
           <button
             className="col-md-3"
-            onClick={() => requestInvoice(invoice)}>주문하기</button>
+            onClick={() => { this.state.phone ? requestInvoice(invoice) : alert('연락처를 입력해주세요.')}}>주문하기</button>
         ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}
       </div>
     )

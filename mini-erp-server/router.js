@@ -2,6 +2,7 @@ const router = require('koa-router')();
 const Users = require('./controllers/user');
 const Books = require('./controllers/books');
 const Invoices = require('./controllers/invoices');
+const ReturnGoods = require('./controllers/return');
 
 
 
@@ -27,9 +28,13 @@ router.post('/books', Books.isRegisteredNewGoods)
 router.get('/books', Books.isFetchedAll)
 
 router.get('/invoices', Invoices.isFetchedAllIVes)
-router.get('/invoices/:user', Invoices.isFetchedByUser)
+router.get('/invoices/:user', Invoices.isFetchedIVesByUser)
 router.post('/invoices', Invoices.isRegisteredNewIVes)
 
-//TODO: return route
+
+router.get('/return', ReturnGoods.isFetchedAllRTns)
+router.get('/return/:user', ReturnGoods.isFetchedRTnsByUser)
+router.post('/return', ReturnGoods.isRegisteredNewRTns)
+
 
 module.exports = router;

@@ -1,5 +1,7 @@
-const Schema = require('mongoose').Schema;
+const mongoose = require('mongoose');
 const moment = require('moment');
+const Schema = mongoose.Schema;
+
 
 
 
@@ -8,7 +10,8 @@ const returnSchema = new Schema({
   userName: {type: String, required: true},
   userEmail : {type: String, required: true},
   userCode: {type: String, required: true},
-  status: {type: String, default: '반품접수'},
+  status: {type: String, default: '반품/교환접수'},
+  refundType: String,
   delivery: {
     trackingNo: String,
     to: {type: String, required: true},

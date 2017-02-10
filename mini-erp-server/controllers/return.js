@@ -3,7 +3,7 @@ const Code = require('../models/code');
 
 const isRegisteredNewRTns = async (ctx, next) => {
   try {
-    const { userName, userEmail, userCode, delivery, returningGoods, requestDesc, totalRefund } = ctx.request.body;
+    const { userName, userEmail, userCode, delivery, returningGoods, requestDesc, totalRefund, refundType } = ctx.request.body;
     const { to, phone, address } = delivery;
     const { roadAddr, detailAddr, zipNo } = address;
 
@@ -13,7 +13,7 @@ const isRegisteredNewRTns = async (ctx, next) => {
         zero = "0".repeat(5),
         returnGoodsId = "RT" + (zero+count).slice(-zero.length);
     const returnGoods = new Return({
-      returnGoodsId, userName, userEmail, userCode,
+      returnGoodsId, userName, userEmail, userCode, requestRefund,
       delivery: { to, address: { zipNo, roadAddr, detailAddr }, phone },
       returningGoods, requestDesc, totalRefund
     });
@@ -44,7 +44,7 @@ const isFetchedAllRTns = async ctx => {
     console.log(err);
   }
 };
-const isFetchedByUser = async ctx => {
+const isFetchedRTnsByUser = async ctx => {
   try {
     ctx.body = await Return.find().where({userEmail: ctx.params.user}).sort({createdOn: -1});
   } catch (err) {
@@ -54,4 +54,4 @@ const isFetchedByUser = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNewRTns, isFetchedAllRTns , isFetchedByUser };
+module.exports = { isRegisteredNewRTns, isFetchedAllRTns , isFetchedRTnsByUser };

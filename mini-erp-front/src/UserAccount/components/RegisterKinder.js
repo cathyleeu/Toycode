@@ -143,6 +143,7 @@ class RegisterKinder extends Component {
                    style={{border: disabled}}
                    disabled={!branchEdit}
                    onChange={this.isHandleChange}
+                   required
                  />
                </div>
                <div className="kinder-address-detailAddr">
@@ -155,6 +156,8 @@ class RegisterKinder extends Component {
                    style={{border: disabled}}
                    disabled={!branchEdit}
                    onChange={this.isHandleChange}
+                   placeholder="상세 주소를 입력하세요"
+                   required
                  />
                </div>
              </div>
@@ -170,6 +173,7 @@ class RegisterKinder extends Component {
                disabled={!branchEdit}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
+               placeholder="원 전화번호를 입력하세요."
              />
            </div>
            <div className="kinder-manager">
@@ -183,6 +187,7 @@ class RegisterKinder extends Component {
                disabled={!branchEdit}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
+               placeholder="담당자를 입력하세요."
              />
            </div>
            <div className="kinder-manager-mobile">
@@ -196,6 +201,8 @@ class RegisterKinder extends Component {
                disabled={!branchEdit}
                onBlur={this.isOnBlur}
                onChange={this.isHandleChange}
+               placeholder="담당자 전화번호를 입력하세요."
+               required
              />
            </div>
          </div>
