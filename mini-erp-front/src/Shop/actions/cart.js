@@ -1,7 +1,7 @@
 import * as types from '../constants/types'
 import axios from 'axios'
 import { browserHistory } from 'react-router'
-const ROOT_URL = process.env.SERVER_URL || 'http://localhost:3090'
+const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
 export const addToCartUnsafe = (bookId,bookTitle,bookPrice) => ({
   type: types.ADD_TO_CART,
@@ -37,7 +37,7 @@ export const requestInvoice = (invoiceData) => ((dispatch) => {
 
 export const getInvoices = () => (dispatch, getState) => {
   dispatch({type: types.START_INVOICES_FETCH})
-  const ROOT_URL = process.env.SERVER_URL || 'http://localhost:3090'
+  const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
   const user = localStorage.getItem('email')
   axios.get(`${ROOT_URL}/invoices/${user}`).then((invoices) => {
      dispatch({

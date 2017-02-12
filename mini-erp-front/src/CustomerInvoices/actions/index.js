@@ -1,7 +1,7 @@
 import * as CSTIV from '../constants'
 import axios from 'axios'
 
-const ROOT_URL = process.env.SERVER_URL || 'http://localhost:3090'
+const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 export function fetchAllUserIVes() {
   return function (dispatch) {
     axios.get(`${ROOT_URL}/invoices`)

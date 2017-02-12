@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import * as types from './types'
 
 
-const ROOT_URL = process.env.SERVER_URL || 'http://localhost:3090'
+const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
 
 export function signinUser(userData) {
