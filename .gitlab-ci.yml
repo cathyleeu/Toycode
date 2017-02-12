@@ -1,0 +1,11 @@
+toycode.org:
+  script:
+  - "cd mini-erp-server"
+  - "npm install --production"
+  - "forever stop server || true"
+  - "forever start --uid \"server\" -a index.js"
+  type: deploy
+  tags:
+  - production
+  only:
+  - master

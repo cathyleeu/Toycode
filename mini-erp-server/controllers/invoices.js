@@ -44,7 +44,7 @@ const isFetchedAllIVes = async ctx => {
     console.log(err);
   }
 };
-const isFetchedByUser = async ctx => {
+const isFetchedIVesByUser = async ctx => {
   try {
     ctx.body = await Invoices.find().where({userEmail: ctx.params.user}).sort({createdOn: -1});
   } catch (err) {
@@ -54,4 +54,4 @@ const isFetchedByUser = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNewIVes, isFetchedAllIVes , isFetchedByUser };
+module.exports = { isRegisteredNewIVes, isFetchedAllIVes , isFetchedIVesByUser };
