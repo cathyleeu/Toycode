@@ -1,7 +1,6 @@
 deploy mini-erp-server to production:
   script:
-  - "cd mini-erp-server"
-  - "npm install --production"
+  - "(cd mini-erp-server ; npm install --production)"
   - "forever stop mini-erp-server || true"
   - "forever start --uid \"mini-erp-server\" -a --sourceDir /home/gitlab-runner/builds/19033c59/0/toycode/sample-erp/mini-erp-server/ index.js"
   type: deploy
@@ -12,10 +11,9 @@ deploy mini-erp-server to production:
 
 deploy mini-erp-front to production:
   script:
-  - "cd mini-erp-front"
   - "echo -e 'REACT_APP_SERVER_URL=http://api.toycode.org' > .env"
-  - "npm install"
-  - "npm run build"
+  - "(cd mini-erp-front ; npm install)"
+  - "(cd mini-erp-front ; npm run build)"
   type: deploy
   tags:
   - production
