@@ -3,7 +3,6 @@ const jwt = require('jwt-simple'),
       Code = require('../models/code'),
       mongoose = require('mongoose'),
       nev = require('email-verification')(mongoose),
-      siteUrl = 'http://localhost:3090',
       config = require('../config'),
       co = require('co');
 
@@ -94,7 +93,7 @@ nev.generateTempUserModel = function(User, callback) {
 };
 
 nev.configure({
-    verificationURL: siteUrl + '/signup/${URL}',
+    verificationURL: config.SERVER_URL + '/signup/${URL}',
     persistentUserModel: User,
     tempUserCollection: 'tempUsers',
 
