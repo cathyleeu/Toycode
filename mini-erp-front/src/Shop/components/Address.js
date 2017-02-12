@@ -52,13 +52,14 @@ class Address extends Component {
 		})
 	}
   render(){
+    console.log(this.props);
     const {user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr} = this.props
     const invoice = {
       userName: userName,
       userEmail: userEmail,
       userCode: userCode,
       delivery: {
-        to: user.Name,
+        to: user.name,
         address: {
 					zipNo: this.state.zipNo,
 					roadAddr: this.state.roadAddr,
@@ -104,9 +105,9 @@ class Address extends Component {
 							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
               <div>
                 <p>지사주소</p>
-                <div onClick={() => this.isSelectedAddress(user.Address)}>
-                  <p>{user.Address.zipNo}</p>
-                  <p>{user.Address.roadAddr} | {user.Address.detailAddr}</p>
+                <div onClick={() => this.isSelectedAddress(user.address)}>
+                  <p>{user.address.zipNo}</p>
+                  <p>{user.address.roadAddr} | {user.address.detailAddr}</p>
                 </div>
                 <div>
                   <p>소속유치원 주소</p>

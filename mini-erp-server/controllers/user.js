@@ -155,7 +155,8 @@ const signin = async(ctx, next) => {
 
 const signup = async (ctx, next) => {
   try {
-    const { email, password, Name, zipNo, roadAddr, detailAddr } = ctx.request.body;
+    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems} = ctx.request.body;
+    // console.log(ctx.request.body);
     if(!email || !password){
       ctx.status = 422;
       ctx.body = {error: '아이디 또는 비밀번호를 입력해주세요.'};
@@ -163,20 +164,31 @@ const signup = async (ctx, next) => {
     }
     let user = await User.findOne({email: email});
     let codeRes = await Code.findOne({dbcollection: 'User'});
+    let customerType = "A";
+    if(signupCode == "think2017") {
+      customerType = "A";
+    } else if(signupCode == "ecc2017") {
+      customerType = "B";
+    } else {
+      ctx.status = 422;
+      ctx.body = '가입코드를 확인해주세요.';
+      return;
+    }
+
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
-        resultId = "A" + (zero+count).slice(-zero.length);
+        resultId = customerType + (zero+count).slice(-zero.length);
     user = new User({
       email, password,
-      Code: resultId,
+      code: resultId,
+      customerType,
       branch: {
-        Name,
-        Address:{ zipNo, roadAddr, detailAddr }
+        license, name, repr, bizType, bizItems,
+        address:{ zipNo, roadAddr, detailAddr }
       },
       account:{ A_manager: '', A_email: '', A_phone: '' },
       education:{ E_manager: '', E_email: '', E_phone: '' }
     });
-
     const result = await createTempUser(user);
     if(result.existingPersistentUser) {
       ctx.body = { msg: '이미 가입된 이메일입니다.' };
@@ -240,10 +252,10 @@ const confirmSignUp = async ctx => {
 
 // TODO:codeName 으로 불러오기
 const allUsers = async ctx => {
-  ctx.body = await User.find().where({userType: 'branch'}).select('userType email kinders branch Code account education');
+  ctx.body = await User.find().where({userType: 'branch'}).select('userType customerType email kinders branch code account education');
 }
 const loggedUser = async ctx => {
-  ctx.body = await User.find().where({email: ctx.params.user}).select('userType email kinders branch Code account education');
+  ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education');
 }
 
 

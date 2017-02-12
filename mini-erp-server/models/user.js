@@ -26,10 +26,15 @@ const userSchema = new Schema({
   userType: {type: String, default: 'branch'},
   email : { type: String, unique: true, lowercase: true},
   password: String,
-  Code: { type: String, unique: true },
+  code: { type: String, unique: true },
+  customerType: String,
   branch: {
-    Name: String,
-    Address:{
+    license: String,
+    name: String,
+    repr: String,
+    bizType: String,
+    bizItems: String,
+    address:{
       zipNo:  String,
       roadAddr: String,
       detailAddr: String

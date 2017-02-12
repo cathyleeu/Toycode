@@ -3,7 +3,7 @@ const Code = require('../models/code');
 
 const isRegisteredNewGoods = async (ctx, next) => {
   try{
-    const {title, code, quantity, price, wPrice, cPrice} = ctx.request.body;
+    const {title, code, quantity, price, bPrice, dPrice } = ctx.request.body;
 
 
     let codeRes = await Code.findOne({dbcollection: 'Books'});
@@ -12,12 +12,9 @@ const isRegisteredNewGoods = async (ctx, next) => {
         resultId = "IV" + (zero+count).slice(-zero.length);
 
     const book = new Books({
-      title : title,
+      title,
       code : resultId,
-      quantity : quantity,
-      wPrice: wPrice,
-      cPrice: cPrice,
-      price : price
+      quantity, bPrice, dPrice, price
     });
     codeRes = codeRes || new Code({
       dbcollection: 'Books',
