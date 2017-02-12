@@ -6,6 +6,7 @@ deploy mini-erp to production:
   - "(cd mini-erp-front ; echo -e 'REACT_APP_SERVER_URL=http://api.toycode.org' > .env)"
   - "(cd mini-erp-front ; npm install)"
   - "(cd mini-erp-front ; npm run build)"
+  - "(cd mini-erp-front ; pushstate-server build)"
   type: deploy
   tags:
   - production
