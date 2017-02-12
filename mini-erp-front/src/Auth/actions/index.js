@@ -41,11 +41,13 @@ export const toggleSignup = () => ({
 export function signupUser(userData) {
   return function (dispatch) {
     axios.post(`${ROOT_URL}/signup`, userData)
-      .then(response => {
+      .then(res => {
         alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
-        dispatch({ type: types.REGISTERED_STATUS, status: false })
+        dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
       })
-      .catch(response => dispatch(authError(response.data.error)))
+      .catch(res => {
+        return dispatch(authError(res.response.data))}
+      )
   }
 }
 

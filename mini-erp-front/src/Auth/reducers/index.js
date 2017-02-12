@@ -30,7 +30,7 @@ export default function (state = initialState(), action) {
   switch (action.type) {
     case types.REGISTERED_STATUS:
     case types.REGISTER_STATUS:
-      return { ...state, status: action.status }
+      return { ...state, status: action.status, error: action.error }
     case types.AUTH_USER:
       return { ...state, authenticated: true}
     case types.STATUS_ON_LOGIN:

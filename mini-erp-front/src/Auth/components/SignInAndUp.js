@@ -15,13 +15,18 @@ class SignInAndUp extends Component {
       email: '',
       password: '',
       passwordConfirm: '',
-      Name: '',
-      License:'',
+      signupCode:'',
+      name: '',
+      repr:'',
+      bizType:'',
+      bizItems:'',
+      license:'',
       zipNo: '',
       roadAddr: '',
       detailAddr:'',
       isModalOpen: false,
-      location: ''
+      location: '',
+      signupErr: ''
     }
   }
   onChange = e => {
@@ -33,7 +38,7 @@ class SignInAndUp extends Component {
     if(this.props.errorMessage){
       return(
         <div className="alert alert-danger">
-          <strong> {this.props.errorMessage}</strong>
+          <strong>{this.props.errorMessage}</strong>
         </div>
       )
     }
@@ -70,6 +75,7 @@ class SignInAndUp extends Component {
   isSignInAndUp = () => {
     const {toggleSignup, toggleSignin, auth} = this.props
     auth.status ? toggleSignin() : toggleSignup()
+    this.setState({signupErr: ''})
   }
   render() {
     const { auth, juso } = this.props
@@ -122,15 +128,66 @@ class SignInAndUp extends Component {
             required/>
         </fieldset>
         <fieldset className="rg-branch-info form-group">
-         <label htmlFor="branch-name">지사정보</label>
+          <label htmlFor="branch-no">사업자 번호</label>
+           <input
+            value={this.state.license}
+            className="rg-branch-name"
+            id="branch-no"
+            name="license"
+            type="text"
+            onChange={this.onChange}
+            placeholder="사업자번호"
+            required/>
+         <label htmlFor="branch-name">상호명</label>
           <input
-           value={this.state.Name}
+           value={this.state.name}
            className="rg-branch-name"
            id="branch-name"
-           name="Name"
+           name="name"
            type="text"
            onChange={this.onChange}
-           placeholder="지사명"
+           placeholder="상호명"
+           required/>
+
+         <label htmlFor="branch-repr">대표자</label>
+          <input
+           value={this.state.repr}
+           className="rg-branch-name"
+           id="branch-repr"
+           name="repr"
+           type="text"
+           onChange={this.onChange}
+           placeholder="대표자"
+           required/>
+         <label htmlFor="branch-bizType">업태</label>
+          <input
+           value={this.state.bizType}
+           className="rg-branch-name"
+           id="branch-bizType"
+           name="bizType"
+           type="text"
+           onChange={this.onChange}
+           placeholder="업태"
+           required/>
+         <label htmlFor="branch-bizItems">종목</label>
+          <input
+           value={this.state.bizItems}
+           className="rg-branch-name"
+           id="branch-bizItems"
+           name="bizItems"
+           type="text"
+           onChange={this.onChange}
+           placeholder="종목"
+           required/>
+         <label htmlFor="branch-signupCode">가입코드</label>
+          <input
+           value={this.state.signupCode}
+           className="rg-branch-name"
+           id="branch-signupCode"
+           name="signupCode"
+           type="text"
+           onChange={this.onChange}
+           placeholder="가입코드"
            required/>
         </fieldset>
       </div>
@@ -202,17 +259,3 @@ function mapStateToProps(state){
 
 
 export default connect(mapStateToProps, {signupUser, signinUser, searchAddress, toggleSignup, toggleSignin, selectedJuso})(SignInAndUp)
-
-
-
-
-/* <div className="rg-branch-no">
-  <input
-   value={this.state.License}
-   name="License"
-   type="text"
-   onChange={this.onChange}
-   placeholder="사업자 번호등록"
-   required/>
-   <button>번호등록</button>
- </div> */

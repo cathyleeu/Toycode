@@ -10,12 +10,11 @@ class Cart extends Component {
     getInvoices()
   }
   render(){
-    const {books, selected, goodsSelect, goodsDelete, requestInvoice,user, kinderAddr} = this.props
+    const {books, selected, goodsSelect, goodsDelete, requestInvoice,user, kinderAddr} = this.props;
     const nodes = books.map((book, index) =>
           <AddedProducts
             key={index}
             title={book.title}
-            price={book.price}
             id={book.id}
             goodsSelect={goodsSelect}
             goodsDelete={goodsDelete}

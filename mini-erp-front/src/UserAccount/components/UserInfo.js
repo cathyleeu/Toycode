@@ -25,16 +25,24 @@ class UserInfo extends Component {
 
   render(){
     const { user, userEdit } = this.props
+    const { branch } = user
     const disabled = !userEdit ? 'none' : ''
     return(
       <div className="user-info-cont">
         <div className="user-info-addr">
-          <p>지사명:{user.branch.Name}</p>
-          <div>지사주소
-            <p>{user.branch.Address.zipNo}</p>
-            <p>{user.branch.Address.roadAddr}</p>
-            <p>{user.branch.Address.detailAddr}</p>
+          <div>회사정보
+            <p>지사명:{user.branch.name}</p>
+            <p>사업자번호:{user.branch.license}</p>
+            <p>대표자명:{user.branch.repr}</p>
+            <p>업태:{user.branch.bizType}</p>
+            <p>종목:{user.branch.bizItems}</p>
           </div>
+          <div>지사주소
+            <p>{branch.address.zipNo}</p>
+            <p>{branch.address.roadAddr}</p>
+            <p>{branch.address.detailAddr}</p>
+          </div>
+
         </div>
         <div className="user-info-mngs">
           <div className="user-info-mngs-acct">
@@ -123,7 +131,6 @@ class UserInfo extends Component {
             </div>
           </div>
         </div>
-        {/* <p>사업자번호:{user.branch.License}</p> */}
       </div>
     )
   }

@@ -8,6 +8,7 @@ function Commas(x) {
 
 const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => {
   const commaTotal = Commas(total)
+  const { branch, email, code, account, kinders} = user.user;
   return(
   <div className="Invoice-Container">
     <div className="col-md-6">
@@ -17,14 +18,14 @@ const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => {
     <div className="col-md-6">
       <Address
         requestInvoice={requestInvoice}
-        userName={user.user.branch.Name}
-        userEmail={user.user.email}
-        userCode={user.user.Code}
-        user={user.user.branch}
-        address={user.user.branch.Address}
-        acct={user.user.account}
+        userName={branch.name}
+        userEmail={email}
+        userCode={code}
+        user={branch}
+        address={branch.address}
+        acct={account}
         selected={selected}
-        userKinders={user.user.kinders}
+        userKinders={kinders}
         kinderAddr={kinderAddr}
       />
     </div>
