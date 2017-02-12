@@ -3,6 +3,7 @@ toycode.org:
   - "cd mini-erp-server"
   - "npm install --production"
   - "forever stop server || true"
+  - "cd mini-erp-server"
   - "forever start --uid \"server\" -a index.js"
   type: deploy
   tags:
