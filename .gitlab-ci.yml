@@ -13,9 +13,8 @@ deploy mini-erp-server to production:
 deploy mini-erp-front to production:
   script:
   - "cd mini-erp-front"
-  - "npm install --production"
-  - "forever stop mini-erp-front || true"
-  - "forever start --uid \"mini-erp-front\" -c \"npm start\" ."
+  - "npm install"
+  - "npm run build"
   type: deploy
   tags:
   - production
