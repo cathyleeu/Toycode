@@ -2,14 +2,14 @@ const Koa = require('koa'),
       app = new Koa(),
       cors = require('koa-cors'), //http 접근 제어 cross resoure origin sharing
       body = require('koa-body'),
-      router = require('./router');
+      router = require('./router'),
+      config = require('./config');
 const mongoose = require('mongoose');
 const passport = require('koa-passport');
 const session = require('koa-generic-session')
 const convert = require('koa-convert');
 
-
-
+console.log(config);
 
 //DB setup
 const authDB = "mongodb://localhost:auth/auth"
