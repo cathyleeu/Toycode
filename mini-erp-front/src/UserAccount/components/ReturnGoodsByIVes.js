@@ -12,32 +12,34 @@ class ReturnGoodsByIVes extends Component{
     this.setState({ [e.target.name]: e.target.value })
   }
   isReqRefund = () => {
-    const {requestRefund} = this.props;
-
-    console.log(requestRefund)
-
+    if (window.confirm('환불 접수하시겠습니까?')) {
+      const {requestRefundByUser} = this.props;
+      const refundCtx={
+        userName: 'gg',
+        userEmail : 'gg',
+        userCode: 'gg',
+        refundType: this.state.refundType,
+        delivery: {
+          to: 'gg',
+          address: {
+            zipNo:  'gg',
+            roadAddr: 'gg',
+            detailAddr: 'gg'
+          },
+          phone: 'gg'
+        },
+        requestDesc: "thanks"
+      }
+      requestRefundByUser(refundCtx)
+    } else {
+      window.alert('접수가 취소되었습니다.')
+    }
   }
   render(){
-    const {invoice, requestRefund} = this.props;
+    const {invoice} = this.props;
     const ReturnGoodsNode = invoice.requestedGoods.map((goods,i) => (
       <ReturnGoodsByItem goods={goods} key={i} i={i}/>
     ))
-    const refundCtx={
-      userName: 'gg',
-      userEmail : 'gg',
-      userCode: 'gg',
-      refundType: this.state.refundType,
-      delivery: {
-        to: 'gg',
-        address: {
-          zipNo:  'gg',
-          roadAddr: 'gg',
-          detailAddr: 'gg'
-        },
-        phone: 'gg'
-      },
-      requestDesc: "thanks"
-    }
     return(
       <div className="returnGoods">
         <div className="returnGoods-top">
@@ -84,7 +86,7 @@ class ReturnGoodsByIVes extends Component{
           <div>
             <p>반품 유의사항 </p>
             <a href="#">자세히보기</a>
-            <button onClick={() => requestRefund(refundCtx)}>반품 신청하기</button>
+            <button onClick={this.isReqRefund}>반품 신청하기</button>
           </div>
         ):(
           <div>

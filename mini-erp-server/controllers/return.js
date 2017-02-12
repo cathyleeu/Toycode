@@ -13,7 +13,7 @@ const isRegisteredNewRTns = async (ctx, next) => {
         zero = "0".repeat(5),
         returnGoodsId = "RT" + (zero+count).slice(-zero.length);
     const returnGoods = new Return({
-      returnGoodsId, userName, userEmail, userCode, requestRefund,
+      returnGoodsId, userName, userEmail, userCode, refundType,
       delivery: { to, address: { zipNo, roadAddr, detailAddr }, phone },
       returningGoods, requestDesc, totalRefund
     });

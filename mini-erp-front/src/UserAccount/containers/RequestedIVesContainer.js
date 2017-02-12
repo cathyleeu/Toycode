@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import RequestedIVes from '../components/RequestedIVes'
 import { connect } from 'react-redux'
-import * as actions from '../actions'
+import { requestRefundByUser, postToRefundServer } from '../actions'
 import { getInvoices } from '../../Shop/actions/cart'
 import './RequestedIVesContainer.css'
 
@@ -12,7 +12,7 @@ class RequestedIVesContainer extends Component {
     getInvoices()
   }
   render(){
-    const {invoices} = this.props
+    const {invoices, requestRefundByUser} = this.props
     return(
       <div>
         <h5>주문 리스트</h5>
@@ -24,7 +24,7 @@ class RequestedIVesContainer extends Component {
           </div>
           <div className="requestedIV-list-body">
             {invoices.map((invoice, index) => (
-              <RequestedIVes className="col-md-12" key={index} invoice={invoice} requestRefund={actions.requestRefund}/>
+              <RequestedIVes className="col-md-12" key={index} invoice={invoice} requestRefundByUser={requestRefundByUser}/>
             ))}
           </div>
         </div>
@@ -40,4 +40,4 @@ function mapStateToProps(state, ownProps){
     invoices: state.shop.userInvoices
   }
 }
-export default connect(mapStateToProps, {actions, getInvoices})(RequestedIVesContainer)
+export default connect(mapStateToProps, {requestRefundByUser, postToRefundServer, getInvoices})(RequestedIVesContainer)

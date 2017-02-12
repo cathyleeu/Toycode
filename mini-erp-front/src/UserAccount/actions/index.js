@@ -78,15 +78,11 @@ export const editUser = (status) => ({
 })
 
 export const updateUser = (info) => {
+  const { a_manager,a_email,a_phone,e_manager,e_email,e_phone } = info
   return({
-  type: types.UPDATE_USER,
-  a_manager: info.a_manager,
-  a_email: info.a_email,
-  a_phone: info.a_phone,
-  e_manager: info.e_manager,
-  e_email: info.e_email,
-  e_phone: info.e_phone
-})
+    type: types.UPDATE_USER,
+    a_manager, a_email, a_phone, e_manager, e_email, e_phone
+  })
 }
 export const editedUser = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
@@ -95,8 +91,18 @@ export const editedUser = (KinData) => (dispatch, getState) => {
   alert('수정이 완료되었습니다.')
 }
 
+export const requestRefundByUser = (refundData) => {
+  const { userName, userEmail, userCode, refundType, delivery, requestDesc } = refundData;
+  const { to, address, phone } = delivery;
+  const { zipNo, roadAddr, detailAddr } = address;
+  return({
+    type: types.REQUEST_REFUND_BY_USER,
+    userName, userEmail, userCode, refundType, requestDesc,
+    to, phone, zipNo, roadAddr, detailAddr
+  })
+}
 
-export const requestRefund = (refundData) => ((dispatch) => {
+export const postToRefundServer = (refundData) => ((dispatch) => {
   axios.post(`${ROOT_URL}/return`, refundData)
     .then(response => {
       dispatch({ type: types.REFUND_REQUEST })

@@ -29,7 +29,7 @@ class RequestedIVes extends Component{
 		this.setState({ isBillOpen: false, isRTnOpen: false})
 	}
   render(){
-    const {invoice, requestRefund} = this.props
+    const {invoice, requestRefundByUser} = this.props
     const orderCreated = invoice.createdOn.split("T")
     const commaTotalSales = Commas(invoice.totalSales);
     return(
@@ -69,7 +69,7 @@ class RequestedIVes extends Component{
               isModalOpen={this.state.isRTnOpen}
               closeModal={this.closeModal}>
 							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
-              <ReturnGoodsByIVes invoice={invoice} requestRefund={requestRefund} />
+              <ReturnGoodsByIVes invoice={invoice} requestRefundByUser={requestRefundByUser} />
             </AddrModal>
           </div>
         </div>
