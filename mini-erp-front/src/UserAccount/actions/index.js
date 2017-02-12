@@ -64,7 +64,7 @@ export const editKinder = (status) => ({
 
 
 
-const ROOT_URL = 'http://localhost:3090'
+const ROOT_URL = process.env.SERVER_URL || 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder`, KinData)

@@ -17,7 +17,7 @@ export const completeBooksFetch = (books) => {
 
 export const fetchBooks = () => (dispatch, getState) => {
   dispatch(startBooksFetch())
-  const ROOT_URL = 'http://localhost:3090'
+  const ROOT_URL = process.env.SERVER_URL || 'http://localhost:3090'
   axios.get(`${ROOT_URL}/books`).then((books) => {
      dispatch(completeBooksFetch(books))
    })

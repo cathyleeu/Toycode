@@ -13,6 +13,7 @@ deploy mini-erp-server to production:
 deploy mini-erp-front to production:
   script:
   - "cd mini-erp-front"
+  - "export SERVER_URL=api.toycode.org"
   - "npm install"
   - "npm run build"
   type: deploy
