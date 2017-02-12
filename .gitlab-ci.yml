@@ -7,7 +7,7 @@ deploy mini-erp to production:
   - "(cd mini-erp-front ; npm install)"
   - "(cd mini-erp-front ; npm run build)"
   - "forever stop mini-erp-front || true"
-  - "(cd mini-erp-front ; forever start --uid \"mini-erp-front\" -a -c \"pushstate-server build\" .)"
+  - "(export PORT=9000 ; forever start --uid \"mini-erp-front\" -a --sourceDir /home/gitlab-runner/builds/19033c59/0/toycode/sample-erp/mini-erp-front/ -c \"pushstate-server build\" .)"
   type: deploy
   tags:
   - production
