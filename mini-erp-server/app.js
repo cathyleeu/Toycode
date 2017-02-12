@@ -26,7 +26,7 @@ db.once('open', function() {
 
 //app setup
 app
-  .use(convert(cors({origin:false})))
+  .use(convert(cors({origin:true})))
   .use(convert(body()));
 
 // logger
