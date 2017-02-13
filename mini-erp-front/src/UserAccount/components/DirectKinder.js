@@ -8,7 +8,7 @@ class DirectKinder extends Component{
   // }
   handleAddChildClick = e => {
     e.preventDefault()
-    const { addClass, createKinderClass, id, kinders} = this.props
+    const { addClass, createKinderClass, id} = this.props
     const childId = createKinderClass('반').classId
     console.log("childId", childId);
     console.log("id",id);
@@ -16,7 +16,7 @@ class DirectKinder extends Component{
     addClass(id, childId, 0)
   }
   renderChild = (kinderClass, i) => {
-    const { id, removeChild, kinders, deleteKinderClass, updateKinderClass, branchEdit } = this.props
+    const { removeChild, deleteKinderClass, updateKinderClass, branchEdit } = this.props
     // const index = kinders.map(item => item._id).indexOf(id);
     // console.log(kinderClass);
     return (
