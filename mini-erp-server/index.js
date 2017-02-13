@@ -7,6 +7,7 @@
 
 
 require("babel-core/register")({
+    "plugins": ["transform-react-constant-elements"],
     "presets": [
         "es2015",
         "stage-0"
