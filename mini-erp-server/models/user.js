@@ -26,7 +26,7 @@ const userSchema = new Schema({
   userType: {type: String, default: 'branch'},
   email : { type: String, unique: true, lowercase: true},
   password: String,
-  code: { type: String, unique: true },
+  code: String,
   customerType: String,
   branch: {
     license: String,
