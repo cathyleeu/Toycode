@@ -24,7 +24,7 @@ const kinderSchema = new Schema({
 // userType = [branch, admin, warehouse]
 const userSchema = new Schema({
   userType: {type: String, default: 'branch'},
-  email : { type: String, unique: true, lowercase: true},
+  email : { type: String, lowercase: true},
   password: String,
   code: String,
   customerType: String,
