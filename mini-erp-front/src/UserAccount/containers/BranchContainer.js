@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { RegisterKinder, DirectKinder, UserInfo } from '../components'
+import { RegisterKinder, UserInfo } from '../components'
+// import { RegisterKinder, DirectKinder, UserInfo } from '../components'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import './BranchContainer.css'
@@ -19,7 +20,8 @@ class BranchContainer extends Component{
     )
   }
   render() {
-    const { kinders, user, editKinder, completedAddKinder, editUser, updateUser, editedUser, createKinderClass, addClass, deleteKinderClass, updateKinderClass } = this.props
+    // const { kinders, user, editKinder, completedAddKinder, editUser, updateUser, editedUser, createKinderClass, addClass, deleteKinderClass, updateKinderClass } = this.props
+    const { kinders, user, editKinder, completedAddKinder, editUser, updateUser, editedUser} = this.props
     const kindergartens = kinders.kinders
     const branchType = (
       <div className="branchKinder-header">
@@ -44,24 +46,24 @@ class BranchContainer extends Component{
             onClick={() => editKinder(kinders.branchEdit)}>수정</button>
         )}
     </div>)
-    const directType = (<div className="branchKinder-header">
-      <h5>원 정보</h5>
-      {kinders.branchEdit ? (
-        <div className="branchKinder-header-btnList">
-          <button
-            className="button-save"
-            onClick={() => completedAddKinder(kinders)}>저장</button>
-          <button
-            className="button-cancle"
-            onClick={() => editKinder(kinders.branchEdit)}>
-            취소</button>
-        </div>
-      ):(
-        <button
-          className="button-edit"
-          onClick={() => editKinder(kinders.branchEdit)}>수정</button>
-      )}
-    </div>)
+    // const directType = (<div className="branchKinder-header">
+    //   <h5>원 정보</h5>
+    //   {kinders.branchEdit ? (
+    //     <div className="branchKinder-header-btnList">
+    //       <button
+    //         className="button-save"
+    //         onClick={() => completedAddKinder(kinders)}>저장</button>
+    //       <button
+    //         className="button-cancle"
+    //         onClick={() => editKinder(kinders.branchEdit)}>
+    //         취소</button>
+    //     </div>
+    //   ):(
+    //     <button
+    //       className="button-edit"
+    //       onClick={() => editKinder(kinders.branchEdit)}>수정</button>
+    //   )}
+    // </div>)
     return (
       <div>
         <div className="userInfo-header">
