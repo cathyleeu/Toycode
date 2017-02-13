@@ -22,6 +22,7 @@ class RegisterKinderClasses extends Component {
   isOnBlur = () => {
     const {id, parentId, updateKinderClass, index} = this.props
     const {classname, students} = this.state
+    console.log("this.state",classname, students);
     updateKinderClass(classname,students,index,parentId,id)
   }
   render(){

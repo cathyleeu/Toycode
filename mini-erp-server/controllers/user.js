@@ -165,9 +165,9 @@ const signup = async (ctx, next) => {
     let user = await User.findOne({email: email});
     let codeRes = await Code.findOne({dbcollection: 'User'});
     let customerType = "A";
-    if(signupCode == "think2017") {
+    if(signupCode.toLowerCase() == "think2017") {
       customerType = "A";
-    } else if(signupCode == "ecc2017") {
+    } else if(signupCode.toLowerCase() == "ecc2017") {
       customerType = "B";
     } else {
       ctx.status = 422;
@@ -178,17 +178,35 @@ const signup = async (ctx, next) => {
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
         resultId = customerType + (zero+count).slice(-zero.length);
-    user = new User({
-      email, password,
-      code: resultId,
-      customerType,
-      branch: {
-        license, name, repr, bizType, bizItems,
-        address:{ zipNo, roadAddr, detailAddr }
-      },
-      account:{ A_manager: '', A_email: '', A_phone: '' },
-      education:{ E_manager: '', E_email: '', E_phone: '' }
-    });
+    if(customerType === 'B'){
+      user = new User({
+        email, password,
+        code: resultId,
+        customerType,
+        kinders:[{
+          name, zipNo, roadAddr, detailAddr, kinderClasses:[]
+        }],
+        branch: {
+          license, name, repr, bizType, bizItems,
+          address:{ zipNo, roadAddr, detailAddr }
+        },
+        account:{ A_manager: '', A_email: '', A_phone: '' },
+        education:{ E_manager: '', E_email: '', E_phone: '' }
+      });
+    } else {
+      user = new User({
+        email, password,
+        code: resultId,
+        customerType,
+        branch: {
+          license, name, repr, bizType, bizItems,
+          address:{ zipNo, roadAddr, detailAddr }
+        },
+        account:{ A_manager: '', A_email: '', A_phone: '' },
+        education:{ E_manager: '', E_email: '', E_phone: '' }
+      });
+    }
+
     const result = await createTempUser(user);
     if(result.existingPersistentUser) {
       ctx.body = { msg: '이미 가입된 이메일입니다.' };
