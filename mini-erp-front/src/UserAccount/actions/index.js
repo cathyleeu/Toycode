@@ -36,10 +36,13 @@ export const createKinderClass = (id) => ({
   classId: `${id}_${nextKinClassId++}`
 })
 
-export const updateKinderClass = (classname, students, id, parentId, classId) => ({
+export const updateKinderClass = (classname, students, id, parentId, classId) => {
+  console.log("actions",classname, students, id, parentId, classId);
+
+  return({
   type: types.UPDATE_KINDER_CLASS,
   classname, students, id, parentId, classId
-})
+})}
 
 export const deleteKinderClass = (id) => ({
   type: types.DELETE_KINDER_CLASS,

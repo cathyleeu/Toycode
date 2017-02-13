@@ -27,6 +27,7 @@ class RegisterKinder extends Component {
     const { addClass, createKinderClass, id, kinders} = this.props
     const childId = createKinderClass('반').classId
     const index = kinders.map(item => item._id).indexOf(id);
+    console.log("kinders",index);
     addClass(id, childId, index)
   }
   handleRemoveClick = e => {
@@ -35,11 +36,11 @@ class RegisterKinder extends Component {
     deleteKinder(id)
   }
   renderChild = (kinderClass, i) => {
-    const { id, removeChild, kinders, deleteKinderClass, updateKinderClass, branchEdit } = this.props
+    const { id, kinders, deleteKinderClass, updateKinderClass, branchEdit } = this.props
     const index = kinders.map(item => item._id).indexOf(id);
     return (
       <div key={i}>
-        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index={index} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit} />
+        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index={index} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit} />
       </div>
     )
   }

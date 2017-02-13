@@ -32,6 +32,7 @@ class RequestedIVes extends Component{
     const {invoice, requestRefundByUser} = this.props
     const orderCreated = invoice.createdOn.split("T")
     const commaTotalSales = Commas(invoice.totalSales);
+    const display = {display: "none"};
     return(
       <div className="requestedIVes-body col-md-12">
         <div className="requestedIVes-contents">
@@ -58,7 +59,7 @@ class RequestedIVes extends Component{
             <strong>고객문의사항</strong>
             <p>{invoice.requestDesc}</p>
           </div>
-          <div className="requestedIVes-inquiry-btn col-md-5">
+          <div className="requestedIVes-inquiry-btn col-md-5" style={display}>
             <button onClick={this.openBill}>거래명세서</button>
             <AddrModal isModalOpen={this.state.isBillOpen} closeModal={this.closeModal}>
 							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>

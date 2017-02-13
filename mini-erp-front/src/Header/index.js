@@ -39,9 +39,11 @@ const Header = ({auth, signoutUser, userType}) => {
       {auth.authenticated && (
         <header className="header-bar">
           <nav>
-            <logo>
-              <img src={logo} className="logo" alt="logo" />
-            </logo>
+            <Link to="/feature">
+              <logo>
+                <img src={logo} className="logo" alt="logo" />
+              </logo>
+            </Link>
             <ul className="header-menu">
               { userType === 'branch' && userHeaderList }
               { userType === 'admin' && adminHeaderList }
