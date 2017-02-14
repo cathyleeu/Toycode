@@ -24,7 +24,7 @@ export const deleteKinder = (id) => ({
   id
 })
 
-let nextKinClassId = 0
+let nextKinClassId = 0;
 export const createKinderClass = (id) => ({
   type: types.CREATE_KINDER_CLASS,
   classId: `${id}_${nextKinClassId++}`
