@@ -8,7 +8,7 @@ function Commas(x) {
 
 const Invoice = ({nodes,total,requestInvoice,user,selected, kinderAddr}) => {
   const commaTotal = Commas(total)
-  const { branch, email, code, account, kinders, customerType} = user.user;
+  const { branch, email, code, account, kinders} = user.user;
   return(
   <div className="Invoice-Container">
     <div className="col-md-6">
