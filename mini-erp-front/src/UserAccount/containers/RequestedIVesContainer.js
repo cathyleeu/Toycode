@@ -15,7 +15,7 @@ class RequestedIVesContainer extends Component {
     const {invoices, requestRefundByUser} = this.props
     return(
       <div>
-        <h5>주문 리스트</h5>
+        <h5>주문 내역</h5>
         <div className="requestedIV-list-cont">
           <div className="requestedIV-list-title col-md-12">
             <div className="col-md-2">주문일자</div>

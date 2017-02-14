@@ -48,6 +48,7 @@ const Header = ({auth, signoutUser, userType}) => {
               { userType === 'branch' && userHeaderList }
               { userType === 'admin' && adminHeaderList }
               { userType === 'warehouse' && transportHeaderList }
+              { userType === 'branch' && <li><a href="https://drive.google.com/embeddedfolderview?id=0B1Aeb4WZ7p9uWGE2NVM2QmRobXM#list" target="_blank">자료실</a></li>}
             </ul>
             <div className="Logout" onClick={() => signoutUser()}>로그아웃</div>
           </nav>

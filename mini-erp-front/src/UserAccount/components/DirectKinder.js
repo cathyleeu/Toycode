@@ -3,32 +3,23 @@ import RegisterKinderClasses from './RegisterKinderClasses'
 
 
 class DirectKinder extends Component{
-  // constructor(props){
-  //   super(props)
-  // }
   handleAddChildClick = e => {
     e.preventDefault()
     const { addClass, createKinderClass, id} = this.props
     const childId = createKinderClass('반').classId
-    console.log("childId", childId);
-    console.log("id",id);
-    // const index = kinders.map(item => item._id).indexOf(id);
     addClass(id, childId, 0)
   }
   renderChild = (kinderClass, i) => {
     const { removeChild, deleteKinderClass, updateKinderClass, branchEdit } = this.props
-    // const index = kinders.map(item => item._id).indexOf(id);
-    // console.log(kinderClass);
     return (
       <div key={i}>
-        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index='0' removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit} />
+        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index={0} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit} />
       </div>
     )
   }
   render(){
   const {kinder, branchEdit} = this.props;
   const disabled = !branchEdit ? 'none' : '';
-  // console.log(kinder);
   return(
     <div className="kinder-info-body">
      <div className="kinder-temp">

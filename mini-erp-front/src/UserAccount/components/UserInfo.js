@@ -6,12 +6,12 @@ class UserInfo extends Component {
     super(props)
     const { edu, acct } = this.props
     this.state = {
-      a_manager: acct.A_manager || '',
-      a_email: acct.A_email || '',
-      a_phone: acct.A_phone ||'',
-      e_manager: edu.E_manager ||'',
-      e_email: edu.E_email ||'',
-      e_phone: edu.E_phone ||''
+      A_manager: acct.A_manager || '',
+      A_email: acct.A_email || '',
+      A_phone: acct.A_phone ||'',
+      E_manager: edu.E_manager ||'',
+      E_email: edu.E_email ||'',
+      E_phone: edu.E_phone ||''
     }
   }
   isHandleChange = e => {
@@ -52,8 +52,8 @@ class UserInfo extends Component {
                 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
                 <input
                   type="text"
-                  value={this.state.a_manager}
-                  name="a_manager"
+                  value={this.state.A_manager}
+                  name="A_manager"
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
@@ -64,8 +64,8 @@ class UserInfo extends Component {
                 <i className="fa fa-envelope" aria-hidden="true"></i>
                 <input
                   type="text"
-                  value={this.state.a_email}
-                  name="a_email"
+                  value={this.state.A_email}
+                  name="A_email"
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
@@ -77,8 +77,8 @@ class UserInfo extends Component {
                 <i className="fa fa-phone" aria-hidden="true"></i>
                 <input
                   type="text"
-                  value={this.state.a_phone}
-                  name="a_phone"
+                  value={this.state.A_phone}
+                  name="A_phone"
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
@@ -95,8 +95,8 @@ class UserInfo extends Component {
                 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
                 <input
                   type="text"
-                  value={this.state.e_manager}
-                  name="e_manager"
+                  value={this.state.E_manager}
+                  name="E_manager"
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
@@ -107,8 +107,8 @@ class UserInfo extends Component {
                 <i className="fa fa-envelope" aria-hidden="true"></i>
                 <input
                   type="text"
-                  value={this.state.e_email}
-                  name="e_email"
+                  value={this.state.E_email}
+                  name="E_email"
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}
@@ -119,8 +119,8 @@ class UserInfo extends Component {
                 <i className="fa fa-phone" aria-hidden="true"></i>
                 <input
                   type="text"
-                  value={this.state.e_phone}
-                  name="e_phone"
+                  value={this.state.E_phone}
+                  name="E_phone"
                   style={{border: disabled}}
                   disabled={!userEdit}
                   onBlur={this.isOnBlur}

@@ -12,18 +12,12 @@ export function createKinder(_id){
 }
 
 
-export const updateKinder = (kinder, branchCode, id) => ({
-  type: types.UPDATE_KINDER,
-  name: kinder.Name,
-  zipNo: kinder.zipNo,
-  detailAddr: kinder.detailAddr,
-  roadAddr: kinder.roadAddr,
-  phone : kinder.Phone,
-  manager: kinder.Manager,
-  managerPh: kinder.ManagerPh,
-  branchCode,
-  id
-})
+export const updateKinder = (kinder, branchCode, id) => {
+  const { name, zipNo, detailAddr, roadAddr, phone, manager, managerPh } = kinder
+  return({
+    type: types.UPDATE_KINDER, name, zipNo, detailAddr, roadAddr, phone, manager, managerPh, branchCode, id
+  })
+}
 
 export const deleteKinder = (id) => ({
   type: types.DELETE_KINDER,
@@ -36,13 +30,10 @@ export const createKinderClass = (id) => ({
   classId: `${id}_${nextKinClassId++}`
 })
 
-export const updateKinderClass = (classname, students, id, parentId, classId) => {
-  console.log("actions",classname, students, id, parentId, classId);
-
-  return({
+export const updateKinderClass = (classname, students, id, parentId, classId) => ({
   type: types.UPDATE_KINDER_CLASS,
   classname, students, id, parentId, classId
-})}
+})
 
 export const deleteKinderClass = (id) => ({
   type: types.DELETE_KINDER_CLASS,
@@ -81,10 +72,10 @@ export const editUser = (status) => ({
 })
 
 export const updateUser = (info) => {
-  const { a_manager,a_email,a_phone,e_manager,e_email,e_phone } = info
+  const { A_manager,A_email,A_phone,E_manager,E_email,E_phone } = info
   return({
     type: types.UPDATE_USER,
-    a_manager, a_email, a_phone, e_manager, e_email, e_phone
+    A_manager, A_email, A_phone, E_manager, E_email, E_phone
   })
 }
 export const editedUser = (KinData) => (dispatch, getState) => {
