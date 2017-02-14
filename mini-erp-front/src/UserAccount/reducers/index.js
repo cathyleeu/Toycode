@@ -50,17 +50,9 @@ const Kinder = (state, action) => {
       }]
     case types.UPDATE_KINDER:
       return state.kinders.map((kinder) => {
+        const { name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, branchCode } = action
         if(kinder._id === action.id){
-          return {...kinder,
-            name: action.name,
-            zipNo: action.zipNo,
-            roadAddr: action.roadAddr,
-            detailAddr: action.detailAddr,
-            phone: action.phone,
-            manager: action.manager,
-            managerPh: action.managerPh,
-            parentId: action.branchCode
-          }
+          return { ...kinder, name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, branchCode }
         } else { return kinder }
       })
     default:
@@ -77,12 +69,10 @@ const deleteKinder = (state, id) => (
 export default (state = initialState , action) => {
   switch (action.type) {
     case STATUS_ON_LOGIN:
+      const { account, education } = action;
       return { ...state,
               kinders:[...action.kinder],
-              managers: {
-                  account: action.account,
-                  education:action.education
-                }
+              managers: { account, education }
               }
     case types.ADD_KINDER:
     case types.UPDATE_KINDER:
@@ -108,17 +98,10 @@ export default (state = initialState , action) => {
     case types.EDITED_USER:
       return { ...state, userEdit: action.userEdit}
     case types.UPDATE_USER:
+     const { A_manager, A_email, A_phone, E_manager, E_email, E_phone } = action;
       return { ...state, managers: {
-        account:{
-          A_manager: action.a_manager,
-          A_email: action.a_email,
-          A_phone: action.a_phone
-        },
-        education:{
-          E_manager: action.e_manager,
-          E_email: action.e_email,
-          E_phone: action.e_phone
-        }
+        account:{ A_manager, A_email, A_phone },
+        education:{ E_manager, E_email, E_phone }
       }
     }
     default:

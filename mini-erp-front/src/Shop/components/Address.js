@@ -52,26 +52,20 @@ class Address extends Component {
 		})
 	}
   render(){
-    console.log(this.props);
-    const {user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr} = this.props
+    const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr } = this.props;
+    const { zipNo, roadAddr, detailAddr, phone } = this.state;
     const invoice = {
-      userName: userName,
-      userEmail: userEmail,
-      userCode: userCode,
+      userName, userEmail, userCode,
       delivery: {
         to: user.name,
-        address: {
-					zipNo: this.state.zipNo,
-					roadAddr: this.state.roadAddr,
-					detailAddr: this.state.detailAddr
-				},
-        phone: this.state.phone
+        address: { zipNo, roadAddr, detailAddr },
+        phone
       },
-      requestedGoods: selected.map(each => (
-        { name : each.title,
-          qutt: each.amount,
-          sales: each.amount*each.price
-        })),
+      requestedGoods: selected.map(each => ({
+        name : each.title,
+        qutt: each.amount,
+        sales: each.amount*each.price
+      })),
       requestDesc: this.state.rqcontent,
       totalSales: selected.map(each => each.amount*each.price).reduce((a,b)=>a+b)
     }
@@ -80,7 +74,7 @@ class Address extends Component {
         <div className="delivery-zipcode">
           <label htmlFor="zipcode">우편번호</label>
           <div className="zipcode">
-            <Input type={'text'} id={'zipcode'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={this.state.zipNo}/>
+            <Input type={'text'} id={'zipcode'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={zipNo}/>
             <button onClick={this.openAddr} className="col-md-3">주소검색</button>
             <AddrModal
               isModalOpen={this.state.isAddrOpen}
@@ -113,7 +107,6 @@ class Address extends Component {
                   <p>소속유치원 주소</p>
                   {kinderAddr.map((kinder, i) => (
                     <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
-
                       <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
                     </div>
                   ))}
@@ -125,8 +118,8 @@ class Address extends Component {
         </div>
         <div className="delivery-address">
           <label htmlFor="delivery">배송지</label>
-          <Input type={'text'} value={this.state.roadAddr} placeholder={'배송지'} className={'Added-Input'} />
-					<Input type={'text'} value={this.state.detailAddr} placeholder={'상세주소를 입력해주세요.'} className={'Added-Input'} id={'delivery'} onChange={this.handleChange} name={'detailAddr'}/>
+          <Input type={'text'} value={roadAddr} placeholder={'배송지'} className={'Added-Input'} />
+					<Input type={'text'} value={detailAddr} placeholder={'상세주소를 입력해주세요.'} className={'Added-Input'} id={'delivery'} onChange={this.handleChange} name={'detailAddr'}/>
         </div>
         <div className="delivery-recipient">
           <div className="name">
@@ -135,7 +128,7 @@ class Address extends Component {
           </div>
           <div className="phone">
             <label htmlFor="phone">연락처</label>
-            <Input type={'text'} id={'phone'} value={this.state.phone} name={'phone'} placeholder={'전화번호'} className={'Added-Input'} onChange={this.handleChange}/>
+            <Input type={'text'} id={'phone'} value={phone} name={'phone'} placeholder={'전화번호'} className={'Added-Input'} onChange={this.handleChange}/>
           </div>
         </div>
         <div className="delivery-inquiry">
@@ -147,7 +140,7 @@ class Address extends Component {
         {invoice.totalSales ?(
           <button
             className="col-md-3"
-            onClick={() => { this.state.phone ? requestInvoice(invoice) : alert('연락처를 입력해주세요.')}}>주문하기</button>
+            onClick={() => { phone ? requestInvoice(invoice) : alert('연락처를 입력해주세요.')}}>주문하기</button>
         ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}
       </div>
     )

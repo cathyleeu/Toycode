@@ -8,6 +8,7 @@ const AllUserLists = ({allUsers}) => (
           <div key={i} className="cst-container">
             <div className="User-Info">
               <p> 지사명 : {user.branch.name} | {user.code} | {user.email}</p>
+              <p>사업자 번호: {user.branch.license} | 업태: {user.branch.bizType} | 종목:{user.branch.bizItems}</p>
             </div>
 
             <div className="User-Addr">

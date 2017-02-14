@@ -11,13 +11,13 @@ class RegisterKinder extends Component {
     super(props)
     const { kinder } = this.props
     this.state = {
-      Name: kinder.name || '',
+      name: kinder.name || '',
       zipNo: kinder.zipNo || '',
       roadAddr: kinder.roadAddr || '',
       detailAddr: kinder.detailAddr || '',
-      Phone: kinder.phone || '',
-      Manager: kinder.manager || '',
-      ManagerPh: kinder.managerPh || '',
+      phone: kinder.phone || '',
+      manager: kinder.manager || '',
+      managerPh: kinder.managerPh || '',
       isModalOpen: false,
       location: ''
     }
@@ -27,7 +27,6 @@ class RegisterKinder extends Component {
     const { addClass, createKinderClass, id, kinders} = this.props
     const childId = createKinderClass('반').classId
     const index = kinders.map(item => item._id).indexOf(id);
-    console.log("kinders",index);
     addClass(id, childId, index)
   }
   handleRemoveClick = e => {
@@ -85,8 +84,8 @@ class RegisterKinder extends Component {
              <input
              type="text"
              id={`${code}_name`}
-             value={this.state.Name}
-             name="Name"
+             value={this.state.name}
+             name="name"
              style={{border: disabled}}
              disabled={!branchEdit}
              onBlur={this.isOnBlur}
@@ -168,8 +167,8 @@ class RegisterKinder extends Component {
              <input
                type="tel"
                id={`${code}_ph`}
-               value={this.state.Phone}
-               name="Phone"
+               value={this.state.phone}
+               name="phone"
                style={{border: disabled}}
                disabled={!branchEdit}
                onBlur={this.isOnBlur}
@@ -182,8 +181,8 @@ class RegisterKinder extends Component {
              <input
                type="text"
                id={`${code}_mng`}
-               value={this.state.Manager}
-               name="Manager"
+               value={this.state.manager}
+               name="manager"
                style={{border: disabled}}
                disabled={!branchEdit}
                onBlur={this.isOnBlur}
@@ -196,8 +195,8 @@ class RegisterKinder extends Component {
              <input
                type="tel"
                id={`${code}_mngPh`}
-               value={this.state.ManagerPh}
-               name="ManagerPh"
+               value={this.state.managerPh}
+               name="managerPh"
                style={{border: disabled}}
                disabled={!branchEdit}
                onBlur={this.isOnBlur}
