@@ -52,12 +52,12 @@ class Address extends Component {
 		})
 	}
   render(){
-    const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr } = this.props;
-    const { zipNo, roadAddr, detailAddr, phone } = this.state;
+    const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr, customerType } = this.props;
+    const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
     const invoice = {
       userName, userEmail, userCode,
       delivery: {
-        to: user.name,
+        to: recipient,
         address: { zipNo, roadAddr, detailAddr },
         phone
       },
@@ -92,28 +92,31 @@ class Address extends Component {
 								))}
 							</div>
             </AddrModal>
-            <button onClick={this.openAddrBook} className="col-md-2">주소록</button>
-            <AddrModal
-              isModalOpen={this.state.isAddrBookOpen}
-              closeModal={this.closeModal}>
-							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+            {customerType === 'A' && (
               <div>
-                <p>지사주소</p>
-                <div onClick={() => this.isSelectedAddress(user.address)}>
-                  <p>{user.address.zipNo}</p>
-                  <p>{user.address.roadAddr} | {user.address.detailAddr}</p>
-                </div>
-                <div>
-                  <p>소속유치원 주소</p>
-                  {kinderAddr.map((kinder, i) => (
-                    <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
-                      <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
+                <button onClick={this.openAddrBook} className="col-md-2">주소록</button>
+                <AddrModal
+                  isModalOpen={this.state.isAddrBookOpen}
+                  closeModal={this.closeModal}>
+    							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+                  <div>
+                    <p>지사주소</p>
+                    <div onClick={() => this.isSelectedAddress(user.address)}>
+                      <p>{user.address.zipNo}</p>
+                      <p>{user.address.roadAddr} | {user.address.detailAddr}</p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </AddrModal>
-
+                    <div>
+                      <p>소속유치원 주소</p>
+                      {kinderAddr.map((kinder, i) => (
+                        <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
+                          <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </AddrModal>
+              </div>)
+            }
           </div>
         </div>
         <div className="delivery-address">
@@ -124,7 +127,7 @@ class Address extends Component {
         <div className="delivery-recipient">
           <div className="name">
             <label htmlFor="name">수령인</label>
-            <Input type={'text'} id={'name'} value={this.state.recipient} placeholder={'받는이'} className={'Added-Input'} name={'recipient'} onChange={this.handleChange}/>
+            <Input type={'text'} id={'name'} value={recipient} placeholder={'받는이'} className={'Added-Input'} name={'recipient'} onChange={this.handleChange}/>
           </div>
           <div className="phone">
             <label htmlFor="phone">연락처</label>
