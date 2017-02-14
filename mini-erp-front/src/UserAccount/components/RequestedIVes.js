@@ -30,48 +30,58 @@ class RequestedIVes extends Component{
 	}
   render(){
     const {invoice, requestRefundByUser} = this.props
+    const { to, address, phone } = invoice.delivery;
     const orderCreated = invoice.createdOn.split("T")
     const commaTotalSales = Commas(invoice.totalSales);
     const display = {display: "none"};
     return(
-      <div className="requestedIVes-body col-md-12">
+      <div className="requestedIVes-body">
         <div className="requestedIVes-contents">
           <div className="requestedIVes-date col-md-3">{orderCreated[0]}</div>
-          <div className="requestedIVes-goods col-md-6">
+          <div className="requestedIVes-goods col-md-7">
             {invoice.requestedGoods.map((goods,i) => {
               const commaSales = Commas(goods.sales);
               return(
               <div key={i} className="requestedIVes-goods-info">
-                <strong>{goods.name}</strong>
-                <p>{goods.qutt} 부</p>
-                <div className="requestedIVes-goods-line"></div>
+                <div className="requestedIVes-goods-line">
+                  <strong>{goods.name}</strong>
+                  <p>{goods.qutt} 부</p>
+                </div>
                 <p>{commaSales} 원</p>
               </div>
             )})}
           </div>
-          <div className="requestedIVes-total col-md-3">
+          <div className="requestedIVes-total col-md-2">
             <p>Total</p>
             <strong>{commaTotalSales} 원</strong>
           </div>
         </div>
-        <div className="requestedIVes-inquiry col-md-12">
-          <div className="requestedIVes-inquiry-ctx col-md-7">
-            <strong>고객문의사항</strong>
-            <p>{invoice.requestDesc}</p>
+        <div className="requestedIVes-btm">
+          <h6>받는 분</h6>
+          <div className="requestedIVes-recipient">
+            <p><strong>수령인</strong>{to}</p>
+            <p><strong>연락처</strong>{phone}</p>
+            <p><strong>배송시</strong>{address.zipNo}, {address.roadAddr}, {address.detailAddr}</p>
           </div>
-          <div className="requestedIVes-inquiry-btn col-md-5" style={display}>
-            <button onClick={this.openBill}>거래명세서</button>
-            <AddrModal isModalOpen={this.state.isBillOpen} closeModal={this.closeModal}>
-							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
-              <TransactionByIVes invoice={invoice} />
-            </AddrModal>
-            <button onClick={this.openRTn}>반품/교환 접수</button>
-            <AddrModal
-              isModalOpen={this.state.isRTnOpen}
-              closeModal={this.closeModal}>
-							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
-              <ReturnGoodsByIVes invoice={invoice} requestRefundByUser={requestRefundByUser} />
-            </AddrModal>
+          <div className="requestedIVes-inquiry">
+            <div className="requestedIVes-inquiry-ctx w-70">
+              <strong>고객문의사항</strong>
+              <p>{invoice.requestDesc}</p>
+            </div>
+            <div className="requestedIVes-inquiry-btn w-30" style={display}>
+              <button onClick={this.openBill}>거래명세서</button>
+              <AddrModal isModalOpen={this.state.isBillOpen} closeModal={this.closeModal}>
+  							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+                <TransactionByIVes invoice={invoice} />
+              </AddrModal>
+              <button onClick={this.openRTn}>반품/교환 접수</button>
+              <AddrModal
+                isModalOpen={this.state.isRTnOpen}
+                closeModal={this.closeModal}>
+  							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+                <ReturnGoodsByIVes invoice={invoice} requestRefundByUser={requestRefundByUser} />
+              </AddrModal>
+            </div>
           </div>
         </div>
       </div>

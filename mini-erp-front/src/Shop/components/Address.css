@@ -92,14 +92,10 @@ height: 30px;
 }
 .search-address-results{
   margin: 1em 1em 0;
+  overflow: scroll;
+  height: 80%;
 }
-/*.search-address-results-header{
-  height: 30px;
-  border-bottom: 3px dashed #4884ce;
-  margin-bottom: 0.5em;
-  padding: 0.2em;
-  text-align: center;
-}*/
+
 .search-address-results p,
 .search-address-results-header p {
   margin:0;
@@ -110,4 +106,12 @@ height: 30px;
   width: 100%;
   margin: 0.4em 0;
   border-left: 3px solid #4884ce;
+}
+
+.search-address-top > button{
+  width: 20%;
+  background: transparent;
+  color: gray;
+  padding: 0;
+  margin: 0;
 }

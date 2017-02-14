@@ -23,3 +23,24 @@
   font-family: "Roboto", sans-serif;
   padding: 0.2em 1em;
 }
+
+.selected-goods{
+  padding-bottom: 1em;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.selected-goods-detailed{
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dfdfdf;
+  padding: 1em;
+}
+.selected-goods-detailed p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0.3em;
+}
+.selected-goods-detailed-ctx{
+  padding: 0.3em;
+}

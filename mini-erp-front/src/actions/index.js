@@ -3,10 +3,10 @@ import axios from 'axios'
 
 
 
-const currentPage = 1
-const countPerPage = 10
-const confmKey = 'U01TX0FVVEgyMDE3MDEyMzA5MzE0NDE4NTA0'
-const searchUrl = 'http://www.juso.go.kr/addrlink/addrLinkApi.do'
+const currentPage = 1;
+const countPerPage = 200;
+const confmKey = 'U01TX0FVVEgyMDE3MDEyMzA5MzE0NDE4NTA0';
+const searchUrl = 'http://www.juso.go.kr/addrlink/addrLinkApi.do';
 
 export function searchAddress(location){
   return function(dispatch) {

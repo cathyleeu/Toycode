@@ -7,10 +7,9 @@ const AllUserLists = ({allUsers}) => (
       (user , i) => (
           <div key={i} className="cst-container">
             <div className="User-Info">
-              <p> 지사명 : {user.branch.name} | {user.code} | {user.email}</p>
+              <p> 지사명 : {user.branch.name} | {user.code} | {user.branch.repr} | {user.email}</p>
               <p>사업자 번호: {user.branch.license} | 업태: {user.branch.bizType} | 종목:{user.branch.bizItems}</p>
             </div>
-
             <div className="User-Addr">
               <p>지사 주소 : {user.branch.address.zipNo}</p>
               <p>{user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>

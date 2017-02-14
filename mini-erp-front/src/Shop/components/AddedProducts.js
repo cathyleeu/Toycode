@@ -18,9 +18,9 @@ class AddedProduct extends Component {
     goodsSelect(this.props.id, parseInt(this.state.orderQuantity, 10))
   }
   render(){
-    const {title, goodsDelete, id} = this.props
+    const {title, goodsDelete, id} = this.props;
     return(
-      <div className="row Added">
+      <div className="Added">
         <div className="col-md-3">
           <p>{title}</p>
         </div>
@@ -32,7 +32,6 @@ class AddedProduct extends Component {
           placeholder={'주문수량'}
           onBlur={this.isOnBlur}
         />
-        {/* TODO: 삭제 버튼 눌렀을 때, state가 같이 삭제 되어야함.  */}
         <button
           className="col-md-2"
           onClick={() => { goodsDelete(id) }}>삭제</button>

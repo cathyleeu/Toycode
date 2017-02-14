@@ -39,6 +39,12 @@ class Address extends Component {
 		const { searchAddress } = this.props
 		searchAddress(this.state.location)
 	}
+  isEnterAddr = (e) => {
+    if(e.key === 'Enter'){
+      const { searchAddress } = this.props
+  		searchAddress(this.state.location)
+    }
+  }
 	isSelectedAddress = (result) => {
 		const {selectedJuso} = this.props
 		selectedJuso(result)
@@ -81,9 +87,9 @@ class Address extends Component {
               closeModal={this.closeModal}>
 							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
 							<div className="search-address-top">
-								<input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
-								<i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>
-							</div>
+								<input className="search-input" type="search" value={this.state.location} onKeyPress={this.isEnterAddr} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
+                <i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>
+              </div>
 							<div className="search-address-results">
 								{juso && juso.map((result, i)=> (
 									<div className="search-address-result" key={i} onClick={() => this.isSelectedAddress(result)}>
