@@ -138,57 +138,58 @@ class SignInAndUp extends Component {
             onChange={this.onChange}
             placeholder="사업자번호"
             required/>
-         <label htmlFor="branch-name">상호명</label>
-          <input
-           value={this.state.name}
-           className="rg-branch-name"
-           id="branch-name"
-           name="name"
-           type="text"
-           onChange={this.onChange}
-           placeholder="상호명"
-           required/>
-
-         <label htmlFor="branch-repr">대표자</label>
-          <input
-           value={this.state.repr}
-           className="rg-branch-name"
-           id="branch-repr"
-           name="repr"
-           type="text"
-           onChange={this.onChange}
-           placeholder="대표자"
-           required/>
-         <label htmlFor="branch-bizType">업태</label>
-          <input
-           value={this.state.bizType}
-           className="rg-branch-name"
-           id="branch-bizType"
-           name="bizType"
-           type="text"
-           onChange={this.onChange}
-           placeholder="업태"
-           required/>
-         <label htmlFor="branch-bizItems">종목</label>
-          <input
-           value={this.state.bizItems}
-           className="rg-branch-name"
-           id="branch-bizItems"
-           name="bizItems"
-           type="text"
-           onChange={this.onChange}
-           placeholder="종목"
-           required/>
-         <label htmlFor="branch-signupCode">가입코드</label>
-          <input
-           value={this.state.signupCode}
-           className="rg-branch-name"
-           id="branch-signupCode"
-           name="signupCode"
-           type="text"
-           onChange={this.onChange}
-           placeholder="가입코드"
-           required/>
+          <div className="rg-branch-info-ctx">
+            <fieldset className="rg-branch-info-name">
+            <label htmlFor="branch-name">상호명</label>
+             <input
+              value={this.state.name}
+              className="rg-branch-name"
+              id="branch-name"
+              name="name"
+              type="text"
+              onChange={this.onChange}
+              placeholder="상호명"
+              required/>
+            </fieldset>
+            <fieldset className="rg-branch-info-repr">
+              <label htmlFor="branch-repr">대표자</label>
+               <input
+                value={this.state.repr}
+                className="rg-branch-name"
+                id="branch-repr"
+                name="repr"
+                type="text"
+                onChange={this.onChange}
+                placeholder="대표자"
+                required/>
+            </fieldset>
+          </div>
+          <div className="rg-branch-info-ctx">
+            <fieldset className="rg-branch-info-bizType">
+             <label htmlFor="branch-bizType">업태</label>
+              <input
+               value={this.state.bizType}
+               className="rg-branch-name"
+               id="branch-bizType"
+               name="bizType"
+               type="text"
+               onChange={this.onChange}
+               placeholder="업태"
+               required/>
+           </fieldset>
+           <fieldset className="rg-branch-info-bizItems">
+             <label htmlFor="branch-bizItems">종목</label>
+              <input
+               value={this.state.bizItems}
+               className="rg-branch-name"
+               id="branch-bizItems"
+               name="bizItems"
+               type="text"
+               onChange={this.onChange}
+               placeholder="종목"
+               required/>
+             </fieldset>
+           </div>
         </fieldset>
       </div>
     )
@@ -231,6 +232,16 @@ class SignInAndUp extends Component {
                 type="password"
                 onChange={this.onChange}
                 placeholder="비밀번호 확인입력"
+                required/>
+              <label htmlFor="branch-signupCode">가입코드</label>
+               <input
+                value={this.state.signupCode}
+                className="rg-branch-name"
+                id="branch-signupCode"
+                name="signupCode"
+                type="text"
+                onChange={this.onChange}
+                placeholder="가입코드"
                 required/>
               </fieldset>
             )}

@@ -1,6 +1,5 @@
 import * as types from '../constants/types'
 import axios from 'axios'
-// import {fetchUser} from './index.js'
 
 
 let nextKinId = 0

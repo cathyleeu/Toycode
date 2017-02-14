@@ -6,7 +6,8 @@ import './index.css'
 const AuthContainer = () => {
   let style = {
         width: `${window.innerWidth}px`,
-        height: `${window.innerHeight}px`
+        height: `${window.innerHeight}px`,
+        overflow: 'scroll'
       }
   return(
   <div className="Auth-Container" style={style}>

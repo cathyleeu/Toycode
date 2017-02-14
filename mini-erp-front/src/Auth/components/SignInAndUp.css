@@ -19,6 +19,7 @@
   font-size: 13px;
 }
 
+
 .rg-branch-no,
 .rg-address-zip {
   display: flex;
@@ -28,6 +29,18 @@
   margin-bottom: 0.5rem;
 }
 
+.rg-branch-info-ctx{
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  margin-bottom: 0.5em;
+}
+
+
+.rg-branch-info-bizItems > input,
+.rg-branch-info-bizType > input,
+.rg-branch-info-repr > input,
+.rg-branch-info-name > input,
 .rg-user-email > input,
 .rg-user-pw > input,
 .rg-user-pwCnfrm > input,
@@ -45,6 +58,21 @@
   height: 40px;
   background: #f2f2f2;
 }
+
+.rg-branch-info-name > label,
+.rg-branch-info-repr > label,
+.rg-branch-info-bizType > label,
+.rg-branch-info-bizItems > label {
+  margin-bottom: 0.2em;
+}
+
+.rg-branch-info-bizItems > input,
+.rg-branch-info-bizType > input,
+.rg-branch-info-repr > input,
+.rg-branch-info-name > input{
+  width: 98%;
+}
+
 
 .rg-user-email > input,
 .rg-user-pw > input,
