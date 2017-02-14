@@ -21,7 +21,6 @@ class BranchContainer extends Component{
   }
   render() {
     const { kinders, user, editKinder, completedAddKinder, editUser, updateUser, editedUser, createKinderClass, addClass, deleteKinderClass, updateKinderClass } = this.props
-    // const { kinders, user, editKinder, completedAddKinder, editUser, updateUser, editedUser} = this.props
     const kindergartens = kinders.kinders
     const branchType = (
       <div className="branchKinder-header">
@@ -84,15 +83,11 @@ class BranchContainer extends Component{
           )}
         </div>
         <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={kinders.managers.education} acct={kinders.managers.account} />
-        {/* {user.customerType === 'A' ? branchType : ''} */}
         {user.customerType === 'A' ? branchType : directType}
         <div className="kinder-list-cont col-md-12">
-          {/* {user.customerType === 'A'
+          {user.customerType === 'A'
             ? kindergartens.map(this.renderChild)
-            : ''} */}
-            {user.customerType === 'A'
-              ? kindergartens.map(this.renderChild)
-              : <DirectKinder kinder={kinders.kinders[0]} branchEdit={kinders.branchEdit? true : false } createKinderClass={createKinderClass} addClass={addClass} id={user._id} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass}/>}
+            : <DirectKinder kinder={kinders.kinders[0]} branchEdit={kinders.branchEdit? true : false } createKinderClass={createKinderClass} addClass={addClass} id={user._id} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass}/>}
         </div>
       </div>
     )

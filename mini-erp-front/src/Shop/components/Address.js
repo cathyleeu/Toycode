@@ -52,7 +52,7 @@ class Address extends Component {
 		})
 	}
   render(){
-    const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr} = this.props;
+    const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr, customerType} = this.props;
     const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
     const invoice = {
       userName, userEmail, userCode,
@@ -92,7 +92,8 @@ class Address extends Component {
 								))}
 							</div>
             </AddrModal>
-
+            {customerType === 'A' && (
+              <div>
                 <button onClick={this.openAddrBook} className="col-md-2">주소록</button>
                 <AddrModal
                   isModalOpen={this.state.isAddrBookOpen}
@@ -114,7 +115,8 @@ class Address extends Component {
                     </div>
                   </div>
                 </AddrModal>
-              </div>
+              </div>)}
+            </div>
         </div>
         <div className="delivery-address">
           <label htmlFor="delivery">배송지</label>
