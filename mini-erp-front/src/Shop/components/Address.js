@@ -53,11 +53,11 @@ class Address extends Component {
 	}
   render(){
     const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr } = this.props;
-    const { zipNo, roadAddr, detailAddr, phone } = this.state;
+    const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
     const invoice = {
       userName, userEmail, userCode,
       delivery: {
-        to: user.name,
+        to: recipient,
         address: { zipNo, roadAddr, detailAddr },
         phone
       },
@@ -124,7 +124,7 @@ class Address extends Component {
         <div className="delivery-recipient">
           <div className="name">
             <label htmlFor="name">수령인</label>
-            <Input type={'text'} id={'name'} value={this.state.recipient} placeholder={'받는이'} className={'Added-Input'} name={'recipient'} onChange={this.handleChange}/>
+            <Input type={'text'} id={'name'} value={recipient} placeholder={'받는이'} className={'Added-Input'} name={'recipient'} onChange={this.handleChange}/>
           </div>
           <div className="phone">
             <label htmlFor="phone">연락처</label>
