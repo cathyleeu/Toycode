@@ -6,7 +6,7 @@
 	height: 100%;
 	overflow: auto;
 	height: 100%;
-	z-index: 1;
+	z-index: 300;
 }
 
 .searchModal {

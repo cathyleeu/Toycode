@@ -12,8 +12,18 @@ const Invoice = ({ nodes, total, requestInvoice, user, selected, kinderAddr }) =
   return(
   <div className="Invoice-Container">
     <div className="col-md-6">
-      {nodes}
-      <div className="col-md-12 Invoice-Total"><p>총 가격:</p><p className="Invoice-Total-Price">{commaTotal}</p><p>원</p></div>
+      <div className="selected-goods">
+        {nodes}
+      </div>
+      <div className="selected-goods-detailed">
+        <p>상세 내역</p>
+        {selected.map((detail,i) => (
+          <div key={i} className="selected-goods-detailed-ctx">
+            {detail.amount && <div> {detail.title} X {detail.amount} = {detail.amount*detail.price}원 </div>}
+          </div>
+        ))}
+      </div>
+      <div className="Invoice-Total"><p>총 가격:</p><p className="Invoice-Total-Price">{commaTotal}</p><p>원</p></div>
     </div>
     <div className="col-md-6">
       <Address

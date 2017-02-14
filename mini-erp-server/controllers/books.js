@@ -34,7 +34,7 @@ const isRegisteredNewGoods = async (ctx, next) => {
 };
 const isFetchedAll = async ctx => {
   try {
-    ctx.body = await Books.find().sort({"id": 1 });
+    ctx.body = await Books.find().sort({"id": -1 });
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
