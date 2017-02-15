@@ -74,13 +74,8 @@ class SignInAndUp extends Component {
     const { signupUser, signinUser, auth } = this.props
     if(auth.status){
       signupUser(this.state)
-    } else if(this.state.license === ''){
-      this.setState({signupErr: '라이센스를 입력하세요.'})
-    } else if(this.state.bizType === ''){
-      this.setState({signupErr: '업태를 입력하세요.'})
-    } else if(this.state.bizItems === ''){
-      this.setState({signupErr: '종목를 입력하세요.'})
     } else {
+      console.log(this.state);
       signinUser(this.state)
     }
   }
