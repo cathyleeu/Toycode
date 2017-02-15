@@ -130,3 +130,12 @@
   background: #5d5656;
   width: 28%;
 }
+
+.errHandle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.errMessage{
+  color: #990c0c;
+}

@@ -85,7 +85,7 @@ class Address extends Component {
             <AddrModal
               isModalOpen={this.state.isAddrOpen}
               closeModal={this.closeModal}>
-							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
+              <i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
 							<div className="search-address-top">
 								<input className="search-input" type="search" value={this.state.location} onKeyPress={this.isEnterAddr} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
                 <i className="fa fa-search search-icon" aria-hidden="true" onClick={this.isSearchAddress}></i>

@@ -134,17 +134,13 @@ function tokenForUser(user) {
   return jwt.encode({sub: user._id, iat: timestamp }, config.secret)
 }
 
-// const intro = function(ctx,next){
-//
-// }
-
 
 const signin = async(ctx, next) => {
   const gen = await passport.authenticate('local', function*(err, user, info) {
     if (err) throw err;
     if (user === false) {
       ctx.status = 401;
-      ctx.body = { success: false };
+      ctx.body = { success: false , loginErr: '가입된 이메일이 아닙니다.' };
     } else {
       ctx.body = { success: true, token:tokenForUser(user) };
     }
@@ -156,24 +152,21 @@ const signin = async(ctx, next) => {
 const signup = async (ctx, next) => {
   try {
     const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems} = ctx.request.body;
-    // console.log(ctx.request.body);
-    if(!email || !password){
+    if(!email){
       ctx.status = 422;
-      ctx.body = {error: '아이디 또는 비밀번호를 입력해주세요.'};
+      ctx.body = { emailErr : '이메일을 입력해주세요.' };
       return;
-    } else if(!license){
+    } else if(!password){
       ctx.status = 422;
-      ctx.body = {error: '라이센스를 입력하세요.'}
+      ctx.body = { passwordErr : '비밀번호를 입력해주세요.' }
       return;
-    } else if(!bizType){
-      console.log(bizType);
+    } else if( !zipNo || !roadAddr || !detailAddr ){
       ctx.status = 422;
-      ctx.body = {error: '업태를 입력하세요.'}
+      ctx.body = { addrErr : '모든 항목을 입력해주세요.'}
       return;
-    } else if(!bizItems){
-      console.log(bizItems);
+    } else if( !license || !bizType || !bizItems || !name || !repr ){
       ctx.status = 422;
-      ctx.body = {error: '종목를 입력하세요.'}
+      ctx.body = { bizErr : '모든 항목을 입력해주세요.'}
       return;
     }
     let user = await User.findOne({email: email});
@@ -185,10 +178,9 @@ const signup = async (ctx, next) => {
       customerType = "B";
     } else {
       ctx.status = 422;
-      ctx.body = '가입코드를 확인해주세요.';
+      ctx.body = { codeErr: '인증된 가입코드를 입력해주세요.' };
       return;
     }
-
 
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),

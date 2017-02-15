@@ -34,13 +34,40 @@ class SignInAndUp extends Component {
     [e.target.name]: e.target.value
     })
   }
-  renderAlert(){
-    if(this.props.errorMessage){
-      return(
-        <div className="alert alert-danger">
-          <strong>{this.props.errorMessage}</strong>
-        </div>
-      )
+  isEmailErr = () => {
+    const { errorMessage } = this.props;
+    if(errorMessage){
+      return <strong className="errMessage">{errorMessage.emailErr}</strong>
+    }
+  }
+  isPasswordErr = () => {
+    const { errorMessage } = this.props;
+    if(errorMessage){
+      return <strong className="errMessage">{errorMessage.passwordErr}</strong>
+    }
+  }
+  isAddrErr = () => {
+    const { errorMessage } = this.props;
+    if(errorMessage){
+      return <strong className="errMessage">{errorMessage.addrErr}</strong>
+    }
+  }
+  isBizErr = () => {
+    const { errorMessage } = this.props;
+    if(errorMessage){
+      return <strong className="errMessage">{errorMessage.bizErr}</strong>
+    }
+  }
+  isCodeErr = () => {
+    const { errorMessage } = this.props;
+    if(errorMessage){
+      return <strong className="errMessage">{errorMessage.codeErr}</strong>
+    }
+  }
+  isloginErr = () => {
+    const { errorMessage } = this.props;
+    if(errorMessage){
+      return <strong className="errMessage">{errorMessage.loginErr}</strong>
     }
   }
   openModal = () => {
@@ -75,7 +102,6 @@ class SignInAndUp extends Component {
     if(auth.status){
       signupUser(this.state)
     } else {
-      console.log(this.state);
       signinUser(this.state)
     }
   }
@@ -85,11 +111,12 @@ class SignInAndUp extends Component {
     this.setState({signupErr: ''})
   }
   render() {
-    const { auth, juso } = this.props
+    const { auth, juso } = this.props;
+    const isMatch = (this.state.password === this.state.passwordConfirm);
     const SignUpFieldSet = (
       <div className="col-md-6">
         <fieldset className="rg-address-info form-group">
-         <label htmlFor="address">주소</label>
+         <label htmlFor="address">주소 {this.isAddrErr()}</label>
          <div className="rg-address-zip">
            <input
             value={this.state.zipNo}
@@ -135,7 +162,7 @@ class SignInAndUp extends Component {
             required/>
         </fieldset>
         <fieldset className="rg-branch-info form-group">
-          <label htmlFor="branch-no">사업자 번호</label>
+          <label htmlFor="branch-no" className="errHandle">사업자 번호 {this.isBizErr()}</label>
            <input
             value={this.state.license}
             className="rg-branch-name"
@@ -206,19 +233,19 @@ class SignInAndUp extends Component {
         <form className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
           <div className={ auth.status ? "rg-user-info col-md-6" : "rg-user-info col-md-12"}>
             <fieldset className="form-group rg-user-email">
-             <label htmlFor="email">이메일</label>
+             <label htmlFor="email" className="errHandle">이메일 {this.isEmailErr()}</label>
              <input
                value={this.state.email}
                id="email"
                name="email"
                type="text"
-               placeholder="이메일 입력"
+               placeholder="ex)toycode@toycode.org"
                onChange={this.onChange}
                required
              />
             </fieldset>
             <fieldset className="form-group rg-user-pw">
-             <label htmlFor="password">비밀번호</label>
+             <label htmlFor="password" className="errHandle">비밀번호 {this.isPasswordErr()}</label>
              <input
               id="password"
               value={this.state.password}
@@ -231,7 +258,7 @@ class SignInAndUp extends Component {
             </fieldset>
             {auth.status && (
               <fieldset className="form-group rg-user-pwCnfrm">
-               <label htmlFor="passwordConfirm">비밀번호확인</label>
+               <label htmlFor="passwordConfirm" className="errHandle">비밀번호확인 {!isMatch && <strong className="errMessage">일치하지 않습니다.</strong>}</label>
                <input
                 value={this.state.passwordConfirm}
                 id="passwordConfirm"
@@ -240,7 +267,7 @@ class SignInAndUp extends Component {
                 onChange={this.onChange}
                 placeholder="비밀번호 확인입력"
                 required/>
-              <label htmlFor="branch-signupCode">가입코드</label>
+              <label htmlFor="branch-signupCode" className="errHandle">가입코드 {this.isCodeErr()}</label>
                <input
                 value={this.state.signupCode}
                 className="rg-branch-name"
@@ -252,9 +279,9 @@ class SignInAndUp extends Component {
                 required/>
               </fieldset>
             )}
+            {this.isloginErr()}
           </div>
           { auth.status && SignUpFieldSet }
-          { this.renderAlert()}
         </form>
         <div className="rg-submit col-md-12">
           <button onClick={this.onSubmit}>{ auth.status ? "회원가입" : "로그인"}</button>
