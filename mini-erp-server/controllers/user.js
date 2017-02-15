@@ -161,16 +161,16 @@ const signup = async (ctx, next) => {
       ctx.status = 422;
       ctx.body = {error: '아이디 또는 비밀번호를 입력해주세요.'};
       return;
-    } else if(license === ''){
+    } else if(!license){
       ctx.status = 422;
       ctx.body = {error: '라이센스를 입력하세요.'}
       return;
-    } else if(bizType === ''){
+    } else if(!bizType){
       console.log(bizType);
       ctx.status = 422;
       ctx.body = {error: '업태를 입력하세요.'}
       return;
-    } else if(bizItems === ''){
+    } else if(!bizItems){
       console.log(bizItems);
       ctx.status = 422;
       ctx.body = {error: '종목를 입력하세요.'}
