@@ -74,6 +74,12 @@ class SignInAndUp extends Component {
     const { signupUser, signinUser, auth } = this.props
     if(auth.status){
       signupUser(this.state)
+    } else if(this.state.license === ''){
+      this.setState({signupErr: '라이센스를 입력하세요.'})
+    } else if(this.state.bizType === ''){
+      this.setState({signupErr: '업태를 입력하세요.'})
+    } else if(this.state.bizItems === ''){
+      this.setState({signupErr: '종목를 입력하세요.'})
     } else {
       signinUser(this.state)
     }
@@ -202,7 +208,7 @@ class SignInAndUp extends Component {
     return (
       <div className={ auth.status ? "SignUp-Container" : "SignIn-Container"}>
         <img src={logo} className="Auth-logo" role="presentation"/>
-        <form onSubmit={this.onSubmit} className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
+        <form className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
           <div className={ auth.status ? "rg-user-info col-md-6" : "rg-user-info col-md-12"}>
             <fieldset className="form-group rg-user-email">
              <label htmlFor="email">이메일</label>
@@ -254,13 +260,13 @@ class SignInAndUp extends Component {
           </div>
           { auth.status && SignUpFieldSet }
           { this.renderAlert()}
-          <div className="rg-submit col-md-12">
-            <button action="submit">{ auth.status ? "회원가입" : "로그인"}</button>
-            <div className="message">{ auth.status ? "이미 회원이신가요?" : "회원이 아니신가요?"}
-              <a onClick={this.isSignInAndUp}>{ auth.status ? "로그인하기" : "회원가입 하기"}</a>
-            </div>
-          </div>
         </form>
+        <div className="rg-submit col-md-12">
+          <button onClick={this.onSubmit}>{ auth.status ? "회원가입" : "로그인"}</button>
+          <div className="message">{ auth.status ? "이미 회원이신가요?" : "회원이 아니신가요?"}
+            <a onClick={this.isSignInAndUp}>{ auth.status ? "로그인하기" : "회원가입 하기"}</a>
+          </div>
+        </div>
       </div>
     )
   }

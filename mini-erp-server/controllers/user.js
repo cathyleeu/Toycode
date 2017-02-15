@@ -161,6 +161,20 @@ const signup = async (ctx, next) => {
       ctx.status = 422;
       ctx.body = {error: '아이디 또는 비밀번호를 입력해주세요.'};
       return;
+    } else if(license === ''){
+      ctx.status = 422;
+      ctx.body = {error: '라이센스를 입력하세요.'}
+      return;
+    } else if(bizType === ''){
+      console.log(bizType);
+      ctx.status = 422;
+      ctx.body = {error: '업태를 입력하세요.'}
+      return;
+    } else if(bizItems === ''){
+      console.log(bizItems);
+      ctx.status = 422;
+      ctx.body = {error: '종목를 입력하세요.'}
+      return;
     }
     let user = await User.findOne({email: email});
     let codeRes = await Code.findOne({dbcollection: 'User'});
@@ -174,6 +188,7 @@ const signup = async (ctx, next) => {
       ctx.body = '가입코드를 확인해주세요.';
       return;
     }
+
 
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
