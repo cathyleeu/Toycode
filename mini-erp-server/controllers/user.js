@@ -96,7 +96,6 @@ nev.configure({
     verificationURL: config.SERVER_URL + '/signup/${URL}',
     persistentUserModel: User,
     tempUserCollection: 'tempUsers',
-
     transportOptions: {
       service: 'Gmail',
       auth: {
@@ -105,10 +104,15 @@ nev.configure({
       }
     },
     verifyMailOptions: {
-      from: '키즈코딩 <toycodeinc_do_not_reply@gmail.com>',
-      subject: '키즈코딩 회원 이메일 인증',
-      html: '<p>아래의 "인증하기"를 클릭하시면 이메일 인증이 완료됩니다 : </p><a href="${URL}">[인증하기]</a></p>',
-      text: ''
+      from: '키즈씽킹 <toycodeinc_do_not_reply@gmail.com>',
+      subject: '키즈씽킹 회원 이메일 인증',
+      html: '<img src="cid:logo" style="width:113px;height:40px;margin-bottom:1em;"/><p style="margin-bottom:0.3em;font-size:18px;">안녕하세요. 고객님!</p> <p style="margin-bottom:1em;">아래의 "인증하기"를 클릭하시면 이메일 인증이 완료됩니다</p><a href="${URL}" style="padding:1em 3em; background-color:#4CA651;color:white;text-align:center;text-decoration:none;display: inline-block;">인증하기</a></p>',
+      text: '',
+      attachments: [{
+        filename: 'logo.png',
+        path: 'static/img/logo.png',
+        cid: 'logo' //same cid value as in the html img src
+      }]
     }
 }, function(err, options) {
   if (err) {
@@ -140,7 +144,7 @@ const signin = async(ctx, next) => {
     if (err) throw err;
     if (user === false) {
       ctx.status = 401;
-      ctx.body = { success: false , loginErr: '가입된 이메일이 아닙니다.' };
+      ctx.body = { success: false , loginErr: '이메일이나 비밀번호를 확인해주세요.' };  //보완적인 이슈로 두리뭉실하게 에러를 보내줌.
     } else {
       ctx.body = { success: true, token:tokenForUser(user) };
     }
@@ -152,35 +156,35 @@ const signin = async(ctx, next) => {
 const signup = async (ctx, next) => {
   try {
     const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems} = ctx.request.body;
+    let errObj = [];
     if(!email){
-      ctx.status = 422;
-      ctx.body = { emailErr : '이메일을 입력해주세요.' };
-      return;
-    } else if(!password){
-      ctx.status = 422;
-      ctx.body = { passwordErr : '비밀번호를 입력해주세요.' }
-      return;
-    } else if( !zipNo || !roadAddr || !detailAddr ){
-      ctx.status = 422;
-      ctx.body = { addrErr : '모든 항목을 입력해주세요.'}
-      return;
-    } else if( !license || !bizType || !bizItems || !name || !repr ){
-      ctx.status = 422;
-      ctx.body = { bizErr : '모든 항목을 입력해주세요.'}
-      return;
+      errObj.push({ type: "emailErr", msg: "이메일을 입력하세요." })
     }
-    let user = await User.findOne({email: email});
-    let codeRes = await Code.findOne({dbcollection: 'User'});
+    if(!password){
+      errObj.push({ type: "passwordErr", msg: "비밀번호를 입력해주세요." })
+    }
+    if( !zipNo || !roadAddr || !detailAddr ){
+      errObj.push({ type: "addrErr", msg: "모든 항목을 입력해주세요." })
+    }
+    if( !license || !bizType || !bizItems || !name || !repr ){
+      errObj.push({ type: "bizErr", msg: "모든 항목을 입력해주세요." })
+    }
     let customerType = "A";
     if(signupCode.toLowerCase() == "think2017") {
       customerType = "A";
     } else if(signupCode.toLowerCase() == "ecc2017") {
       customerType = "B";
     } else {
+      errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
+    }
+    if(errObj.length > 0) {
       ctx.status = 422;
-      ctx.body = { codeErr: '인증된 가입코드를 입력해주세요.' };
+      ctx.body = errObj;
       return;
     }
+    let user = await User.findOne({email: email});
+    let codeRes = await Code.findOne({dbcollection: 'User'});
+
 
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
@@ -255,7 +259,6 @@ const confirmSignUp = async ctx => {
   try {
     const url = ctx.params.url;
     const user = await confirmTempUser(url);
-    console.log("confirm",user)
     // TODO: 클릭이 완료되면 로그인 페이지로 자동 이동하기 ㅎㅎㅎㅎctx.render = "http:localhost:3000/login"
     ctx.body = "이메일 인증이 완료되었습니다."
     // if(user) {

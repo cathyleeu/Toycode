@@ -18,7 +18,7 @@ const initialState = function(){
     return {
       status: false,
       authenticated: false,
-      error: {},
+      errMsg: {},
       email:'',
       user:{}
     }
@@ -30,25 +30,15 @@ export default function (state = initialState(), action) {
   switch (action.type) {
     case types.REGISTERED_STATUS:
     case types.REGISTER_STATUS:
-      return { ...state, status: action.status, error: action.error }
+      return { ...state, status: action.status, errMsg: {} }
     case types.AUTH_USER:
       return { ...state, authenticated: true}
     case types.STATUS_ON_LOGIN:
       return { ...state, user: action.response, email: localStorage.getItem('email'), authenticated: true }
     case types.UNAUTH_USER:
       return { ...state, authenticated: false, email: '', user: '', status: false }
-    case types.EMAIL_ERROR:
-      return { ...state, error: {...state.error, emailErr: action.emailErr } }
-    case types.PASSWORD_ERROR:
-      return { ...state, error: {...state.error, passwordErr: action.passwordErr} }
-    case types.ADDR_ERROR:
-      return { ...state, error: {...state.error, addrErr: action.addrErr} }
-    case types.BIZ_ERROR:
-      return { ...state, error: {...state.error, bizErr: action.bizErr} }
-    case types.CODE_ERROR:
-      return { ...state, error: {...state.error, codeErr: action.codeErr} }
     case types.LOGIN_ERROR:
-      return { ...state, error: {...state.error, loginErr: action.loginErr} }
+      return { ...state, errMsg: action.errMsg }
     default:
       return state
   }

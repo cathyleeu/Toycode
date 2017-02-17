@@ -10,7 +10,6 @@ const AllUserIVes = ({allIVes}) => (
                 <div className="IV-Goods-detail-info">
                   <div className="IV-Info col-md-4">
                     <p>{iv.invoiceId}</p>
-                    <p>{iv.userName} | {iv.userCode}</p>
                     <p>{iv.userEmail}</p>
                   </div>
                   <div className="IV-Addr col-md-7">

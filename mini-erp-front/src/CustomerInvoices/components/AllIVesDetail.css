@@ -8,6 +8,7 @@
   padding-right: 2.1em;
 }
 
+.user-info-detail,
 .IV-Goods-detail {
   height: 0;
   overflow: hidden;
@@ -18,7 +19,7 @@
   flex-direction: row;
 }
 
-
+.user-info button,
 .IV-Goods button {
   margin: 0;
   padding: 0;
@@ -31,6 +32,10 @@
 
 .IV-Goods.open .IV-Goods-detail {
   height: 130px;
+}
+
+.user-info.open .user-info-detail {
+  height: 380px;
 }
 
 .IV-Goods-abbr-top{
