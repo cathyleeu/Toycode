@@ -30,6 +30,8 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
         amount: '',
         price: action.bookPrice
       }]
+    case types.EMPTY_CART:
+      return state;
     case types.SELECTED_GOODS:
       return state.map((goods) => {
         if(goods.id === action.id){

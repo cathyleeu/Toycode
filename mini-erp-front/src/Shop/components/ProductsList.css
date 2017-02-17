@@ -30,3 +30,8 @@ h4{
   height: 100px;
   padding: 1em;
 }
+
+.goods-list > div:hover{
+  background-color: #dbdbdb;
+  cursor: pointer;
+}
