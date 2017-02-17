@@ -1,6 +1,6 @@
-import * as types from '../constants/types'
-import axios from 'axios'
-import { browserHistory } from 'react-router'
+import * as types from '../constants/types';
+import axios from 'axios';
+import { browserHistory } from 'react-router';
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
 export const addToCartUnsafe = (bookId,bookTitle,bookPrice) => ({
@@ -20,6 +20,8 @@ export const goodsDelete = (id) => ({
   type: types.DELETE_GOODS,
   id
 })
+
+
 
 export const requestInvoice = (invoiceData) => ((dispatch) => {
   axios.post(`${ROOT_URL}/invoices`, invoiceData)
