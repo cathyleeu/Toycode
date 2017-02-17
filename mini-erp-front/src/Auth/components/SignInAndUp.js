@@ -34,40 +34,10 @@ class SignInAndUp extends Component {
     [e.target.name]: e.target.value
     })
   }
-  isEmailErr = () => {
+  getErrMsg = (errType) => {
     const { errorMessage } = this.props;
     if(errorMessage){
-      return <strong className="errMessage">{errorMessage.emailErr}</strong>
-    }
-  }
-  isPasswordErr = () => {
-    const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage.passwordErr}</strong>
-    }
-  }
-  isAddrErr = () => {
-    const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage.addrErr}</strong>
-    }
-  }
-  isBizErr = () => {
-    const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage.bizErr}</strong>
-    }
-  }
-  isCodeErr = () => {
-    const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage.codeErr}</strong>
-    }
-  }
-  isloginErr = () => {
-    const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage.loginErr}</strong>
+      return <strong className="errMessage">{errorMessage[errType]}</strong>
     }
   }
   openModal = () => {
@@ -116,7 +86,7 @@ class SignInAndUp extends Component {
     const SignUpFieldSet = (
       <div className="col-md-6">
         <fieldset className="rg-address-info form-group">
-         <label htmlFor="address">주소 {this.isAddrErr()}</label>
+         <label htmlFor="address">주소 {this.getErrMsg("addrErr")}</label>
          <div className="rg-address-zip">
            <input
             value={this.state.zipNo}
@@ -162,7 +132,7 @@ class SignInAndUp extends Component {
             required/>
         </fieldset>
         <fieldset className="rg-branch-info form-group">
-          <label htmlFor="branch-no" className="errHandle">사업자 번호 {this.isBizErr()}</label>
+          <label htmlFor="branch-no" className="errHandle">사업자 번호 {this.getErrMsg("bizErr")}</label>
            <input
             value={this.state.license}
             className="rg-branch-name"
@@ -233,7 +203,7 @@ class SignInAndUp extends Component {
         <form className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
           <div className={ auth.status ? "rg-user-info col-md-6" : "rg-user-info col-md-12"}>
             <fieldset className="form-group rg-user-email">
-             <label htmlFor="email" className="errHandle">이메일 {this.isEmailErr()}</label>
+             <label htmlFor="email" className="errHandle">이메일 {this.getErrMsg("emailErr")}</label>
              <input
                value={this.state.email}
                id="email"
@@ -245,7 +215,7 @@ class SignInAndUp extends Component {
              />
             </fieldset>
             <fieldset className="form-group rg-user-pw">
-             <label htmlFor="password" className="errHandle">비밀번호 {this.isPasswordErr()}</label>
+             <label htmlFor="password" className="errHandle">비밀번호 {this.getErrMsg("passwordErr")}</label>
              <input
               id="password"
               value={this.state.password}
@@ -267,7 +237,7 @@ class SignInAndUp extends Component {
                 onChange={this.onChange}
                 placeholder="비밀번호 확인입력"
                 required/>
-              <label htmlFor="branch-signupCode" className="errHandle">가입코드 {this.isCodeErr()}</label>
+              <label htmlFor="branch-signupCode" className="errHandle">가입코드 {this.getErrMsg("codeErr")}</label>
                <input
                 value={this.state.signupCode}
                 className="rg-branch-name"
@@ -279,7 +249,7 @@ class SignInAndUp extends Component {
                 required/>
               </fieldset>
             )}
-            {this.isloginErr()}
+            {this.getErrMsg("loginErr")}
           </div>
           { auth.status && SignUpFieldSet }
         </form>
@@ -296,7 +266,7 @@ class SignInAndUp extends Component {
 function mapStateToProps(state){
   return{
     auth: state.auth,
-    errorMessage: state.auth.error,
+    errorMessage: state.auth.errMsg,
     juso: state.commonData.juso,
 		selectedJuso: state.commonData.selectedJuso
   }

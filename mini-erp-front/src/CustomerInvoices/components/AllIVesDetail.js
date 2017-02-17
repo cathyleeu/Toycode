@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import './AllIVesDetail.css'
 
-
+function Commas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 class AllIVesDetail extends Component {
   constructor(props){
     super(props)
@@ -25,11 +27,11 @@ class AllIVesDetail extends Component {
         <button onClick={this.handleClick}>상세보기</button>
         <div className="IV-Goods-abbr">
           <div className="IV-Goods-abbr-top">
-            <p>{date} | {iv.status}</p>
+            <p>{date} | {iv.userName} | {iv.userCode}</p>
           </div>
           {iv.requestedGoods.map((goods, i) => (
             <div key={i} className="IV-Goods-Info">
-              <p>{goods.name} / {goods.qutt}권 / {goods.sales}</p>
+              <p>{goods.name} / {goods.qutt}권 / {Commas(goods.sales)}</p>
             </div>
           ))}
         </div>

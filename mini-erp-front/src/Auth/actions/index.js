@@ -5,12 +5,8 @@ import * as types from '../constants/types'
 
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
-export const emailErr = (emailErr) => ({ type: types.EMAIL_ERROR, emailErr })
-export const passwordErr = (passwordErr) => ({ type: types.PASSWORD_ERROR, passwordErr })
-export const bizErr = (bizErr) => ({ type: types.BIZ_ERROR, bizErr })
-export const addrErr = (addrErr) => ({ type: types.ADDR_ERROR, addrErr })
-export const codeErr = (codeErr) => ({ type: types.CODE_ERROR, codeErr })
-export const loginErr = (loginErr) => ({ type: types.LOGIN_ERROR, loginErr })
+export const errMsg = (errMsg) => ({ type: types.LOGIN_ERROR, errMsg })
+
 
 
 export function signupUser(userData) {
@@ -22,11 +18,7 @@ export function signupUser(userData) {
       })
       .catch(res => {
         console.log("내가 에러다!!!",res.response.data);
-        dispatch(emailErr(res.response.data.emailErr))
-        dispatch(passwordErr(res.response.data.passwordErr))
-        dispatch(codeErr(res.response.data.codeErr))
-        dispatch(addrErr(res.response.data.addrErr))
-        dispatch(bizErr(res.response.data.bizErr))
+        dispatch(errMsg(res.response.data))
       })
   }
 }
@@ -47,7 +39,7 @@ export function signinUser(userData) {
           browserHistory.push('feature')
       })
       .catch((res) => {
-         dispatch(loginErr(res.response.data.loginErr))
+         dispatch(errMsg(res.response.data))
       })
   }
 }
