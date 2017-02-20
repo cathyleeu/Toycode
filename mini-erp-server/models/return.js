@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
 const Schema = mongoose.Schema;
-
-
 
 
 const returnSchema = new Schema({
@@ -28,10 +25,6 @@ const returnSchema = new Schema({
   totalRefund: Number
 });
 
-//TODO-4: 한국시간으로 받아오기
-// returnSchema.virtual('createdOnInvoice').get(function() {
-//   return moment(this.createdOn).format('lll')
-// })
 
 
 module.exports = mongoose.model('return', returnSchema)
