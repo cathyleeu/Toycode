@@ -8,6 +8,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "es6-shim": "^0.35.3",
+    "moment-timezone": "^0.5.11",
     "nodemailer": "^2.4.2",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",

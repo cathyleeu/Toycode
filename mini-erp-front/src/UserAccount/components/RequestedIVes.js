@@ -3,6 +3,7 @@ import './RequestedIVes.css'
 import AddrModal from '../../Shop/components/AddrModal'
 import TransactionByIVes from './TransactionByIVes'
 import ReturnGoodsByIVes from './ReturnGoodsByIVes'
+import moment from 'moment-timezone'
 
 
 // const RequestedIVes = ({invoice}) => {
@@ -31,13 +32,13 @@ class RequestedIVes extends Component{
   render(){
     const {invoice, requestRefundByUser} = this.props
     const { to, address, phone } = invoice.delivery;
-    const orderCreated = invoice.createdOn.split("T")
+    const orderCreated = moment(invoice.createdOn).tz("Asia/Seoul").format('YYYY년 MM월 DD일');
     const commaTotalSales = Commas(invoice.totalSales);
     const display = {display: "none"};
     return(
       <div className="requestedIVes-body">
         <div className="requestedIVes-contents">
-          <div className="requestedIVes-date col-md-3">{orderCreated[0]}</div>
+          <div className="requestedIVes-date col-md-3">{orderCreated}</div>
           <div className="requestedIVes-goods col-md-7">
             {invoice.requestedGoods.map((goods,i) => {
               const commaSales = Commas(goods.sales);
