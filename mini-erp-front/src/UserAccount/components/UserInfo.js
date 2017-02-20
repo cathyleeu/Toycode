@@ -11,7 +11,8 @@ class UserInfo extends Component {
       A_phone: acct.A_phone ||'',
       E_manager: edu.E_manager ||'',
       E_email: edu.E_email ||'',
-      E_phone: edu.E_phone ||''
+      E_phone: edu.E_phone ||'',
+      isValid: "none"
     }
   }
   isHandleChange = e => {
@@ -22,11 +23,20 @@ class UserInfo extends Component {
     const {updateUser} = this.props
     updateUser(this.state)
   }
-
+  isValidEmail = (e) => {
+    let regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    if(regexEmail.test(this.state.A_email || this.state.E_email)){
+      this.setState({ isValid : "none" })
+      console.log();
+    } else {
+      this.setState({ isValid : true})
+    }
+  }
   render(){
     const { user, userEdit } = this.props
     const { branch } = user
     const disabled = !userEdit ? 'none' : ''
+    const isntValid = { display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "12px" }
     return(
       <div className="user-info-cont">
         <div className="user-info-addr">
@@ -42,11 +52,10 @@ class UserInfo extends Component {
             <p>{branch.address.roadAddr}</p>
             <p>{branch.address.detailAddr}</p>
           </div>
-
         </div>
         <div className="user-info-mngs">
           <div className="user-info-mngs-acct">
-            <p className="user-info-mngs-header">회계 담당자</p>
+            <p className="user-info-mngs-header">회계 담당자 <strong style={isntValid}>담당자 이메일 양식을 확인하세요.</strong></p>
             <div className="user-info-mngs-body">
               <div className="user-info-mngs-acct-name">
                 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -68,7 +77,7 @@ class UserInfo extends Component {
                   name="A_email"
                   style={{border: disabled}}
                   disabled={!userEdit}
-                  onBlur={this.isOnBlur}
+                  onBlur={this.isValidEmail}
                   onChange={this.isHandleChange}
                   placeholder='회계담당자 이메일을 입력하세요.'
                    />
@@ -89,7 +98,7 @@ class UserInfo extends Component {
             </div>
           </div>
           <div className="user-info-mngs-edu">
-            <p className="user-info-mngs-header">교육 담당자</p>
+            <p className="user-info-mngs-header">교육 담당자 <strong style={isntValid}>담당자 이메일 양식을 확인하세요.</strong></p>
             <div className="user-info-mngs-body">
               <div className="user-info-mngs-edu-name">
                 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -111,7 +120,7 @@ class UserInfo extends Component {
                   name="E_email"
                   style={{border: disabled}}
                   disabled={!userEdit}
-                  onBlur={this.isOnBlur}
+                  onBlur={this.isValidEmail}
                   onChange={this.isHandleChange}
                   placeholder='교육담당자의 이메일을 입력하세요.'/>
               </div>

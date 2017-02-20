@@ -260,7 +260,7 @@ const confirmSignUp = async ctx => {
     const url = ctx.params.url;
     const user = await confirmTempUser(url);
     // TODO: 클릭이 완료되면 로그인 페이지로 자동 이동하기 ㅎㅎㅎㅎctx.render = "http:localhost:3000/login"
-    ctx.body = "이메일 인증이 완료되었습니다."
+    ctx.body = "이메일 인증이 완료 되었습니다."
     // if(user) {
     //   try {
     //     const email = await sendConfirmationEmail(user.email)
