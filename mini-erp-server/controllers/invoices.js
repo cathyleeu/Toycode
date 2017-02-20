@@ -1,6 +1,6 @@
 const Invoices = require('../models/invoices');
 const Code = require('../models/code');
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
 
 
 
@@ -24,7 +24,7 @@ const isRegisteredNewIVes = async (ctx, next) => {
     const {userName, userEmail, userCode, delivery, requestedGoods, requestDesc, totalSales} = ctx.request.body;
     const {to, phone, address} = delivery;
     const {roadAddr, detailAddr, zipNo} = address;
-    console.log(requestedGoods);
+    console.log("바디에서 온 시간!!",createdOn);
 
     // let invoice = await User.findOne({email: email});
     let codeRes = await Code.findOne({dbcollection: 'Invoices'});

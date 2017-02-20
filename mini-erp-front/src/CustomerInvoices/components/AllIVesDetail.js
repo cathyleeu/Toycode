@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './AllIVesDetail.css'
+import moment from 'moment-timezone'
 
 function Commas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -21,7 +22,7 @@ class AllIVesDetail extends Component {
   }
   render(){
     const {iv} = this.props
-    const date = iv.createdOn.split("T")[0]
+    const date = moment(iv.createdOn).tz("Asia/Seoul").format('YYYY년 MM월 DD일');
     return(
       <div className={this.state.class}>
         <button onClick={this.handleClick}>상세보기</button>

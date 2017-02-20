@@ -34,7 +34,6 @@
     "koa-passport": "^1.4.0",
     "koa-router": "^7.1.0",
     "koa-static": "^2.1.0",
-    "moment": "^2.17.1",
     "mongoose": "^4.8.1",
     "nodemailer": "^2.4.2",
     "passport-jwt": "^2.2.1",
