@@ -23,8 +23,8 @@ class AllUsersDetail extends Component {
         <button onClick={this.handleClick}>상세보기</button>
         <div className="IV-Goods-abbr">
           <div className="IV-Goods-abbr-top">
-            <p> 지사명 : {user.branch.name} | {user.code} | {user.branch.repr} | {user.email}</p>
-            <p>사업자 번호: {user.branch.license} | 업태: {user.branch.bizType} | 종목:{user.branch.bizItems}</p>
+            <p> 지사명 : {user.branch.name} | {user.code} | {user.branch.repr} | {user.email} </p>
+            <p> 사업자 번호: {user.branch.license} | 업태: {user.branch.bizType} | 종목:{user.branch.bizItems} </p>
           </div>
         </div>
         <div className="user-info-detail">

@@ -18,6 +18,7 @@ class Cart extends Component {
             id={book.id}
             goodsSelect={goodsSelect}
             goodsDelete={goodsDelete}
+            // img_url={``}
           />
         )
     const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);

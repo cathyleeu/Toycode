@@ -26,7 +26,9 @@ class SignInAndUp extends Component {
       detailAddr:'',
       isModalOpen: false,
       location: '',
-      signupErr: ''
+      signupErr: '',
+      isValid: "none",
+      isValidPW: "none"
     }
   }
   onChange = e => {
@@ -66,11 +68,31 @@ class SignInAndUp extends Component {
 			roadAddr: result.roadAddr
 		})
 	}
+  isValidPassword = () => {
+    let regexPassword = /^[a-z0-9_]{4,20}$/;
+    if(regexPassword.test(this.state.password)){
+      this.setState({isValidPW : "none"})
+    } else {
+      this.setState({isValidPW: true})
+    }
+  }
   onSubmit = e => {
     e.preventDefault()
     const { signupUser, signinUser, auth } = this.props
     if(auth.status){
-      signupUser(this.state)
+      let regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+      let regexPassword = /^[a-z0-9_]{4,20}$/;
+      if(regexEmail.test(this.state.email)){
+        this.setState({isValid: "none"})
+        if(regexPassword.test(this.state.password)){
+          this.setState({isValidPW : "none"})
+          signupUser(this.state)
+        } else {
+          this.setState({isValidPW: true})
+        }
+      } else {
+        this.setState({isValid: true})
+      }
     } else {
       signinUser(this.state)
     }
@@ -203,7 +225,7 @@ class SignInAndUp extends Component {
         <form className={ auth.status ? "row SignUp-Form" : "SignIn-Form"}>
           <div className={ auth.status ? "rg-user-info col-md-6" : "rg-user-info col-md-12"}>
             <fieldset className="form-group rg-user-email">
-             <label htmlFor="email" className="errHandle">이메일 {this.getErrMsg("emailErr")}</label>
+             <label htmlFor="email" className="errHandle">이메일 {this.getErrMsg("emailErr")}<strong style={{display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "10px"}}>정확한 이메일 양식을 입력하세요.</strong></label>
              <input
                value={this.state.email}
                id="email"
@@ -215,13 +237,14 @@ class SignInAndUp extends Component {
              />
             </fieldset>
             <fieldset className="form-group rg-user-pw">
-             <label htmlFor="password" className="errHandle">비밀번호 {this.getErrMsg("passwordErr")}</label>
+             <label htmlFor="password" className="errHandle">비밀번호 {this.getErrMsg("passwordErr")} {auth.status && <strong style={{display: this.state.isValidPW, margin: 0, color: "#990c0c", fontSize: "10px"}}>영문자,숫자 조합으로 8~16자를 사용하세요.</strong>}</label>
              <input
               id="password"
               value={this.state.password}
               name="password"
               type="password"
               onChange={this.onChange}
+              onBlur={this.isValidPassword}
               placeholder="비밀번호 입력"
               required
               />
