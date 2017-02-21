@@ -72,6 +72,7 @@ class RequestedIVes extends Component{
               <AddrModal isModalOpen={this.state.isBillOpen} closeModal={this.closeModal}>
   							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
                 <TransactionByIVes invoice={invoice} />
+                <button onClick={() => window.print()}>인쇄하기</button>
               </AddrModal>
               <button onClick={this.openRTn} className="return-btn">반품/교환 접수</button>
               <AddrModal
@@ -87,5 +88,6 @@ class RequestedIVes extends Component{
     )
   }
 }
+
 
 export default RequestedIVes

@@ -38,6 +38,15 @@
   flex-direction: column;
   text-align: center;
 }
+.inc-stamp{
+  width: 35px;
+  height: 35px;
+  position:absolute;
+  right: 15px;
+  top: 90px;
+  float: right;
+  z-index: 10000;
+}
 
 .line-r{ border-right:1px solid #dfdfdf !important; }
 .line-b{ border-bottom: 1px solid #dfdfdf; }
@@ -253,4 +262,20 @@
 
 .requestedIVes-total strong {
   font-size: 20px;
+}
+
+@media print {
+  body * { visibility: hidden;}
+  #root{
+    height: 1000px;
+    position: absolute;
+    overflow-y: hidden;
+  }
+  #print-transaction *{
+    visibility: visible;
+  }
+  #print-transaction {
+    position: absolute;
+    top: 20px;
+  }
 }
