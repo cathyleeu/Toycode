@@ -6,8 +6,6 @@ import ReturnGoodsByIVes from './ReturnGoodsByIVes'
 import moment from 'moment-timezone'
 
 
-// const RequestedIVes = ({invoice}) => {
-  //TODO: mongoDB에서 momentJs 활용하여 한국시간으로 받아와야함
 function Commas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -70,12 +68,12 @@ class RequestedIVes extends Component{
               <p>{invoice.requestDesc}</p>
             </div>
             <div className="requestedIVes-inquiry-btn w-30" style={display}>
-              <button onClick={this.openBill}>거래명세서</button>
+              <button onClick={this.openBill} className="bill">거래명세서</button>
               <AddrModal isModalOpen={this.state.isBillOpen} closeModal={this.closeModal}>
   							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
                 <TransactionByIVes invoice={invoice} />
               </AddrModal>
-              <button onClick={this.openRTn}>반품/교환 접수</button>
+              <button onClick={this.openRTn} className="return-btn">반품/교환 접수</button>
               <AddrModal
                 isModalOpen={this.state.isRTnOpen}
                 closeModal={this.closeModal}>
