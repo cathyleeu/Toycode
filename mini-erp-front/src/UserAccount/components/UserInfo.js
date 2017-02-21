@@ -38,7 +38,7 @@ class UserInfo extends Component {
     const disabled = !userEdit ? 'none' : ''
     const isntValid = { display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "12px" }
     return(
-      <div className="user-info-cont">
+      <div className="user-info-cont" id="non-print-userInfo">
         <div className="user-info-addr">
           <div>회사정보
             <p>지사명:{user.branch.name}</p>

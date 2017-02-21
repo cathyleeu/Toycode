@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment-timezone'
+import incStamp from '../../../public/img/inc_stamp.png'
 
 function Commas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -10,8 +11,8 @@ const TransactionByIVes = ({invoice}) => {
   const { address, phone } = delivery;
   const commaSales = Commas(invoice.totalSales);
   return(
-    <div>
-      <div className="transaction">
+    <div id="print-transaction">
+      <div className="transaction" >
         <div className="transaction-top">
           <div className="transaction-top-h">
             <div className="line-r transaction-top-h-side">
@@ -48,11 +49,11 @@ const TransactionByIVes = ({invoice}) => {
               <div className="provider-l line-r w-10"><strong>공급자</strong></div>
               <div className="provider-r w-90">
                 <div className="provider-r-1 w-100">
-                  <strong className="line-r w-20">등록번호</strong><p className="w-80">12-334-12345</p>
+                  <strong className="line-r w-20">등록번호</strong><p className="w-80">764-86-00016</p>
                 </div>
                 <div className="provider-r-2 w-100">
                   <strong className="line-r w-20">상호</strong><p className="line-r w-30">토이코드</p>
-                  <strong className="line-r w-20">성명</strong><p className="w-30">홍현기 (인)</p>
+                  <strong className="line-r w-20">성명</strong><p className="w-30">홍현기 (인) <img src={incStamp} role="presentation" className="inc-stamp"/></p>
                 </div>
                 <div className="provider-r-1 w-100">
                   <strong className="line-r w-20">사업장 소재지</strong><p className="w-80">서울시 강남구 강남대로 408 13층</p>
@@ -99,9 +100,6 @@ const TransactionByIVes = ({invoice}) => {
           <strong className="line-r col-md-2">합계</strong>
           <p className="col-md-4">{commaSales}원</p>
         </div>
-      </div>
-      <div>
-        <button>인쇄하기</button>
       </div>
     </div>
 )}
