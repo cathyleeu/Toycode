@@ -155,32 +155,43 @@ const signin = async(ctx, next) => {
 
 const signup = async (ctx, next) => {
   try {
-    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems} = ctx.request.body;
+    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems, userType } = ctx.request.body;
     let errObj = [];
+    let customerType = "A";
     if(!email){
       errObj.push({ type: "emailErr", msg: "이메일을 입력하세요." })
     }
     if(!password){
       errObj.push({ type: "passwordErr", msg: "비밀번호를 입력해주세요." })
     }
-    if( !zipNo || !roadAddr || !detailAddr ){
-      errObj.push({ type: "addrErr", msg: "모든 항목을 입력해주세요." })
+    if(userType === "branch"){
+      if( !zipNo || !roadAddr || !detailAddr ){
+        errObj.push({ type: "addrErr", msg: "모든 항목을 입력해주세요." })
+      }
+      if( !license || !bizType || !bizItems || !name || !repr ){
+        errObj.push({ type: "bizErr", msg: "모든 항목을 입력해주세요." })
+      }
+      if(signupCode.toLowerCase() == "think2017") {
+        customerType = "A";
+      } else if(signupCode.toLowerCase() == "ecc2017") {
+        customerType = "B";
+      } else if(signupCode.toLowerCase() == "ybm2017") {
+        customerType = "C";
+      } else if(signupCode.toLowerCase() == "psa2017") {
+        customerType = "D";
+      } else {
+        errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
+      }
     }
-    if( !license || !bizType || !bizItems || !name || !repr ){
-      errObj.push({ type: "bizErr", msg: "모든 항목을 입력해주세요." })
+    if(userType === "kinder"){
+      let kinderCode = signupCode.toLowerCase();
+      let branchs = "think2017" || "ecc2017" || "ybm2017" || "psa2017";
+      if(!kinderCode === branchs){
+        errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
+      }
+      customerType = "T";
     }
-    let customerType = "A";
-    if(signupCode.toLowerCase() == "think2017") {
-      customerType = "A";
-    } else if(signupCode.toLowerCase() == "ecc2017") {
-      customerType = "B";
-    } else if(signupCode.toLowerCase() == "ybm2017") {
-      customerType = "C";
-    } else if(signupCode.toLowerCase() == "psa2017") {
-      customerType = "D";
-    } else {
-      errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
-    }
+
     if(errObj.length > 0) {
       ctx.status = 422;
       ctx.body = errObj;
@@ -195,7 +206,7 @@ const signup = async (ctx, next) => {
         resultId = customerType + (zero+count).slice(-zero.length);
     if(customerType === 'B'){
       user = new User({
-        email, password,
+        userType, email, password,
         code: resultId,
         customerType,
         kinders:[{
@@ -210,7 +221,7 @@ const signup = async (ctx, next) => {
       });
     } else {
       user = new User({
-        email, password,
+        userType, email, password,
         code: resultId,
         customerType,
         branch: {

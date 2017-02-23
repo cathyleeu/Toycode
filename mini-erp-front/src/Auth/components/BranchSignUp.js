@@ -26,6 +26,7 @@ class BranchSignUp extends Component {
       isModalOpen: false,
       location: '',
       signupErr: '',
+      userType: 'branch',
       isValid: "none",
       isValidPW: "none"
     }
@@ -97,6 +98,7 @@ class BranchSignUp extends Component {
         <img src={logo} className="Auth-logo" role="presentation"/>
         <form className="row SignUp-Form">
           <div className="rg-user-info col-md-6">
+            <input type="hidden" name="userType" value={this.state.userType} />
             <fieldset className="form-group rg-user-email">
              <label htmlFor="email" className="errHandle">이메일 {this.getErrMsg("emailErr")}<strong style={{display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "10px"}}>정확한 이메일 양식을 입력하세요.</strong></label>
              <input

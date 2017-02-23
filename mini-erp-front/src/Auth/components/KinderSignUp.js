@@ -14,6 +14,7 @@ class KinderSignUp extends Component {
       passwordConfirm: '',
       signupCode:'',
       signupErr: '',
+      userType: 'kinder',
       isValid: "none",
       isValidPW: "none"
     }
@@ -56,12 +57,13 @@ class KinderSignUp extends Component {
     return (
       <div className="SignUp-Container">
         <img src={logo} className="Auth-logo" role="presentation"/>
-        <div style={{textAlign:"center", margin:"20px", padding:"20px"}}>
+        <div style={{textAlign:"center", margin:"20px", padding:"20px", display:"none"}}>
           <h1>준비중입니다.</h1>
         </div>
-        <div style={{display: "none"}}>
+        <div>
         <form className="SignUp-Form">
           <div className="rg-user-info col-md-12">
+            <input type="hidden" name="userType" value={this.state.userType} />
             <fieldset className="form-group rg-user-email">
              <label htmlFor="email" className="errHandle">이메일 {this.getErrMsg("emailErr")}<strong style={{display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "10px"}}>정확한 이메일 양식을 입력하세요.</strong></label>
              <input
@@ -100,6 +102,18 @@ class KinderSignUp extends Component {
             </fieldset>
             <fieldset className="form-group rg-user-issuedCode">
               <label htmlFor="branch-signupCode" className="errHandle">가입코드 {this.getErrMsg("codeErr")}</label>
+               <input
+                value={this.state.signupCode}
+                className="rg-branch-name"
+                id="branch-signupCode"
+                name="signupCode"
+                type="text"
+                onChange={this.onChange}
+                placeholder="가입코드"
+                required/>
+            </fieldset>
+            <fieldset className="form-group rg-user-issuedCode">
+              <label htmlFor="branch-signupCode" className="errHandle">원명 <strong className="errMessage">* 지사에 입력된 원명을 입력</strong></label>
                <input
                 value={this.state.signupCode}
                 className="rg-branch-name"
