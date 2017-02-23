@@ -15,6 +15,7 @@ export function signupUser(userData) {
       .then(res => {
         alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
         dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
+        browserHistory.push('login')
       })
       .catch(res => {
         console.log("내가 에러다!!!",res.response.data);

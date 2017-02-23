@@ -11,7 +11,7 @@
   overflow: scroll;
 }
 .SignIn-Container{ max-width: 400px; width: 40%; }
-.SignUp-Container{ max-width: 700px; width: 60%; }
+.SignUp-Container{ max-width: 700px; width: 100%; min-width: 500px; padding: 1em;}
 
 .SignUp-Form label,
 .SignIn-Form label{
@@ -38,6 +38,7 @@
 }
 
 
+.rg-user-issuedCode > input,
 .rg-branch-info-bizItems > input,
 .rg-branch-info-bizType > input,
 .rg-branch-info-repr > input,
@@ -75,6 +76,7 @@
 }
 
 
+.rg-user-issuedCode > input,
 .rg-user-email > input,
 .rg-user-pw > input,
 .rg-user-pwCnfrm > input,

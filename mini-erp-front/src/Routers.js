@@ -14,6 +14,7 @@ import { Statement } from './Statement'
 import { Transport } from './TransportGoods'
 import { Return } from './ReturnGoods'
 import Feature from './Feature'
+import SignUp from './Auth/containers/SignUp'
 
 
 
@@ -40,6 +41,7 @@ class Routers extends Component {
               <IndexRoute component={Feature} onEnter={this.requireLogin}/>
               <Route path="login" component={Auth} />
               <Route path="logout" component={Auth} />
+              <Route path="signup" component={SignUp} />
               <Route path='feature' component={requireAuth(Feature)}/>
               <Route path='shop' component={requireAuth(Shop)}/>
               <Route path='account' component={requireAuth(UserAccount)}/>

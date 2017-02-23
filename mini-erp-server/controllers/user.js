@@ -174,6 +174,10 @@ const signup = async (ctx, next) => {
       customerType = "A";
     } else if(signupCode.toLowerCase() == "ecc2017") {
       customerType = "B";
+    } else if(signupCode.toLowerCase() == "ybm2017") {
+      customerType = "C";
+    } else if(signupCode.toLowerCase() == "psa2017") {
+      customerType = "D";
     } else {
       errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
     }
@@ -182,8 +186,8 @@ const signup = async (ctx, next) => {
       ctx.body = errObj;
       return;
     }
-    let user = await User.findOne({email: email});
-    let codeRes = await Code.findOne({dbcollection: 'User'});
+    let user = await User.findOne({ email: email });
+    let codeRes = await Code.findOne({ dbcollection: `${customerType}_User` });
 
 
     let count = codeRes ? codeRes.count : 1,
