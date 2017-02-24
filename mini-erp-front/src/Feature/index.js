@@ -5,7 +5,13 @@ import './index.css'
 
 const Feature = ({customerType}) => (
   <div className="Feature-Container has-Header">
-    {customerType === "B" ? (
+    {customerType === "A" && (
+      <div>
+        <h5 className="auth-success">지사 공지사항 준비중</h5>
+      </div>
+      )
+    }
+    {customerType === "B" && (
       <div>
         <h5 className="auth-success">2/13 ECC 공지사항</h5>
         <p>1. 회원 가입후 입력하신 메일로 전달된 가입 인증을 해주셔야 가입이 완료됩니다. </p>
@@ -19,11 +25,15 @@ const Feature = ({customerType}) => (
         <p>- 카카오톡> 친구추가아이콘 > ID/플러스친구 검색 > 키즈씽킹 검색 > 친구추가 > 1:1채팅 실행> 문의입력 </p>
         <p>[문의방법2] 유선 문의: 070-5102-1822</p>
       </div>
-    ) : (
+      )
+    }
+    {customerType === "T" && (
       <div>
-        <h5 className="auth-success">지사 공지사항 준비중</h5>
+        <h5 className="auth-success">원 공지사항 준비중</h5>
       </div>
-    )}
+      )
+    }
+
   </div>
 )
 

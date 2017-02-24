@@ -183,14 +183,7 @@ const signup = async (ctx, next) => {
         errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
       }
     }
-    if(userType === "kinder"){
-      let kinderCode = signupCode.toLowerCase();
-      let branchs = "think2017" || "ecc2017" || "ybm2017" || "psa2017";
-      if(!kinderCode === branchs){
-        errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
-      }
-      customerType = "T";
-    }
+    if(userType === "kinder"){ customerType = "T"; }
 
     if(errObj.length > 0) {
       ctx.status = 422;
@@ -198,7 +191,7 @@ const signup = async (ctx, next) => {
       return;
     }
     let user = await User.findOne({ email: email });
-    let codeRes = await Code.findOne({ dbcollection: `${customerType}_User` });
+    let codeRes = await Code.findOne({ dbcollection: `User` });
 
 
     let count = codeRes ? codeRes.count : 1,
@@ -301,6 +294,10 @@ const loggedUser = async ctx => {
   ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education');
 }
 
+// 원-지사코드 매칭
+const allBranchKinders = async ctx => {
+  ctx.body = await User.find().where({ code: ctx.params.branch }).select('kinders');
+}
 
 const userKinders = async ctx => {
   ctx.body = await User.find().where({email: ctx.params.user}).select('kinders')
@@ -349,5 +346,5 @@ const userKinderUpdate = async ctx => {
 }
 
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate
+  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders
 };

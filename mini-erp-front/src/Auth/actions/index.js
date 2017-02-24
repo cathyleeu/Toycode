@@ -9,6 +9,22 @@ export const errMsg = (errMsg) => ({ type: types.LOGIN_ERROR, errMsg })
 
 
 
+export function fetchMatchedBranch(branchCode) {
+  return function (dispatch) {
+    axios.get(`${ROOT_URL}/branch/${branchCode}`)
+      .then((response) => {
+        dispatch({
+          type: types.MATCHED_BRANCH,
+          matchedB: response.data[0].kinders
+        })
+      })
+      .catch(response => {
+        console.log("없는 코드");
+        dispatch(errMsg({matchedErr: "없는 코드입니다."}))
+      })
+  }
+}
+
 export function signupUser(userData) {
   return function (dispatch) {
     axios.post(`${ROOT_URL}/signup`, userData)

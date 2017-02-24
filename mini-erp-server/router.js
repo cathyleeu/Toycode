@@ -9,7 +9,7 @@ const ReturnGoods = require('./controllers/return');
 
 // router.get('/', requireAuth, Users.intro);
 // router.get('/', Users.intro);
-
+// 패턴이 달라야함!!
 
 // router.post('/signin', requireSignin, Users.signin)
 router.post('/signin', Users.signin)
@@ -19,6 +19,9 @@ router.get('/signup/:url', Users.confirmSignUp)
 
 router.get('/user', Users.allUsers)
 router.get('/user/:user', Users.loggedUser)
+
+router.get('/branch/:branch', Users.allBranchKinders)
+
 router.get('/user/:user/kinders',  Users.userKinders)
 router.put('/user/:user/info',  Users.userInfoUpdate)
 router.put('/user/:user/kinder',  Users.userKinderUpdate)

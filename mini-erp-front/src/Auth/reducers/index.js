@@ -33,6 +33,8 @@ export default function (state = initialState(), action) {
       return { ...state, status: action.status, errMsg: {} }
     case types.AUTH_USER:
       return { ...state, authenticated: true}
+    case types.MATCHED_BRANCH:
+      return { ...state, matchedB: action.matchedB }
     case types.STATUS_ON_LOGIN:
       return { ...state, user: action.response, email: localStorage.getItem('email'), authenticated: true }
     case types.UNAUTH_USER:
