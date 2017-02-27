@@ -13,7 +13,7 @@ import { Catalog } from './Catalog'
 import { Statement } from './Statement'
 import { Transport } from './TransportGoods'
 import { Return } from './ReturnGoods'
-import IssuedLogin from './IssuedLogin'
+import { IssuedLogin } from './IssuedLogin'
 import Feature from './Feature'
 import SignUp from './Auth/containers/SignUp'
 

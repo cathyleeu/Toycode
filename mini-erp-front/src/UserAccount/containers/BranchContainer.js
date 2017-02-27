@@ -9,7 +9,7 @@ class BranchContainer extends Component{
   handleAddChildClick = e => {
     e.preventDefault()
     const { addChild, createKinder, user } = this.props
-    const branchCode = createKinder(user.Code).kinderId
+    const branchCode = createKinder(user.code).kinderId
     addChild(branchCode)
   }
   renderChild = (kinder, i) => {

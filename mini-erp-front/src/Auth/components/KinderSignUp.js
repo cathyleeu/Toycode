@@ -36,9 +36,6 @@ class KinderSignUp extends Component {
     const { fetchMatchedBranch } = this.props;
     fetchMatchedBranch(signupCode)
   }
-  isValidKinderCode = () => {
-
-  }
   isValidPassword = () => {
     let regexPassword = /^[a-z0-9_]{8,20}$/;
     if(regexPassword.test(this.state.password)){
@@ -136,7 +133,6 @@ class KinderSignUp extends Component {
                 name="kinderName"
                 type="text"
                 onChange={this.onChange}
-                onBlur={this.isValidKinderCode}
                 placeholder="원코드"
                 required/>
             </fieldset>

@@ -21,6 +21,7 @@ router.get('/user', Users.allUsers)
 router.get('/user/:user', Users.loggedUser)
 
 router.get('/branch/:branch', Users.allBranchKinders)
+router.get('/branch/:branch/:kinderInfo', Users.isFetchedKinderInfo)
 
 router.get('/user/:user/kinders',  Users.userKinders)
 router.put('/user/:user/info',  Users.userInfoUpdate)

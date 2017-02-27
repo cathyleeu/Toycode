@@ -11,10 +11,10 @@ export function createKinder(_id){
 }
 
 
-export const updateKinder = (kinder, branchCode, id) => {
-  const { name, zipNo, detailAddr, roadAddr, phone, manager, managerPh } = kinder
+export const updateKinder = (kinder, id) => {
+  const { name, zipNo, detailAddr, roadAddr, phone, manager, managerPh, parentId } = kinder
   return({
-    type: types.UPDATE_KINDER, name, zipNo, detailAddr, roadAddr, phone, manager, managerPh, branchCode, id
+    type: types.UPDATE_KINDER, name, zipNo, detailAddr, roadAddr, phone, manager, managerPh, parentId, id
   })
 }
 
@@ -29,9 +29,9 @@ export const createKinderClass = (id) => ({
   classId: `${id}_${nextKinClassId++}`
 })
 
-export const updateKinderClass = (classname, students, id, parentId, classId) => ({
+export const updateKinderClass = (classname, level, id, parentId, classId) => ({
   type: types.UPDATE_KINDER_CLASS,
-  classname, students, id, parentId, classId
+  classname, level, id, parentId, classId
 })
 
 export const deleteKinderClass = (id) => ({
@@ -59,6 +59,7 @@ export const editKinder = (status) => ({
 
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
+  console.log("completedAddKinderDB",KinData);
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder`, KinData)
   dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})

@@ -6,7 +6,7 @@ class RegisterKinderClasses extends Component {
     const {kinderClass} = this.props
     this.state={
       classname: kinderClass.className || '',
-      students: kinderClass.students || ''
+      level: kinderClass.level || ''
     }
 
   }
@@ -21,9 +21,9 @@ class RegisterKinderClasses extends Component {
   }
   isOnBlur = () => {
     const {id, parentId, updateKinderClass, index} = this.props
-    const {classname, students} = this.state
-    console.log("this.state",classname, students);
-    updateKinderClass(classname,students,index,parentId,id)
+    const {classname, level} = this.state
+    console.log("this.state",classname, level);
+    updateKinderClass(classname, level, index, parentId, id)
   }
   render(){
     const { id, branchEdit } = this.props
@@ -43,20 +43,31 @@ class RegisterKinderClasses extends Component {
           value={this.state.classname}
           onChange={this.isHandleChange}
         />
-        <label htmlFor={`${id}_students`}>
+        <label htmlFor={`${id}_level`}>
           <i className="fa fa-users" aria-hidden="true"></i>
           학생
         </label>
-        <input
+        <select
+          name="level"
+          value={this.state.level}
+          onChange={this.isHandleChange}
+          onBlur={this.isOnBlur}
+          disabled={!branchEdit}>
+          <option value="none">---</option>
+          <option value="A">A레벨</option>
+          <option value="B">B레벨</option>
+          <option value="C">C레벨</option>
+        </select>
+        {/* <input
           style={{border: disabled}}
           disabled={!branchEdit}
           type="number"
-          name='students'
-          id={`${id}_students`}
+          name='level'
+          id={`${id}_level`}
           onBlur={this.isOnBlur}
-          value={this.state.students}
+          value={this.state.level}
           onChange={this.isHandleChange}
-        />
+        /> */}
         <button
           style={{display: disabled}}
           className="button-delete"

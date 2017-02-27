@@ -9,7 +9,7 @@ import AddrModal from '../../Shop/components/AddrModal'
 class RegisterKinder extends Component {
   constructor(props) {
     super(props)
-    const { kinder } = this.props
+    const { kinder, branchCode } = this.props
     this.state = {
       name: kinder.name || '',
       zipNo: kinder.zipNo || '',
@@ -18,6 +18,7 @@ class RegisterKinder extends Component {
       phone: kinder.phone || '',
       manager: kinder.manager || '',
       managerPh: kinder.managerPh || '',
+      parentId: kinder.parentId || branchCode ,
       isModalOpen: false,
       location: ''
     }
@@ -74,8 +75,8 @@ class RegisterKinder extends Component {
 		})
 	}
   isOnBlur = () => {
-    const {id, updateKinder, branchCode} = this.props
-    updateKinder(this.state,branchCode,id)
+    const {id, updateKinder} = this.props
+    updateKinder(this.state, id)
   }
   render(){
     const { id, kinders, code, kinderNo, branchEdit, juso } = this.props

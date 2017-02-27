@@ -155,7 +155,7 @@ const signin = async(ctx, next) => {
 
 const signup = async (ctx, next) => {
   try {
-    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems, userType } = ctx.request.body;
+    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems, userType, kinderName } = ctx.request.body;
     let errObj = [];
     let customerType = "A";
     if(!email){
@@ -211,6 +211,15 @@ const signup = async (ctx, next) => {
         },
         account:{ A_manager: '', A_email: '', A_phone: '' },
         education:{ E_manager: '', E_email: '', E_phone: '' }
+      });
+    } else if(customerType === 'T'){
+      user = new User({
+        userType, email, password,
+        code: resultId,
+        customerType,
+        kinders:[{
+          parentId: signupCode, name: kinderName,  kinderClasses:[]
+        }]
       });
     } else {
       user = new User({
@@ -299,6 +308,24 @@ const allBranchKinders = async ctx => {
   ctx.body = await User.find().where({ code: ctx.params.branch }).select('kinders');
 }
 
+const isFetchedKinderInfo = async ctx => {
+  ctx.body = await User.aggregate([
+    { $match: {
+      "userType": "branch",
+      "kinders.parentId" : ctx.params.branch,
+      "kinders.name" : ctx.params.kinderInfo
+    } },
+    { $project: {
+        kinders: { $filter: {
+          input: '$kinders',
+          as: 'kinder',
+          cond: {$eq: ['$$kinder.name', ctx.params.kinderInfo]}
+        }},
+        _id: 0
+    }}
+  ]);
+}
+
 const userKinders = async ctx => {
   ctx.body = await User.find().where({email: ctx.params.user}).select('kinders')
 }
@@ -323,19 +350,21 @@ const userInfoUpdate = async ctx => {
 const userKinderUpdate = async ctx => {
   try{
     const kinders = ctx.request.body.kinders.map((kinder, i) => {
+      console.log("userKinderUpdatefromDB",kinder);
       const kinderId = 'K'+(i+1);
       const kinderCode = kinder.parentId+'-'+kinderId;
-      const { parentId, manager, zipNo, roadAddr, detailAddr, managerPh, name, phone} = kinder;
+      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId} = kinder;
       return({
-        code: kinderCode, parentId, manager,
+        code: kinderCode, manager, parentId,
         zipNo, roadAddr, detailAddr,
         managerPh, name, phone,
-        kinderClasses: kinder.kinderClasses.map((kinderClass, i) => ({
+        kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
+          return({
           _id: kinderId+'-KC'+(i+1),
           code: kinderCode+'-KC'+(i+1),
           className: kinderClass.className,
-          students: kinderClass.students
-        }))
+          level: kinderClass.level
+        })})
       })})
       ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders}}, { new: true })
   } catch(err){
@@ -346,5 +375,5 @@ const userKinderUpdate = async ctx => {
 }
 
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders
+  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo
 };
