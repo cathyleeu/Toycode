@@ -13,17 +13,11 @@ class IssuedClassesList extends Component {
     const {loginInfo} = this.props;
     return(
         <div>
-          <h3>{loginInfo.name} 로그인 발급</h3>
+          <h3>로그인 발급</h3>
           <IssuedClass loginInfo={loginInfo} />
         </div>
     )
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   loginInfo: state.issuedLogin.recordedInfo
-// })
-
-
-// export default connect(mapStateToProps)(IssuedClassesList)
 export default IssuedClassesList

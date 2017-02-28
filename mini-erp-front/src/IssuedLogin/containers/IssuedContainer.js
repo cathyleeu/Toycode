@@ -5,11 +5,12 @@ import IssuedClassesList from '../components/IssuedClassesList'
 
 
 
-const IssuedContainer = ({recordedInfo, fetchInfoForIssued,loginInfo}) => (
+const IssuedContainer = ({recordedInfo, fetchInfoForIssued,loginInfo}) => {
+  return(
   <div className="has-Header Container">
     {recordedInfo && <IssuedClassesList recordedInfo={recordedInfo} fetchInfoForIssued={fetchInfoForIssued} loginInfo={loginInfo}/>}
   </div>
-)
+)}
 
 
 

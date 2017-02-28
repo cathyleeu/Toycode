@@ -155,7 +155,8 @@ const signin = async(ctx, next) => {
 
 const signup = async (ctx, next) => {
   try {
-    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems, userType, kinderName } = ctx.request.body;
+    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems, kinderName } = ctx.request.body;
+    let { userType } = ctx.request.body;
     let errObj = [];
     let customerType = "A";
     if(!email){
@@ -179,6 +180,9 @@ const signup = async (ctx, next) => {
         customerType = "C";
       } else if(signupCode.toLowerCase() == "psa2017") {
         customerType = "D";
+      } else if(signupCode.toLowerCase() == "toycode_admin") {
+        userType = "admin";
+        customerType = "Z";
       } else {
         errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
       }
@@ -191,18 +195,19 @@ const signup = async (ctx, next) => {
       return;
     }
     let user = await User.findOne({ email: email });
-    let codeRes = await Code.findOne({ dbcollection: `User` });
+    let codeRes = await Code.findOne({ dbcollection: 'User' });
 
 
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
         resultId = customerType + (zero+count).slice(-zero.length);
-    if(customerType === 'B'){
+    if((customerType === 'B') || (customerType === 'D')){
       user = new User({
         userType, email, password,
         code: resultId,
         customerType,
         kinders:[{
+          parentId: resultId,
           name, zipNo, roadAddr, detailAddr, kinderClasses:[]
         }],
         branch: {
@@ -316,6 +321,7 @@ const isFetchedKinderInfo = async ctx => {
       "kinders.name" : ctx.params.kinderInfo
     } },
     { $project: {
+        branch: {name: 1},
         kinders: { $filter: {
           input: '$kinders',
           as: 'kinder',

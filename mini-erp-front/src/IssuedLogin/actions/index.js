@@ -20,7 +20,7 @@ export const fetchInfoForIssued = (parentId, name) => (dispatch) => {
        .then((response) => {
          dispatch({
            type: FETCH_INFO_FOR_ISSUED,
-           recordedInfo: response.data[0].kinders[0]
+           recordedInfo: response.data[0]
          })
        })
 }
