@@ -8,6 +8,8 @@ export const REGISTER_STATUS = 'REGISTER_STATUS'
 
 
 export const INITIAL_KINDER = 'INITIAL_KINDER'  //처음 시작할 때 DB의 kinder불러옴
+export const MATCHED_BRANCH = 'MATCHED_BRANCH'
+
 
 
 export const EMAIL_ERROR = 'EMAIL_ERROR'

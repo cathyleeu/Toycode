@@ -4,11 +4,12 @@ import { STATUS_ON_LOGIN } from '../../Auth/constants/types'
 const kinderClasses = {
   _id: null,
   name: null,
-  students: null
+  level: null
 }
 const kinders = {
   _id: null,
   name: null,
+  parentId: null,
   kinderClasses: [...kinderClasses]
 }
 
@@ -26,12 +27,12 @@ const KinderClass = (state , action) => {
         parentId: action.classId,
         _id: action.childId,
         className: null,
-        students: null
+        level: null
       }]
     case types.UPDATE_KINDER_CLASS:
       return state.kinderClasses.map((kinderclass) => {
         if(kinderclass._id === action.classId){
-          return {...kinderclass, className: action.classname, students: action.students}
+          return {...kinderclass, className: action.classname, level: action.level}
         } else { return kinderclass }
       })
     default:
@@ -50,9 +51,9 @@ const Kinder = (state, action) => {
       }]
     case types.UPDATE_KINDER:
       return state.kinders.map((kinder) => {
-        const { name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, branchCode } = action
+        const { name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, parentId } = action
         if(kinder._id === action.id){
-          return { ...kinder, name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, branchCode }
+          return { ...kinder, name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, parentId }
         } else { return kinder }
       })
     default:
@@ -93,7 +94,7 @@ export default (state = initialState , action) => {
       }
     case types.EDITING_KINDER:
     case types.COMPLETE_ADD_KINDER:
-      return { ...state, branchEdit: action.branchEdit}
+      return { ...state, branchEdit: action.branchEdit }
     case types.EDITING_USER:
     case types.EDITED_USER:
       return { ...state, userEdit: action.userEdit}

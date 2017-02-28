@@ -9,7 +9,7 @@ class BranchContainer extends Component{
   handleAddChildClick = e => {
     e.preventDefault()
     const { addChild, createKinder, user } = this.props
-    const branchCode = createKinder(user.Code).kinderId
+    const branchCode = createKinder(user.code).kinderId
     addChild(branchCode)
   }
   renderChild = (kinder, i) => {
@@ -63,6 +63,7 @@ class BranchContainer extends Component{
           onClick={() => editKinder(kinders.branchEdit)}>수정</button>
       )}
     </div>)
+    const bORd = user.customerType;
     return (
       <div>
         <div className="userInfo-header">
@@ -83,9 +84,9 @@ class BranchContainer extends Component{
           )}
         </div>
         <UserInfo user={user} userEdit={kinders.userEdit} updateUser={updateUser} edu={kinders.managers.education} acct={kinders.managers.account} />
-        {user.customerType === 'A' ? branchType : directType}
+        {((bORd === 'A') || (bORd ==='C')) ? branchType : directType}
         <div className="kinder-list-cont col-md-12">
-          {user.customerType === 'A'
+          {((bORd === 'A') || (bORd ==='C'))
             ? kindergartens.map(this.renderChild)
             : <DirectKinder kinder={kinders.kinders[0]} branchEdit={kinders.branchEdit? true : false } createKinderClass={createKinderClass} addClass={addClass} id={user._id} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass}/>}
         </div>

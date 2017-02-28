@@ -1,7 +1,7 @@
 import React from 'react'
-import SignInAndUp from '../components/SignInAndUp'
+// import SignInAndUp from '../components/SignInAndUp'
 import './index.css'
-
+import SignIn from '../components/SignIn'
 
 const AuthContainer = () => {
   let style = {
@@ -11,7 +11,8 @@ const AuthContainer = () => {
       }
   return(
   <div className="Auth-Container" style={style}>
-    <SignInAndUp />
+    <SignIn />
+    {/* <SignInAndUp /> */}
   </div>
 )}
 

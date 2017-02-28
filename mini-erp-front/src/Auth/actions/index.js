@@ -9,12 +9,29 @@ export const errMsg = (errMsg) => ({ type: types.LOGIN_ERROR, errMsg })
 
 
 
+export function fetchMatchedBranch(branchCode) {
+  return function (dispatch) {
+    axios.get(`${ROOT_URL}/branch/${branchCode}`)
+      .then((response) => {
+        dispatch({
+          type: types.MATCHED_BRANCH,
+          matchedB: response.data[0].kinders
+        })
+      })
+      .catch(response => {
+        console.log("없는 코드");
+        dispatch(errMsg({matchedErr: "없는 코드입니다."}))
+      })
+  }
+}
+
 export function signupUser(userData) {
   return function (dispatch) {
     axios.post(`${ROOT_URL}/signup`, userData)
       .then(res => {
         alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
         dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
+        browserHistory.push('login')
       })
       .catch(res => {
         console.log("내가 에러다!!!",res.response.data);

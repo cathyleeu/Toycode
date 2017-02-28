@@ -30,7 +30,7 @@ const AllUserLists = ({allUsers}) => (
                     <div className="User-Kinder-Classes">
                       {kinder.kinderClasses.map((kinderClass, i) => (
                         <div className="User-Kinder-Class" key={i}>
-                          <p>{kinderClass.className} | {kinderClass.students}명</p>
+                          <p>{kinderClass.className} | {kinderClass.level}</p>
                         </div>
                       ))}
                     </div>

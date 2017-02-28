@@ -155,46 +155,59 @@ const signin = async(ctx, next) => {
 
 const signup = async (ctx, next) => {
   try {
-    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems} = ctx.request.body;
+    const { email, password, zipNo, roadAddr, detailAddr, signupCode, license, name, repr, bizType, bizItems, kinderName } = ctx.request.body;
+    let { userType } = ctx.request.body;
     let errObj = [];
+    let customerType = "A";
     if(!email){
       errObj.push({ type: "emailErr", msg: "이메일을 입력하세요." })
     }
     if(!password){
       errObj.push({ type: "passwordErr", msg: "비밀번호를 입력해주세요." })
     }
-    if( !zipNo || !roadAddr || !detailAddr ){
-      errObj.push({ type: "addrErr", msg: "모든 항목을 입력해주세요." })
+    if(userType === "branch"){
+      if( !zipNo || !roadAddr || !detailAddr ){
+        errObj.push({ type: "addrErr", msg: "모든 항목을 입력해주세요." })
+      }
+      if( !license || !bizType || !bizItems || !name || !repr ){
+        errObj.push({ type: "bizErr", msg: "모든 항목을 입력해주세요." })
+      }
+      if(signupCode.toLowerCase() == "think2017") {
+        customerType = "A";
+      } else if(signupCode.toLowerCase() == "ecc2017") {
+        customerType = "B";
+      } else if(signupCode.toLowerCase() == "ybm2017") {
+        customerType = "C";
+      } else if(signupCode.toLowerCase() == "psa2017") {
+        customerType = "D";
+      } else if(signupCode.toLowerCase() == "toycode_admin") {
+        userType = "admin";
+        customerType = "Z";
+      } else {
+        errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
+      }
     }
-    if( !license || !bizType || !bizItems || !name || !repr ){
-      errObj.push({ type: "bizErr", msg: "모든 항목을 입력해주세요." })
-    }
-    let customerType = "A";
-    if(signupCode.toLowerCase() == "think2017") {
-      customerType = "A";
-    } else if(signupCode.toLowerCase() == "ecc2017") {
-      customerType = "B";
-    } else {
-      errObj.push({ type: "codeErr", msg: '인증된 가입코드를 입력해주세요.' })
-    }
+    if(userType === "kinder"){ customerType = "T"; }
+
     if(errObj.length > 0) {
       ctx.status = 422;
       ctx.body = errObj;
       return;
     }
-    let user = await User.findOne({email: email});
-    let codeRes = await Code.findOne({dbcollection: 'User'});
+    let user = await User.findOne({ email: email });
+    let codeRes = await Code.findOne({ dbcollection: 'User' });
 
 
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
         resultId = customerType + (zero+count).slice(-zero.length);
-    if(customerType === 'B'){
+    if((customerType === 'B') || (customerType === 'D')){
       user = new User({
-        email, password,
+        userType, email, password,
         code: resultId,
         customerType,
         kinders:[{
+          parentId: resultId,
           name, zipNo, roadAddr, detailAddr, kinderClasses:[]
         }],
         branch: {
@@ -204,9 +217,18 @@ const signup = async (ctx, next) => {
         account:{ A_manager: '', A_email: '', A_phone: '' },
         education:{ E_manager: '', E_email: '', E_phone: '' }
       });
+    } else if(customerType === 'T'){
+      user = new User({
+        userType, email, password,
+        code: resultId,
+        customerType,
+        kinders:[{
+          parentId: signupCode, name: kinderName,  kinderClasses:[]
+        }]
+      });
     } else {
       user = new User({
-        email, password,
+        userType, email, password,
         code: resultId,
         customerType,
         branch: {
@@ -286,6 +308,29 @@ const loggedUser = async ctx => {
   ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education');
 }
 
+// 원-지사코드 매칭
+const allBranchKinders = async ctx => {
+  ctx.body = await User.find().where({ code: ctx.params.branch }).select('kinders');
+}
+
+const isFetchedKinderInfo = async ctx => {
+  ctx.body = await User.aggregate([
+    { $match: {
+      "userType": "branch",
+      "kinders.parentId" : ctx.params.branch,
+      "kinders.name" : ctx.params.kinderInfo
+    } },
+    { $project: {
+        branch: {name: 1},
+        kinders: { $filter: {
+          input: '$kinders',
+          as: 'kinder',
+          cond: {$eq: ['$$kinder.name', ctx.params.kinderInfo]}
+        }},
+        _id: 0
+    }}
+  ]);
+}
 
 const userKinders = async ctx => {
   ctx.body = await User.find().where({email: ctx.params.user}).select('kinders')
@@ -311,19 +356,21 @@ const userInfoUpdate = async ctx => {
 const userKinderUpdate = async ctx => {
   try{
     const kinders = ctx.request.body.kinders.map((kinder, i) => {
+      console.log("userKinderUpdatefromDB",kinder);
       const kinderId = 'K'+(i+1);
       const kinderCode = kinder.parentId+'-'+kinderId;
-      const { parentId, manager, zipNo, roadAddr, detailAddr, managerPh, name, phone} = kinder;
+      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId} = kinder;
       return({
-        code: kinderCode, parentId, manager,
+        code: kinderCode, manager, parentId,
         zipNo, roadAddr, detailAddr,
         managerPh, name, phone,
-        kinderClasses: kinder.kinderClasses.map((kinderClass, i) => ({
+        kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
+          return({
           _id: kinderId+'-KC'+(i+1),
           code: kinderCode+'-KC'+(i+1),
           className: kinderClass.className,
-          students: kinderClass.students
-        }))
+          level: kinderClass.level
+        })})
       })})
       ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders}}, { new: true })
   } catch(err){
@@ -334,5 +381,5 @@ const userKinderUpdate = async ctx => {
 }
 
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate
+  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo
 };

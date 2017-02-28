@@ -6,7 +6,7 @@ class RegisterKinderClasses extends Component {
     const {kinderClass} = this.props
     this.state={
       classname: kinderClass.className || '',
-      students: kinderClass.students || ''
+      level: kinderClass.level || ''
     }
 
   }
@@ -21,9 +21,9 @@ class RegisterKinderClasses extends Component {
   }
   isOnBlur = () => {
     const {id, parentId, updateKinderClass, index} = this.props
-    const {classname, students} = this.state
-    console.log("this.state",classname, students);
-    updateKinderClass(classname,students,index,parentId,id)
+    const {classname, level} = this.state
+    console.log("this.state",classname, level);
+    updateKinderClass(classname, level, index, parentId, id)
   }
   render(){
     const { id, branchEdit } = this.props
@@ -31,32 +31,32 @@ class RegisterKinderClasses extends Component {
     return(
       <div className="row col-md-12">
         <label htmlFor={`${id}_name`}>
-          <i className="fa fa-graduation-cap"></i>
-          반 이름</label>
-        <input
-          style={{border: disabled}}
-          disabled={!branchEdit}
-          type="text"
-          name='classname'
-          id={`${id}_name`}
-          onBlur={this.isOnBlur}
-          value={this.state.classname}
-          onChange={this.isHandleChange}
-        />
-        <label htmlFor={`${id}_students`}>
-          <i className="fa fa-users" aria-hidden="true"></i>
-          학생
+          반 이름
+          <input
+            style={{border: disabled}}
+            disabled={!branchEdit}
+            type="text"
+            name='classname'
+            id={`${id}_name`}
+            onBlur={this.isOnBlur}
+            value={this.state.classname}
+            onChange={this.isHandleChange}
+          />
         </label>
-        <input
-          style={{border: disabled}}
-          disabled={!branchEdit}
-          type="number"
-          name='students'
-          id={`${id}_students`}
-          onBlur={this.isOnBlur}
-          value={this.state.students}
-          onChange={this.isHandleChange}
-        />
+        <label htmlFor={`${id}_level`}>
+          레벨
+          <select
+            name="level"
+            value={this.state.level}
+            onChange={this.isHandleChange}
+            onBlur={this.isOnBlur}
+            disabled={!branchEdit}>
+            <option value="none">---</option>
+            <option value="A">A레벨</option>
+            <option value="B">B레벨</option>
+            <option value="C">C레벨</option>
+          </select>
+        </label>
         <button
           style={{display: disabled}}
           className="button-delete"
@@ -68,5 +68,19 @@ class RegisterKinderClasses extends Component {
     )
   }
 }
+
+
+/*
+<input
+  style={{border: disabled}}
+  disabled={!branchEdit}
+  type="number"
+  name='level'
+  id={`${id}_level`}
+  onBlur={this.isOnBlur}
+  value={this.state.level}
+  onChange={this.isHandleChange}
+/>
+*/
 
 export default RegisterKinderClasses

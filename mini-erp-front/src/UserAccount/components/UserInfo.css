@@ -5,8 +5,6 @@
   max-height: 400px;
   box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
   margin-bottom: 1em;
-  display: flex;
-  flex-direction: row;
 }
 
 .user-info-addr,
@@ -14,21 +12,19 @@
   width: 50%;
   height: 100%;
 }
-.user-info-mngs-acct,
-.user-info-mngs-edu {
-  margin: 1em 0;
-}
 
 .user-info-mngs-header{
   width: 100%;
-  border-left: 3px solid #dbdbdb;
-  padding: 0.5em;
+  border-left: 2px solid #1ECD97;
+  padding-left: 1em;
+  font-weight: 700;
+  margin: 0.5em 0;
 }
 
 .user-info-mngs-body{
-  padding: 0 0 0 2em;
+  padding-left: 1em;
 }
-/*.user-info-mngs-body span,*/
+
 .user-info-mngs-body i {
   margin-right: 1em;
   font-size: 18px;
@@ -37,6 +33,7 @@
 }
 .user-info-mngs-body input {
   outline: none;
+  width: 70%;
 }
 
 .user-info-mngs-acct-name,
@@ -49,4 +46,18 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.user-info-row,
+.user-info-addr-biz > div{
+  display: flex;
+  flex-direction: row;
+}
+
+.user-info-text{
+  font-weight: 700;
+  /*color: #1ECD97;*/
+  border-right: 2px solid #1ECD97;
+  margin-right: 1em;
+  width: 85px;
 }

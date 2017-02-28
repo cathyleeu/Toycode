@@ -27,9 +27,8 @@ class UserInfo extends Component {
     let regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
     if(regexEmail.test(this.state.A_email || this.state.E_email)){
       this.setState({ isValid : "none" })
-      console.log();
     } else {
-      this.setState({ isValid : true})
+      this.setState({ isValid : true })
     }
   }
   render(){
@@ -39,103 +38,108 @@ class UserInfo extends Component {
     const isntValid = { display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "12px" }
     return(
       <div className="user-info-cont" id="non-print-userInfo">
-        <div className="user-info-addr">
-          <div>회사정보
-            <p>지사명:{user.branch.name}</p>
-            <p>사업자번호:{user.branch.license}</p>
-            <p>대표자명:{user.branch.repr}</p>
-            <p>업태:{user.branch.bizType}</p>
-            <p>종목:{user.branch.bizItems}</p>
-          </div>
-          <div>지사주소
-            <p>{branch.address.zipNo}</p>
-            <p>{branch.address.roadAddr}</p>
-            <p>{branch.address.detailAddr}</p>
-          </div>
-        </div>
-        <div className="user-info-mngs">
-          <div className="user-info-mngs-acct">
-            <p className="user-info-mngs-header">회계 담당자 <strong style={isntValid}>담당자 이메일 양식을 확인하세요.</strong></p>
-            <div className="user-info-mngs-body">
-              <div className="user-info-mngs-acct-name">
-                <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  value={this.state.A_manager}
-                  name="A_manager"
-                  style={{border: disabled}}
-                  disabled={!userEdit}
-                  onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange}
-                  placeholder='회계담당자를 입력하세요.' />
-              </div>
-              <div className="user-info-mngs-acct-email">
-                <i className="fa fa-envelope" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  value={this.state.A_email}
-                  name="A_email"
-                  style={{border: disabled}}
-                  disabled={!userEdit}
-                  onBlur={this.isValidEmail}
-                  onChange={this.isHandleChange}
-                  placeholder='회계담당자 이메일을 입력하세요.'
-                   />
-              </div>
-              <div className="user-info-mngs-acct-phone">
-                <i className="fa fa-phone" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  value={this.state.A_phone}
-                  name="A_phone"
-                  style={{border: disabled}}
-                  disabled={!userEdit}
-                  onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange}
-                  placeholder='회계담당자의 번호를 입력하세요.'
-                  required/>
+        <h3>{user.code}</h3>
+        <div className="user-info-row">
+          <div className="user-info-addr">
+            <div className="user-info-addr-biz">
+              <div><p className="user-info-text">지사명</p><p>{user.branch.name}</p></div>
+              <div><p className="user-info-text">사업자번호</p><p>{user.branch.license}</p></div>
+              <div><p className="user-info-text">대표자명</p><p>{user.branch.repr}</p></div>
+              <div><p className="user-info-text">업태</p><p>{user.branch.bizType}</p></div>
+              <div><p className="user-info-text">종목</p><p>{user.branch.bizItems}</p></div>
+              <div>
+                <p className="user-info-text">주소</p>
+                <div>
+                  <p>{branch.address.zipNo}</p>
+                  <p>{branch.address.roadAddr} {branch.address.detailAddr}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="user-info-mngs-edu">
-            <p className="user-info-mngs-header">교육 담당자 <strong style={isntValid}>담당자 이메일 양식을 확인하세요.</strong></p>
-            <div className="user-info-mngs-body">
-              <div className="user-info-mngs-edu-name">
-                <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  value={this.state.E_manager}
-                  name="E_manager"
-                  style={{border: disabled}}
-                  disabled={!userEdit}
-                  onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange}
-                  placeholder='교육담당자를 입력하세요.'/>
+          <div className="user-info-mngs">
+            <div className="user-info-mngs-acct">
+              <p className="user-info-mngs-header">회계 담당자 <strong style={isntValid}>담당자 이메일 양식을 확인하세요.</strong></p>
+              <div className="user-info-mngs-body">
+                <div className="user-info-mngs-acct-name">
+                  <i className="fa fa-user-circle-o" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    value={this.state.A_manager}
+                    name="A_manager"
+                    style={{border: disabled}}
+                    disabled={!userEdit}
+                    onBlur={this.isOnBlur}
+                    onChange={this.isHandleChange}
+                    placeholder='회계담당자를 입력하세요.' />
+                </div>
+                <div className="user-info-mngs-acct-email">
+                  <i className="fa fa-envelope" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    value={this.state.A_email}
+                    name="A_email"
+                    style={{border: disabled}}
+                    disabled={!userEdit}
+                    onBlur={this.isValidEmail}
+                    onChange={this.isHandleChange}
+                    placeholder='회계담당자 이메일을 입력하세요.'
+                     />
+                </div>
+                <div className="user-info-mngs-acct-phone">
+                  <i className="fa fa-phone" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    value={this.state.A_phone}
+                    name="A_phone"
+                    style={{border: disabled}}
+                    disabled={!userEdit}
+                    onBlur={this.isOnBlur}
+                    onChange={this.isHandleChange}
+                    placeholder='회계담당자의 번호를 입력하세요.'
+                    required/>
+                </div>
               </div>
-              <div className="user-info-mngs-edu-email">
-                <i className="fa fa-envelope" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  value={this.state.E_email}
-                  name="E_email"
-                  style={{border: disabled}}
-                  disabled={!userEdit}
-                  onBlur={this.isValidEmail}
-                  onChange={this.isHandleChange}
-                  placeholder='교육담당자의 이메일을 입력하세요.'/>
-              </div>
-              <div className="user-info-mngs-edu-phone">
-                <i className="fa fa-phone" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  value={this.state.E_phone}
-                  name="E_phone"
-                  style={{border: disabled}}
-                  disabled={!userEdit}
-                  onBlur={this.isOnBlur}
-                  onChange={this.isHandleChange}
-                  placeholder='교육담당자의 번호를 입력하세요.'
-                  required/>
+            </div>
+            <div className="user-info-mngs-edu">
+              <p className="user-info-mngs-header">교육 담당자 <strong style={isntValid}>담당자 이메일 양식을 확인하세요.</strong></p>
+              <div className="user-info-mngs-body">
+                <div className="user-info-mngs-edu-name">
+                  <i className="fa fa-user-circle-o" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    value={this.state.E_manager}
+                    name="E_manager"
+                    style={{border: disabled}}
+                    disabled={!userEdit}
+                    onBlur={this.isOnBlur}
+                    onChange={this.isHandleChange}
+                    placeholder='교육담당자를 입력하세요.'/>
+                </div>
+                <div className="user-info-mngs-edu-email">
+                  <i className="fa fa-envelope" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    value={this.state.E_email}
+                    name="E_email"
+                    style={{border: disabled}}
+                    disabled={!userEdit}
+                    onBlur={this.isValidEmail}
+                    onChange={this.isHandleChange}
+                    placeholder='교육담당자의 이메일을 입력하세요.'/>
+                </div>
+                <div className="user-info-mngs-edu-phone">
+                  <i className="fa fa-phone" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    value={this.state.E_phone}
+                    name="E_phone"
+                    style={{border: disabled}}
+                    disabled={!userEdit}
+                    onBlur={this.isOnBlur}
+                    onChange={this.isHandleChange}
+                    placeholder='교육담당자의 번호를 입력하세요.'
+                    required/>
+                </div>
               </div>
             </div>
           </div>

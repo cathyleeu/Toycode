@@ -11,7 +11,7 @@
   overflow: scroll;
 }
 .SignIn-Container{ max-width: 400px; width: 40%; }
-.SignUp-Container{ max-width: 700px; width: 60%; }
+.SignUp-Container{ width: 600px;  padding: 1em;}
 
 .SignUp-Form label,
 .SignIn-Form label{
@@ -20,7 +20,7 @@
   font-size: 13px;
 }
 
-
+.rg-kinder-teacher,
 .rg-branch-no,
 .rg-address-zip {
   display: flex;
@@ -36,8 +36,12 @@
   height: 60px;
   margin-bottom: 0.5em;
 }
+.rg-kinder-teacher{margin-bottom: 3em;}
+.rg-kinder-teacher fieldset{
+  width: 49%;
+}
 
-
+.rg-user-issuedCode > input,
 .rg-branch-info-bizItems > input,
 .rg-branch-info-bizType > input,
 .rg-branch-info-repr > input,
@@ -75,6 +79,7 @@
 }
 
 
+.rg-user-issuedCode > input,
 .rg-user-email > input,
 .rg-user-pw > input,
 .rg-user-pwCnfrm > input,
