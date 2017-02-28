@@ -1,0 +1,7 @@
+.User-Kinder-Classes{
+  display: flex;
+  flex-direction: row;
+}
+.User-Kinder-Class{
+  margin-right: 0.5em;
+}
