@@ -1,5 +1,6 @@
 import React from 'react'
 import AllUsersDetail from './AllUsersDetail'
+import './AllUserLists.css'
 
 const AllUserLists = ({allUsers}) => (
   <div>
