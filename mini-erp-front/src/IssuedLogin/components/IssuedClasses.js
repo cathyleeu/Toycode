@@ -35,7 +35,7 @@ const IssuedClasses = (props) => {
       원별 접속 주소: <a href={`https://toycode.org/code/${code}`} target="_blank">toycode.org/code/{code}</a>
       {kinders[0].kinderClasses.map((kids, i) => (
         <div  key={i} style={{margin: '1em'}}>
-          <IssuedClass code={code} kinderName={kinders[0].name} kclassName={kids.className} level={kids.level} disable={(kids.level === 'none') ? 'disabled' : '' }/>
+          <IssuedClass code={code} kinderName={kinders[0].name} kclassName={kids.className} level={kids.level}/>
         </div>
       ))}
     </div>
