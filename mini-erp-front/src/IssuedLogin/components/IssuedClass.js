@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const IssuedClass = ({ kinderName, kclassName, code, level }) => {
-  const disabled = (level === 'none' || undefined) ? 'disabled' : '';
+  const disabled = (level === 'none' || undefined || '') ? 'disabled' : '';
   console.log(level);
   return(
   <div>
@@ -13,7 +13,8 @@ const IssuedClass = ({ kinderName, kclassName, code, level }) => {
       <input type="hidden" name="className" value={kclassName} />
       <input type="hidden" name="yearmonth" value="201703" />
       <input type="hidden" name="level" value={level} />
-      <input type="submit" value="로그인 스티커 발급" disabled={disabled} />
+      <button disabled={disabled}>로그인 스티커 발급</button>
+      {/* <input type="submit" value="로그인 스티커 발급" disabled={disabled} /> */}
     </form>
   </div>
 )}
