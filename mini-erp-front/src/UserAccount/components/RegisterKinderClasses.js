@@ -51,7 +51,7 @@ class RegisterKinderClasses extends Component {
             onChange={this.isHandleChange}
             onBlur={this.isOnBlur}
             disabled={!branchEdit}>
-            <option value="none">---</option>
+            <option value="">---</option>
             <option value="A">A레벨</option>
             <option value="B">B레벨</option>
             <option value="C">C레벨</option>
