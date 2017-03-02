@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const IssuedClass = ({ kinderName, kclassName, code, level, disable }) => (
+const IssuedClass = ({ kinderName, kclassName, code, level }) => (
   <div>
     {kinderName} - {kclassName}
     <form action="https://toycode.org/issue" method="POST" target="_blank">
@@ -10,7 +10,7 @@ const IssuedClass = ({ kinderName, kclassName, code, level, disable }) => (
       <input type="hidden" name="className" value={kclassName} />
       <input type="hidden" name="yearmonth" value="201703" />
       <input type="hidden" name="level" value={level} />
-      <input type="submit" value="로그인 스티커 발급" disabled={disable}/>
+      {level === 'none' ? <input type="submit" value="로그인 스티커 발급" disabled/> : <input type="submit" value="로그인 스티커 발급" />}
     </form>
   </div>
 )
