@@ -314,22 +314,11 @@ const allBranchKinders = async ctx => {
 }
 
 const isFetchedKinderInfo = async ctx => {
-  ctx.body = await User.aggregate([
-    { $match: {
-      "userType": "branch",
-      "kinders.parentId" : ctx.params.branch,
-      "kinders.name" : ctx.params.kinderInfo
-    } },
-    { $project: {
-        branch: {name: 1},
-        kinders: { $filter: {
-          input: '$kinders',
-          as: 'kinder',
-          cond: {$eq: ['$$kinder.name', ctx.params.kinderInfo]}
-        }},
-        _id: 0
-    }}
-  ]);
+  ctx.body = await User.find({
+    "kinders.parentId": ctx.params.branch, "userType": "branch"
+  },{
+    _id: 0, branch: 1, kinders: {$elemMatch : {name: ctx.params.kinderInfo}}
+  })
 }
 
 const userKinders = async ctx => {

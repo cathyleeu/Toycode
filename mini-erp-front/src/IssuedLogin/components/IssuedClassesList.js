@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import IssuedClass from './IssuedClass'
-// import { connect } from 'react-redux'
+import IssuedClasses from './IssuedClasses'
 
 
 class IssuedClassesList extends Component {
@@ -14,7 +13,7 @@ class IssuedClassesList extends Component {
     return(
         <div>
           <h3>로그인 발급</h3>
-          <IssuedClass loginInfo={loginInfo} />
+          {loginInfo.kinders && <IssuedClasses loginInfo={loginInfo} />}
         </div>
     )
   }
