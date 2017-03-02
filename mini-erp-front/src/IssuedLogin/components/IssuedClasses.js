@@ -1,11 +1,8 @@
 import React from 'react';
 import IssuedClass from './IssuedClass'
 
-function getCode( bId , kId , date ){
+function getCode( bId , kId ) {
   let sum = 0;
-  if(date.length === 6) {
-    date += "01";
-  }
   sum += bId.charCodeAt(0) * 17;
   sum += bId.charCodeAt(1) * 13;
   if(kId.slice(0, 2) === "러닝") {
@@ -21,7 +18,11 @@ function getCode( bId , kId , date ){
   sum += kId.charCodeAt(0) * 11;
   sum += kId.slice(-1).charCodeAt(0) * 19;
   sum += kId.slice(parseInt(kId / 2, 10)).charCodeAt(0) * 7;
-  return sum.toString(16).slice(1);
+  let code = sum.toString(16).slice(1),
+      l = parseInt(kId.length / 2, 10),
+      mid = kId.slice(l-1, l+1);
+  code = (code + mid.charCodeAt(0).toString(16).slice(0, 2) + mid.charCodeAt(1).toString(16).slice(0, 2)).slice(0, 5);
+  return code;
 }
 
 
