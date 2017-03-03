@@ -260,7 +260,7 @@ class BranchSignUp extends Component {
           </div>
         </form>
         <div className="rg-submit col-md-12">
-          <button onClick={this.onSubmit}>지사/본사로 회원가입</button>
+          <button onClick={this.onSubmit}>회원가입</button>
           <div className="message">이미 회원이신가요?
             <Link to="login">로그인하기</Link>
           </div>
