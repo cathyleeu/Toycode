@@ -38,10 +38,10 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
               </logo>
             </Link>
             <ul className="header-menu">
-              { ( (userType === 'branch') && (customerType === 'A')) && <li><Link to="/shop"><p>주문</p></Link></li> }
+              { ( (userType === 'branch') && ((customerType === 'A') || (customerType === 'E'))) && <li><Link to="/shop"><p>주문</p></Link></li> }
               { userType === 'branch' && <li><Link to="/account"><p>마이페이지</p></Link></li> }
               {
-                (((customerType === 'B') || (customerType === 'D') ||  (customerType === 'T')) && (userType !== 'admin'))
+                (((customerType !== 'A') || (customerType !== 'C')) && (userType !== 'admin'))
                 && <li><Link to="/issued"><p>로그인 발급</p></Link></li>
               }
               { customerType === 'Z' && adminHeaderList }

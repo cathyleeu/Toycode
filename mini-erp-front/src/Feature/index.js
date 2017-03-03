@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import './index.css'
 
-
+//swich 로 바꾸기
 const Feature = ({customerType}) => (
   <div className="Feature-Container has-Header">
     {customerType === "A" && (
@@ -22,6 +22,24 @@ const Feature = ({customerType}) => (
         <p>[문의방법1] 카카오톡1:1채팅 </p>
         <p>- 카카오톡> 친구추가아이콘 > ID/플러스친구 검색 > 키즈씽킹 검색 > 친구추가 > 1:1채팅 실행> 문의입력 </p>
         <p>[문의방법2] 유선 문의: 070-5102-1822</p>
+      </div>
+      )
+    }
+    {customerType === "C" && (
+      <div>
+        <h5 className="auth-success">YBM지사 공지사항 준비중</h5>
+      </div>
+      )
+    }
+    {customerType === "D" && (
+      <div>
+        <h5 className="auth-success">PSA 공지사항 준비중</h5>
+      </div>
+      )
+    }
+    {customerType === "E" && (
+      <div>
+        <h5 className="auth-success">직영원 공지사항 준비중</h5>
       </div>
       )
     }

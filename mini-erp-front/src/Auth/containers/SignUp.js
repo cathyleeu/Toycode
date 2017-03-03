@@ -6,7 +6,7 @@ import KinderSignUp from '../components/KinderSignUp'
 
 const SignUp = () => (
   <Tabs>
-    <Tab title="지사/본사 회원가입">
+    <Tab title="회원가입">
       <BranchSignUp />
     </Tab>
     <Tab title="원(선생님) 회원가입">

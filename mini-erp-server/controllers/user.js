@@ -180,6 +180,8 @@ const signup = async (ctx, next) => {
         customerType = "C";
       } else if(signupCode.toLowerCase() == "psa2017") {
         customerType = "D";
+      } else if(signupCode.toLowerCase() == "toy2017") {
+        customerType = "E";
       } else if(signupCode.toLowerCase() == "toycode_admin") {
         userType = "admin";
         customerType = "Z";
@@ -201,7 +203,7 @@ const signup = async (ctx, next) => {
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(5),
         resultId = customerType + (zero+count).slice(-zero.length);
-    if((customerType === 'B') || (customerType === 'D')){
+    if((customerType === 'B') || (customerType === 'D') || (customerType === 'E')){
       user = new User({
         userType, email, password,
         code: resultId,

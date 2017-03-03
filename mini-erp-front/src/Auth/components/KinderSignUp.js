@@ -66,9 +66,6 @@ class KinderSignUp extends Component {
     return (
       <div className="SignUp-Container">
         <img src={logo} className="Auth-logo" role="presentation"/>
-        <div style={{ textAlign:"center", margin:"20px", padding:"20px", display:"none" }}>
-          <h1>준비중입니다.</h1>
-        </div>
         <div style={{ display: false }}>
         <form className="SignUp-Form">
           <div className="rg-user-info col-md-12">
