@@ -29,7 +29,7 @@ function getCode( bId , kId ) {
 const IssuedClasses = (props) => {
   const { kinders, branch } = props.loginInfo,
           code = getCode(branch.name, kinders[0].name, "201703");
-          console.log(kinders[0].kinderClasses);
+          // console.log(kinders[0].kinderClasses);
   return(
     <div>
       <h5>로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h5>
@@ -37,7 +37,7 @@ const IssuedClasses = (props) => {
       { kinders[0].kinderClasses.length > 0 ? (
         kinders[0].kinderClasses.map((kids, i) => (
           <div key={i} style={{margin: '1em'}}>
-            <IssuedClass code={code} kinderName={kinders[0].name} kclassName={kids.className} level={kids.level} disabled={kids.level === '' && 'disabled'}/>
+            <IssuedClass code={code} parentId={kinders[0].parentId} kinderId={kinders[0].code} kclassId={kids.code} kinderName={kinders[0].name} kclassName={kids.className} isRegisteredNames={props.isRegisteredNames} level={kids.level} disabled={kids.level === '' && 'disabled'}/>
           </div>
         ))
       ) : (

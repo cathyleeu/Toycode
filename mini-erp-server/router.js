@@ -1,5 +1,6 @@
 const router = require('koa-router')();
 const Users = require('./controllers/user');
+const Login = require('./controllers/login');
 const Books = require('./controllers/books');
 const Invoices = require('./controllers/invoices');
 const ReturnGoods = require('./controllers/return');
@@ -39,6 +40,12 @@ router.post('/invoices', Invoices.isRegisteredNewIVes)
 router.get('/return', ReturnGoods.isFetchedAllRTns)
 router.get('/return/:user', ReturnGoods.isFetchedRTnsByUser)
 router.post('/return', ReturnGoods.isRegisteredNewRTns)
+
+
+router.post('/login', Login.isRegisteredNames)
+router.get('/login/:classId', Login.isFetchedNamesByClass)
+router.put('/login/update/:classId', Login.isUpdateNames)
+
 
 
 module.exports = router;

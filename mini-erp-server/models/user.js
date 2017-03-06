@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 
 // const subClassSchema = new Schema({
-//   classname: String,
+//   className: String,
 //   students: Number
 // })
 const kinderSchema = new Schema({

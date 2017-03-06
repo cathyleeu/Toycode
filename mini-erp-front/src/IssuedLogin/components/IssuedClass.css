@@ -1,0 +1,9 @@
+.students-names{
+  outline:0;
+  padding: 1em;
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+  border-radius: 8px;
+  resize: none;
+}

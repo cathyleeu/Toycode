@@ -9,11 +9,11 @@ class IssuedClassesList extends Component {
     fetchInfoForIssued(parentId, name)
   }
   render(){
-    const {loginInfo} = this.props;
+    const {loginInfo, isRegisteredNames} = this.props;
     return(
         <div>
           <h3>로그인 발급</h3>
-          {loginInfo.kinders && <IssuedClasses loginInfo={loginInfo} />}
+          {loginInfo.kinders && <IssuedClasses loginInfo={loginInfo} isRegisteredNames={isRegisteredNames}/>}
         </div>
     )
   }

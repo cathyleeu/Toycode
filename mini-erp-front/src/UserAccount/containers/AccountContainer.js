@@ -9,7 +9,7 @@ const AccountContainer = ({user}) => (
     {user._id && (
       <div className="has-Header Container">
         <BranchContainer user={user} />
-        { user.customerType === 'A' && <RequestedIVesContainer /> }  
+        { ((user.customerType === 'A') || (user.customerType === 'E')) && <RequestedIVesContainer /> }  
       </div>
     )}
   </div>
