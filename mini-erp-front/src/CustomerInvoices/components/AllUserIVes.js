@@ -13,6 +13,7 @@ const AllUserIVes = ({allIVes}) => (
                     <p>{iv.userEmail}</p>
                   </div>
                   <div className="IV-Addr col-md-7">
+                    <p>{iv.delivery.to} | {iv.delivery.phone}</p>
                     <p>{iv.delivery.address.zipNo} | {iv.delivery.address.roadAddr}</p>
                     <p>{iv.delivery.address.detailAddr}</p>
                   </div>

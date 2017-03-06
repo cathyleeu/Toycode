@@ -5,3 +5,6 @@
 .User-Kinder-Class{
   margin-right: 0.5em;
 }
+.cst-container{
+  overflow: scroll;
+}

@@ -25,6 +25,14 @@ export const fetchInfoForIssued = (parentId, name) => (dispatch) => {
        })
 }
 
+export const isRegisteredNames = ( parentId, kinderId, classId, className, students ) => (dispatch) => {
+  const loginCont = { parentId, kinderId, classId, className, students }
+  axios.post(`${ROOT_URL}/login`, loginCont)
+      .then(res => {
+        alert('등록이 완료 되었습니다.')
+      })
+}
+
 
 
 

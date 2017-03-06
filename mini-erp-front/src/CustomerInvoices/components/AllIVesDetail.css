@@ -35,7 +35,7 @@
 }
 
 .user-info.open .user-info-detail {
-  height: 380px;
+  height: auto;
 }
 
 .IV-Goods-abbr-top{
