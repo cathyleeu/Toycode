@@ -225,7 +225,7 @@ const signup = async (ctx, next) => {
         code: resultId,
         customerType,
         kinders:[{
-          parentId: signupCode, name: kinderName,  kinderClasses:[]
+          parentId: signupCode, name: kinderName.trim(),  kinderClasses:[]
         }]
       });
     } else {
@@ -354,7 +354,8 @@ const userKinderUpdate = async ctx => {
       return({
         code: kinderCode, manager, parentId,
         zipNo, roadAddr, detailAddr,
-        managerPh, name, phone,
+        managerPh,
+        name: name.trim(), phone,
         kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
           return({
           _id: kinderId+'-KC'+(i+1),
