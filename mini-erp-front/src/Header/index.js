@@ -41,7 +41,7 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
               { ( (userType === 'branch') && ((customerType === 'A') || (customerType === 'E'))) && <li><Link to="/shop"><p>주문</p></Link></li> }
               { userType === 'branch' && <li><Link to="/account"><p>마이페이지</p></Link></li> }
               {
-                (((customerType !== 'A') || (customerType !== 'C')) && (userType !== 'admin'))
+                (((customerType === 'B') || (customerType === 'D') || (customerType === 'E')) && (userType !== 'admin'))
                 && <li><Link to="/issued"><p>로그인 발급</p></Link></li>
               }
               { customerType === 'Z' && adminHeaderList }
