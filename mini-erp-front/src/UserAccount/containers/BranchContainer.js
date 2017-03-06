@@ -33,7 +33,8 @@ class BranchContainer extends Component{
               유치원 추가</button>
             <button
               className="button-save"
-              onClick={() => completedAddKinder(kinders)}>저장</button>
+              onClick={() => completedAddKinder(kinders)}>
+              저장</button>
             <button
               className="button-cancle"
               onClick={() => editKinder(kinders.branchEdit)}>

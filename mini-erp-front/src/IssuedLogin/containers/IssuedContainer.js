@@ -19,4 +19,4 @@ const mapStateToProps = (state) => ({
   loginInfo: state.issuedLogin.recordedInfo
 })
 
-export default connect(mapStateToProps, actions )(IssuedContainer)
+export default connect(mapStateToProps, actions)(IssuedContainer)
