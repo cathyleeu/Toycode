@@ -3,12 +3,6 @@ import IssuedClasses from './IssuedClasses'
 
 
 class IssuedClassesList extends Component {
-  // constructor(props){
-  //   super(props)
-  //   const { name, parentId } = props.recordedInfo[0];
-  //   props.fetchInfoForIssued(parentId, name)
-  //   console.log("constructor",props.loginInfo);
-  // }
   componentWillMount(){
     const { recordedInfo, fetchInfoForIssued } = this.props;
     const { name, parentId } = recordedInfo[0];
@@ -19,13 +13,13 @@ class IssuedClassesList extends Component {
     return(
         <div>
           <h3>로그인 발급</h3>
-          {/* {loginInfo.kinders && */}
+          {loginInfo.kinders &&
             <IssuedClasses
               studentsNames={studentsNames}
               loginInfo={loginInfo}
               isRegisteredNames={isRegisteredNames}
               isFetchedNamesByClass={isFetchedNamesByClass}
-            />
+            />}
         </div>
     )
   }
