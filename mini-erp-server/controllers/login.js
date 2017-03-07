@@ -25,7 +25,7 @@ const isUpdateNames = async (ctx) => {
     students.map(name => {
       studentsList.push(name)
     })
-    ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId}, {$set: { students: studentsList }})
+    ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId}, {$set: { students: studentsList }}, { new: true })
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;

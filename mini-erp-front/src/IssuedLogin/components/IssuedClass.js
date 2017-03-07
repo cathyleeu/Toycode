@@ -26,10 +26,19 @@ import './IssuedClass.css'
 class IssuedClass extends Component {
   constructor(props){
     super(props)
+    // props.isFetchedNamesByClass(props.kclassId)
     this.state = {
       addNick: '', // Boolean
-      students:'' // names
+      students: '' // names
     }
+    // console.log(props.studentsNames);
+  }
+  componentWillMount(){
+    const {isFetchedNamesByClass, kclassId} = this.props;
+    isFetchedNamesByClass(kclassId)
+    // console.log(studentsNames);
+    // this.setState({students: })
+
   }
   onChange = ( e:Event ) => {
     e.preventDefault()
@@ -49,7 +58,7 @@ class IssuedClass extends Component {
         {this.state.addNick && (
           <div>
             학생들의 이름 혹은 별명(닉네임)을 한 줄에 하나씩 입력해주세요.
-            <textarea className='students-names' onChange={this.onChange} />
+            <textarea className='students-names' onChange={this.onChange} value={this.state.students} />
             <button onClick={() => this.setState({ addNick: false }) }>취소하기</button>
             <button onClick={this.isPostingNames}>완료</button>
           </div>
