@@ -8,21 +8,23 @@ class IssuedClassesList extends Component {
     recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
   }
   render(){
-    const {loginInfo, isRegisteredNames, recordedKinders, isFetchedNamesByClass, studentsNames, isEditingNames} = this.props;
+    const {loginInfo, isRegisteredNames, recordedKinders, customerType, isFetchedNamesByClass, studentsNames, isEditingNames} = this.props;
+    const Code4Kinder = Object.keys(loginInfo).filter(name => name !== 'branchInfo')[0];
     return(
         <div>
           <h3>로그인 발급</h3>
-          {recordedKinders.map((kinder, i) =>
-            loginInfo[kinder.code] &&
+          {recordedKinders.map((kinder, i) =>{
+            const kinder4Info = customerType === 'T' ? loginInfo[Code4Kinder] : loginInfo[kinder.code];
+            return( kinder4Info &&
               <IssuedClasses
                 key={i}
                 studentsNames={studentsNames}
                 branchInfo={loginInfo.branchInfo}
-                kinderInfo={loginInfo[kinder.code]}
+                kinderInfo={kinder4Info}
                 isEditingNames={isEditingNames}
                 isRegisteredNames={isRegisteredNames}
                 isFetchedNamesByClass={isFetchedNamesByClass}
-              />
+              />)}
           )}
         </div>
     )
@@ -30,13 +32,3 @@ class IssuedClassesList extends Component {
 }
 
 export default IssuedClassesList
-
-
-/* {loginInfo &&
-  <IssuedClasses
-    studentsNames={studentsNames}
-    loginInfo={loginInfo}
-    isEditingNames={isEditingNames}
-    isRegisteredNames={isRegisteredNames}
-    isFetchedNamesByClass={isFetchedNamesByClass}
-  />} */
