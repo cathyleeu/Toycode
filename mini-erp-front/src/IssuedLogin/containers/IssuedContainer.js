@@ -6,23 +6,27 @@ import IssuedClassesList from '../components/IssuedClassesList'
 
 
 const IssuedContainer = ({
-  recordedInfo,
+  recordedKinders,
   fetchInfoForIssued,
   loginInfo,
   isFetchedNamesByClass,
   isRegisteredNames,
-  studentsNames
+  isEditingNames,
+  studentsNames,
+  customerType
 }) => {
   return(
   <div className="has-Header Container">
-    {recordedInfo && (
+    {recordedKinders && (
       <IssuedClassesList
         studentsNames={studentsNames}
-        recordedInfo={recordedInfo}
+        recordedKinders={recordedKinders}
         fetchInfoForIssued={fetchInfoForIssued}
         loginInfo={loginInfo}
+        customerType={customerType}
         isRegisteredNames={isRegisteredNames}
         isFetchedNamesByClass={isFetchedNamesByClass}
+        isEditingNames={isEditingNames}
       />)}
   </div>
 )}
@@ -30,9 +34,10 @@ const IssuedContainer = ({
 
 
 const mapStateToProps = (state) => ({
-  recordedInfo: state.auth.user.kinders,
-  loginInfo: state.issuedLogin.recordedInfo,
-  studentsNames: state.issuedLogin
+  recordedKinders: state.auth.user.kinders,
+  loginInfo: state.issuedLogin,
+  studentsNames: state.issuedLogin,
+  customerType: state.auth.user.customerType
 })
 
 export default connect(mapStateToProps, actions)(IssuedContainer)

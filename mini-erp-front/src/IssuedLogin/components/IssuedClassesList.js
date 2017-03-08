@@ -4,22 +4,28 @@ import IssuedClasses from './IssuedClasses'
 
 class IssuedClassesList extends Component {
   componentWillMount(){
-    const { recordedInfo, fetchInfoForIssued } = this.props;
-    const { name, parentId } = recordedInfo[0];
-    fetchInfoForIssued(parentId, name)
+    const { recordedKinders, fetchInfoForIssued } = this.props;
+    recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
   }
   render(){
-    const {loginInfo, isRegisteredNames, isFetchedNamesByClass, studentsNames} = this.props;
+    const {loginInfo, isRegisteredNames, recordedKinders, customerType, isFetchedNamesByClass, studentsNames, isEditingNames} = this.props;
+    const Code4Kinder = Object.keys(loginInfo).filter(name => name !== 'branchInfo')[0];
     return(
         <div>
           <h3>로그인 발급</h3>
-          {loginInfo.kinders &&
-            <IssuedClasses
-              studentsNames={studentsNames}
-              loginInfo={loginInfo}
-              isRegisteredNames={isRegisteredNames}
-              isFetchedNamesByClass={isFetchedNamesByClass}
-            />}
+          {recordedKinders.map((kinder, i) =>{
+            const kinder4Info = customerType === 'T' ? loginInfo[Code4Kinder] : loginInfo[kinder.code];
+            return( kinder4Info &&
+              <IssuedClasses
+                key={i}
+                studentsNames={studentsNames}
+                branchInfo={loginInfo.branchInfo}
+                kinderInfo={kinder4Info}
+                isEditingNames={isEditingNames}
+                isRegisteredNames={isRegisteredNames}
+                isFetchedNamesByClass={isFetchedNamesByClass}
+              />)}
+          )}
         </div>
     )
   }
