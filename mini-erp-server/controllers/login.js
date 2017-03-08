@@ -20,12 +20,9 @@ const isRegisteredNames = async (ctx, next) => {
 
 const isUpdateNames = async (ctx) => {
   try{
-    const { students } = ctx.request.body;
-    let studentsList = [];
-    students.map(name => {
-      studentsList.push(name)
-    })
-    ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId}, {$set: { students: studentsList }}, { new: true })
+    // const { students } = ctx.request.body;
+    console.log(ctx.request.body);
+    ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId}, {$set: { students: ctx.request.body }}, { new: true })
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;

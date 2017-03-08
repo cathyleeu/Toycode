@@ -68,29 +68,5 @@ const IssuedClasses = (props) => {
   )
 }
 
-// class IssuedClasses extends Component {
-//
-//   render(){
-//     const { kinders, branch } = this.props.loginInfo,
-//             code = getCode(branch.name, kinders[0].name, "201703");
-//     return(
-//       <div>
-//         원별 접속 주소: <a href={`https://toycode.org/code/${code}`} target="_blank">toycode.org/code/{code}</a>
-//         {kinders[0].kinderClasses.map((kids, i) => (
-//           <div  key={i} style={{margin: '1em'}}>
-//             <IssuedClass code={code} kinderName={kinders[0].name} kclassName={kids.className} level={kids.level} disable={(kids.level === 'none') ? 'disabled' : '' }/>
-//           </div>
-//         ))}
-//       </div>
-//     )
-//   }
-// }
-
 
 export default IssuedClasses;
-
-/* <form action="https://toycode.org/issue" method="POST" target="_blank"> */
-
-/* <button>원아수 수정</button>
-<button>ID 설정하기</button>
-<button>로그인 발급 받기</button> */
