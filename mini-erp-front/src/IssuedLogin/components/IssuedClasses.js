@@ -33,29 +33,32 @@ function getCode( bId , kId ) {
 
 
 const IssuedClasses = (props) => {
-  const { kinders, branch } = props.loginInfo,
-          code = getCode(branch.name, kinders[0].name, "201703");
+
+  const { kinderInfo, branchInfo } = props,
+        code = getCode(branchInfo.name, kinderInfo.name,"201703");
   return(
     <div>
       <h5>로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h5>
       원별 접속 주소: <a href={`https://toycode.org/code/${code}`} target="_blank">toycode.org/code/{code}</a>
-      { kinders[0].kinderClasses.length > 0 ? (
-        kinders[0].kinderClasses.map((kids, i) => (
+      { kinderInfo.kinderClasses.length > 0 ? (
+        kinderInfo.kinderClasses.map((kids, i) => {
+          return(
           <div key={i} style={{margin: '1em'}}>
             <IssuedClass
               code={code}
-              parentId={kinders[0].parentId}
-              kinderId={kinders[0].code}
+              parentId={kinderInfo.parentId}
+              kinderId={kinderInfo.code}
               kclassId={kids.code}
-              kinderName={kinders[0].name}
+              kinderName={kinderInfo.name}
               kclassName={kids.className}
+              isEditingNames={props.isEditingNames}
               studentsNames={props.studentsNames}
               isFetchedNamesByClass={props.isFetchedNamesByClass}
               isRegisteredNames={props.isRegisteredNames}
               level={kids.level}
               disabled={kids.level === '' && 'disabled'}/>
           </div>
-        ))
+        )})
       ) : (
         <div>
           마이페이지에서 원과 레벨을 입력해주세요.

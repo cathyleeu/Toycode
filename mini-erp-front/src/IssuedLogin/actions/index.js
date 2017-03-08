@@ -7,7 +7,7 @@ const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090';
 export const FETCH_INFO_FOR_ISSUED = 'FETCH_INFO_FOR_ISSUED';
 export const IS_REGISTER_NAMES = 'IS_REGISTER_NAMES';
 export const IS_FETCHED_NAMES = 'IS_FETCHED_NAMES';
-
+export const IS_EDITED_NAMES = 'EDITED_NAMES'
 
 /*-------------------*/
 
@@ -35,6 +35,16 @@ export const isRegisteredNames = ( parentId, kinderId, classId, className, stude
       alert('등록이 완료 되었습니다.')
     })
 }
+
+export const isEditingNames = (classId, students) => (dispatch) => {
+  console.log(students);
+  axios.put(`${ROOT_URL}/login/update/${classId}`, students)
+    .then(res => {
+      console.log(res);
+      dispatch({type: IS_EDITED_NAMES})
+    })
+}
+
 
 export const isFetchedNamesByClass = (classId) => (dispatch) => {
   axios.get(`${ROOT_URL}/login/${classId}`)
