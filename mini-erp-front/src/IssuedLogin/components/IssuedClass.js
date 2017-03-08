@@ -23,7 +23,7 @@ class IssuedClass extends Component {
     return(
       <div style={{margin: '2em 0'}}>
         {kinderName} - {kclassName}
-        <button onClick={() => this.setState({ addNick: true })} style={{display:'none'}}>학생 이름 등록하기</button>
+        <button onClick={() => this.setState({ addNick: true })}>학생 이름 등록하기</button>
         {this.state.addNick && (
           <div>
             <IssuedNames
