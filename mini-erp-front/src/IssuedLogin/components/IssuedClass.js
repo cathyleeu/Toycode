@@ -20,12 +20,12 @@ class IssuedClass extends Component {
   }
   render(){
     const { kinderName, kclassName, code, level, disabled, studentsNames, isRegisteredNames, kclassId, parentId, kinderId, isEditingNames } = this.props;
+    console.log(studentsNames[kclassName]);
     return(
       <div style={{margin: '2em 0'}}>
         {kinderName} - {kclassName}
-        <button onClick={() => this.setState({ addNick: true })}>학생 이름 등록하기</button>
-        {this.state.addNick && (
-          <div>
+        {(studentsNames[kclassName] || this.state.addNick) ? (
+          <div style={{display:'none'}}>
             <IssuedNames
               isRegisteredNames={isRegisteredNames}
               isEditingNames={isEditingNames}
@@ -35,9 +35,13 @@ class IssuedClass extends Component {
               kinderId={kinderId}
               kclassName={kclassName}
             />
-            <button onClick={() => this.setState({ addNick: false }) }>취소하기</button>
+            {studentsNames[kclassName]?'':<button onClick={() => this.setState({ addNick: false })}>취소하기</button>}
           </div>
-        )}
+        ) : (
+          <div>
+            <button onClick={() => this.setState({ addNick: true }) } style={{display:'none'}}>학생 이름 등록하기</button>
+          </div>
+        ) }
         <form action="https://toycode.org/issue" method="POST" target="_blank">
           <input type="hidden" name="code" value={code} />
           <input type="hidden" name="school" value={kinderName} />
