@@ -8,7 +8,7 @@ class IssuedClassesList extends Component {
     recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
   }
   render(){
-    const {loginInfo, isRegisteredNames, recordedKinders, customerType, isFetchedNamesByClass, studentsNames, isEditingNames} = this.props;
+    const { loginInfo, isRegisteredNames, isWritingNames, recordedKinders, customerType, isFetchedNamesByClass, studentsNames, isEditingNames} = this.props;
     const Code4Kinder = Object.keys(loginInfo).filter(name => name !== 'branchInfo')[0];
     return(
         <div>
@@ -23,6 +23,7 @@ class IssuedClassesList extends Component {
                 kinderInfo={kinder4Info}
                 isEditingNames={isEditingNames}
                 isRegisteredNames={isRegisteredNames}
+                isWritingNames={isWritingNames}
                 isFetchedNamesByClass={isFetchedNamesByClass}
               />)}
           )}

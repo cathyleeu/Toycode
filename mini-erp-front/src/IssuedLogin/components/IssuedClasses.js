@@ -22,6 +22,7 @@ const IssuedClasses = (props) => {
               kclassId={kids.code}
               kinderName={kinderInfo.name}
               kclassName={kids.className}
+              isWritingNames={props.isWritingNames}
               isEditingNames={props.isEditingNames}
               studentsNames={props.studentsNames}
               isFetchedNamesByClass={props.isFetchedNamesByClass}
