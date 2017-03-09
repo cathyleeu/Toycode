@@ -6,8 +6,19 @@
   margin-top: 1em;
   border-radius: 8px;
   resize: none;
+  height: 200px;
 }
 .students-top{
   display: flex;
   flex-direction: row;
+}
+
+.issued-login-top{
+  display: flex;
+  flex-direction: row;
+}
+
+.issued-login{
+  margin: 2em 0;
+  width: 70%;
 }

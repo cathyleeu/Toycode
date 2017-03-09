@@ -51,9 +51,9 @@ const Kinder = (state, action) => {
       }]
     case types.UPDATE_KINDER:
       return state.kinders.map((kinder) => {
-        const { name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, parentId } = action
+        const { name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, parentId, lang } = action
         if(kinder._id === action.id){
-          return { ...kinder, name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, parentId }
+          return { ...kinder, name, zipNo, roadAddr, detailAddr, phone, manager, managerPh, parentId, lang }
         } else { return kinder }
       })
     default:

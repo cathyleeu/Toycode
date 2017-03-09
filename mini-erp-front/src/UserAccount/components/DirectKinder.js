@@ -3,6 +3,29 @@ import RegisterKinderClasses from './RegisterKinderClasses'
 
 
 class DirectKinder extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      lang: this.props.kinder.lang || 'en'
+    }
+  }
+  isHandleChange = e => {
+    e.preventDefault()
+    this.setState({[e.target.name]: e.target.value})
+  }
+  isOnBlur = () => {
+    const { kinder, updateKinder, branchCode} = this.props;
+    console.log(branchCode);
+    const directKinUp = {
+      name: kinder.name,
+      zipNo: kinder.zipNo,
+      roadAddr: kinder.roadAddr,
+      detailAddr: kinder.detailAddr,
+      parentId: branchCode,
+      lang: this.state.lang
+    }
+    updateKinder(directKinUp, kinder._id)
+  }
   handleAddChildClick = e => {
     e.preventDefault()
     const { addClass, createKinderClass, id} = this.props
@@ -46,6 +69,19 @@ class DirectKinder extends Component{
              </div>
            </div>
          </div>
+         <label>
+           언어
+           <select
+             name="lang"
+             value={this.state.lang}
+             onChange={this.isHandleChange}
+             onBlur={this.isOnBlur}
+             disabled={!branchEdit}>
+             <option value="">---</option>
+             <option value="ko">한국어</option>
+             <option value="en">영어</option>
+           </select>
+         </label>
        </div>
      </div>
      <div className="kinder-class-body">

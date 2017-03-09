@@ -350,10 +350,11 @@ const userKinderUpdate = async ctx => {
       console.log("userKinderUpdatefromDB",kinder);
       const kinderId = 'K'+(i+1);
       const kinderCode = kinder.parentId+'-'+kinderId;
-      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId} = kinder;
+      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang} = kinder;
+      console.log("langlang",lang);
       return({
         code: kinderCode, manager, parentId,
-        zipNo, roadAddr, detailAddr,
+        zipNo, roadAddr, detailAddr, lang,
         managerPh,
         name: name.trim(), phone,
         kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {

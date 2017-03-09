@@ -13,6 +13,7 @@ const IssuedContainer = ({
   isRegisteredNames,
   isEditingNames,
   studentsNames,
+  isWritingNames,
   customerType
 }) => {
   return(
@@ -27,6 +28,7 @@ const IssuedContainer = ({
         isRegisteredNames={isRegisteredNames}
         isFetchedNamesByClass={isFetchedNamesByClass}
         isEditingNames={isEditingNames}
+        isWritingNames={isWritingNames}
       />)}
   </div>
 )}

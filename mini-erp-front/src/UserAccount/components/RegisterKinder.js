@@ -19,6 +19,7 @@ class RegisterKinder extends Component {
       manager: kinder.manager || '',
       managerPh: kinder.managerPh || '',
       parentId: kinder.parentId || branchCode ,
+      lang: kinder.lang || '',
       isModalOpen: false,
       location: ''
     }
@@ -212,6 +213,19 @@ class RegisterKinder extends Component {
                required
              />
            </div>
+           <label>
+             언어
+             <select
+               name="lang"
+               value={this.state.lang}
+               onChange={this.isHandleChange}
+               onBlur={this.isOnBlur}
+               disabled={!branchEdit}>
+               <option value="">---</option>
+               <option value="ko">한국어</option>
+               <option value="en">영어</option>
+             </select>
+           </label>
          </div>
        </div>
        <div className="kinder-class-body">

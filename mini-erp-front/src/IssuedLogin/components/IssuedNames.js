@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import { splitNames } from '../../services/issue4login'
 class IssuedNames extends Component {
   constructor(props){
     super(props)
@@ -11,25 +11,22 @@ class IssuedNames extends Component {
     e.preventDefault()
     this.setState({ students: e.target.value })
   }
-  isPostingNames = () => {
-    const {isRegisteredNames, kclassId, parentId, kinderId, kclassName } = this.props;
-    const names = this.state.students.split("\n").map(name => name.trim()).filter(name => name)
-    isRegisteredNames(parentId,kinderId,kclassId,kclassName,names)
-  }
-  isEditingNames = () => {
-    const {isEditingNames, kclassId, kclassName } = this.props;
-    const names = this.state.students.split("\n").map(name => name.trim()).filter(name => name)
-    isEditingNames(kclassId, names, kclassName)
+  isWritingNames4Issue = () => {
+    const { kclassName, isWritingNames } = this.props;
+    const students = splitNames(this.state.students)
+    isWritingNames(kclassName, students)
   }
   render(){
-    const { studentsNames } = this.props;
+    const { disabled } = this.props;
     return(
       <div>
-        <div className="students-top">
-          <p>학생들의 이름 혹은 별명(닉네임)을 한 줄에 하나씩 입력해주세요.</p>
-          { studentsNames ? <button onClick={this.isEditingNames}>수정</button> : <button onClick={this.isPostingNames}>완료</button> }
-        </div>
-        <textarea className='students-names' onChange={this.onChange} value={this.state.students} />
+        <textarea
+          className='students-names'
+          onChange={this.onChange}
+          onBlur={this.isWritingNames4Issue}
+          value={this.state.students}
+          disabled={disabled}
+        />
       </div>
     )
   }

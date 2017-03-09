@@ -7,7 +7,8 @@ const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090';
 export const FETCH_INFO_FOR_ISSUED = 'FETCH_INFO_FOR_ISSUED';
 export const IS_REGISTER_NAMES = 'IS_REGISTER_NAMES';
 export const IS_FETCHED_NAMES = 'IS_FETCHED_NAMES';
-export const IS_EDITED_NAMES = 'EDITED_NAMES'
+export const IS_EDITED_NAMES = 'IS_EDITED_NAMES'
+export const IS_WRITING_NAMES = 'IS_WRITING_NAMES'
 
 /*-------------------*/
 
@@ -46,12 +47,12 @@ export const isEditingNames = (classId, students, kclassName) => (dispatch) => {
     })
 }
 
+export const isWritingNames = (kclassName, students) => ({ type: IS_WRITING_NAMES, kclassName, students })
 
 export const isFetchedNamesByClass = (classId) => (dispatch) => {
   axios.get(`${ROOT_URL}/login/${classId}`)
     .then(res => {
       dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
-      // console.log(res.data[0]);
     })
 }
 
