@@ -7,7 +7,9 @@ const AllUserLists = ({allUsers}) => (
   <div>
     <h5>고객리스트</h5>
     { allUsers.map(
-      (user , i) => (
+      (user , i) => {
+        console.log(user);
+        return(
           <div key={i} className="cst-container">
             <AllUsersDetail user={user}>
               <div>
@@ -18,7 +20,7 @@ const AllUserLists = ({allUsers}) => (
                   <p>교육 담당자 : {user.education.E_manager} | {user.education.E_phone} | {user.education.E_email}</p>
                 </div>
                 <div className="User-Acct-Manager">
-                  <p>회계 담당자 : {user.account.E_manager} | {user.account.E_phone} | {user.account.E_email}</p>
+                  <p>회계 담당자 : {user.account.A_manager} | {user.account.A_phone} | {user.account.A_email}</p>
                 </div>
                 {user.kinders.map((kinder, i) => (
                   <div className="User-Kinders" key={i}>
@@ -41,7 +43,7 @@ const AllUserLists = ({allUsers}) => (
               </div>
             </AllUsersDetail>
           </div>
-        )
+        )}
       )
     }
   </div>
