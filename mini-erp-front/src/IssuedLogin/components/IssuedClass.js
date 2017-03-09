@@ -25,7 +25,7 @@ class IssuedClass extends Component {
       <div style={{margin: '2em 0'}}>
         {kinderName} - {kclassName}
         {(studentsNames[kclassName] || this.state.addNick) ? (
-          <div>
+          <div style={{display: 'none'}}>
             <IssuedNames
               isRegisteredNames={isRegisteredNames}
               isEditingNames={isEditingNames}
@@ -39,7 +39,7 @@ class IssuedClass extends Component {
           </div>
         ) : (
           <div>
-            <button onClick={() => this.setState({ addNick: true }) }>학생 이름 등록하기</button>
+            <button onClick={() => this.setState({ addNick: true }) } style={{display: 'none'}}>학생 이름 등록하기</button>
           </div>
         ) }
         <form action="https://toycode.org/issue" method="POST" target="_blank">
