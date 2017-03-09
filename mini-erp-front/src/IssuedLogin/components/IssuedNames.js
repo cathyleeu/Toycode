@@ -17,9 +17,9 @@ class IssuedNames extends Component {
     isRegisteredNames(parentId,kinderId,kclassId,kclassName,names)
   }
   isEditingNames = () => {
-    const {isEditingNames, kclassId } = this.props;
+    const {isEditingNames, kclassId, kclassName } = this.props;
     const names = this.state.students.split("\n").map(name => name.trim()).filter(name => name)
-    isEditingNames(kclassId, names)
+    isEditingNames(kclassId, names, kclassName)
   }
   render(){
     const { studentsNames } = this.props;

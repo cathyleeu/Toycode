@@ -36,12 +36,13 @@ export const isRegisteredNames = ( parentId, kinderId, classId, className, stude
     })
 }
 
-export const isEditingNames = (classId, students) => (dispatch) => {
-  console.log(students);
+export const isEditingNames = (classId, students, kclassName) => (dispatch) => {
+  console.log(students, classId);
   axios.put(`${ROOT_URL}/login/update/${classId}`, students)
     .then(res => {
       console.log(res);
-      dispatch({type: IS_EDITED_NAMES})
+      alert('수정이 완료 되었습니다.')
+      dispatch({type: IS_EDITED_NAMES, students, kclassName})
     })
 }
 

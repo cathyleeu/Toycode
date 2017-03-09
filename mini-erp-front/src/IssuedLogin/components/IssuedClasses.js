@@ -17,6 +17,12 @@ function getCode( bId , kId ) {
       sum += kId.charCodeAt(5) * 31;
     }
   }
+  if(kId.slice(0, 3) === "ECC") {
+    if(kId.slice(3, 5) === "석계") {
+      sum += kId.charCodeAt(3) * 11;
+      sum += kId.charCodeAt(4) * 31;
+    }
+  }
   if(kId.slice(0, 2) === "이화") {
     sum += kId.charCodeAt(2) * 13;
     sum += kId.charCodeAt(3) * 29;
@@ -38,12 +44,11 @@ const IssuedClasses = (props) => {
         code = getCode(branchInfo.name, kinderInfo.name,"201703");
   return(
     <div>
-      <h5>로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h5>
-      원별 접속 주소: <a href={`https://toycode.org/code/${code}`} target="_blank">toycode.org/code/{code}</a>
+      <h5>{kinderInfo.name} 접속 주소: <a href={`https://toycode.org/code/${code}`} target="_blank">toycode.org/code/{code}</a></h5>
       { kinderInfo.kinderClasses.length > 0 ? (
         kinderInfo.kinderClasses.map((kids, i) => {
           return(
-          <div key={i} style={{margin: '1em'}}>
+          <div key={i} >
             <IssuedClass
               code={code}
               parentId={kinderInfo.parentId}
