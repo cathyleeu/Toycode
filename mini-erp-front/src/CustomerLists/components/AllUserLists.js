@@ -15,10 +15,10 @@ const AllUserLists = ({allUsers}) => (
                   <p>지사 주소 : {user.branch.address.zipNo} | {user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>
                 </div>
                 <div className="User-Edu-Manager">
-                  <p>교육 담당자 : {user.education.Manager} | {user.education.Phone} | {user.education.Email}</p>
+                  <p>교육 담당자 : {user.education.E_manager} | {user.education.E_phone} | {user.education.E_email}</p>
                 </div>
                 <div className="User-Acct-Manager">
-                  <p>회계 담당자 : {user.account.Manager} | {user.account.Phone} | {user.account.Email}</p>
+                  <p>회계 담당자 : {user.account.E_manager} | {user.account.E_phone} | {user.account.E_email}</p>
                 </div>
                 {user.kinders.map((kinder, i) => (
                   <div className="User-Kinders" key={i}>
