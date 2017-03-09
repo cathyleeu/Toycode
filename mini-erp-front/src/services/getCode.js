@@ -1,4 +1,4 @@
-export function getCode( bId , kId ) {
+function getCode( bId , kId ) {
   let sum = 0;
   sum += bId.charCodeAt(0) * 17;
   sum += bId.charCodeAt(1) * 13;
@@ -12,6 +12,12 @@ export function getCode( bId , kId ) {
     if(kId.slice(4, 6) !== "개금") {
       sum += kId.charCodeAt(4) * 11;
       sum += kId.charCodeAt(5) * 31;
+    }
+  }
+  if(kId.slice(0, 8) === "(주)와이비엠넷") {
+    if(kId.slice(8, 10) !== "송도") {
+      sum += kId.charCodeAt(8) * 11;
+      sum += kId.charCodeAt(9) * 31;
     }
   }
   if(kId.slice(0, 3) === "ECC") {
