@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import './CustomerContainer.css'
-import { AllUserLists, SearchAllUser } from '../components'
+import { AllUserLists } from '../components'
 
 
 
@@ -14,7 +14,7 @@ class CustomerContainer extends Component {
     const {allUsers} = this.props
     return(
       <div className="has-Header Container">
-        <SearchAllUser />
+        {/* <SearchAllUser /> */}
         <AllUserLists allUsers={allUsers}/>
       </div>
     )
