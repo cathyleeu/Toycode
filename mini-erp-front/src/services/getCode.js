@@ -1,4 +1,4 @@
-function getCode( bId , kId ) {
+export function getCode( bId , kId ) {
   let sum = 0;
   sum += bId.charCodeAt(0) * 17;
   sum += bId.charCodeAt(1) * 13;
