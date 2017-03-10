@@ -9,6 +9,7 @@ export const IS_REGISTER_NAMES = 'IS_REGISTER_NAMES';
 export const IS_FETCHED_NAMES = 'IS_FETCHED_NAMES';
 export const IS_EDITED_NAMES = 'IS_EDITED_NAMES'
 export const IS_WRITING_NAMES = 'IS_WRITING_NAMES'
+export const IS_REGISTERED_FIRST_TIME = 'IS_REGISTERED_FIRST_TIME'
 
 /*-------------------*/
 
@@ -28,14 +29,6 @@ export const fetchInfoForIssued = (parentId, name) => (dispatch) => {
      })
 }
 
-export const isRegisteredNames = ( parentId, kinderId, classId, className, students ) => (dispatch) => {
-  const loginCont = { parentId, kinderId, classId, className, students }
-  axios.post(`${ROOT_URL}/login`, loginCont)
-    .then(res => {
-      dispatch({ type: IS_REGISTER_NAMES, names: loginCont.className, students: loginCont.students})
-      alert('등록이 완료 되었습니다.')
-    })
-}
 
 export const isEditingNames = (classId, students, kclassName) => (dispatch) => {
   console.log(students, classId);
@@ -47,12 +40,29 @@ export const isEditingNames = (classId, students, kclassName) => (dispatch) => {
     })
 }
 
-export const isWritingNames = (kclassName, students) => ({ type: IS_WRITING_NAMES, kclassName, students })
+export const isWritingNames = (kclassName, students) => {
+  console.log(kclassName, students);
+  return({ type: IS_WRITING_NAMES, kclassName, students})}
 
-export const isFetchedNamesByClass = (classId) => (dispatch) => {
+export const isFetchedNamesByClass = (classId, kclassName) => (dispatch) => {
   axios.get(`${ROOT_URL}/login/${classId}`)
     .then(res => {
       dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
+    })
+    .catch(err => {
+      dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
+      console.log(err, classId, kclassName);
+    })
+}
+
+export const isRegisteredNames = ( parentId, kinderId, classId, className, students ) => (dispatch) => {
+  const loginCont = { parentId, kinderId, classId, className, students }
+  axios.post(`${ROOT_URL}/login`, loginCont)
+    .then(res => {
+      dispatch({ type: IS_REGISTER_NAMES, names: className, students, className})
+      console.log(className);
+      dispatch(isFetchedNamesByClass(classId, className))
+      alert('등록이 완료 되었습니다.')
     })
 }
 

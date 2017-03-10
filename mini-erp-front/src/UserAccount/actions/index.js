@@ -13,7 +13,6 @@ export function createKinder(_id){
 
 export const updateKinder = (kinder, id) => {
   const { name, zipNo, detailAddr, roadAddr, phone, manager, managerPh, parentId, lang } = kinder;
-  console.log(lang);
   return({
     type: types.UPDATE_KINDER, name, zipNo, detailAddr, roadAddr, phone, manager, managerPh, parentId, id, lang
   })

@@ -15,7 +15,6 @@ class DirectKinder extends Component{
   }
   isOnBlur = () => {
     const { kinder, updateKinder, branchCode} = this.props;
-    console.log(branchCode);
     const directKinUp = {
       name: kinder.name,
       zipNo: kinder.zipNo,

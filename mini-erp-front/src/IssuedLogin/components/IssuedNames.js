@@ -7,7 +7,7 @@ class IssuedNames extends Component {
       students: props.studentsNames // names
     }
   }
-  onChange = ( e:Event ) => {
+  onChange = (e) => {
     e.preventDefault()
     this.setState({ students: e.target.value })
   }

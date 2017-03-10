@@ -8,24 +8,22 @@ class IssuedClassesList extends Component {
     recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
   }
   render(){
-    const { loginInfo, isRegisteredNames, isWritingNames, recordedKinders, customerType, isFetchedNamesByClass, studentsNames, isEditingNames} = this.props;
-    const Code4Kinder = Object.keys(loginInfo).filter(name => name !== 'branchInfo')[0];
+    const { loginInfo, recordedKinders, customerType} = this.props;
+    //TODO: 유치원 코드 찾기
+    const Code4Kinder = Object.keys(loginInfo).filter(name => name !== 'branchInfo')[1];
     return(
         <div>
           <h3>로그인 발급 : 로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h3>
-          {recordedKinders.map((kinder, i) =>{
+          {recordedKinders.map((kinder, i) => {
             const kinder4Info = customerType === 'T' ? loginInfo[Code4Kinder] : loginInfo[kinder.code];
             return( kinder4Info &&
               <IssuedClasses
                 key={i}
-                studentsNames={studentsNames}
+                {...this.props}
                 branchInfo={loginInfo.branchInfo}
                 kinderInfo={kinder4Info}
-                isEditingNames={isEditingNames}
-                isRegisteredNames={isRegisteredNames}
-                isWritingNames={isWritingNames}
-                isFetchedNamesByClass={isFetchedNamesByClass}
-              />)}
+              />)
+            }
           )}
         </div>
     )

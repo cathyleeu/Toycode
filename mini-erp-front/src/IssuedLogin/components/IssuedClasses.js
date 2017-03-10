@@ -16,17 +16,13 @@ const IssuedClasses = (props) => {
           return(
           <div key={i} >
             <IssuedClass
+              {...props}
               code={code}
               parentId={kinderInfo.parentId}
               kinderId={kinderInfo.code}
               kclassId={kids.code}
               kinderName={kinderInfo.name}
               kclassName={kids.className}
-              isWritingNames={props.isWritingNames}
-              isEditingNames={props.isEditingNames}
-              studentsNames={props.studentsNames}
-              isFetchedNamesByClass={props.isFetchedNamesByClass}
-              isRegisteredNames={props.isRegisteredNames}
               level={kids.level}
               disabled={kids.level === '' && 'disabled'}/>
           </div>
