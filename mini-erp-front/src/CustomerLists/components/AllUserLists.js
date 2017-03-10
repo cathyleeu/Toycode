@@ -7,9 +7,7 @@ const AllUserLists = ({allUsers}) => (
   <div>
     <h5>고객리스트</h5>
     { allUsers.map(
-      (user , i) => {
-        console.log(user);
-        return(
+      (user , i) => (
           <div key={i} className="cst-container">
             <AllUsersDetail user={user}>
               <div>
@@ -43,7 +41,7 @@ const AllUserLists = ({allUsers}) => (
               </div>
             </AllUsersDetail>
           </div>
-        )}
+        )
       )
     }
   </div>

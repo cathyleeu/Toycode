@@ -83,6 +83,7 @@ export function fetchUserInfo() {
 }
 
 function receiveUserInfo(response) {
+  console.log(response);
   return {
     type: types.STATUS_ON_LOGIN,
     response,

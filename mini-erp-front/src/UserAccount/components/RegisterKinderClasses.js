@@ -22,7 +22,6 @@ class RegisterKinderClasses extends Component {
   isOnBlur = () => {
     const {id, parentId, updateKinderClass, index} = this.props
     const {classname, level} = this.state
-    console.log("this.state",classname, level);
     updateKinderClass(classname, level, index, parentId, id)
   }
   render(){
@@ -68,19 +67,5 @@ class RegisterKinderClasses extends Component {
     )
   }
 }
-
-
-/*
-<input
-  style={{border: disabled}}
-  disabled={!branchEdit}
-  type="number"
-  name='level'
-  id={`${id}_level`}
-  onBlur={this.isOnBlur}
-  value={this.state.level}
-  onChange={this.isHandleChange}
-/>
-*/
 
 export default RegisterKinderClasses
