@@ -25,7 +25,7 @@ class IssuedClass extends Component {
     const {isEditingNames, kclassId, kclassName, studentsNames } = this.props;
     const students = studentsNames[kclassName].students;
     isEditingNames(kclassId, students , kclassName)
-    this.setState({ isEditing: false })
+    this.setState({ isEditing: true })
   }
   onChange = ( e:Event ) => {
     e.preventDefault()
