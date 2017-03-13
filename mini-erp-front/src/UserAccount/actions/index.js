@@ -56,7 +56,6 @@ export const editKinder = (status) => ({
 })
 
 
-
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 export const completedAddKinder = (KinData) => (dispatch, getState) => {
   console.log("completedAddKinderDB",KinData);
@@ -64,9 +63,7 @@ export const completedAddKinder = (KinData) => (dispatch, getState) => {
   axios.put(`${ROOT_URL}/user/${user}/kinder`, KinData)
   dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})
   KinData.kinders.map(kinder => (
-    kinder.kinderClasses.map(kdc => {
-      console.log("11111111")
-      return dispatch(isFetchedNamesByClass(kdc.code, kdc.className))})
+    kinder.kinderClasses.map(kdc => dispatch(isFetchedNamesByClass(kdc.code, kdc.className)))
   ))
   alert('수정이 완료되었습니다.')
 }
