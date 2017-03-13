@@ -1,6 +1,6 @@
 import * as types from '../constants/types'
 import axios from 'axios'
-
+import { isFetchedNamesByClass } from '../../IssuedLogin/actions'
 
 let nextKinId = 0
 export function createKinder(_id){
@@ -63,6 +63,11 @@ export const completedAddKinder = (KinData) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder`, KinData)
   dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})
+  KinData.kinders.map(kinder => (
+    kinder.kinderClasses.map(kdc => {
+      console.log("11111111")
+      return dispatch(isFetchedNamesByClass(kdc.code, kdc.className))})
+  ))
   alert('수정이 완료되었습니다.')
 }
 

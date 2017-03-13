@@ -45,9 +45,13 @@ export const isWritingNames = (kclassName, students) => {
   return({ type: IS_WRITING_NAMES, kclassName, students})}
 
 export const isFetchedNamesByClass = (classId, kclassName) => (dispatch) => {
-  axios.get(`${ROOT_URL}/login/${classId}`)
+  axios.get(`${ROOT_URL}/login/${classId}/${kclassName}`)
     .then(res => {
-      dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
+      if(res.data[0].className !== kclassName){
+        dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
+      } else {
+        dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
+      }
     })
     .catch(err => {
       dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
@@ -60,8 +64,6 @@ export const isRegisteredNames = ( parentId, kinderId, classId, className, stude
   axios.post(`${ROOT_URL}/login`, loginCont)
     .then(res => {
       dispatch({ type: IS_REGISTER_NAMES, names: className, students, className})
-      console.log(className);
-      dispatch(isFetchedNamesByClass(classId, className))
       alert('등록이 완료 되었습니다.')
     })
 }

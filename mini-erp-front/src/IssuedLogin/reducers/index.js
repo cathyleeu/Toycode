@@ -6,10 +6,19 @@ const initialState = {
   needNames: []
 }
 
+const filterNames = (state = initialState.needNames, newName) => {
+  let names = state.map(name => name).indexOf(newName)
+  if(names === -1){
+    return [...state, newName ]
+  } else {
+    return state
+  }
+}
+
 const needNames = (state = initialState.needNames, action ) => {
   switch (action.type) {
     case types.IS_REGISTERED_FIRST_TIME:
-      return [...state, action.kclassName ]
+      return filterNames(state, action.kclassName)
     case types.IS_REGISTER_NAMES:
       return state.filter(className => className !== action.className)
     default:
