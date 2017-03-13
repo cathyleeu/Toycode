@@ -33,7 +33,7 @@ const isUpdateNames = async (ctx) => {
 
 const isFetchedNamesByClass = async ctx => {
   try {
-    ctx.body = await Login.find({classId: ctx.params.classId});
+    ctx.body = await Login.find({classId: ctx.params.classId, className: ctx.params.className});
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
