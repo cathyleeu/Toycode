@@ -35,7 +35,8 @@ class DirectKinder extends Component{
     const { removeChild, deleteKinderClass, updateKinderClass, branchEdit } = this.props
     return (
       <div key={i}>
-        <RegisterKinderClasses id={kinderClass._id} kinderClass={kinderClass} index={0} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit} />
+        <RegisterKinderClasses
+          id={kinderClass._id} kinderClass={kinderClass} index={0} removeChild={removeChild} deleteKinderClass={deleteKinderClass} updateKinderClass={updateKinderClass} branchEdit={branchEdit}/>
       </div>
     )
   }
@@ -68,6 +69,13 @@ class DirectKinder extends Component{
              </div>
            </div>
          </div>
+       </div>
+     </div>
+     <div className="kinder-class-body">
+       <strong>로그인 발급과 관련된 정보입니다.</strong>
+       <strong>해당 원에 맞게 설정해주세요.</strong>
+       <div>
+         <p>1. 신청한 교재와 맞는 언어를 선택해주세요.</p>
          <label>
            언어
            <select
@@ -82,9 +90,10 @@ class DirectKinder extends Component{
            </select>
          </label>
        </div>
-     </div>
-     <div className="kinder-class-body">
-       {kinder.kinderClasses.map(this.renderChild)}
+       <div>
+          <p>2. 각 반과 반에서 사용하는 키즈씽킹 레벨을 선택 해주세요.</p>
+         {kinder.kinderClasses.map(this.renderChild)}
+       </div>
      </div>
     </div>
   )}

@@ -10,6 +10,7 @@ const kinderSchema = new Schema({
   parentId:String,
   code: String,
   lang: String,
+  url: String,
   zipNo:String,
   roadAddr:String,
   detailAddr:String,
@@ -51,6 +52,7 @@ const userSchema = new Schema({
     E_phone: String
   },
   kinders: [kinderSchema],
+  updateOn: {type: Date, default: Date.now},
   createdOn: {type: Date, default: Date.now}
 }, {collection:'user'});
 

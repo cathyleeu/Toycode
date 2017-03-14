@@ -22,7 +22,10 @@ class CustomerContainer extends Component {
     let {allUsers} = this.props,
         searchString = this.state.searchString.trim().toLowerCase();
     if(searchString.length > 0){
-      allUsers = allUsers.filter(l => l.branch.name.toLowerCase().match(searchString) || l.code.toLowerCase().match(searchString));
+      allUsers = allUsers.filter(l => l.branch.name.toLowerCase().match(searchString)
+      || l.code.toLowerCase().match(searchString)
+      || l.email.toLowerCase().match(searchString)
+    );
     }
     return(
       <div className="has-Header Container">

@@ -1,3 +1,7 @@
+.issued-notice{
+  margin: 0 0 1em;
+}
+
 .students-names{
   outline:0;
   padding: 1em;
@@ -7,18 +11,63 @@
   border-radius: 8px;
   resize: none;
   height: 200px;
+  border: 3px solid #1ECD97;
 }
+
+.names-disabled{
+  border: 3px solid #d7d7d7;
+}
+
+
+.issued-login-top,
 .students-top{
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
-.issued-login-top{
-  display: flex;
-  flex-direction: row;
+.issued-login-top button,
+.students-top button {
+  margin: 0 1em;
+}
+
+.issued-login-top h5{
+  margin-bottom: 0;
+  padding: 0 0.5em 0.5em;
+  border-bottom: 2px solid #1ECD97;
+}
+
+.students-top p,
+.issued-login-top p{
+  margin-bottom: 0;
 }
 
 .issued-login{
   margin: 2em 0;
   width: 70%;
+  padding-bottom: 2em;
+  border-bottom: 1px dashed #d7d7d7;
+}
+
+.issued-kinder-info i {
+  margin: 0 0.5em 0.2em 0;
+  /*margin-right: 0.5em;*/
+  font-size: 30px;
+  /*color: #d7d7d7;*/
+}
+
+
+.issued-info{
+  margin: 0 1em 0 0;
+  font-weight: 500;
+}
+.register_names{
+  padding: 0.6em 6em;
+  width: 80%;
+}
+
+.issued-kinder-info{
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  /*border-bottom: 1px solid #5e5e5e;*/
 }

@@ -304,10 +304,10 @@ const confirmSignUp = async ctx => {
 
 // TODO:codeName 으로 불러오기
 const allUsers = async ctx => {
-  ctx.body = await User.find().where({userType: 'branch'}).select('userType customerType email kinders branch code account education');
+  ctx.body = await User.find().where({userType: 'branch'}).select('userType customerType email kinders branch code account education updateOn');
 }
 const loggedUser = async ctx => {
-  ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education');
+  ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education updateOn');
 }
 
 // 원-지사코드 매칭
@@ -344,18 +344,96 @@ const userInfoUpdate = async ctx => {
     console.log(err);
   }
 }
+
+const getNewUrl = ( bId , names ) => {
+  return new Promise(async(resolve, reject) => {
+    let users = await User.find(),
+        urls = [],
+        newUrls = [];
+    users.filter(function(user) {
+      return user.userType == "branch";
+    }).forEach(function(user) {
+      user.kinders.forEach(function(kinder) {
+        if(kinder.url) {
+          urls.push(kinder.url);
+        }
+      });
+    });
+
+    for(let i = 0; i < names.length; i++) {
+      let sum = 0,
+          kId = names[i];
+      sum += bId.charCodeAt(0) * 17;
+      sum += bId.charCodeAt(1) * 13;
+      if(kId.slice(0, 2) === "러닝") {
+        if(kId.slice(2, 4) !== "서초") {
+          sum += kId.charCodeAt(2) * 13;
+          sum += kId.charCodeAt(3) * 29;
+        }
+      }
+      if(kId.slice(0, 4) === "와이비엠") {
+        if(kId.slice(4, 6) !== "개금") {
+          sum += kId.charCodeAt(4) * 11;
+          sum += kId.charCodeAt(5) * 31;
+        }
+      }
+      if(kId.slice(0, 8) === "(주)와이비엠넷") {
+        if(kId.slice(8, 10) !== "송도") {
+          sum += kId.charCodeAt(8) * 11;
+          sum += kId.charCodeAt(9) * 31;
+        }
+      }
+      if(kId.slice(0, 3) === "ECC") {
+        if(kId.slice(3, 5) === "석계") {
+          sum += kId.charCodeAt(3) * 11;
+          sum += kId.charCodeAt(4) * 31;
+        }
+      }
+      if(kId.slice(0, 2) === "이화") {
+        sum += kId.charCodeAt(2) * 13;
+        sum += kId.charCodeAt(3) * 29;
+      }
+      sum += kId.charCodeAt(0) * 11;
+      sum += kId.slice(-1).charCodeAt(0) * 19;
+      sum += kId.slice(parseInt(kId / 2, 10)).charCodeAt(0) * 7;
+
+      let code, l, mid;
+      while(true) {
+        code = sum.toString(16).slice(1);
+        l = parseInt(kId.length / 2, 10);
+        mid = kId.slice(l-1, l+1);
+        code = (code + mid.charCodeAt(0).toString(16).slice(0, 2) + mid.charCodeAt(1).toString(16).slice(0, 2)).slice(0, 5);
+
+        if(urls.indexOf(code) == -1) {
+          urls.push(code); //겹치는 것 체크
+          newUrls.push(code); //return 용
+          break;
+        }
+        sum++;
+      }
+    }
+    console.log("urls",urls);
+    console.log("newUrls",newUrls);
+    resolve(newUrls);
+  });
+}
+
 const userKinderUpdate = async ctx => {
   try{
-    const kinders = ctx.request.body.kinders.map((kinder, i) => {
-      console.log("userKinderUpdatefromDB",kinder);
+    let kinders = ctx.request.body.kinders,
+        names = kinders.map(kinder => kinder.name),
+        urls = await getNewUrl(ctx.request.body.branch, names);
+    for(var i = 0; i < kinders.length; i++) {
+      const kinder = kinders[i];
       const kinderId = 'K'+(i+1);
       const kinderCode = kinder.parentId+'-'+kinderId;
-      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang} = kinder;
-      console.log("langlang",lang);
-      return({
+      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
+      console.log(url)
+      kinders[i] = {
         code: kinderCode, manager, parentId,
         zipNo, roadAddr, detailAddr, lang,
         managerPh,
+        url: url || urls[i],
         name: name.trim(), phone,
         kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
           return({
@@ -364,8 +442,11 @@ const userKinderUpdate = async ctx => {
           className: kinderClass.className,
           level: kinderClass.level
         })})
-      })})
-      ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders}}, { new: true })
+      };
+      console.log(kinders[i])
+    }
+
+    ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
   } catch(err){
     ctx.status = 500;
     ctx.body = err;

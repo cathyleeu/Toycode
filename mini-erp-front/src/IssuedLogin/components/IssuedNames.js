@@ -21,7 +21,7 @@ class IssuedNames extends Component {
     return(
       <div>
         <textarea
-          className='students-names'
+          className={disabled ? 'students-names names-disabled' : 'students-names'}
           onChange={this.onChange}
           onBlur={this.isWritingNames4Issue}
           value={this.state.students}
