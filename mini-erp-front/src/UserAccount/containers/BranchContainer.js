@@ -33,7 +33,7 @@ class BranchContainer extends Component{
               유치원 추가</button>
             <button
               className="button-save"
-              onClick={() => completedAddKinder(kinders)}>
+              onClick={() => completedAddKinder(kinders, user.branch.name)}>
               저장</button>
             <button
               className="button-cancle"
@@ -52,7 +52,7 @@ class BranchContainer extends Component{
         <div className="branchKinder-header-btnList">
           <button
             className="button-save"
-            onClick={() => completedAddKinder(kinders)}>저장</button>
+            onClick={() => completedAddKinder(kinders, user.branch.name)}>저장</button>
           <button
             className="button-cancle"
             onClick={() => editKinder(kinders.branchEdit)}>

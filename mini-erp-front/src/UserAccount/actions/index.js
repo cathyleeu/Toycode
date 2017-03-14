@@ -57,10 +57,10 @@ export const editKinder = (status) => ({
 
 
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
-export const completedAddKinder = (KinData) => (dispatch, getState) => {
+export const completedAddKinder = (KinData, branch) => (dispatch, getState) => {
   console.log("completedAddKinderDB",KinData);
   const user = localStorage.getItem('email')
-  axios.put(`${ROOT_URL}/user/${user}/kinder`, KinData)
+  axios.put(`${ROOT_URL}/user/${user}/kinder`, {...KinData,branch})
   dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})
   KinData.kinders.map(kinder => (
     kinder.kinderClasses.map(kdc => dispatch(isFetchedNamesByClass(kdc.code, kdc.className)))

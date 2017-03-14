@@ -1,7 +1,7 @@
 import React from 'react'
 import AllUsersDetail from './AllUsersDetail'
 import './AllUserLists.css'
-import { getCode } from '../../services/getCode'
+
 
 const AllUserLists = ({allUsers}) => (
   <div>
@@ -23,7 +23,7 @@ const AllUserLists = ({allUsers}) => (
                 {user.kinders.map((kinder, i) => (
                   <div className="User-Kinders" key={i}>
                     <div className="User-Kinder-Info">
-                      <p>유치원 명: {kinder.name} | {kinder.phone} | <strong>접속주소코드 {getCode(user.branch.name, kinder.name)}</strong></p>
+                      <p>유치원 명: {kinder.name} | {kinder.phone} | <strong>접속주소코드 <a href={`https://toycode.org/code/${kinder.url}`} target="_blank">toycode.org/code/{kinder.url}</a></strong></p>
                       <p>유치원 담당자 : {kinder.manager} | {kinder.managerPh}</p>
                     </div>
                     <div className="Uesr-Kinder-Addr">

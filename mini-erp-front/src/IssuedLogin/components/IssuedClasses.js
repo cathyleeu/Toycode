@@ -1,23 +1,23 @@
 import React from 'react';
 import IssuedClass from './IssuedClass'
-import { getCode } from '../../services/getCode'
 
 
 
 const IssuedClasses = (props) => {
 
-  const { kinderInfo, branchInfo } = props,
-        code = getCode(branchInfo.name, kinderInfo.name,"201703");
+  const { kinderInfo, kinderUrl, KinNo } = props;
   return(
     <div>
-      <h5>{kinderInfo.name} 접속 주소: <a href={`https://toycode.org/code/${code}`} target="_blank">toycode.org/code/{code}</a></h5>
+      <div className="issued-login-top">
+        <p className="kinder-no">{KinNo}</p>
+        <h5>{kinderInfo.name} 접속 주소: <a href={`https://toycode.org/code/${kinderUrl}`} target="_blank">toycode.org/code/{kinderUrl}</a></h5>
+      </div>
       { kinderInfo.kinderClasses.length > 0 ? (
         kinderInfo.kinderClasses.map((kids, i) => {
           return(
           <div key={i} >
             <IssuedClass
               {...props}
-              code={code}
               parentId={kinderInfo.parentId}
               kinderId={kinderInfo.code}
               kclassId={kids.code}
