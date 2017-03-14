@@ -6,7 +6,8 @@ const loginSchema = new Schema({
   kinderId: String,
   classId: String,
   className: String,
-  students: []
+  students: [],
+  updateOn: {type: Date, default: Date.now}
 })
 
 module.exports = mongoose.model('login', loginSchema)

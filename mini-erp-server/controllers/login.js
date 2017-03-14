@@ -22,7 +22,7 @@ const isUpdateNames = async (ctx) => {
   try{
     // const { students } = ctx.request.body;
     console.log(ctx.request.body);
-    ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId}, {$set: { students: ctx.request.body }}, { new: true })
+    ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId}, {$set: { students: ctx.request.body, updateOn: Date.now }}, { new: true })
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
