@@ -12,21 +12,12 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
     {route: '/catalog' , title: '상품목록'},
     {route: '/statement' , title: '매출장부'}
   ]
-  // const transportHeader = [
-  //   {route: '/transport' , title: '배송물량'},
-  //   {route: '/return' , title: '반품물량'}
-  // ]
 
   const adminHeaderList = adminHeader.map((list,i) => (
-    <li key={i}>
+    <li key={i} className="head-menu">
       <Link to={list.route} className="navLink"><p>{list.title}</p></Link>
     </li>
   ))
-  // const transportHeaderList = transportHeader.map((list,i) => (
-  //   <li key={i}>
-  //     <Link to={list.route} className="navLink"><p>{list.title}</p></Link>
-  //   </li>
-  // ))
   return(
     <div>
       {auth.authenticated && (
@@ -54,5 +45,14 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
 }
 
 
+// const transportHeaderList = transportHeader.map((list,i) => (
+//   <li key={i}>
+//     <Link to={list.route} className="navLink"><p>{list.title}</p></Link>
+//   </li>
+// ))
 
+// const transportHeader = [
+//   {route: '/transport' , title: '배송물량'},
+//   {route: '/return' , title: '반품물량'}
+// ]
 export default Header
