@@ -6,11 +6,13 @@ import IssuedClass from './IssuedClass'
 const IssuedClasses = (props) => {
 
   const { kinderInfo, kinderUrl, KinNo } = props;
+  let getUrl = props.customerType === 'T' ? kinderInfo.url : kinderUrl; // 지사 소속원의 접속주소를 받아오기 위해서.
+
   return(
     <div>
       <div className="issued-login-top">
         <p className="kinder-no">{KinNo}</p>
-        <h5>{kinderInfo.name} 접속 주소: <a href={`https://toycode.org/code/${kinderUrl}`} target="_blank">toycode.org/code/{kinderUrl}</a></h5>
+        <h5>{kinderInfo.name} 접속 주소: <a href={`https://toycode.org/code/${getUrl}`} target="_blank">toycode.org/code/{getUrl}</a></h5>
       </div>
       { kinderInfo.kinderClasses.length > 0 ? (
         kinderInfo.kinderClasses.map((kids, i) => {
