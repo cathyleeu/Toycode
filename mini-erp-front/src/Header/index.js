@@ -32,21 +32,21 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
       {auth.authenticated && (
         <header className="header-bar">
           <nav>
-            <Link to="/feature">
-              <logo>
+            <Link to="/feature" className="head-logo">
+              <logo >
                 <img src={logo} className="logo" alt="logo" />
               </logo>
             </Link>
             <ul className="header-menu">
-              { ( (userType === 'branch') && ((customerType === 'A') || (customerType === 'E'))) && <li><Link to="/shop"><p>주문</p></Link></li> }
-              { userType === 'branch' && <li><Link to="/account"><p>마이페이지</p></Link></li> }
-              { userType !== 'admin' && <li><Link to="/issued"><p>로그인 발급</p></Link></li> }
+              { ( (userType === 'branch') && ((customerType === 'A') || (customerType === 'E'))) && <li className="head-menu"><Link to="/shop"><p>주문</p></Link></li> }
+              { userType === 'branch' && <li className="head-menu"><Link to="/account"><p>마이페이지</p></Link></li> }
+              { userType !== 'admin' && <li className="head-menu"><Link to="/issued"><p>로그인 발급</p></Link></li> }
               { customerType === 'Z' && adminHeaderList }
 
-              <li><a href="https://drive.google.com/embeddedfolderview?id=0B1Aeb4WZ7p9uWGE2NVM2QmRobXM#list" target="_blank">자료실</a></li>
+              <li className="head-menu"><a href="https://drive.google.com/embeddedfolderview?id=0B1Aeb4WZ7p9uWGE2NVM2QmRobXM#list" target="_blank"><p>자료실</p></a></li>
             </ul>
-            <div className="Logout" onClick={() => signoutUser()}>로그아웃</div>
           </nav>
+          <div className="Logout" onClick={() => signoutUser()}>로그아웃</div>
         </header>
       )}
     </div>
