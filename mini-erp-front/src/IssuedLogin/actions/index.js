@@ -32,7 +32,7 @@ export const fetchInfoForIssued = (parentId, name) => (dispatch) => {
 
 export const isEditingNames = (classId, students, kclassName) => (dispatch) => {
   console.log(students, classId);
-  axios.put(`${ROOT_URL}/login/update/${classId}`, students)
+  axios.put(`${ROOT_URL}/login/update/${classId}/${kclassName}`, {students, kclassName})
     .then(res => {
       console.log(res);
       alert('수정이 완료 되었습니다.')
