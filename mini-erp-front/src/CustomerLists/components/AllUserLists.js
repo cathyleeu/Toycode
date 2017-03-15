@@ -3,9 +3,9 @@ import AllUsersDetail from './AllUsersDetail'
 import './AllUserLists.css'
 
 
-const AllUserLists = ({allUsers}) => (
+const AllUserLists = ({allUsers, listTitle}) => (
   <div>
-    <h5>고객리스트</h5>
+    <h5>{listTitle}리스트</h5>
     { allUsers.map(
       (user , i) => (
           <div key={i} className="cst-container">

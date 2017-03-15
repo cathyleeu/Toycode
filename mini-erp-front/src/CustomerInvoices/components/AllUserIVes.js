@@ -1,8 +1,9 @@
 import React from 'react'
 import AllIVesDetail from './AllIVesDetail'
 
-const AllUserIVes = ({allIVes}) => (
+const AllUserIVes = ({allIVes, listTitle}) => (
     <div>
+      <h5>{listTitle} 고객 주문 상황</h5>
       { allIVes.map(
         (iv , i) => (
             <div key={i} className="cst-container">

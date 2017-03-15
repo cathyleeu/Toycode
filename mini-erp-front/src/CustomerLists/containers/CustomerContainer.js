@@ -27,7 +27,7 @@ class CustomerContainer extends Component {
         searchString = this.state.searchString.trim().toLowerCase(),
         searchTag = this.state.searchTag;
     const tags = [
-      {type:"All", title:"All", css:'button-edit'},
+      {type:"All", title:"전체", css:'button-edit'},
       {type:"A", title:"지사", css:'button-addClass'},
       {type:"B", title:"ECC", css:'button-addClass'},
       {type:"C", title:"YBM영업", css:'button-addClass'},
@@ -54,7 +54,7 @@ class CustomerContainer extends Component {
             <SearchTags tag={tag} isGetTags={this.isGetTags} key={tag.type} cssName={tag.css}/>
           ))}
         </div>
-        <AllUserLists allUsers={allUsers}/>
+        <AllUserLists allUsers={allUsers} listTitle={tags.find(l => l.type === searchTag).title}/>
       </div>
     )
   }
