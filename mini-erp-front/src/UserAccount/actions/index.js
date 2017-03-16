@@ -74,13 +74,14 @@ export const editUser = (status) => ({
 })
 
 export const updateUser = (info) => {
-  const { A_manager,A_email,A_phone,E_manager,E_email,E_phone } = info
+  const { A_manager,A_email,A_phone,E_manager,E_email,E_phone, sub_name } = info
   return({
     type: types.UPDATE_USER,
-    A_manager, A_email, A_phone, E_manager, E_email, E_phone
+    A_manager, A_email, A_phone, E_manager, E_email, E_phone, sub_name
   })
 }
 export const editedUser = (KinData) => (dispatch, getState) => {
+  console.log(KinData);
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/info`, KinData)
   dispatch({type: types.EDITED_USER, userEdit: false})

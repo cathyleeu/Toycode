@@ -32,6 +32,8 @@ const userSchema = new Schema({
   branch: {
     license: String,
     name: String,
+    location: String, // 지사 소속
+    sub_name: String,
     repr: String,
     bizType: String,
     bizItems: String,

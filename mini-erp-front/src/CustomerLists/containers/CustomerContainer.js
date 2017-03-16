@@ -15,6 +15,7 @@ class CustomerContainer extends Component {
   }
   componentWillMount(){
     this.props.fetchAllUserInfo()
+    this.props.fetchAllKClassNames()
   }
   isSearching = (e) => {
     this.setState({[e.target.name]: e.target.value})
@@ -23,7 +24,7 @@ class CustomerContainer extends Component {
     this.setState({searchTag: tag})
   }
   render(){
-    let { allUsers } = this.props,
+    let { allUsers, allKCNames, status } = this.props,
         searchString = this.state.searchString.trim().toLowerCase(),
         searchTag = this.state.searchTag;
     const tags = [
@@ -54,7 +55,13 @@ class CustomerContainer extends Component {
             <SearchTags tag={tag} isGetTags={this.isGetTags} key={tag.type} cssName={tag.css}/>
           ))}
         </div>
-        <AllUserLists allUsers={allUsers} listTitle={tags.find(l => l.type === searchTag).title}/>
+        {console.log("custom",this.props)}
+        <AllUserLists
+          status={status}
+          allKCNames={allKCNames}
+          allUsers={allUsers}
+          fetchInfoForIssued={this.props.fetchInfoForIssued}
+          listTitle={tags.find(l => l.type === searchTag).title}/>
       </div>
     )
   }
@@ -62,10 +69,13 @@ class CustomerContainer extends Component {
 
 
 
-function mapStateToProps(state){
+function mapStateToProps(state, ownProps){
   return {
-    allUsers: state.cstList.allUsers
+    allUsers: state.cstList.allUsers,
+    allKCNames: state.cstList.allKCNames,
+    status: state.cstList,
   }
 }
 
-export default connect(mapStateToProps, actions)(CustomerContainer)
+
+export default connect(mapStateToProps,actions)(CustomerContainer)
