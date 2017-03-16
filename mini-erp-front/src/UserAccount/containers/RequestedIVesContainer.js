@@ -12,6 +12,7 @@ class RequestedIVesContainer extends Component {
     getInvoices()
   }
   render(){
+    console.log("RequestedIVesContainer",this.props)
     const {invoices, requestRefundByUser} = this.props
     return(
       <div>

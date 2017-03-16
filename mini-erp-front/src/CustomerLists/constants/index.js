@@ -1,3 +1,0 @@
-
-
-export const FETCH_ALL_USER_INFO = 'FETCH_ALL_USER_INFO'

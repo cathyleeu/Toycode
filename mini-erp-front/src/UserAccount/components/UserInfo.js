@@ -4,7 +4,8 @@ import './UserInfo.css'
 class UserInfo extends Component {
   constructor(props) {
     super(props)
-    const { edu, acct } = this.props
+    const { edu, acct, user } = this.props
+
     this.state = {
       A_manager: acct.A_manager || '',
       A_email: acct.A_email || '',
@@ -12,6 +13,7 @@ class UserInfo extends Component {
       E_manager: edu.E_manager ||'',
       E_email: edu.E_email ||'',
       E_phone: edu.E_phone ||'',
+      sub_name: user.branch.sub_name || '',
       isValid: "none"
     }
   }
@@ -32,8 +34,9 @@ class UserInfo extends Component {
     }
   }
   render(){
-    const { user, userEdit } = this.props
+    const { user, userEdit } = this.props;
     const { branch } = user
+    console.log(user.customerType);
     const disabled = !userEdit ? 'none' : ''
     const isntValid = { display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "12px" }
     return(
@@ -42,11 +45,22 @@ class UserInfo extends Component {
         <div className="user-info-row">
           <div className="user-info-addr">
             <div className="user-info-addr-biz">
-              <div><p className="user-info-text">지사명</p><p>{user.branch.name}</p></div>
+              <div><p className="user-info-text">사업명</p><p>{user.branch.name}</p></div>
               <div><p className="user-info-text">사업자번호</p><p>{user.branch.license}</p></div>
               <div><p className="user-info-text">대표자명</p><p>{user.branch.repr}</p></div>
-              <div><p className="user-info-text">업태</p><p>{user.branch.bizType}</p></div>
-              <div><p className="user-info-text">종목</p><p>{user.branch.bizItems}</p></div>
+              {!(user.customerType ==='A' || user.customerType ==='C')
+                && (<div className="user-name-setting">
+                      <p className="user-info-text">학원 명</p>
+                      <input
+                        style={{border: disabled}}
+                        disabled={!userEdit}
+                        onBlur={this.isOnBlur}
+                        onChange={this.isHandleChange}
+                        placeholder='프로그램 학원명을 입력하세요.'
+                        name='sub_name'
+                        value={this.state.sub_name}
+                        type='text'/>
+                    </div>)}
               <div>
                 <p className="user-info-text">주소</p>
                 <div>

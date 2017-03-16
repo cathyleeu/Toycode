@@ -42,6 +42,7 @@ router.get('/return/:user', ReturnGoods.isFetchedRTnsByUser)
 router.post('/return', ReturnGoods.isRegisteredNewRTns)
 
 
+router.get('/login', Login.isFetchedAllNames)
 router.post('/login', Login.isRegisteredNames)
 router.get('/login/:classId/:className', Login.isFetchedNamesByClass)
 router.put('/login/update/:classId/:className', Login.isUpdateNames)

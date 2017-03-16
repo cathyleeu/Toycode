@@ -21,6 +21,7 @@ class IssuedClassesList extends Component {
                 key={i}
                 KinNo={i+1}
                 {...this.props}
+                kinderLang={kinder.lang}
                 kinderUrl={kinder.url}
                 branchInfo={loginInfo.branchInfo}
                 kinderInfo={kinder4Info}

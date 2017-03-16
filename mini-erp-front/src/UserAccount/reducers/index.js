@@ -99,10 +99,11 @@ export default (state = initialState , action) => {
     case types.EDITED_USER:
       return { ...state, userEdit: action.userEdit}
     case types.UPDATE_USER:
-     const { A_manager, A_email, A_phone, E_manager, E_email, E_phone } = action;
+     const { A_manager, A_email, A_phone, E_manager, E_email, E_phone, sub_name } = action;
       return { ...state, managers: {
+        sub_name,
         account:{ A_manager, A_email, A_phone },
-        education:{ E_manager, E_email, E_phone }
+        education:{ E_manager, E_email, E_phone },
       }
     }
     default:

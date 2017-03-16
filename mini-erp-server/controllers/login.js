@@ -18,6 +18,16 @@ const isRegisteredNames = async (ctx, next) => {
   }
 }
 
+const isFetchedAllNames = async (ctx) => {
+  try {
+    ctx.body = await Login.find();
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+
 const isUpdateNames = async (ctx) => {
   try{
     const { students } = ctx.request.body;
@@ -40,4 +50,4 @@ const isFetchedNamesByClass = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNames, isFetchedNamesByClass, isUpdateNames};
+module.exports = { isRegisteredNames, isFetchedNamesByClass, isUpdateNames, isFetchedAllNames};

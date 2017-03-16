@@ -32,16 +32,18 @@ class IssuedClass extends Component {
     this.setState({ students: e.target.value })
   }
   render(){
-    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames } = this.props;
+    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang } = this.props;
     let needNames = studentsNames.needNames;
     return(
       <div className='issued-login'>
         <div className="issued-login-top issued-kinder-info">
           <i className="fa fa-id-card" aria-hidden="true"></i>
           <p className="issued-info">{kinderName} - {kclassName}</p>
+          {console.log(kinderUrl, kinderName, kclassName, level, kinderLang)}
           <form action="https://toycode.org/issue" method="POST" target="_blank">
             <input type="hidden" name="code" value={kinderUrl} />
             <input type="hidden" name="school" value={kinderName} />
+            <input type="hidden" name="lang" value={kinderLang} />
             <input type="hidden" name="className" value={kclassName} />
             <input type="hidden" name="yearmonth" value="201703" />
             <input type="hidden" name="level" value={level} />
