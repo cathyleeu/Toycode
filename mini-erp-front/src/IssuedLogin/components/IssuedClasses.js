@@ -20,6 +20,8 @@ const IssuedClasses = (props) => {
           <div key={i} >
             <IssuedClass
               {...props}
+              kinderUrl={getUrl}
+              kinderLang={kinderInfo.lang}
               parentId={kinderInfo.parentId}
               kinderId={kinderInfo.code}
               kclassId={kids.code}
