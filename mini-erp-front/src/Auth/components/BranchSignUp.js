@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { signupUser } from '../actions'
+import { signupUser, isValidEmail } from '../actions'
 import { searchAddress, selectedJuso } from '../../actions'
 import logo from '../../../public/logo.png'
 import AddrModal from '../../Shop/components/AddrModal'
@@ -26,21 +26,24 @@ class BranchSignUp extends Component {
       isModalOpen: false,
       location: '',
       signupErr: '',
+      emailErr: '',
+      passwordErr: '',
+      bizErr:'',
+      codeErr:'',
+      addrErr:'',
       userType: 'branch',
       isValid: "none",
       isValidPW: "none"
     }
   }
+  componentDidMount(){
+    this.props.isValidEmail()
+  }
   onChange = e => {
     this.setState({
-    [e.target.name]: e.target.value
+    [e.target.name]: e.target.value,
+    emailErr: '',
     })
-  }
-  getErrMsg = (errType) => {
-    const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage[errType]}</strong>
-    }
   }
   openModal = () => {
     this.setState({ isModalOpen: true })
@@ -49,6 +52,13 @@ class BranchSignUp extends Component {
 		const { searchAddress } = this.props
 		this.setState({ isModalOpen: false, location: ''}, searchAddress(''))
 	}
+  isExistingEmail = () => {
+   let validEmail = this.props.existingEmails.map(l => l.email).indexOf(this.state.email)
+   if(validEmail !== -1) {
+     alert('이미 가입된 이메일 입니다.')
+     this.setState({emailErr: '이미 가입된 이메일 입니다.'})
+   }
+  }
   isSearchAddress = () => {
 		const { searchAddress } = this.props
 		searchAddress(this.state.location)
@@ -76,23 +86,39 @@ class BranchSignUp extends Component {
       this.setState({isValidPW: true})
     }
   }
+  isMatchPassword = () => {
+    const isMatch = this.state.password === this.state.passwordConfirm
+    if(!isMatch){
+      this.setState({passwordErr: '비밀번호가 일치하지 않습니다.'})
+    } else {
+      this.setState({passwordErr: ''})
+    }
+  }
+  isValidField = (nameErr) => {
+    const {errorMessage} = this.props
+    let nameErrs = errorMessage.find(l => l.type.match(nameErr))
+    if(nameErrs) return nameErrs.msg
+  }
   onSubmit = e => {
     e.preventDefault()
     const { signupUser } = this.props
     let regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
     let regexPassword = /^[a-z0-9_]{4,20}$/;
     if(!regexEmail.test(this.state.email)){
-      this.setState({isValid: true})
-    } else if(!regexPassword.test(this.state.password)) {
-      this.setState({isValidPW: true})
-    } else {
-      this.setState({isValid:"none", isValidPW :"none"})
-      signupUser(this.state)
+      this.setState({emailErr: '이메일을 양식을 확인하세요.'})
     }
+    if(!regexPassword.test(this.state.password)) {
+      this.setState({
+        isValidPW: true,
+        passwordErr: '비밀번호를 확인하세요.'
+      })
+    }
+    this.setState({isValid:"none", isValidPW :"none"})
+    signupUser(this.state)
+
   }
   render() {
-    const { juso } = this.props;
-    const isMatch = (this.state.password === this.state.passwordConfirm);
+    const { juso} = this.props;
     return (
       <div className="SignUp-Container">
         <img src={logo} className="Auth-logo" role="presentation"/>
@@ -100,19 +126,27 @@ class BranchSignUp extends Component {
           <div className="rg-user-info col-md-6">
             <input type="hidden" name="userType" value={this.state.userType} />
             <fieldset className="form-group rg-user-email">
-             <label htmlFor="email" className="errHandle">이메일 {this.getErrMsg("emailErr")}<strong style={{display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "10px"}}>정확한 이메일 양식을 입력하세요.</strong></label>
+             <label htmlFor="email" className="errHandle">
+               이메일
+               {this.state.emailErr}
+               <strong className="errMessage">{this.isValidField("emailErr")}</strong>
+             </label>
              <input
                value={this.state.email}
                id="email"
                name="email"
                type="text"
                placeholder="ex)toycode@toycode.org"
+               onBlur={this.isExistingEmail}
                onChange={this.onChange}
                required
              />
             </fieldset>
             <fieldset className="form-group rg-user-pw">
-             <label htmlFor="password" className="errHandle">비밀번호 {this.getErrMsg("passwordErr")} <strong style={{display: this.state.isValidPW, margin: 0, color: "#990c0c", fontSize: "10px"}}>영문자,숫자 조합으로 8~16자를 사용하세요.</strong> </label>
+             <label htmlFor="password" className="errHandle">비밀번호
+               <strong className="errMessage">{this.isValidField("passwordErr")}</strong>
+               <strong style={{display: this.state.isValidPW, margin: 0, color: "#990c0c", fontSize: "10px"}}>영문자,숫자 조합으로 8~16자를 사용하세요.</strong>
+             </label>
              <input
               id="password"
               value={this.state.password}
@@ -125,16 +159,23 @@ class BranchSignUp extends Component {
               />
             </fieldset>
             <fieldset className="form-group rg-user-pwCnfrm">
-             <label htmlFor="passwordConfirm" className="errHandle">비밀번호확인 {!isMatch && <strong className="errMessage">일치하지 않습니다.</strong>}</label>
+             <label htmlFor="passwordConfirm" className="errHandle">
+               비밀번호확인
+               <strong className="errMessage">{this.state.passwordErr}</strong>
+             </label>
              <input
               value={this.state.passwordConfirm}
               id="passwordConfirm"
               name="passwordConfirm"
               type="password"
               onChange={this.onChange}
+              onBlur={this.isMatchPassword}
               placeholder="비밀번호 확인입력"
               required/>
-            <label htmlFor="branch-signupCode" className="errHandle">가입코드 {this.getErrMsg("codeErr")}</label>
+            <label htmlFor="branch-signupCode" className="errHandle">
+              가입코드
+              <strong className="errMessage">{this.isValidField("codeErr")}</strong>
+              </label>
              <input
               value={this.state.signupCode}
               className="rg-branch-name"
@@ -148,7 +189,9 @@ class BranchSignUp extends Component {
           </div>
           <div className="col-md-6">
             <fieldset className="rg-address-info form-group">
-             <label htmlFor="address">주소 {this.getErrMsg("addrErr")}</label>
+             <label htmlFor="address">주소
+               <strong>{this.isValidField("addrErr")}</strong>
+             </label>
              <div className="rg-address-zip">
                <input
                 value={this.state.zipNo}
@@ -194,7 +237,9 @@ class BranchSignUp extends Component {
                 required/>
             </fieldset>
             <fieldset className="rg-branch-info form-group">
-              <label htmlFor="branch-no" className="errHandle">사업자 번호 {this.getErrMsg("bizErr")}</label>
+              <label htmlFor="branch-no" className="errHandle">사업자 번호
+                <strong>{this.isValidField("bizErr")}</strong>
+              </label>
                <input
                 value={this.state.license}
                 className="rg-branch-name"
@@ -270,14 +315,24 @@ class BranchSignUp extends Component {
   }
 }
 
+
+
+/*errorMessage.find(l => l.type === "addrErr").msg*/
 function mapStateToProps(state){
   return{
     auth: state.auth,
     errorMessage: state.auth.errMsg,
     juso: state.commonData.juso,
-		selectedJuso: state.commonData.selectedJuso
+		selectedJuso: state.commonData.selectedJuso,
+    existingEmails: state.auth.existingEmail
   }
 }
 
 
-export default connect(mapStateToProps, {signupUser, searchAddress, selectedJuso})(BranchSignUp)
+export default connect(
+  mapStateToProps,
+  { signupUser,
+    searchAddress,
+    selectedJuso,
+    isValidEmail
+  })(BranchSignUp)
