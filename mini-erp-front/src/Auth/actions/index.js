@@ -5,7 +5,7 @@ import * as types from '../constants/types'
 
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
-export const errMsg = (errMsg) => ({ type: types.LOGIN_ERROR, errMsg })
+export const errMsg = (errM) => ({ type: types.LOGIN_ERROR, errM })
 
 
 
@@ -25,19 +25,25 @@ export function fetchMatchedBranch(branchCode) {
   }
 }
 
-export function signupUser(userData) {
-  return function (dispatch) {
-    axios.post(`${ROOT_URL}/signup`, userData)
-      .then(res => {
-        alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
-        dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
-        browserHistory.push('login')
-      })
-      .catch(res => {
-        console.log("내가 에러다!!!",res.response.data);
-        dispatch(errMsg(res.response.data))
-      })
-  }
+export const isValidEmail = (email) => (dispatch) => {
+  axios.get(`${ROOT_URL}/email`)
+   .then(res => dispatch({type: types.IS_EXISTING_USER_EMAIL, existingEmail: res.data}))
+}
+export const signupUser = (userData) => (dispatch) =>  {
+  axios.post(`${ROOT_URL}/signup`, userData)
+  .then(res => {
+    alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
+    dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
+    browserHistory.push('login')
+  })
+  .catch(res => {
+
+    console.log("내가 에러다!!!",res.response.data);
+    // res.response.data.map(errM => dispatch(errMsg(errM)))
+    dispatch(errMsg(res.response.data))
+    // alert('정확한 양식을 확인해주세요.')
+
+  })
 }
 
 

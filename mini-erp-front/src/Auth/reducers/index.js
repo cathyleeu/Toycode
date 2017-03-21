@@ -18,7 +18,7 @@ const initialState = function(){
     return {
       status: false,
       authenticated: false,
-      errMsg: {},
+      errMsg: [],
       email:'',
       user:{}
     }
@@ -31,6 +31,8 @@ export default function (state = initialState(), action) {
     case types.REGISTERED_STATUS:
     case types.REGISTER_STATUS:
       return { ...state, status: action.status, errMsg: {} }
+    case types.IS_EXISTING_USER_EMAIL:
+      return { ...state, existingEmail: action.existingEmail}
     case types.AUTH_USER:
       return { ...state, authenticated: true}
     case types.MATCHED_BRANCH:
@@ -40,7 +42,7 @@ export default function (state = initialState(), action) {
     case types.UNAUTH_USER:
       return { ...state, authenticated: false, email: '', user: '', status: false }
     case types.LOGIN_ERROR:
-      return { ...state, errMsg: action.errMsg }
+      return { ...state, errMsg: action.errM}
     default:
       return state
   }

@@ -144,7 +144,7 @@ const signin = async(ctx, next) => {
     if (err) throw err;
     if (user === false) {
       ctx.status = 401;
-      ctx.body = { success: false , loginErr: '이메일이나 비밀번호를 확인해주세요.' };  //보완적인 이슈로 두리뭉실하게 에러를 보내줌.
+      ctx.body = { success: false , type: "loginErr", msg: '이메일이나 비밀번호를 확인해주세요.' };  //보완적인 이슈로 두리뭉실하게 에러를 보내줌.
     } else {
       ctx.body = { success: true, token:tokenForUser(user) };
     }
@@ -167,10 +167,10 @@ const signup = async (ctx, next) => {
     }
     if(userType === "branch"){
       if( !zipNo || !roadAddr || !detailAddr ){
-        errObj.push({ type: "addrErr", msg: "모든 항목을 입력해주세요." })
+        errObj.push({ type: "addrErr", msg: "주소를 정확히 입력해주세요." })
       }
       if( !license || !bizType || !bizItems || !name || !repr ){
-        errObj.push({ type: "bizErr", msg: "모든 항목을 입력해주세요." })
+        errObj.push({ type: "bizErr", msg: "사업자 항목을 모두 입력해주세요." })
       }
       if(signupCode.toLowerCase() == "think2017") {
         customerType = "A";
@@ -244,7 +244,8 @@ const signup = async (ctx, next) => {
 
     const result = await createTempUser(user);
     if(result.existingPersistentUser) {
-      ctx.body = { msg: '이미 가입된 이메일입니다.' };
+      errObj.push({ type: "existErr", msg: '이미 가입된 이메일입니다.' })
+      ctx.body = errObj;
       return;
     }
     if(result.newTempUser) {
@@ -266,9 +267,8 @@ const signup = async (ctx, next) => {
         info: info
       };
     } else {
-      ctx.body = {
-        msg: '이미 이메일 이증메일을 보냈습니다. 확인해주세요.'
-      };
+      errObj.push({ type: "sendErr", msg: '이미 이메일 이증메일을 보냈습니다. 확인해주세요.' })
+      ctx.body = errObj;
     }
   } catch(err) {
     ctx.status = 500;
@@ -305,6 +305,9 @@ const confirmSignUp = async ctx => {
 // TODO:codeName 으로 불러오기
 const allUsers = async ctx => {
   ctx.body = await User.find().where({userType: 'branch'}).select('userType customerType email kinders branch code account education updateOn');
+}
+const allUsersEmails = async ctx => {
+  ctx.body = await User.find().select('email -_id');
 }
 const loggedUser = async ctx => {
   ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education updateOn');
@@ -457,5 +460,5 @@ const userKinderUpdate = async ctx => {
 }
 
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo
+  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo, allUsersEmails
 };

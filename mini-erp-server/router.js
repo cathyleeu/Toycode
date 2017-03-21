@@ -19,6 +19,7 @@ router.get('/signup/:url', Users.confirmSignUp)
 
 
 router.get('/user', Users.allUsers)
+router.get('/email', Users.allUsersEmails)
 router.get('/user/:user', Users.loggedUser)
 
 router.get('/branch/:branch', Users.allBranchKinders)
@@ -35,6 +36,7 @@ router.get('/books', Books.isFetchedAll)
 router.get('/invoices', Invoices.isFetchedAllIVes)
 router.get('/invoices/:user', Invoices.isFetchedIVesByUser)
 router.post('/invoices', Invoices.isRegisteredNewIVes)
+// router.get('/xlsx', Invoices.isGetXlsx)
 
 
 router.get('/return', ReturnGoods.isFetchedAllRTns)
