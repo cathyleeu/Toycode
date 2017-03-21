@@ -4,7 +4,7 @@ import * as actions from '../../CustomerInvoices/actions'
 
 class StatementContainer extends Component{
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchAllUserIVes()
   }
   render(){

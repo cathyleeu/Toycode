@@ -5,19 +5,18 @@ import './Cart.css'
 
 
 class Cart extends Component {
-  componentWillMount(){
+  componentDidMount(){
     const {getInvoices} = this.props
     getInvoices()
   }
   render(){
-    const {books, selected, goodsSelect, goodsDelete, requestInvoice, user, kinderAddr} = this.props;
+    const { books, selected } = this.props;
     const nodes = books.map((book, index) =>
           <AddedProducts
             key={index}
             title={book.title}
             id={book.id}
-            goodsSelect={goodsSelect}
-            goodsDelete={goodsDelete}
+            {...this.props}
             // img_url={``}
           />
         )
@@ -36,12 +35,10 @@ class Cart extends Component {
       <div>
         <h4 className="Cart-Title">2단계: 수량 및 배송정보를 입력하세요.</h4>
         <Invoice
-          kinderAddr={kinderAddr}
           nodes={nodes}
           total={total}
-          requestInvoice={requestInvoice}
-          user={user}
-          selected={selected} />
+          {...this.props}
+        />
       </div>
     )
     return(

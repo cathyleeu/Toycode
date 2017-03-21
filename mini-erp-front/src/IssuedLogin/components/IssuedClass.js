@@ -11,7 +11,7 @@ class IssuedClass extends Component {
       isEditing: true //for disabled textarea
     }
   }
-  componentWillMount(){
+  componentDidMount(){
     const {isFetchedNamesByClass, kclassId, kclassName} = this.props;
     isFetchedNamesByClass(kclassId, kclassName)
   }
@@ -54,6 +54,7 @@ class IssuedClass extends Component {
               return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인 스티커 발급</button>
           </form>
         </div>
+        {console.log(needNames)}
         {(needNames && (needNames.map(item => item).indexOf(kclassName) !== -1))
           ? <div className="issued-login-top">
               {this.state.added

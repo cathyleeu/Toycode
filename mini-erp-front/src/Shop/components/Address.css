@@ -70,6 +70,8 @@ height: 30px;
   display: flex;
   justify-content: flex-end;
 }
+
+
 .search-address-top{
   display: flex;
   flex-direction: row;
@@ -117,5 +119,72 @@ height: 30px;
   background: transparent;
   color: gray;
   padding: 0;
+  margin: 0;
+}
+
+/*========addr==========*/
+.addr-table{
+  margin-top: 1%;
+  height: 95%;
+}
+
+.addr-close{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.addr-close > p{
+  font-size: 12px;
+  margin: 0;
+  padding: 0.3em 1.5em 0.1em;
+  border: 2px solid #c82222;
+  border-radius: 10px;
+}
+.addr-close > p:hover{
+  background-color: #c82222;
+  color: #fff;
+  font-weight: 500;
+}
+
+
+.addr-kinder-table{
+  overflow: scroll;
+}
+
+.addr-title{
+  text-align: center;
+  padding: 0.2em 0;
+  color: #fff;
+  background-color: #5d5656;
+}
+
+.addr-ctx{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /*justify-content: center;*/
+  margin: 2% 0;
+  padding-bottom: 2%;
+  border-bottom: 1px dashed #dbdbdb;
+}
+
+.addr-name{
+  border: 3px solid #4884ce;
+  border-radius: 20px;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1%;
+  font-size: 10px;
+  padding: 0.5em 0;
+}
+.addr-name:hover{
+  background-color: #4884ce;
+  color: #fff;
+}
+
+.addr-detail{
+  font-size: 14px;
   margin: 0;
 }

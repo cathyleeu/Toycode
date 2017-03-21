@@ -13,7 +13,7 @@ class CustomerContainer extends Component {
       searchTag: 'All'
     }
   }
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchAllUserInfo()
     this.props.fetchAllKClassNames()
   }

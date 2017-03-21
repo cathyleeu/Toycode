@@ -8,9 +8,8 @@ class AddedProduct extends Component {
     this.state={
       orderQuantity: ''
     }
-    this.handleChange = this.handleChange.bind(this)
   }
-  handleChange(e){
+  handleChange = (e) => {
     this.setState({orderQuantity: e.target.value})
   }
   isOnBlur = () => {

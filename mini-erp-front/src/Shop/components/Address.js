@@ -21,6 +21,17 @@ class Address extends Component {
       isAddrBookOpen: false
     }
   }
+  // componentWillReceiveProps(newProps){
+  //   console.log("addrrrrr",newProps);
+  //   const { address, acct } = newProps;
+  //   this.setState({
+  //     phone: acct.A_phone,
+	// 		zipNo: address.zipNo,
+	// 		roadAddr: address.roadAddr,
+	// 		detailAddr: address.detailAddr,
+  //     recipient: acct.A_manager,
+  //   })
+  // }
   handleChange = e => {
     this.setState({[e.target.name]:e.target.value})
   }
@@ -56,6 +67,12 @@ class Address extends Component {
       phone: result.managerPh || ''
 		})
 	}
+  // componentWillUpdate(nextProps, nextState){
+  //   console.log("componentWillUpdate",nextState.rqcontent);
+  // }
+  // componentDidUpdate(nextProps, nextState){
+  //   console.log("componentDidUpdate",nextState.rqcontent);
+  // }
   render(){
     const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr, customerType} = this.props;
     const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
@@ -79,7 +96,7 @@ class Address extends Component {
         <div className="delivery-zipcode">
           <label htmlFor="zipcode">우편번호</label>
           <div className="zipcode">
-            <Input type={'text'} id={'zipcode'} placeholder={'우편번호'} className={'col-md-5 Added-Input'} value={zipNo}/>
+            <input type='text' id='zipcode' placeholder='우편번호' className='col-md-5 Added-Input' value={zipNo} readOnly/>
             <button onClick={this.openAddr} className="col-md-3">주소검색</button>
             <AddrModal
               isModalOpen={this.state.isAddrOpen}
@@ -103,18 +120,32 @@ class Address extends Component {
                 <AddrModal
                   isModalOpen={this.state.isAddrBookOpen}
                   closeModal={this.closeModal}>
-    							<i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i>
-                  <div>
-                    <p>지사주소</p>
-                    <div onClick={() => this.isSelectedAddress(user.address)}>
-                      <p>{user.address.zipNo}</p>
-                      <p>{user.address.roadAddr} | {user.address.detailAddr}</p>
+    							{/* <i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i> */}
+                  <div className='addr-close'>
+                  <p onClick={this.closeModal}>주소록 닫기</p>
+                  </div>
+                  <div className='addr-table'>
+                    <div className='addr-branch-table'>
+                      <div className='addr-title'>
+                        <strong>지사주소</strong>
+                      </div>
+                      <div
+                        className='addr-ctx'
+                        onClick={() => this.isSelectedAddress(user.address)}>
+                        <strong className='addr-name'>{user.name}</strong>
+                        <p className='addr-detail'>{user.address.zipNo} | {user.address.roadAddr} {user.address.detailAddr}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p>소속유치원 주소</p>
+                    <div className='addr-kinder-table'>
+                      <div className='addr-title'>
+                        <strong>소속유치원 주소</strong>
+                      </div>
                       {kinderAddr.map((kinder, i) => (
-                        <div key={i} onClick={() => this.isSelectedAddress(kinder)}>
-                          <p>{kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
+                        <div
+                          className='addr-ctx'
+                          key={i} onClick={() => this.isSelectedAddress(kinder)}>
+                          <strong className='addr-name'>{kinder.name}</strong>
+                          <p className='addr-detail'>{kinder.zipNo} | {kinder.roadAddr} {kinder.detailAddr}</p>
                         </div>
                       ))}
                     </div>
@@ -125,7 +156,7 @@ class Address extends Component {
         </div>
         <div className="delivery-address">
           <label htmlFor="delivery">배송지</label>
-          <Input type={'text'} value={roadAddr} placeholder={'배송지'} className={'Added-Input'} />
+          <input type='text' value={roadAddr} placeholder='배송지' className='Added-Input' readOnly/>
 					<Input type={'text'} value={detailAddr} placeholder={'상세주소를 입력해주세요.'} className={'Added-Input'} id={'delivery'} onChange={this.handleChange} name={'detailAddr'}/>
         </div>
         <div className="delivery-recipient">
