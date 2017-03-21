@@ -7,7 +7,7 @@ import './RequestedIVesContainer.css'
 
 
 class RequestedIVesContainer extends Component {
-  componentWillMount(){
+  componentDidMount(){
     const {getInvoices} = this.props
     getInvoices()
   }

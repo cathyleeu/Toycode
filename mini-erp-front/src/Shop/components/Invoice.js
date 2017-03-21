@@ -6,18 +6,18 @@ function Commas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const Invoice = ({ nodes, total, requestInvoice, user, selected, kinderAddr }) => {
-  const commaTotal = Commas(total)
-  const { branch, email, code, account, kinders, customerType } = user.user;
+const Invoice = (props) => {
+  const commaTotal = Commas(props.total)
+  const { branch, email, code, account, kinders, customerType } = props.user.user;
   return(
   <div className="Invoice-Container">
     <div className="col-md-6">
       <div className="selected-goods">
-        {nodes}
+        {props.nodes}
       </div>
       <div className="selected-goods-detailed">
         <p>상세 내역</p>
-        {selected.map((detail,i) => (
+        {props.selected.map((detail,i) => (
           <div key={i} className="selected-goods-detailed-ctx">
             {detail.amount && <div> {detail.title} X {detail.amount} = {detail.amount*detail.price}원 </div>}
           </div>
@@ -27,7 +27,7 @@ const Invoice = ({ nodes, total, requestInvoice, user, selected, kinderAddr }) =
     </div>
     <div className="col-md-6">
       <Address
-        requestInvoice={requestInvoice}
+        {...props}
         userName={branch.name}
         userEmail={email}
         userCode={code}
@@ -35,9 +35,7 @@ const Invoice = ({ nodes, total, requestInvoice, user, selected, kinderAddr }) =
         customerType={customerType}
         address={branch.address}
         acct={account}
-        selected={selected}
         userKinders={kinders}
-        kinderAddr={kinderAddr}
       />
     </div>
   </div>

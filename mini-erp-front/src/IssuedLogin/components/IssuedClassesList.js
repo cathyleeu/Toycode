@@ -3,7 +3,7 @@ import IssuedClasses from './IssuedClasses'
 
 
 class IssuedClassesList extends Component {
-  componentWillMount(){
+  componentDidMount(){
     const { recordedKinders, fetchInfoForIssued } = this.props;
     recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
   }

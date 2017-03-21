@@ -20,7 +20,7 @@ import SignUp from './Auth/containers/SignUp'
 
 
 class Routers extends Component {
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchUserInfo()
   }
   requireLogin = (nextState, replace) => {

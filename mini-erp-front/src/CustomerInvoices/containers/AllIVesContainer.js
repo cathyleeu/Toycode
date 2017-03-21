@@ -11,8 +11,9 @@ class AllIVesContainer extends Component {
       searchTag: 'All'
     }
   }
-  componentWillMount(){
+  componentDidMount(){
     this.props.fetchAllUserIVes()
+    console.log("did",this.props.allIVes)
   }
   isSearching = (e) => {
     this.setState({[e.target.name]: e.target.value})
@@ -24,6 +25,7 @@ class AllIVesContainer extends Component {
     let {allIVes} = this.props,
         searchString = this.state.searchString.trim().toLowerCase(),
         searchTag = this.state.searchTag;
+        // console.log("render",allIVes)
     if(searchString.length > 0){
       allIVes = allIVes.filter(l => (
            l.invoiceId.toLowerCase().match(searchString)
