@@ -48,6 +48,8 @@ export const isFetchedNamesByClass = (classId, kclassName) => (dispatch) => {
   axios.get(`${ROOT_URL}/login/${classId}/${kclassName}`)
     .then(res => {
       if(res.data[0].className !== kclassName){
+        console.log("기존에 있던것",res.data[0].className)
+        console.log("비교하려는 것",kclassName)
         dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
       } else {
         dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
