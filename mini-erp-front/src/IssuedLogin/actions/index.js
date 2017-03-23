@@ -47,18 +47,27 @@ export const isWritingNames = (kclassName, students) => {
 export const isFetchedNamesByClass = (classId, kclassName) => (dispatch) => {
   axios.get(`${ROOT_URL}/login/${classId}/${kclassName}`)
     .then(res => {
-      if(res.data[0].className !== kclassName){
-        console.log("기존에 있던것",res.data[0].className)
-        console.log("비교하려는 것",kclassName)
-        dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
+      // if(res.data[0].className !== kclassName){
+      //   console.log("기존에 있던것",res.data[0].className)
+      //   console.log("비교하려는 것",kclassName)
+      //   dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
+      // } else {
+      //   dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
+      // }
+      if(res.data){
+        dispatch({ type: IS_FETCHED_NAMES, name:res.data.className , students:res.data.students , classId})
       } else {
-        dispatch({ type: IS_FETCHED_NAMES, names:res.data[0].className , students:res.data[0].students })
+        // console.log("기존에 있던것",res.data[0].className)
+        // console.log("비교하려는 것",kclassName)
+        dispatch({ type: IS_REGISTERED_FIRST_TIME, classId})
       }
     })
-    .catch(err => {
-      dispatch({ type: IS_REGISTERED_FIRST_TIME, kclassName})
-      console.log(err, classId, kclassName);
-    })
+    // .catch(err => {
+    //   dispatch({ type: IS_REGISTERED_FIRST_TIME, classId})
+    //   console.log(err, classId, kclassName);
+    // })
+    // 아예없으면 걍 빠짐
+    //[0] => mongoDB에서 findOne으로 해주면 배열이 아니라 오브젝트로 온당당
 }
 
 export const isRegisteredNames = ( parentId, kinderId, classId, className, students ) => (dispatch) => {
