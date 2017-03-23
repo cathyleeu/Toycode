@@ -32,14 +32,13 @@ class IssuedClass extends Component {
     this.setState({ students: e.target.value })
   }
   render(){
-    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang } = this.props;
+    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId } = this.props;
     let needNames = studentsNames.needNames;
     return(
       <div className='issued-login'>
         <div className="issued-login-top issued-kinder-info">
           <i className="fa fa-id-card" aria-hidden="true"></i>
           <p className="issued-info">{kinderName} - {kclassName}</p>
-          {console.log(kinderUrl, kinderName, kclassName, level, kinderLang)}
           <form action="https://toycode.org/issue" method="POST" target="_blank">
             <input type="hidden" name="code" value={kinderUrl} />
             <input type="hidden" name="school" value={kinderName} />
@@ -54,8 +53,7 @@ class IssuedClass extends Component {
               return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인 스티커 발급</button>
           </form>
         </div>
-        {console.log(needNames)}
-        {(needNames && (needNames.map(item => item).indexOf(kclassName) !== -1))
+        {(needNames && (needNames.map(item => item).indexOf(kclassId) !== -1))
           ? <div className="issued-login-top">
               {this.state.added
                 ? (
@@ -91,11 +89,11 @@ class IssuedClass extends Component {
                     </div>
                 }
               </div>
-              {studentsNames[kclassName]
+              {studentsNames[kclassId]
                 &&
                   <IssuedNames {...this.props}
                     disabled={this.state.isEditing}
-                    studentsNames={studentsNames[kclassName].students.join("\n")}
+                    studentsNames={studentsNames[kclassId].students.join("\n")}
                   />}
             </div>
         }

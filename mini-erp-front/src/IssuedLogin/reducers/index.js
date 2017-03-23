@@ -7,7 +7,7 @@ const initialState = {
 }
 
 const filterNames = (state = initialState.needNames, newName) => {
-  let names = state.map(name => name).indexOf(newName)
+  let names = state.indexOf(newName)
   if(names === -1){
     return [...state, newName ]
   } else {
@@ -18,7 +18,7 @@ const filterNames = (state = initialState.needNames, newName) => {
 const needNames = (state = initialState.needNames, action ) => {
   switch (action.type) {
     case types.IS_REGISTERED_FIRST_TIME:
-      return filterNames(state, action.kclassName)
+      return filterNames(state, action.classId)
     case types.IS_REGISTER_NAMES:
       return state.filter(className => className !== action.className)
     default:
@@ -33,7 +33,7 @@ export default function (state = initialState, action) {
     case types.IS_REGISTER_NAMES:
     return { ...state, [action.names]: { students: action.students}, needNames: needNames(state.needNames, action) }
     case types.IS_FETCHED_NAMES:
-      return { ...state, [action.names]: { students: action.students }}
+      return { ...state, [action.classId]: { students: action.students, name:action.name }}
     case types.IS_EDITED_NAMES:
       return { ...state, [action.names]: { students: action.students}}
     case types.IS_WRITING_NAMES:

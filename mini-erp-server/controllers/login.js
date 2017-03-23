@@ -38,11 +38,27 @@ const isUpdateNames = async (ctx) => {
     console.log(err);
   }
 }
-
+const isAllNamesByBranch = async ctx => {
+  try{
+    const list = await Login.find({parentId:ctx.params.parentId});
+    let obj = {};
+    list.forEach(item => {
+      if(!obj[item.kinderId]) {
+        obj[item.kinderId] = {};
+      }
+      obj[item.kinderId][item.classId] = item.students;
+    });
+    ctx.body = obj;
+  } catch(err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
 
 const isFetchedNamesByClass = async ctx => {
   try {
-    ctx.body = await Login.find({classId: ctx.params.classId, className: ctx.params.className});
+    ctx.body = await Login.findOne({classId: ctx.params.classId, className: ctx.params.className});
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
@@ -50,4 +66,4 @@ const isFetchedNamesByClass = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNames, isFetchedNamesByClass, isUpdateNames, isFetchedAllNames};
+module.exports = { isRegisteredNames, isFetchedNamesByClass, isUpdateNames, isFetchedAllNames, isAllNamesByBranch};
