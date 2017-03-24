@@ -17,6 +17,7 @@ const AllUserIVes = ({allIVes, listTitle}) => (
                     <p>{iv.delivery.to} | {iv.delivery.phone}</p>
                     <p>{iv.delivery.address.zipNo} | {iv.delivery.address.roadAddr}</p>
                     <p>{iv.delivery.address.detailAddr}</p>
+                    <p>{iv.requestDesc}</p>
                   </div>
                 </div>
               </AllIVesDetail>
