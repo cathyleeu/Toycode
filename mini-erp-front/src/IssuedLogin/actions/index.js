@@ -36,13 +36,13 @@ export const isEditingNames = (classId, students, kclassName) => (dispatch) => {
     .then(res => {
       console.log(res);
       alert('수정이 완료 되었습니다.')
-      dispatch({type: IS_EDITED_NAMES, students, kclassName})
+      dispatch({type: IS_EDITED_NAMES, students, kclassName, classId})
     })
 }
 
-export const isWritingNames = (kclassName, students) => {
-  console.log(kclassName, students);
-  return({ type: IS_WRITING_NAMES, kclassName, students})}
+export const isWritingNames = (classId, students) => {
+  return({ type: IS_WRITING_NAMES, classId, students})
+}
 
 export const isFetchedNamesByClass = (classId, kclassName) => (dispatch) => {
   axios.get(`${ROOT_URL}/login/${classId}/${kclassName}`)
@@ -74,7 +74,7 @@ export const isRegisteredNames = ( parentId, kinderId, classId, className, stude
   const loginCont = { parentId, kinderId, classId, className, students }
   axios.post(`${ROOT_URL}/login`, loginCont)
     .then(res => {
-      dispatch({ type: IS_REGISTER_NAMES, names: className, students, className})
+      dispatch({ type: IS_REGISTER_NAMES, name: className, students, classId})
       alert('등록이 완료 되었습니다.')
     })
 }
