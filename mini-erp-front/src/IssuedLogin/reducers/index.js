@@ -20,7 +20,7 @@ const needNames = (state = initialState.needNames, action ) => {
     case types.IS_REGISTERED_FIRST_TIME:
       return filterNames(state, action.classId)
     case types.IS_REGISTER_NAMES:
-      return state.filter(className => className !== action.className)
+      return state.filter(classId => classId !== action.classId)
     default:
       return state
   }
@@ -31,13 +31,13 @@ export default function (state = initialState, action) {
     case types.FETCH_INFO_FOR_ISSUED:
       return { ...state, branchInfo: action.recordedInfo.branch, [action.recordedInfo.kinders[0].code]: action.recordedInfo.kinders[0] }
     case types.IS_REGISTER_NAMES:
-    return { ...state, [action.names]: { students: action.students}, needNames: needNames(state.needNames, action) }
+    return { ...state, [action.classId]: { students: action.students, name:action.name}, needNames: needNames(state.needNames, action) }
     case types.IS_FETCHED_NAMES:
       return { ...state, [action.classId]: { students: action.students, name:action.name }}
     case types.IS_EDITED_NAMES:
-      return { ...state, [action.names]: { students: action.students}}
+      return { ...state, [action.classId]: { students: action.students, name:action.name}}
     case types.IS_WRITING_NAMES:
-      return { ...state, [action.kclassName] : {students: action.students}}
+      return { ...state, [action.classId] : {students: action.students}}
     case types.IS_REGISTERED_FIRST_TIME:
       return { ...state, needNames: needNames(state.needNames, action)  }
     default:

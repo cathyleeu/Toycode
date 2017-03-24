@@ -21,9 +21,9 @@ class IssuedNames extends Component {
     this.setState({ students: e.target.value })
   }
   isWritingNames4Issue = () => {
-    const { kclassName, isWritingNames } = this.props;
+    const { kclassId, isWritingNames } = this.props;
     const students = splitNames(this.state.students)
-    isWritingNames(kclassName, students)
+    isWritingNames(kclassId, students)
   }
   render(){
     const { disabled } = this.props;

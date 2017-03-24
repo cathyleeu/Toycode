@@ -17,14 +17,15 @@ class IssuedClass extends Component {
   }
   isPostingNames = () => {
     const {isRegisteredNames, kclassId, parentId, kinderId, kclassName, studentsNames } = this.props;
-    const students = studentsNames[kclassName].students;
+    const students = studentsNames[kclassId].students;
     isRegisteredNames(parentId,kinderId,kclassId,kclassName, students)
     this.setState({ isEditing: true, added: false })
   }
   isEditingNames = () => {
     const {isEditingNames, kclassId, kclassName, studentsNames } = this.props;
-    const students = studentsNames[kclassName].students;
+    const students = studentsNames[kclassId].students;
     isEditingNames(kclassId, students , kclassName)
+    console.log("editing")
     this.setState({ isEditing: true })
   }
   onChange = ( e:Event ) => {
@@ -46,7 +47,7 @@ class IssuedClass extends Component {
             <input type="hidden" name="className" value={kclassName} />
             <input type="hidden" name="yearmonth" value="201703" />
             <input type="hidden" name="level" value={level} />
-            <input type="hidden" name="students" value={studentsNames[kclassName] ? studentsNames[kclassName].students : ''} />
+            <input type="hidden" name="students" value={studentsNames[kclassId] ? studentsNames[kclassId].students : ''} />
             <button
               className='button-edit'
               disabled={disabled} onClick={() => {
