@@ -55,7 +55,6 @@ class CustomerContainer extends Component {
             <SearchTags tag={tag} isGetTags={this.isGetTags} key={tag.type} cssName={tag.css}/>
           ))}
         </div>
-        {console.log("custom",this.props)}
         <AllUserLists
           status={status}
           allKCNames={allKCNames}

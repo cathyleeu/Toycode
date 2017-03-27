@@ -1,4 +1,5 @@
 .User-Top,
+.all-user-abbr,
 .User-Kinder-Classes{
   display: flex;
   flex-direction: row;
@@ -14,10 +15,40 @@
 .User-Top{
   width: 100%;
   height: 40px;
-  margin: 2em 0;
+  margin: 2em 0 1em;
   justify-content: space-between;
 }
 
+.all-user-name{
+  font-weight: 600;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5em;
+}
 
+.all-user-info{
+  display: flex;
+  flex-direction: column;
+}
 /*background: #4884ce;
 color: white;*/
+.all-user-abbr{
+  /*justify-content: space-between;*/
+  width: 100%;
+}
+
+.all-user-abbr p{
+  margin: 0;
+}
+
+.user-info button{
+  border: 1px solid #1ECD97;
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 0.5em;
+}

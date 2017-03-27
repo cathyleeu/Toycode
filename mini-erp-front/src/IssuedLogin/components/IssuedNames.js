@@ -10,12 +10,6 @@ class IssuedNames extends PureComponent {
   componentWillReceiveProps(props){
     this.setState({students: props.studentsNames})
   }
-  // shouldComponentUpdate(nextProps, nextState){
-  //   console.log("shouldProps",nextProps)
-  //   console.log("shouldState",nextState)
-  //   if (this.props.students === nextProps.studentsNames) return false;
-  //   return true;
-  // }
   onChange = (e) => {
     e.preventDefault()
     this.setState({ students: e.target.value })

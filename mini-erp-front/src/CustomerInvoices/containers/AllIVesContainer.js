@@ -3,17 +3,34 @@ import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { AllUserIVes, SearchTags } from '../components'
 
+class Config extends Component {
+  render(){
+    return(
+      <div>
+        <select id="pageSize" value={this.props.pageSize} onChange={this.props.handlePageSizeChange} className='num-config'>
+          <option value="5">5개 보기</option>
+          <option value="10">10개 보기</option>
+          <option value="20">20개 보기</option>
+        </select>
+      </div>
+    )
+  }
+}
+
 class AllIVesContainer extends Component {
-  constructor(props){
-    super(props)
+  constructor(){
+    super()
     this.state = {
       searchString: '',
-      searchTag: 'All'
+      searchTag: 'All',
+      pageSize: 10
     }
   }
   componentDidMount(){
     this.props.fetchAllUserIVes()
-    console.log("did",this.props.allIVes)
+  }
+  handlePageSizeChange = (e) => {
+    this.setState({pageSize: Number(e.target.value)})
   }
   isSearching = (e) => {
     this.setState({[e.target.name]: e.target.value})
@@ -25,7 +42,6 @@ class AllIVesContainer extends Component {
     let {allIVes} = this.props,
         searchString = this.state.searchString.trim().toLowerCase(),
         searchTag = this.state.searchTag;
-        // console.log("render",allIVes)
     if(searchString.length > 0){
       allIVes = allIVes.filter(l => (
            l.invoiceId.toLowerCase().match(searchString)
@@ -55,11 +71,16 @@ class AllIVesContainer extends Component {
             <SearchTags tag={tag} isGetTags={this.isGetTags} key={tag.type} cssName={tag.css}/>
           ))}
         </div>
-        <AllUserIVes allIVes={allIVes} listTitle={tags.find(l => l.type === searchTag).title}/>
+        <div className='num-config-cont'>
+          <h5>{tags.find(l => l.type === searchTag).title} 고객 주문 상황</h5>
+          <Config pageSize={this.state.pageSize} handlePageSizeChange={this.handlePageSizeChange}/>
+        </div>
+        <AllUserIVes allIVes={allIVes} pageSize={this.state.pageSize}/>
       </div>
     )
   }
 }
+
 
 
 function mapStateToProps(state){

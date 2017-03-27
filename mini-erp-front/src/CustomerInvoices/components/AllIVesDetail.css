@@ -1,11 +1,42 @@
 .IV-Goods-abbr {
-  width: 100%;
+  width: 70%;
   overflow: hidden;
   background: white;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: 1em;
-  padding-right: 2.1em;
+  padding: 0.5em;
+  /*padding-right: 2.1em;*/
+}
+
+/*.IV-Recipient p,*/
+.IV-Goods-abbr p{
+  margin-bottom: 0.5em;
+}
+
+
+.detail-btn{
+  border: 1px solid #1ECD97;
+  border-radius: 3px;
+  height: 40px;
+  width: 20%;
+  background-color: white;
+  cursor: pointer;
+}
+
+.user-info button:hover,
+.detail-btn:hover{
+  background: #1ECD97;
+  color: white;
+}
+
+.user-info button:focus,
+.detail-btn:focus{
+  outline: none;
+}
+
+.IV-Goods-abbr-cont{
+  align-items: center;
+  justify-content: space-between;
 }
 
 .user-info-detail,
@@ -14,21 +45,19 @@
   overflow: hidden;
   transition: all .2s ease-in;
 }
-.IV-Goods-detail-info{
+
+
+.IV-Goods-abbr-top,
+.IV-Recipient-detail,
+.IV-Recipient-addr,
+.IV-Recipient-msg,
+.IV-Goods-abbr-cont,
+.num-config-cont{
   display: flex;
   flex-direction: row;
 }
 
-.user-info button,
-.IV-Goods button {
-  margin: 0;
-  padding: 0;
-  outline: 0;
-  border: 0;
-  color:black;
-  cursor: pointer;
-  /*text-indent: -9999%;*/
-}
+
 
 .IV-Goods.open .IV-Goods-detail {
   height: 160px;
@@ -38,7 +67,71 @@
   height: auto;
 }
 
-.IV-Goods-abbr-top{
+.IV-Goods-Info-title,
+.IV-Goods-Info-detail{
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.num-config-cont{
+  justify-content: space-between;
+  align-items: center;
+}
+
+.IV-Goods-detail-info p,
+.num-config-cont > h5{
+  margin: 0;
+}
+.num-config{
+  width: 100px;
+  height: 30px;
+}
+
+.pageLink{
+  padding: 0.5em;
+  border: 0.5px solid #dbdbdb;
+  border-radius: 1px;
+  font-weight: 900;
+}
+
+.pageLink:hover{
+  background: #dbdbdb;
+  color: white;
+  font-weight: 900;
+}
+.pagination-btm{
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+}
+.pagination{
+  width: 220px;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: 600;
+}
+
+.IV-Goods-detail-info{
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
+}
+
+.IV-Goods-abbr-top,
+.IV-Recipient{
+  border-bottom: 3px solid #DBDBDB;
+  font-weight: 600;
+  margin-bottom: 1em;
+}
+.IV-Goods-detail-info strong{
+  width: 12%;
+}
+
+.IV-Goods-abbr-top strong{
+  width: 15%;
+}
+.IV-Goods-abbr-top p{
+  width: 28%;
 }
