@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import './IssuedClass.css'
 import IssuedNames from './IssuedNames'
 
 
-class IssuedClass extends Component {
+class IssuedClass extends PureComponent {
   constructor(props){
     super(props)
     this.state = {

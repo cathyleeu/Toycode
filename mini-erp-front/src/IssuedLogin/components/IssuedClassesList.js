@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import IssuedClasses from './IssuedClasses'
 
 
-class IssuedClassesList extends Component {
+class IssuedClassesList extends PureComponent {
   componentDidMount(){
     const { recordedKinders, fetchInfoForIssued } = this.props;
     recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
