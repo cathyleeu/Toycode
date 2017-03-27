@@ -3,6 +3,43 @@ import AllUsersDetail from './AllUsersDetail'
 import './AllUserLists.css'
 
 
+
+// class AllUserLists extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state={
+//       currentPage: 1
+//     }
+//   }
+//   componentWillReceiveProps(nextProps){
+//     this.setState({currentPage: 1})
+//   }
+//   getPage = () => {
+//     var start = this.props.pageSize * (this.state.currentPage - 1)
+//     var end = start + this.props.pageSize
+//     return {
+//       currentPage: this.state.currentPage
+//     , allUsers: this.props.allUsers.slice(start, end)
+//     , numPages: this.getNumPages()
+//     , handleClick: function(pageNum) {
+//         return function() { this.handlePageChange(pageNum) }.bind(this)
+//       }.bind(this)
+//     }
+//   }
+//   getNumPages = () => {
+//     var numPages = Math.floor(this.props.allUsers.length / this.props.pageSize)
+//     if (this.props.allUsers.length % this.props.pageSize > 0) {
+//       numPages++
+//     }
+//     return numPages
+//   }
+//   handlePageChange = (pageNum) => {
+//     this.setState({currentPage: pageNum})
+//   }
+//
+// }
+
+
 const AllUserLists = ({allUsers, listTitle}) => (
   <div>
     <h5>{listTitle}리스트</h5>
@@ -11,9 +48,6 @@ const AllUserLists = ({allUsers, listTitle}) => (
           <div key={i} className="cst-container">
             <AllUsersDetail user={user}>
               <div>
-                <div className="User-Addr">
-                  <p>지사 주소 : {user.branch.address.zipNo} | {user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>
-                </div>
                 <div className="User-Edu-Manager">
                   <p>교육 담당자 : {user.education.E_manager} | {user.education.E_phone} | {user.education.E_email}</p>
                 </div>

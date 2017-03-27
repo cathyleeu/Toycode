@@ -20,11 +20,12 @@ class AllUsersDetail extends Component {
     const { user } = this.props;
     return(
       <div className={this.state.class}>
-        <button onClick={this.handleClick}>상세보기</button>
-        <div className="IV-Goods-abbr">
-          <div className="IV-Goods-abbr-top">
-            <p> 지사명 : {user.branch.name} | {user.code} | {user.branch.repr} | {user.email} </p>
-            <p> 사업자 번호: {user.branch.license} | 업태: {user.branch.bizType} | 종목:{user.branch.bizItems} </p>
+        <div className="all-user-abbr">
+          <button onClick={this.handleClick}>+</button>
+          <div className="all-user-name">{user.branch.name}</div>
+          <div className="all-user-info">
+            <p>{user.code} | {user.branch.repr} | {user.email} </p>
+            <p>{user.branch.address.zipNo} | {user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>
           </div>
         </div>
         <div className="user-info-detail">
@@ -37,3 +38,6 @@ class AllUsersDetail extends Component {
 
 
 export default AllUsersDetail
+
+
+//<p> 사업자 번호: {user.branch.license} | 업태: {user.branch.bizType} | 종목:{user.branch.bizItems} </p>
