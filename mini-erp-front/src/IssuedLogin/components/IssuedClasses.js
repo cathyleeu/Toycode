@@ -10,7 +10,7 @@ class IssuedClasses extends PureComponent{
       <div>
         <div className="issued-login-top">
           <p className="kinder-no">{KinNo}</p>
-          <h5>{kinderInfo.name} 접속 주소: <a href={`https://toycode.org/code/${getUrl}`} target="_blank">toycode.org/code/{getUrl}</a></h5>
+          <h5>{kinderInfo.name}({kinderInfo.code}) 접속 주소: <a href={`https://toycode.org/code/${getUrl}`} target="_blank">toycode.org/code/{getUrl}</a></h5>
         </div>
         { kinderInfo.kinderClasses.length > 0 ? (
           kinderInfo.kinderClasses.map((kids, i) => {

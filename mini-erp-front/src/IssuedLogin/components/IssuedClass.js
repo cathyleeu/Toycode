@@ -33,13 +33,13 @@ class IssuedClass extends PureComponent {
     this.setState({ students: e.target.value })
   }
   render(){
-    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId } = this.props;
+    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId } = this.props;
     let needNames = studentsNames.needNames;
     return(
       <div className='issued-login'>
         <div className="issued-login-top issued-kinder-info">
           <i className="fa fa-id-card" aria-hidden="true"></i>
-          <p className="issued-info">{kinderName} - {kclassName} | 원 코드: {kinderId}</p>
+          <p className="issued-info">{kinderName} - {kclassName}</p>
           <form action="https://toycode.org/issue" method="POST" target="_blank">
             <input type="hidden" name="code" value={kinderUrl} />
             <input type="hidden" name="school" value={kinderName} />
