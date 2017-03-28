@@ -108,6 +108,35 @@ const isFetchedAllIVes = async ctx => {
     console.log(err);
   }
 };
+
+const isFetchedOrderStatus = async ctx => {
+  try {
+    ctx.body = await Invoices.find({status:ctx.params.status.toUpperCase()})
+  } catch (e) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+// 2017-03-28
+// const isFetchedOrderFFMT = async ctx => {
+//   try {
+//     let filterDate = ctx.params.date.split("-")
+//     const ffmt = await Invoices.find({createdOn: {"$gte": new Date(2017,1,26), "$lt": new Date(2017,3,28)}})
+//     // let obj = {};
+//     // ffmt.forEach(ff => {
+//     //
+//     // })
+//     // moment(this.state.startDate).tz("Asia/Seoul").format('MM월 DD일')
+//     ctx.body = ffmt
+//   } catch (err) {
+//     ctx.status = 500;
+//     ctx.body = err;
+//     console.log(err);
+//   }
+// }
+
+
 const isFetchedIVesByUser = async ctx => {
   try {
     ctx.body = await Invoices.find().where({userEmail: ctx.params.user}).sort({createdOn: -1});
@@ -118,4 +147,10 @@ const isFetchedIVesByUser = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNewIVes, isFetchedAllIVes , isFetchedIVesByUser };
+module.exports = {
+  isRegisteredNewIVes,
+  isFetchedAllIVes ,
+  isFetchedIVesByUser,
+  isFetchedOrderStatus
+  // isFetchedOrderFFMT
+ };
