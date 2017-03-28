@@ -34,8 +34,11 @@ router.post('/books', Books.isRegisteredNewGoods)
 router.get('/books', Books.isFetchedAll)
 
 router.get('/invoices', Invoices.isFetchedAllIVes)
+router.get('/invoices/status/:status', Invoices.isFetchedOrderStatus)
+// router.get('/invoices/status/ffmt/:date', Invoices.isFetchedOrderFFMT)
 router.get('/invoices/:user', Invoices.isFetchedIVesByUser)
 router.post('/invoices', Invoices.isRegisteredNewIVes)
+
 // router.get('/xlsx', Invoices.isGetXlsx)
 
 

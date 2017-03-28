@@ -1,0 +1,48 @@
+.statement-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.statement-date{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.statement-date p {
+  margin-bottom: 0;
+  margin-right: 10px;
+  font-weight: 800;
+}
+
+.statement-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100;
+  text-align: center;
+}
+.statement-item p {
+  width: 19%;
+  margin-right: 1%;
+}
+
+.statement-item-btm,
+.statement-item-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100;
+  text-align: center;
+  background: #dbdbdb;
+  padding: 0.5em 0;
+}
+.statement-item-btm p,
+.statement-item-top p{
+  font-weight: 700;
+  width: 19%;
+  margin-right: 1%;
+  margin-bottom: 0;
+}

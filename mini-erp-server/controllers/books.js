@@ -9,7 +9,7 @@ const isRegisteredNewGoods = async (ctx, next) => {
     let codeRes = await Code.findOne({dbcollection: 'Books'});
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(4),
-        resultId = "IV" + (zero+count).slice(-zero.length);
+        resultId = "G" + (zero+count).slice(-zero.length);
 
     const book = new Books({
       title,
