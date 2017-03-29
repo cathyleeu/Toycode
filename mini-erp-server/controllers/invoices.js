@@ -109,6 +109,24 @@ const isFetchedAllIVes = async ctx => {
   }
 };
 
+
+const isPostTrackNumber = async ctx => {
+  console.log(ctx.request.body)
+  console.log(ctx.params.invoiceId)
+  try {
+    ctx.body = await Invoices.findOneAndUpdate(
+      {invoiceId: ctx.params.invoiceId},
+      {$set: {
+        trackingNo: ctx.request.body.trackingNo,
+        status: 'FFMT',
+        releaseDate: Date.now()}}, { new: true })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+};
+
 const isFetchedOrderStatus = async ctx => {
   try {
     ctx.body = await Invoices.find({status:ctx.params.status.toUpperCase()})
@@ -151,6 +169,7 @@ module.exports = {
   isRegisteredNewIVes,
   isFetchedAllIVes ,
   isFetchedIVesByUser,
-  isFetchedOrderStatus
+  isFetchedOrderStatus,
+  isPostTrackNumber
   // isFetchedOrderFFMT
  };

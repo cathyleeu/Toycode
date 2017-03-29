@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent, Component} from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { AllUserIVes, SearchTags } from '../components'
@@ -17,7 +17,7 @@ class Config extends Component {
   }
 }
 
-class AllIVesContainer extends Component {
+class AllIVesContainer extends PureComponent {
   constructor(){
     super()
     this.state = {
@@ -75,7 +75,7 @@ class AllIVesContainer extends Component {
           <h5>{tags.find(l => l.type === searchTag).title} 고객 주문 상황</h5>
           <Config pageSize={this.state.pageSize} handlePageSizeChange={this.handlePageSizeChange}/>
         </div>
-        <AllUserIVes allIVes={allIVes} pageSize={this.state.pageSize}/>
+        <AllUserIVes allIVes={allIVes} pageSize={this.state.pageSize} postTrackNumber={this.props.postTrackNumber}/>
       </div>
     )
   }

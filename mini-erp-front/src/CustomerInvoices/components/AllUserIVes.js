@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import AllIVesDetail from './AllIVesDetail'
 
 function pager(page) {
@@ -23,7 +23,7 @@ function pager(page) {
   return <div className="pagination">{pageLinks}</div>
 }
 
-class AllUserIVes extends Component {
+class AllUserIVes extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
@@ -62,7 +62,7 @@ class AllUserIVes extends Component {
         { page.allIVes.map(
           (iv , i) => (
               <div key={i} className="cst-container">
-                <AllIVesDetail iv={iv}>
+                <AllIVesDetail iv={iv} postTrackNumber={this.props.postTrackNumber}>
                   <div className="IV-Goods-detail-info">
                     <div className="IV-Recipient"><p> 받는 사람 정보 | {iv.invoiceId} </p></div>
                     <div className="IV-Recipient-detail"><strong>받는이</strong><p>{iv.delivery.to} | {iv.delivery.phone} | {iv.userEmail}</p></div>
