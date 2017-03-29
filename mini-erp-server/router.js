@@ -35,6 +35,7 @@ router.get('/books', Books.isFetchedAll)
 
 router.get('/invoices', Invoices.isFetchedAllIVes)
 router.get('/invoices/status/:status', Invoices.isFetchedOrderStatus)
+router.put('/invoices/track/no/:invoiceId', Invoices.isPostTrackNumber)
 // router.get('/invoices/status/ffmt/:date', Invoices.isFetchedOrderFFMT)
 router.get('/invoices/:user', Invoices.isFetchedIVesByUser)
 router.post('/invoices', Invoices.isRegisteredNewIVes)

@@ -17,10 +17,13 @@
 .detail-btn{
   border: 1px solid #1ECD97;
   border-radius: 3px;
-  height: 40px;
-  width: 20%;
+  height: 30px;
+  width: 100px;
   background-color: white;
   cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0;
 }
 
 .user-info button:hover,
@@ -47,7 +50,7 @@
 }
 
 
-.IV-Goods-abbr-top,
+.track-cont,
 .IV-Recipient-detail,
 .IV-Recipient-addr,
 .IV-Recipient-msg,
@@ -55,6 +58,14 @@
 .num-config-cont{
   display: flex;
   flex-direction: row;
+}
+
+.IV-Goods-abbr-top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.2em;
 }
 
 
@@ -130,8 +141,9 @@
 }
 
 .IV-Goods-abbr-top strong{
-  width: 15%;
+  width: 80px;
 }
 .IV-Goods-abbr-top p{
-  width: 28%;
+  width: 200px;
+  margin: 0;
 }
