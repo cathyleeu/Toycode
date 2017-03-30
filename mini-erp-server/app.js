@@ -3,7 +3,8 @@ const Koa = require('koa'),
       cors = require('koa-cors'), //http 접근 제어 cross resoure origin sharing
       body = require('koa-body'),
       router = require('./router'),
-      config = require('./config');
+      config = require('./config'),
+      cacheControl = require('koa-cache-control');
 const mongoose = require('mongoose');
 const passport = require('koa-passport');
 const session = require('koa-generic-session')
@@ -40,7 +41,9 @@ app.use(async (ctx, next) => {
 app.use(convert(session()))
 app.use(convert(passport.initialize()))
 app.use(convert(passport.session()))
-
+app.use(cacheControl({
+    noCache: true
+}));
 app
   .use(router.routes())
   .use(router.allowedMethods())
