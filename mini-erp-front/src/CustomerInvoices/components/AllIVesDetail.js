@@ -54,7 +54,6 @@ class AllIVesDetail extends PureComponent {
               </div>
             ))}
           </div>
-          {console.log(this.state.status)}
           {this.state.status !== 'FFMT'
             ? <div className="track-cont">
                 <input type='number' value={this.state.trackingNo} name='trackingNo' onChange={this.isHandleChange}/>

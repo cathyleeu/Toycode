@@ -140,12 +140,13 @@ const isFetchedOrderStatus = async ctx => {
 // const isFetchedOrderFFMT = async ctx => {
 //   try {
 //     let filterDate = ctx.params.date.split("-")
-//     const ffmt = await Invoices.find({createdOn: {"$gte": new Date(2017,1,26), "$lt": new Date(2017,3,28)}})
-//     // let obj = {};
-//     // ffmt.forEach(ff => {
-//     //
-//     // })
-//     // moment(this.state.startDate).tz("Asia/Seoul").format('MM월 DD일')
+//     console.log(filterDate)
+//     const ffmt = await Invoices.find({createdOn: {"$gte": new Date(2017,2,1), "$lt": new Date(2017,4,1)}})
+    // let obj = {};
+    // ffmt.forEach(ff => {
+    //
+    // })
+    // moment(this.state.startDate).tz("Asia/Seoul").format('MM월 DD일')
 //     ctx.body = ffmt
 //   } catch (err) {
 //     ctx.status = 500;
