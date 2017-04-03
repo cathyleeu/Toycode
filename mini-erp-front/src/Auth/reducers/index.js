@@ -42,7 +42,7 @@ export default function (state = initialState(), action) {
     case types.UNAUTH_USER:
       return { ...state, authenticated: false, email: '', user: '', status: false }
     case types.LOGIN_ERROR:
-      return { ...state, errMsg: action.errM}
+      return { ...state, errMsg: action.errM.type === "loginErr" ? [{type:action.errM.type, msg:action.errM.msg }] : action.errM}
     default:
       return state
   }
