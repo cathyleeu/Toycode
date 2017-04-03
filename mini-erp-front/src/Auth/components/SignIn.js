@@ -11,8 +11,7 @@ class SignIn extends Component {
     super(props)
     this.state = {
       email: '',
-      password: '',
-      signupErr: ''
+      password: ''
     }
   }
   onChange = e => {
@@ -20,11 +19,10 @@ class SignIn extends Component {
     [e.target.name]: e.target.value
     })
   }
-  getErrMsg = (errType) => {
+  getErrMsg = (nameErr) => {
     const { errorMessage } = this.props;
-    if(errorMessage){
-      return <strong className="errMessage">{errorMessage[errType]}</strong>
-    }
+    let nameErrs = errorMessage.find(l => l.type.match(nameErr))
+    if(nameErrs) return <strong className="errMessage">{nameErrs.msg}</strong>
   }
   onSubmit = e => {
     e.preventDefault()
@@ -69,7 +67,6 @@ class SignIn extends Component {
           <button onClick={this.onSubmit}>로그인</button>
           <div className="message">회원이 아니신가요?
             <Link to="signup">회원가입 하기</Link>
-            {/* <a>회원가입 하기</a> */}
           </div>
         </div>
       </div>
