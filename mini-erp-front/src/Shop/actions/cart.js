@@ -3,11 +3,9 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
-export const addToCartUnsafe = (bookId,bookTitle,bookPrice) => ({
+export const addToCartUnsafe = (book , bookPrice) => ({
   type: types.ADD_TO_CART,
-  bookId,
-  bookTitle,
-  bookPrice
+  book, bookPrice
 })
 
 export const goodsSelect = (id, orderQutt) => ({
@@ -16,10 +14,7 @@ export const goodsSelect = (id, orderQutt) => ({
   orderQutt
 })
 
-export const goodsDelete = (id) => ({
-  type: types.DELETE_GOODS,
-  id
-})
+export const goodsDelete = (id) => ({ type: types.DELETE_GOODS, id })
 
 
 

@@ -10,8 +10,10 @@ const addedIds = ( state = initialState.addedIds, action) => {
   switch (action.type) {
     case types.ADD_TO_CART:
       return [...state, {
-        id:action.bookId,
-        title: action.bookTitle,
+        id:action.book.code,
+        title: action.book.title,
+        level: action.book.level,
+        volume: action.book.volume,
         price: action.bookPrice
       }]
     case types.DELETE_GOODS:
@@ -25,8 +27,10 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
   switch (action.type) {
     case types.ADD_TO_CART:
       return [...state, {
-        id:action.bookId,
-        title: action.bookTitle,
+        id:action.book.code,
+        title: action.book.title,
+        level: action.book.level,
+        volume: action.book.volume,
         amount: '',
         price: action.bookPrice
       }]

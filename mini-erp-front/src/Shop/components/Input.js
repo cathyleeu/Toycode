@@ -1,43 +1,22 @@
 import React from 'react'
 
-const Input = (props) => (
-  <input
-    className={props.className ? props.className : "form-control"}
-    type={props.type}
-    value={props.value}
-    placeholder={props.placeholder}
-    onChange={props.onChange}
-    onBlur={props.onBlur}
-    name={props.name}
-    id={props.id}
-  />
-)
+
+class Input extends React.PureComponent{
+  render(){
+    return(
+      <input
+        className={this.props.className ? this.props.className : "form-control"}
+        type={this.props.type}
+        value={this.props.qutt}
+        placeholder={this.props.placeholder}
+        onChange={this.props.onChange}
+        onBlur={this.props.onBlur}
+        name={this.props.name}
+        id={this.props.id}
+      />
+    )
+  }
+}
+
 
 export default Input
-
-
-// import React, {Component} from 'react'
-//
-// class Input extends Component {
-//   render(){
-//     const props = this.props;
-//     return(
-//       <input
-//         className={props.className ? props.className : "form-control"}
-//         type={props.type}
-//         value={props.value}
-//         placeholder={props.placeholder}
-//         onChange={props.onChange}
-//         onBlur={props.onBlur}
-//         name={props.name}
-//         id={props.id}
-//       />
-//     )
-//   }
-//   shouldComponentUpdate(nextProps, nextState){
-//     if(this.props !== nextProps){
-//       console.log('나 변했졍', nextProps)
-//        return true
-//      };
-//   }
-// }

@@ -8,12 +8,11 @@ import './RequestedIVesContainer.css'
 
 class RequestedIVesContainer extends Component {
   componentDidMount(){
-    const {getInvoices} = this.props
-    getInvoices()
+    this.props.getInvoices()
   }
+  isChildIVes = (invoice, i) => <RequestedIVes className="col-md-12" key={i} invoice={invoice} requestRefundByUser={this.props.requestRefundByUser}/>
   render(){
     console.log("RequestedIVesContainer",this.props)
-    const {invoices, requestRefundByUser} = this.props
     return(
       <div>
         <h5>주문 내역</h5>
@@ -24,9 +23,7 @@ class RequestedIVesContainer extends Component {
             <div className="col-md-3">주문금액</div>
           </div>
           <div className="requestedIV-list-body">
-            {invoices.map((invoice, index) => (
-              <RequestedIVes className="col-md-12" key={index} invoice={invoice} requestRefundByUser={requestRefundByUser}/>
-            ))}
+            {this.props.invoices.map(this.isChildIVes)}
           </div>
         </div>
       </div>

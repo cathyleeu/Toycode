@@ -1,23 +1,32 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import AddedProducts from './AddedProducts'
 import Invoice from './Invoice'
 import './Cart.css'
 
 
-class Cart extends Component {
-  componentDidMount(){
-    const {getInvoices} = this.props
-    getInvoices()
+class Cart extends PureComponent {
+  constructor(props){
+    super(props)
+    this.state = {
+      books: props.books
+    }
+  }
+  componentWillReceiveProps(newProps){
+    if(this.state.books !== newProps.books){
+      this.setState({books: newProps.books})
+    }
+  }
+  isDelete = (id) => {
+    this.props.goodsDelete(id)
   }
   render(){
-    const { books, selected } = this.props;
-    const nodes = books.map((book, index) =>
+    const { selected } = this.props;
+    const nodes = this.state.books.map((book, i) =>
           <AddedProducts
-            key={index}
-            title={book.title}
-            id={book.id}
+            key={book.id}
+            book={book}
+            isDelete={this.isDelete}
             {...this.props}
-            // img_url={``}
           />
         )
     const total = selected.reduce((sum, each) => (sum + each.price * each.amount), 0);
