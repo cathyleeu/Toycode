@@ -3,18 +3,14 @@ const Code = require('../models/code');
 
 const isRegisteredNewGoods = async (ctx, next) => {
   try{
-    const {title, code, quantity, price, bPrice, dPrice } = ctx.request.body;
-
-
     let codeRes = await Code.findOne({dbcollection: 'Books'});
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(4),
         resultId = "G" + (zero+count).slice(-zero.length);
 
     const book = new Books({
-      title,
       code : resultId,
-      quantity, bPrice, dPrice, price
+      ...ctx.request.body
     });
     codeRes = codeRes || new Code({
       dbcollection: 'Books',
@@ -26,10 +22,8 @@ const isRegisteredNewGoods = async (ctx, next) => {
       await next(err);
     }
     ctx.body = await book.save();
-    // ctx.body = await new Books().save()
   } catch(err){
     ctx.body = await next(err);
-    // console.log(err);
   }
 };
 const isFetchedAll = async ctx => {

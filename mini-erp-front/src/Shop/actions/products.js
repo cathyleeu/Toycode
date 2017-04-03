@@ -2,18 +2,15 @@ import * as types from '../constants/types'
 import axios from 'axios'
 
 
-export const startBooksFetch = () => {
-  return {
-    type: types.START_BOOKS_FETCH
-  };
-};
+export const startBooksFetch = () => ({
+  type: types.START_BOOKS_FETCH
+});
 
-export const completeBooksFetch = (books) => {
-  return {
-    type: types.COMPLETE_BOOKS_FETCH,
-    books : books.data
-  };
-};
+export const completeBooksFetch = (books) => ({
+  type: types.COMPLETE_BOOKS_FETCH,
+  books : books.data
+});
+
 
 export const fetchBooks = () => (dispatch, getState) => {
   dispatch(startBooksFetch())

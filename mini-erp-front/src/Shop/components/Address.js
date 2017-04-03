@@ -21,17 +21,6 @@ class Address extends Component {
       isAddrBookOpen: false
     }
   }
-  // componentWillReceiveProps(newProps){
-  //   console.log("addrrrrr",newProps);
-  //   const { address, acct } = newProps;
-  //   this.setState({
-  //     phone: acct.A_phone,
-	// 		zipNo: address.zipNo,
-	// 		roadAddr: address.roadAddr,
-	// 		detailAddr: address.detailAddr,
-  //     recipient: acct.A_manager,
-  //   })
-  // }
   handleChange = e => {
     this.setState({[e.target.name]:e.target.value})
   }
@@ -67,14 +56,8 @@ class Address extends Component {
       phone: result.managerPh || ''
 		})
 	}
-  // componentWillUpdate(nextProps, nextState){
-  //   console.log("componentWillUpdate",nextState.rqcontent);
-  // }
-  // componentDidUpdate(nextProps, nextState){
-  //   console.log("componentDidUpdate",nextState.rqcontent);
-  // }
-  render(){
-    const { user, userEmail, userCode, requestInvoice, selected, juso, userName, kinderAddr, customerType} = this.props;
+  isOrderRequest = () => {
+    const { userEmail, userCode, requestInvoice, selected, userName } = this.props;
     const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
     const invoice = {
       userName, userEmail, userCode,
@@ -91,6 +74,15 @@ class Address extends Component {
       requestDesc: this.state.rqcontent,
       totalSales: selected.map(each => each.amount*each.price).reduce((a,b)=>a+b)
     }
+    if(!this.state.phone){
+      alert('연락처를 입력해주세요.')
+    } else {
+      requestInvoice(invoice)
+    }
+  }
+  render(){
+    const { user, juso, kinderAddr, customerType} = this.props;
+    const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
     return(
       <div className="col-md-12 delivery">
         <div className="delivery-zipcode">
@@ -120,7 +112,6 @@ class Address extends Component {
                 <AddrModal
                   isModalOpen={this.state.isAddrBookOpen}
                   closeModal={this.closeModal}>
-    							{/* <i className="fa fa-times-circle search-close" aria-hidden="true" onClick={this.closeModal}></i> */}
                   <div className='addr-close'>
                   <p onClick={this.closeModal}>주소록 닫기</p>
                   </div>
@@ -175,11 +166,7 @@ class Address extends Component {
             rows="2" name='rqcontent' placeholder='배송 요청사항을 적어주세요.' id="rqcontent"
             value={this.state.rqcontent} onChange={this.handleChange} />
         </div>
-        {invoice.totalSales ?(
-          <button
-            className="col-md-3"
-            onClick={() => { phone ? requestInvoice(invoice) : alert('연락처를 입력해주세요.')}}>주문하기</button>
-        ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}
+       <button className="col-md-3" onClick={this.isOrderRequest}>주문하기</button>
       </div>
     )
   }
@@ -195,3 +182,10 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps,actions)(Address)
 // export default Address
+
+
+// {invoice.totalSales ?(
+//   <button
+//     className="col-md-3"
+//     onClick={() => this.isOrderRequest}> 주문하기</button>
+// ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}

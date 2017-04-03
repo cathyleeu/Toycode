@@ -25,7 +25,6 @@ const isRegisteredNewIVes = async (ctx, next) => {
     const {to, phone, address} = delivery;
     const {roadAddr, detailAddr, zipNo} = address;
 
-    // let invoice = await User.findOne({email: email});
     let codeRes = await Code.findOne({dbcollection: 'Invoices'});
     let count = codeRes ? codeRes.count : 1,
         zero = "0".repeat(9),
