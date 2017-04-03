@@ -67,7 +67,7 @@ class Address extends Component {
         phone
       },
       requestedGoods: selected.map(each => ({
-        name : each.title,
+        name : `${each.title}${each.level}-${each.volume}`,
         qutt: each.amount,
         sales: each.amount*each.price
       })),
