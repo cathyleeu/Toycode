@@ -8,9 +8,10 @@ import userAccount from './UserAccount/reducers'
 import issuedLogin from './IssuedLogin/reducers'
 import statement from './Statement/reducers'
 import commonData from './reducers'
+import notice from './Feature/reducers'
 
 const rootReducer = combineReducers({
-  auth, shop, cart, userAccount, commonData, cstList, cstIVes, issuedLogin, statement
+  auth, shop, cart, userAccount, commonData, cstList, cstIVes, issuedLogin, statement, notice
   // products,
 });
 

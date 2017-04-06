@@ -6,3 +6,8 @@
 .auth-success{
   font-family: 'Jeju Gothic', serif;
 }
+
+.row{
+  display: flex;
+  flex-direction: row;
+}

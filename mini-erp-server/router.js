@@ -39,8 +39,8 @@ router.put('/invoices/track/no/:invoiceId', Invoices.isPostTrackNumber)
 // router.get('/invoices/status/ffmt/:date', Invoices.isFetchedOrderFFMT)
 router.get('/invoices/:user', Invoices.isFetchedIVesByUser)
 router.post('/invoices', Invoices.isRegisteredNewIVes)
-
-// router.get('/xlsx', Invoices.isGetXlsx)
+router.get('/xlsx', Invoices.isGetXlsx)
+// router.get('/xlsx/day', Invoices.isGetXlsx)
 
 
 router.get('/return', ReturnGoods.isFetchedAllRTns)

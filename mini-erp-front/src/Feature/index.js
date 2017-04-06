@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import './index.css'
+import NewOrders from './NewOrders'
 
 //swich 로 바꾸기
 class Feature extends Component {
@@ -9,7 +10,7 @@ class Feature extends Component {
       case "Z":
         return(
           <div className="Feature-Container has-Header">
-             <h5 className="auth-success">어드민 페이지 준비중</h5>
+             <NewOrders />
           </div>
         )
       case "B":
