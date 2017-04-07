@@ -34,7 +34,7 @@ class IssuedClass extends PureComponent {
     this.setState({ students: e.target.value })
   }
   render(){
-    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId } = this.props;
+    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId } = this.props;
     let needNames = studentsNames.needNames;
     let mon = moment().set({year:2017, month:3});
     // YBM 대구지사 3월로 고정 예외처리
