@@ -38,7 +38,7 @@ class IssuedClass extends PureComponent {
     let needNames = studentsNames.needNames;
     let mon = moment().set({year:2017, month:3});
     // YBM 대구지사 3월로 고정 예외처리
-    if(kinderUrl === "C00071") {
+    if(kinderId.split("-")[0] === "C00071") {
       mon = moment().set({year:2017, month:2});
     }
     return(
