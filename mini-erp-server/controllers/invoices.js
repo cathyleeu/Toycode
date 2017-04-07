@@ -1,7 +1,8 @@
 const Invoices = require('../models/invoices');
 const Code = require('../models/code');
 const nodemailer = require('nodemailer');
-
+const XLSX = require('XLSX')
+const moment = require('moment-timezone')
 
 
 let transporter = nodemailer.createTransport({
@@ -165,11 +166,129 @@ const isFetchedIVesByUser = async ctx => {
   }
 };
 
+
+
+const isGetXlsx = async ctx => {
+  function datenum(v, date1904) {
+  	if(date1904) v+=1462;
+  	var epoch = Date.parse(v);
+  	return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+  }
+  let rqt = await Invoices.find({status: 'RQT'})
+
+  function sheet_from_array_of_arrays(data, opts) {
+  	var ws = {};
+  	var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
+  	for(var R = 0; R != data.length; ++R) {
+  		for(var C = 0; C != data[R].length; ++C) {
+  			if(range.s.r > R) range.s.r = R;
+  			if(range.s.c > C) range.s.c = C;
+  			if(range.e.r < R) range.e.r = R;
+  			if(range.e.c < C) range.e.c = C;
+  			var cell = {v: data[R][C] };
+  			if(cell.v == null) continue;
+  			var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+
+  			if(typeof cell.v === 'number') cell.t = 'n';
+  			else if(typeof cell.v === 'boolean') cell.t = 'b';
+  			else if(cell.v instanceof Date) {
+  				cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+  				cell.v = datenum(cell.v);
+  			}
+  			else cell.t = 's';
+
+  			ws[cell_ref] = cell;
+  		}
+  	}
+  	if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+  	return ws;
+  }
+
+  /* original data */
+
+  let today = moment().tz("Asia/Seoul").format('YYYY년MM월DD일')
+  function Workbook() {
+  	if(!(this instanceof Workbook)) return new Workbook();
+  	this.SheetNames = [];
+  	this.Sheets = {};
+  }
+
+  var wb = new Workbook();
+  rqt.forEach(state => {
+    let list = []
+    let totalQutt = 0
+    var data = [
+      ["거래명세서"],
+      [null],
+      ["일자", "우편번호","전표:1"],
+      [today, state.delivery.address.zipNo , "공급자", '등록번호'   , "764-86-00016"                 , null, null],
+      [state.delivery.address.roadAddr,  null  , "공급자", '상호(법인명)', '주식회사 토이코드'                ,"성명","홍현기"],
+      [state.delivery.address.detailAddr, null  , "공급자", '사업장주소'  , "서울특별시 강남구 강남대로 408 13층" , null,null],
+      ["아래와 같이 계산합니다.",null,"공급자","업태", "출판, 영상, 방송통신\n및 정보서비스업","종목","교육출판물, 시스템\n소프트웨어개발및 공급"],
+      ["합계금액", null, state.totalSales , null, null, null, null],
+      ["품목", null, "수량" , "단가", "공급가액", "세액", "비율"]
+    ];
+
+    state.requestedGoods.forEach(g => {
+      list = [g.name, null, g.qutt, g.sales/g.qutt , g.sales, null, null];
+      totalQutt += g.qutt
+      data.push(list);
+    })
+    let nullRow = [null,null,null,null,null,null,null,null,null,null]
+    data.push(nullRow)
+    data.push(nullRow)
+    data.push(nullRow)
+    data.push(["계", "총수량", totalQutt ,"총금액",state.totalSales,null,null,null,null,null])
+    data.push(nullRow)
+    data.push(nullRow)
+    data.push(["배송처"])
+    data.push([`${state.delivery.address.roadAddr} ${state.delivery.address.detailAddr}`])
+    data.push([state.delivery.to])
+    data.push([state.delivery.phone])
+
+    var ws_name = `토이코드-거래명세서-${state.delivery.to}`;
+    var ws = sheet_from_array_of_arrays(data);
+    wb.SheetNames.push(ws_name);
+    wb.Sheets[ws_name] = ws;
+    ws['!merges'] = [
+      {s:{c:7,r:0},e:{c:0,r:1}}, //거래명세서
+      {s:{c:2,r:6},e:{c:2,r:3}}, //공급자
+      {s:{c:4,r:3},e:{c:6,r:3}}, //등록번호
+      {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소
+      {s:{c:0,r:4},e:{c:1,r:4}}, // 주소
+      {s:{c:0,r:5},e:{c:1,r:5}}, // 상세주소
+      {s:{c:0,r:6},e:{c:1,r:6}}, //아래와 같이
+      {s:{c:0,r:7},e:{c:1,r:7}}, //합계
+      {s:{c:2,r:7},e:{c:6,r:7}}, //total sales
+      {s:{c:0,r:8},e:{c:1,r:8}},
+      {s:{c:0,r:9},e:{c:1,r:9}},
+      {s:{c:0,r:10},e:{c:1,r:10}},
+      {s:{c:0,r:11},e:{c:1,r:11}},
+      {s:{c:0,r:12},e:{c:1,r:12}}
+    ];
+    ws['!cols'] = [
+      {wch:25},{wch:10},{wch:5},{wch:7},{wch:15},{wch:7},{wch:15},{wch:5},{wch:5},
+    ];
+
+  })
+
+  /* write file */
+  ctx.type = "application/octet-stream";
+  ctx.attachment(`토이코드-주문서-${moment().format('YYMMDD')}.xlsx`);
+  ctx.body = XLSX.write(wb, {
+    type: "buffer"
+  });
+
+}
+
+
+
 module.exports = {
   isRegisteredNewIVes,
   isFetchedAllIVes ,
   isFetchedIVesByUser,
   isFetchedOrderStatus,
-  isPostTrackNumber
+  isPostTrackNumber,
+  isGetXlsx
   // isFetchedOrderFFMT
  };
