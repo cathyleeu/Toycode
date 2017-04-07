@@ -1,7 +1,7 @@
 const Invoices = require('../models/invoices');
 const Code = require('../models/code');
 const nodemailer = require('nodemailer');
-const XLSX = require('XLSX')
+const XLSX = require('xlsx')
 const moment = require('moment-timezone')
 
 
