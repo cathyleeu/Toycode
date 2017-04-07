@@ -1,17 +1,23 @@
-import React from 'react'
+import React, {PureComponent} from 'react'
+import ChildDetail from './ChildDetail'
 
-
-const ChildOrders = (props) => (
-  <div className='cst-container'>
-    <div className='IV-Goods'>
-      <div>
-        {props.rqt.userName}
-        {props.rqt.requestedGoods.map((g,i) => <p key={i}>{g.name} {g.qutt} {g.sales}</p>)}
+//
+class ChildOrders extends PureComponent {
+  ChildDetail = (g, i) => <ChildDetail g={g} key={i}/>
+  render(){
+    return(
+      <div className='cst-container'>
+        <div className='IV-Goods'>
+          <div>
+            {this.props.rqt.userName}
+            {this.props.rqt.requestedGoods.map(this.ChildDetail)}
+          </div>
+        </div>
       </div>
-      {console.log(props.rqt)}
-    </div>
-  </div>
-)
+    )
+  }
+}
+
 
 
 export default ChildOrders

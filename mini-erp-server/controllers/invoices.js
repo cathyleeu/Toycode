@@ -214,8 +214,9 @@ const isGetXlsx = async ctx => {
   }
 
   var wb = new Workbook();
-  rqt.forEach(state =>{
+  rqt.forEach(state => {
     let list = []
+    let totalQutt = 0
     var data = [
       ["거래명세서"],
       [null],
@@ -224,22 +225,33 @@ const isGetXlsx = async ctx => {
       [state.delivery.address.roadAddr,  null  , "공급자", '상호(법인명)', '주식회사 토이코드'                ,"성명","홍현기"],
       [state.delivery.address.detailAddr, null  , "공급자", '사업장주소'  , "서울특별시 강남구 강남대로 408 13층" , null,null],
       ["아래와 같이 계산합니다.",null,"공급자","업태", "출판, 영상, 방송통신\n및 정보서비스업","종목","교육출판물, 시스템\n소프트웨어개발및 공급"],
-      ["합계금액", null, state.totalSales , null, null, null, null]
+      ["합계금액", null, state.totalSales , null, null, null, null],
+      ["품목", null, "수량" , "단가", "공급가액", "세액", "비율"]
     ];
+
     state.requestedGoods.forEach(g => {
-      list = [g.name, g.qutt, g.sales/g.qutt , g.sales];
+      list = [g.name, null, g.qutt, g.sales/g.qutt , g.sales, null, null];
+      totalQutt += g.qutt
       data.push(list);
     })
-    let nullList = [null,null,null,null,null,null,null,null,null,null]
-    data.push(nullList)
-    data.push(nullList)
-    data.push(nullList)
+    let nullRow = [null,null,null,null,null,null,null,null,null,null]
+    data.push(nullRow)
+    data.push(nullRow)
+    data.push(nullRow)
+    data.push(["계", "총수량", totalQutt ,"총금액",state.totalSales,null,null,null,null,null])
+    data.push(nullRow)
+    data.push(nullRow)
+    data.push(["배송처"])
+    data.push([`${state.delivery.address.roadAddr} ${state.delivery.address.detailAddr}`])
+    data.push([state.delivery.to])
+    data.push([state.delivery.phone])
+
     var ws_name = `토이코드-거래명세서-${state.delivery.to}`;
     var ws = sheet_from_array_of_arrays(data);
     wb.SheetNames.push(ws_name);
     wb.Sheets[ws_name] = ws;
     ws['!merges'] = [
-      {s:{c:10,r:0},e:{c:0,r:1}}, //거래명세서
+      {s:{c:7,r:0},e:{c:0,r:1}}, //거래명세서
       {s:{c:2,r:6},e:{c:2,r:3}}, //공급자
       {s:{c:4,r:3},e:{c:6,r:3}}, //등록번호
       {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소
@@ -248,6 +260,11 @@ const isGetXlsx = async ctx => {
       {s:{c:0,r:6},e:{c:1,r:6}}, //아래와 같이
       {s:{c:0,r:7},e:{c:1,r:7}}, //합계
       {s:{c:2,r:7},e:{c:6,r:7}}, //total sales
+      {s:{c:0,r:8},e:{c:1,r:8}},
+      {s:{c:0,r:9},e:{c:1,r:9}},
+      {s:{c:0,r:10},e:{c:1,r:10}},
+      {s:{c:0,r:11},e:{c:1,r:11}},
+      {s:{c:0,r:12},e:{c:1,r:12}}
     ];
     ws['!cols'] = [
       {wch:25},{wch:10},{wch:5},{wch:7},{wch:15},{wch:7},{wch:15},{wch:5},{wch:5},

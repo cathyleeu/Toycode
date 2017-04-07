@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { connect } from 'react-redux'
 import * as actions from './actions'
 import ChildOrders from './ChildOrders'
 
 
 
-class NewOrders extends Component {
+class NewOrders extends PureComponent {
   componentDidMount(){
     this.props.fetchAllRQT()
   }
@@ -18,10 +18,9 @@ class NewOrders extends Component {
     return(
       <div className='cst-container'>
         <form onSubmit={this.handleSubmit}>
-        {/* <form target='_blank' method='GET' action="http://localhost:3090/xlsx"> */}
           <label>
             금일 출고 요청 건
-            <input type='submit' value='거래명세서' />
+            <input type='submit' value='거래명세서 excel 출력' />
           </label>
         </form>
         {this.props.rqt.map(this.renderChildOrders)}
