@@ -218,15 +218,15 @@ const isGetXlsx = async ctx => {
     let list = []
     let totalQutt = 0
     var data = [
-      ["거래명세서"],
-      [null],
-      ["일자", "우편번호","전표:1"],
+      ["거래명세서", null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null ],
+      ["일자", "우편번호","전표:1", null, null, null, null, null, null],
       [today, state.delivery.address.zipNo , "공급자", '등록번호'   , "764-86-00016"                 , null, null],
       [state.delivery.address.roadAddr,  null  , "공급자", '상호(법인명)', '주식회사 토이코드'                ,"성명","홍현기"],
       [state.delivery.address.detailAddr, null  , "공급자", '사업장주소'  , "서울특별시 강남구 강남대로 408 13층" , null,null],
       ["아래와 같이 계산합니다.",null,"공급자","업태", "출판, 영상, 방송통신\n및 정보서비스업","종목","교육출판물, 시스템\n소프트웨어개발및 공급"],
-      ["합계금액", null, state.totalSales , null, null, null, null],
-      ["품목", null, "수량" , "단가", "공급가액", "세액", "비율"]
+      ["합계금액", null, state.totalSales , null, null, null, null, null, null],
+      ["품목", null, "수량" , "단가", "공급가액", "세액", "비율", null , null]
     ];
 
     state.requestedGoods.forEach(g => {
@@ -251,7 +251,7 @@ const isGetXlsx = async ctx => {
     wb.SheetNames.push(ws_name);
     wb.Sheets[ws_name] = ws;
     ws['!merges'] = [
-      {s:{c:7,r:0},e:{c:0,r:1}}, //거래명세서
+      {s:{c:8,r:0},e:{c:0,r:1}}, //거래명세서
       {s:{c:2,r:6},e:{c:2,r:3}}, //공급자
       {s:{c:4,r:3},e:{c:6,r:3}}, //등록번호
       {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소

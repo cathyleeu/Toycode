@@ -20,10 +20,5 @@ export const fetchAllRQT = () => (dispatch) => {
 }
 
 export const getDayStatement = (rqt) => (dispatch) => {
-  // console.log('ggg')
-  window.open('http://localhost:3090/xlsx', '_blank')
-  // axios.get(`${ROOT_URL}/xlsx`, rqt)
-  //   .then(res => {
-  //
-  //   })
+  window.open(`${ROOT_URL}/xlsx`, '_blank')
 }
