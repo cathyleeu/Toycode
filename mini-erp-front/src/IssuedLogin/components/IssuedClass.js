@@ -36,8 +36,11 @@ class IssuedClass extends PureComponent {
   render(){
     const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId } = this.props;
     let needNames = studentsNames.needNames;
-    let mon = moment().tz("Asia/Seoul")
-    let nextMon = moment().add(1,'month').tz("Asia/Seoul")
+    let mon = moment().set({year:2017, month:3});
+    // YBM 대구지사 3월로 고정 예외처리
+    if(kinderUrl == "C00071") {
+      mon = moment().set({year:2017, month:2});
+    }
     return(
       <div className='issued-login'>
         <div className="issued-login-top issued-kinder-info">
@@ -55,19 +58,6 @@ class IssuedClass extends PureComponent {
               className='button-edit'
               disabled={disabled} onClick={() => {
               return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>{mon.format('MM')}월 로그인발급</button>
-          </form>
-          <form action="https://toycode.org/issue" method="POST" target="_blank">
-            <input type="hidden" name="code" value={kinderUrl} />
-            <input type="hidden" name="school" value={kinderName} />
-            <input type="hidden" name="lang" value={kinderLang} />
-            <input type="hidden" name="className" value={kclassName} />
-            <input type="hidden" name="yearmonth" value={nextMon.format('YYYYMM')} />
-            <input type="hidden" name="level" value={level} />
-            <input type="hidden" name="students" value={studentsNames[kclassId] ? studentsNames[kclassId].students : ''} />
-            <button
-              className='button-edit'
-              disabled={disabled} onClick={() => {
-              return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>{nextMon.format('MM')}월 로그인발급</button>
           </form>
         </div>
         {(needNames && (needNames.indexOf(kclassId) !== -1))
