@@ -59,8 +59,9 @@ class Address extends Component {
   isOrderRequest = () => {
     const { userEmail, userCode, requestInvoice, selected, userName } = this.props;
     const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
+    console.log("selectedFromAddr",selected)
     const invoice = {
-      userName, userEmail, userCode,
+      userName, userEmail, userCode,  //TODO: user Erpcode 등록 userErp: erpCode
       delivery: {
         to: recipient,
         address: { zipNo, roadAddr, detailAddr },
@@ -69,6 +70,7 @@ class Address extends Component {
       requestedGoods: selected.map(each => ({
         name : `${each.title}${each.level}-${each.volume}`,
         qutt: each.amount,
+        erpCode: each.erp,
         sales: each.amount*each.price
       })),
       requestDesc: this.state.rqcontent,

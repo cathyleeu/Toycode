@@ -13,9 +13,9 @@ export const fetchAllUserIVes = () => (dispatch) => {
 }
 
 
-export const postTrackNumber = (tn, ivId) => (dispatch) => {
-  console.log(tn)
-  axios.put(`${ROOT_URL}/invoices/track/no/${ivId}`, {trackingNo:tn})
+export const postTrackNumber = (tn, ivId, date) => (dispatch) => {
+  console.log(tn, date)
+  axios.put(`${ROOT_URL}/invoices/track/no/${ivId}`, {trackingNo:tn, filterReleaseDate: date})
     .then((response) => {
       dispatch(fetchAllUserIVes())
       alert('등록완료')

@@ -36,6 +36,23 @@ const isFetchedAll = async ctx => {
   }
 };
 
+const isModifyingGoods = async ctx => {
+  try {
+    console.log(ctx.params.code)
+    console.log(ctx.request.body)
+    ctx.body = await Books.findOneAndUpdate(
+      {code: ctx.params.code},
+      {$set: {
+        ...ctx.request.body
+      }},
+      { new: true })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+
 module.exports = {
-  isRegisteredNewGoods, isFetchedAll
+  isRegisteredNewGoods, isFetchedAll, isModifyingGoods
 };

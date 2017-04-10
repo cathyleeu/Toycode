@@ -30,10 +30,11 @@ class AllIVesDetail extends PureComponent {
     this.setState({[e.target.name]: e.target.value})
   }
   isPostTrackNo = () => {
+    let releaseDate = moment().tz("Asia/Seoul").format('YYYYMMDD')
     if(!this.state.trackingNo){
       alert('운송장을 입력하세요.')
     } else {
-      this.props.postTrackNumber(this.state.trackingNo, this.props.iv.invoiceId)
+      this.props.postTrackNumber(this.state.trackingNo, this.props.iv.invoiceId, releaseDate)
       // console.log('운송장 등록하기', this.state.trackingNo, this.props.iv.invoiceId)
     }
   }

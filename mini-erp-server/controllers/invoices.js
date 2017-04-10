@@ -118,6 +118,7 @@ const isPostTrackNumber = async ctx => {
       {invoiceId: ctx.params.invoiceId},
       {$set: {
         trackingNo: ctx.request.body.trackingNo,
+        filterReleaseDate: ctx.request.body.filterReleaseDate,
         status: 'FFMT',
         releaseDate: Date.now()}}, { new: true })
   } catch (err) {
@@ -166,52 +167,55 @@ const isFetchedIVesByUser = async ctx => {
   }
 };
 
+/*============ xlsx ====================================*/
+function datenum(v, date1904) {
+  if(date1904) v+=1462;
+  var epoch = Date.parse(v);
+  return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+}
+function sheet_from_array_of_arrays(data, opts) {
+  var ws = {};
+  var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
+  for(var R = 0; R != data.length; ++R) {
+    for(var C = 0; C != data[R].length; ++C) {
+      if(range.s.r > R) range.s.r = R;
+      if(range.s.c > C) range.s.c = C;
+      if(range.e.r < R) range.e.r = R;
+      if(range.e.c < C) range.e.c = C;
+      var cell = {v: data[R][C] };
+      if(cell.v == null) continue;
+      var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+
+      if(typeof cell.v === 'number') cell.t = 'n';
+      else if(typeof cell.v === 'boolean') cell.t = 'b';
+      else if(cell.v instanceof Date) {
+        cell.t = 'n'; cell.z = XLSX.SSF._table[14];
+        cell.v = datenum(cell.v);
+      }
+      else cell.t = 's';
+
+      ws[cell_ref] = cell;
+    }
+  }
+  if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+  return ws;
+}
+function Workbook() {
+  if(!(this instanceof Workbook)) return new Workbook();
+  this.SheetNames = [];
+  this.Sheets = {};
+}
+
+/*============================================================*/
+
 
 
 const isGetXlsx = async ctx => {
-  function datenum(v, date1904) {
-  	if(date1904) v+=1462;
-  	var epoch = Date.parse(v);
-  	return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
-  }
   let rqt = await Invoices.find({status: 'RQT'})
-
-  function sheet_from_array_of_arrays(data, opts) {
-  	var ws = {};
-  	var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
-  	for(var R = 0; R != data.length; ++R) {
-  		for(var C = 0; C != data[R].length; ++C) {
-  			if(range.s.r > R) range.s.r = R;
-  			if(range.s.c > C) range.s.c = C;
-  			if(range.e.r < R) range.e.r = R;
-  			if(range.e.c < C) range.e.c = C;
-  			var cell = {v: data[R][C] };
-  			if(cell.v == null) continue;
-  			var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
-
-  			if(typeof cell.v === 'number') cell.t = 'n';
-  			else if(typeof cell.v === 'boolean') cell.t = 'b';
-  			else if(cell.v instanceof Date) {
-  				cell.t = 'n'; cell.z = XLSX.SSF._table[14];
-  				cell.v = datenum(cell.v);
-  			}
-  			else cell.t = 's';
-
-  			ws[cell_ref] = cell;
-  		}
-  	}
-  	if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
-  	return ws;
-  }
 
   /* original data */
 
   let today = moment().tz("Asia/Seoul").format('YYYY년MM월DD일')
-  function Workbook() {
-  	if(!(this instanceof Workbook)) return new Workbook();
-  	this.SheetNames = [];
-  	this.Sheets = {};
-  }
 
   var wb = new Workbook();
   rqt.forEach(state => {
@@ -283,12 +287,74 @@ const isGetXlsx = async ctx => {
 
 
 
+const isGetXlsxDayFFMT = async ctx => {
+  console.log(ctx.params.date)
+  let ffmtAday = await Invoices.find({filterReleaseDate: ctx.params.date})
+  var wb = new Workbook();
+  var data = [
+    ["판매자료 입력"],
+    [null],
+    ["Ⅰ. 공급자 인적사항"],
+    ["①  회 사 명"   , null , null, "②사업자등록번호" , null, "필수입력 항목" , null, null],
+    ["주식회사 토이코드", null , null, "764-86-00016" ,null, null, null],
+    [null],
+    [" Ⅱ. 거래내역"],
+    ["년월일", "번호", "처리유형(상위)", "처리유형(하위)" ,"거래처코드", "거래처명", "사업자등록번호", "부서/사원", "납기일자","비고(상단)", "분개", "자산", "품목코드","품목명" ,"규격", "수량", "단가", "VAT", "공급가액", "세액", "합계금액", "창고","프로젝트","품목비고","금융기관","납품처","거래명세서비고","(세금)계산서 비고"],
+  ];
+  ffmtAday.forEach(state => {
+    let list = []
+    state.requestedGoods.forEach((g, i) => {
+      list = [ctx.params.date, i+1 , 1, 3 , state.userCode, null, null, null, null,null, 3,4, g.erpCode, g.name, null, g.qutt, g.sales/g.qutt, null, null,null,null,null,null,null,null,null,null];
+      data.push(list);
+    })
+  })
+  var ws = sheet_from_array_of_arrays(data);
+  // ws['!merges'] = [
+  //   {s:{c:8,r:0},e:{c:0,r:1}}, //거래명세서
+  //   {s:{c:2,r:6},e:{c:2,r:3}}, //공급자
+  //   {s:{c:4,r:3},e:{c:6,r:3}}, //등록번호
+  //   {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소
+  //   {s:{c:0,r:4},e:{c:1,r:4}}, // 주소
+  //   {s:{c:0,r:5},e:{c:1,r:5}}, // 상세주소
+  //   {s:{c:0,r:6},e:{c:1,r:6}}, //아래와 같이
+  //   {s:{c:0,r:7},e:{c:1,r:7}}, //합계
+  //   {s:{c:2,r:7},e:{c:6,r:7}}, //total sales
+  //   {s:{c:0,r:8},e:{c:1,r:8}},
+  //   {s:{c:0,r:9},e:{c:1,r:9}},
+  //   {s:{c:0,r:10},e:{c:1,r:10}},
+  //   {s:{c:0,r:11},e:{c:1,r:11}},
+  //   {s:{c:0,r:12},e:{c:1,r:12}}
+  // ];
+  ws['!cols'] = [
+    //  a       b       c       d       e       f       g       h
+    {wch:15},{wch:5},{wch:5},{wch:5},{wch:10},{wch:7},{wch:7},{wch:5}
+    //  i       j       k       l       m       n     o         p
+    ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:15},{wch:20},{wch:5},{wch:5}
+    // q        r      s        t       u      v        w       x
+    ,{wch:15},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
+    // y         z        aa      ab     ac
+    ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
+  ];
+  var ws_name = `토이코드-출고입력-${ctx.params.date}`;
+
+  wb.SheetNames.push(ws_name);
+  wb.Sheets[ws_name] = ws;
+  /* write file */
+  ctx.type = "application/octet-stream";
+  ctx.attachment(`토이코드-출고입력-${ctx.params.date}.xlsx`);
+  ctx.body = XLSX.write(wb, {
+    type: "buffer"
+  });
+}
+
+
 module.exports = {
   isRegisteredNewIVes,
   isFetchedAllIVes ,
   isFetchedIVesByUser,
   isFetchedOrderStatus,
   isPostTrackNumber,
-  isGetXlsx
+  isGetXlsx,
+  isGetXlsxDayFFMT
   // isFetchedOrderFFMT
  };

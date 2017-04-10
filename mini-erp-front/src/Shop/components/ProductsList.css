@@ -37,5 +37,6 @@ h4{
 }
 
 .goods-cover{
-  width: 100px;
+  width: calc(718px/8);
+  height: calc(1014px/8);
 }

@@ -36,7 +36,6 @@ class UserInfo extends Component {
   render(){
     const { user, userEdit } = this.props;
     const { branch } = user
-    console.log(user.customerType);
     const disabled = !userEdit ? 'none' : ''
     const isntValid = { display: this.state.isValid, margin: 0, color: "#990c0c", fontSize: "12px" }
     return(

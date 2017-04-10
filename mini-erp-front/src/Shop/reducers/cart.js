@@ -11,6 +11,7 @@ const addedIds = ( state = initialState.addedIds, action) => {
     case types.ADD_TO_CART:
       return [...state, {
         id:action.book.code,
+        erp: action.book.erpCode,
         title: action.book.title,
         level: action.book.level,
         volume: action.book.volume,
@@ -28,6 +29,7 @@ export const selectedGoods = (state = initialState.selectedGoods, action) => {
     case types.ADD_TO_CART:
       return [...state, {
         id:action.book.code,
+        erp: action.book.erpCode,
         title: action.book.title,
         level: action.book.level,
         volume: action.book.volume,

@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 export const FETCH_ALL_FFMT = 'FETCH_ALL_FFMT'
+export const IS_GET_XLSX_FFMT_A_DAY = 'IS_GET_XLSX_FFMT_A_DAY'
 
 
 
@@ -17,4 +18,9 @@ export const fetchAllFFMT = () => (dispatch) => {
         response: response.data
       })
     })
+}
+
+export const getXlsxFFMTaDay = (date) => (dispatch) => {
+  window.open(`${ROOT_URL}/xlsx/${date}/ffmt`, '_blank')
+  dispatch({type: IS_GET_XLSX_FFMT_A_DAY})
 }

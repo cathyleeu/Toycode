@@ -12,7 +12,6 @@ class RequestedIVesContainer extends Component {
   }
   isChildIVes = (invoice, i) => <RequestedIVes className="col-md-12" key={i} invoice={invoice} requestRefundByUser={this.props.requestRefundByUser}/>
   render(){
-    console.log("RequestedIVesContainer",this.props)
     return(
       <div>
         <h5>주문 내역</h5>

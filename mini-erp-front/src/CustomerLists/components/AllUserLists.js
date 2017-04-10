@@ -48,6 +48,9 @@ const AllUserLists = ({allUsers, listTitle}) => (
           <div key={i} className="cst-container">
             <AllUsersDetail user={user}>
               <div>
+                <div>
+                  <p>사업자 번호 : {user.branch.license} | 지사 명칭: {user.branch.sub_name}</p>
+                </div>
                 <div className="User-Edu-Manager">
                   <p>교육 담당자 : {user.education.E_manager} | {user.education.E_phone} | {user.education.E_email}</p>
                 </div>

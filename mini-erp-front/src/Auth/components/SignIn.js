@@ -22,7 +22,11 @@ class SignIn extends Component {
   getErrMsg = (nameErr) => {
     const { errorMessage } = this.props;
     let nameErrs = errorMessage.find(l => l.type.match(nameErr)) || null
-    if(nameErrs) return <strong className="errMessage">{nameErrs.msg}</strong>
+    if(nameErrs) {
+      return <strong className="errMessage">{nameErrs.msg}</strong>
+    } else {
+      return null
+    }
   }
   onSubmit = e => {
     e.preventDefault()

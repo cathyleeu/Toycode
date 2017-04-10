@@ -8,6 +8,7 @@ const booksSchema = new Schema({
   volume: String,
   level: String,
   code : String,
+  erpCode: String,
   classify: String, //지사구분
   quantity : {type: Number, default: 0},
   imgcode: String, //임시로 사용 중

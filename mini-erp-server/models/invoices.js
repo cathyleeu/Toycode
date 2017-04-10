@@ -13,9 +13,11 @@ const invoiceSchema = new Schema({
   userName: {type: String, required: true},
   userEmail : {type: String, required: true},
   userCode: {type: String, required: true},
+  userErp: String,
   status: {type: String, default: 'RQT'}, //RQT, FFMT
   trackingNo: String,
   releaseDate: Date,
+  filterReleaseDate: String, //YYYYMMDD
   delivery: {
     to: {type: String, required: true},
     address: {
