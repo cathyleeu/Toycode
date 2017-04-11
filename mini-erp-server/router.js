@@ -28,18 +28,20 @@ router.get('/branch/:branch/:kinderInfo', Users.isFetchedKinderInfo)
 router.get('/user/:user/kinders',  Users.userKinders)
 router.put('/user/:user/info',  Users.userInfoUpdate)
 router.put('/user/:user/kinder',  Users.userKinderUpdate)
+router.put('/user/:code', Users.userUpdateByAdmin )
 
 
 router.post('/books', Books.isRegisteredNewGoods)
 router.get('/books', Books.isFetchedAll)
+router.put('/books/:code', Books.isModifyingGoods)
 
 router.get('/invoices', Invoices.isFetchedAllIVes)
 router.get('/invoices/status/:status', Invoices.isFetchedOrderStatus)
 router.put('/invoices/track/no/:invoiceId', Invoices.isPostTrackNumber)
-// router.get('/invoices/status/ffmt/:date', Invoices.isFetchedOrderFFMT)
 router.get('/invoices/:user', Invoices.isFetchedIVesByUser)
 router.post('/invoices', Invoices.isRegisteredNewIVes)
 router.get('/xlsx', Invoices.isGetXlsx)
+router.get('/xlsx/:date/ffmt', Invoices.isGetXlsxDayFFMT)
 // router.get('/xlsx/day', Invoices.isGetXlsx)
 
 

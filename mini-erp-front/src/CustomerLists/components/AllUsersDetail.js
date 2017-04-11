@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
-
+import CustomModal from './CustomModal'
 
 class AllUsersDetail extends Component {
   constructor(props){
     super(props)
     this.state = {
       open: false,
-      class: "user-info"
+      class: "user-info",
+      modalOpen: 'none'
     }
   }
   handleClick = (e) => {
@@ -15,6 +16,12 @@ class AllUsersDetail extends Component {
     } else {
       this.setState({ open: true, class: "user-info open" })
     }
+  }
+  handleOpenModal = (block) => {
+    this.setState({modalOpen: block})
+  }
+  handleCloseModal = (none) => {
+    this.setState({modalOpen: none})
   }
   render(){
     const { user } = this.props;
@@ -27,7 +34,16 @@ class AllUsersDetail extends Component {
             <p>{user.code} | {user.branch.repr} | {user.email} </p>
             <p>{user.branch.address.zipNo} | {user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>
           </div>
+          <button onClick={() => this.handleOpenModal('block')}>M</button>
         </div>
+        <CustomModal
+          ModalOpen={this.state.modalOpen}
+          handleCloseModal={this.handleCloseModal}
+          handleOpenModal={this.handleOpenModal}
+          isUpdateByAdmin={this.props.isUpdateByAdmin}
+          user={user}
+          code={user.code}
+        />
         <div className="user-info-detail">
           {this.props.children}
         </div>

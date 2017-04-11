@@ -12,7 +12,7 @@ class Invoice extends PureComponent{
   isSelectedGoods = (detail, i) => <SelectedGoods detail={detail} key={i}/>
   render(){
     const commaTotal = Commas(this.props.total)
-    const { branch, email, code, account, kinders, customerType } = this.props.user.user;
+    const { branch, email, code, account, kinders, customerType, erpCode } = this.props.user.user;
     return(
       <div className="Invoice-Container">
         <div className="col-md-6">
@@ -35,6 +35,7 @@ class Invoice extends PureComponent{
             customerType={customerType}
             address={branch.address}
             acct={account}
+            userErp={erpCode}
             userKinders={kinders}
           />
         </div>

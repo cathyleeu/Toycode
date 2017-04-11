@@ -15,6 +15,11 @@ class GoodsFFMTs extends Component {
   dateChange = (date) => {
     this.setState({date})
   }
+  handleXlsx = (e) => {
+    e.preventDefault()
+    let date = moment(this.state.date).tz("Asia/Seoul").format('YYYYMMDD')
+    this.props.getXlsxFFMTaDay(date)
+  }
   render(){
     let selectedDate = moment(this.state.date).tz("Asia/Seoul").format('MM월 DD일')
     let ffmtGoods = this.props.allFFMT.filter(ffmt => moment(ffmt.releaseDate).tz("Asia/Seoul").format('MM월 DD일') === selectedDate)
@@ -28,6 +33,11 @@ class GoodsFFMTs extends Component {
               selected={this.state.date}
               onChange={this.dateChange}
              />
+             <form onSubmit={this.handleXlsx}>
+               <label>
+                 <input type='submit' value='엑셀 출력' />
+               </label>
+             </form>
           </div>
          </div>
          <div>

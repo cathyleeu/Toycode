@@ -29,6 +29,7 @@ const userSchema = new Schema({
   password: String,
   code: String,
   customerType: String,
+  erpCode: String,
   branch: {
     license: String,
     name: String,

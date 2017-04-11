@@ -18,8 +18,8 @@ class NewOrders extends PureComponent {
     return(
       <div className='cst-container'>
         <form onSubmit={this.handleSubmit}>
+          <p>금일 출고 요청 건</p>
           <label>
-            금일 출고 요청 건
             <input type='submit' value='거래명세서 excel 출력' />
           </label>
         </form>

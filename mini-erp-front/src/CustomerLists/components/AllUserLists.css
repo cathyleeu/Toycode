@@ -31,23 +31,47 @@
 .all-user-info{
   display: flex;
   flex-direction: column;
+  width: 65%;
+  margin-right: 0.5em;
 }
 /*background: #4884ce;
 color: white;*/
 .all-user-abbr{
   /*justify-content: space-between;*/
   width: 100%;
+  align-items: center;
 }
 
 .all-user-abbr p{
   margin: 0;
 }
 
-.user-info button{
+.all-user-abbr > button{
   border: 1px solid #1ECD97;
   border-radius: 20px;
   height: 40px;
   width: 40px;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+.modal-btn-close{
+  border: 1px solid #1ECD97;
+  border-radius: 15px;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+
+.modal-btn-success{
+  border: 1px solid #1ECD97;
+  /*border-radius: 20px;*/
+  height: 40px;
+  width: 100px;
   background-color: white;
   cursor: pointer;
   margin-right: 0.5em;

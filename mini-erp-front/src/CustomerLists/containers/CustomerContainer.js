@@ -59,6 +59,7 @@ class CustomerContainer extends Component {
           status={status}
           allKCNames={allKCNames}
           allUsers={allUsers}
+          isUpdateByAdmin={this.props.isUpdateByAdmin}
           fetchInfoForIssued={this.props.fetchInfoForIssued}
           listTitle={tags.find(l => l.type === searchTag).title}/>
       </div>

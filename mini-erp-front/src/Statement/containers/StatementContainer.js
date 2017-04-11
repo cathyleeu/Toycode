@@ -11,8 +11,8 @@ class StatementContainer extends Component{
     const { allFFMT } = this.props;
     return(
       <div className="has-Header Container">
-        {allFFMT && <GoodsFFMTs allFFMT={this.props.allFFMT} />}
-        
+        {allFFMT && <GoodsFFMTs allFFMT={this.props.allFFMT} getXlsxFFMTaDay={this.props.getXlsxFFMTaDay}/>}
+
       </div>
     )
   }
