@@ -304,13 +304,13 @@ const confirmSignUp = async ctx => {
 
 // TODO:codeName 으로 불러오기
 const allUsers = async ctx => {
-  ctx.body = await User.find().where({userType: 'branch'}).select('userType customerType email kinders branch code account education updateOn');
+  ctx.body = await User.find().where({userType: 'branch'}).select('-password');
 }
 const allUsersEmails = async ctx => {
   ctx.body = await User.find().select('email -_id');
 }
 const loggedUser = async ctx => {
-  ctx.body = await User.find().where({email: ctx.params.user}).select('userType customerType email kinders branch code account education updateOn');
+  ctx.body = await User.find().where({email: ctx.params.user}).select('-password');
 }
 
 // 원-지사코드 매칭
@@ -459,6 +459,28 @@ const userKinderUpdate = async ctx => {
   }
 }
 
+const userUpdateByAdmin = async ctx => {
+  try{
+    console.log("UpdateByAdmin",ctx.request.body)
+    const { name, sub_name, license, erpCode, location } = ctx.request.body;
+    ctx.body = await User.findOneAndUpdate(
+      {code: ctx.params.code},
+      {$set: {
+        "branch.name": name,
+        "branch.sub_name": sub_name,
+        "branch.license": license,
+        "branch.location": location,
+        erpCode: erpCode
+      }},
+      { new: true })
+  } catch(err){
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+
+
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo, allUsersEmails
+  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo, allUsersEmails, userUpdateByAdmin
 };

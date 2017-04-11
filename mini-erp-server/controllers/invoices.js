@@ -22,7 +22,7 @@ function Commas(x) {
 }
 const isRegisteredNewIVes = async (ctx, next) => {
   try {
-    const {userName, userEmail, userCode, delivery, requestedGoods, requestDesc, totalSales} = ctx.request.body;
+    const {userName, userEmail, userCode, userErp, delivery, requestedGoods, requestDesc, totalSales} = ctx.request.body;
     const {to, phone, address} = delivery;
     const {roadAddr, detailAddr, zipNo} = address;
 
@@ -31,7 +31,7 @@ const isRegisteredNewIVes = async (ctx, next) => {
         zero = "0".repeat(9),
         invoiceId = "IV" + (zero+count).slice(-zero.length);
     const invoice = new Invoices({
-      invoiceId, userName, userEmail, userCode,
+      invoiceId, userName, userEmail, userCode, userErp,
       delivery: { to, address: { zipNo, roadAddr, detailAddr }, phone },
       requestedGoods, requestDesc, totalSales
     });
@@ -304,34 +304,31 @@ const isGetXlsxDayFFMT = async ctx => {
   ffmtAday.forEach(state => {
     let list = []
     state.requestedGoods.forEach((g, i) => {
-      list = [ctx.params.date, i+1 , 1, 3 , state.userCode, null, null, null, null,null, 3,4, g.erpCode, g.name, null, g.qutt, g.sales/g.qutt, null, null,null,null,null,null,null,null,null,null];
+      list = [ctx.params.date, i+1 , 1, 3 , state.userErp, null, null, null, null,null, 3,4, g.erpCode, g.name, null, g.qutt, g.sales/g.qutt, null, null,null,null,null,null,null,null,null,null];
       data.push(list);
     })
   })
   var ws = sheet_from_array_of_arrays(data);
-  // ws['!merges'] = [
-  //   {s:{c:8,r:0},e:{c:0,r:1}}, //거래명세서
-  //   {s:{c:2,r:6},e:{c:2,r:3}}, //공급자
-  //   {s:{c:4,r:3},e:{c:6,r:3}}, //등록번호
-  //   {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소
-  //   {s:{c:0,r:4},e:{c:1,r:4}}, // 주소
-  //   {s:{c:0,r:5},e:{c:1,r:5}}, // 상세주소
-  //   {s:{c:0,r:6},e:{c:1,r:6}}, //아래와 같이
-  //   {s:{c:0,r:7},e:{c:1,r:7}}, //합계
-  //   {s:{c:2,r:7},e:{c:6,r:7}}, //total sales
-  //   {s:{c:0,r:8},e:{c:1,r:8}},
-  //   {s:{c:0,r:9},e:{c:1,r:9}},
-  //   {s:{c:0,r:10},e:{c:1,r:10}},
-  //   {s:{c:0,r:11},e:{c:1,r:11}},
-  //   {s:{c:0,r:12},e:{c:1,r:12}}
-  // ];
+  ws['!merges'] = [
+    {s:{c:4,r:0},e:{c:0,r:0}}, //판매자료 입력
+    {s:{c:4,r:2},e:{c:0,r:2}}, //공급자
+    {s:{c:2,r:3},e:{c:0,r:3}}, //회사명
+    {s:{c:4,r:3},e:{c:3,r:3}}, //사업자
+    {s:{c:2,r:4},e:{c:0,r:4}}, //회사명
+    {s:{c:4,r:4},e:{c:3,r:4}}, //사업자
+    {s:{c:4,r:6},e:{c:0,r:6}}
+    // {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소
+    // {s:{c:0,r:4},e:{c:1,r:4}}, // 주소
+    // {s:{c:0,r:5},e:{c:1,r:5}}, // 상세주소
+
+  ];
   ws['!cols'] = [
     //  a       b       c       d       e       f       g       h
-    {wch:15},{wch:5},{wch:5},{wch:5},{wch:10},{wch:7},{wch:7},{wch:5}
+    {wch:10},{wch:5},{wch:5},{wch:5},{wch:10},{wch:7},{wch:7},{wch:5}
     //  i       j       k       l       m       n     o         p
-    ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:15},{wch:20},{wch:5},{wch:5}
+    ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:10},{wch:20},{wch:5},{wch:5}
     // q        r      s        t       u      v        w       x
-    ,{wch:15},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
+    ,{wch:10},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
     // y         z        aa      ab     ac
     ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
   ];

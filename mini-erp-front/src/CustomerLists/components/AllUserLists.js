@@ -40,13 +40,13 @@ import './AllUserLists.css'
 // }
 
 
-const AllUserLists = ({allUsers, listTitle}) => (
+const AllUserLists = ({allUsers, listTitle, isUpdateByAdmin}) => (
   <div>
     <h5>{listTitle}리스트</h5>
     { allUsers.map(
       (user , i) => (
           <div key={i} className="cst-container">
-            <AllUsersDetail user={user}>
+            <AllUsersDetail user={user} isUpdateByAdmin={isUpdateByAdmin}>
               <div>
                 <div>
                   <p>사업자 번호 : {user.branch.license} | 지사 명칭: {user.branch.sub_name}</p>

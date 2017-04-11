@@ -47,6 +47,7 @@ class Address extends Component {
 	isSelectedAddress = (result) => {
 		const {selectedJuso} = this.props
 		selectedJuso(result)
+    console.log(result);
 		this.closeModal()
 		this.setState({
 			zipNo: result.zipNo,
@@ -57,11 +58,12 @@ class Address extends Component {
 		})
 	}
   isOrderRequest = () => {
-    const { userEmail, userCode, requestInvoice, selected, userName } = this.props;
+    const { userEmail, userCode, requestInvoice, selected, userName, userErp } = this.props;
     const { zipNo, roadAddr, detailAddr, phone, recipient } = this.state;
     console.log("selectedFromAddr",selected)
+    console.log(userErp);
     const invoice = {
-      userName, userEmail, userCode,  //TODO: user Erpcode 등록 userErp: erpCode
+      userName, userEmail, userCode, userErp,
       delivery: {
         to: recipient,
         address: { zipNo, roadAddr, detailAddr },
@@ -183,11 +185,3 @@ function mapStateToProps(state){
 
 
 export default connect(mapStateToProps,actions)(Address)
-// export default Address
-
-
-// {invoice.totalSales ?(
-//   <button
-//     className="col-md-3"
-//     onClick={() => this.isOrderRequest}> 주문하기</button>
-// ):'수량을 입력하시면 주문하기 버튼이 뜹니다.'}

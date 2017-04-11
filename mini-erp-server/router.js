@@ -28,6 +28,7 @@ router.get('/branch/:branch/:kinderInfo', Users.isFetchedKinderInfo)
 router.get('/user/:user/kinders',  Users.userKinders)
 router.put('/user/:user/info',  Users.userInfoUpdate)
 router.put('/user/:user/kinder',  Users.userKinderUpdate)
+router.put('/user/:code', Users.userUpdateByAdmin )
 
 
 router.post('/books', Books.isRegisteredNewGoods)

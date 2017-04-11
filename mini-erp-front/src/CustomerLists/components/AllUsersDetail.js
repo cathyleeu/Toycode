@@ -38,9 +38,12 @@ class AllUsersDetail extends Component {
         </div>
         <CustomModal
           ModalOpen={this.state.modalOpen}
-          handleCloseModal={this.handleCloseModal} 
+          handleCloseModal={this.handleCloseModal}
           handleOpenModal={this.handleOpenModal}
-          user={user}/>
+          isUpdateByAdmin={this.props.isUpdateByAdmin}
+          user={user}
+          code={user.code}
+        />
         <div className="user-info-detail">
           {this.props.children}
         </div>
