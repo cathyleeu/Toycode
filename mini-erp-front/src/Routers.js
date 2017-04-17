@@ -18,7 +18,6 @@ import Feature from './Feature'
 import SignUp from './Auth/containers/SignUp'
 
 
-
 class Routers extends Component {
   componentDidMount(){
     this.props.fetchUserInfo()
