@@ -24,8 +24,13 @@ class Login extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
   render(){
-    // console.log("login",this.props.err);
-    const logo = require('../../public/logo.png');
+    const logo = require('../../public/logo.png'),
+          buttonStyle = {
+            color: "#fff",
+            height: '40px',
+            width: '250px',
+            fontSize: '12px'
+          };
     return(
       <div className="Login-temp" style={{height: `${this.state.height}px`}}>
         <div className="Login-temp-back" style={{height: `${this.state.height}px`}}>
@@ -53,7 +58,11 @@ class Login extends Component {
               onChange={this.handleChange}
               errorText={this.state.err}
             />
-            <RaisedButton label="로그인" type="submit"/>
+            <RaisedButton
+              backgroundColor="#00ACC1"
+              buttonStyle={buttonStyle}
+              className="Login-btn"
+              type="submit">로그인</RaisedButton>
           </form>
         </Card>
         </div>

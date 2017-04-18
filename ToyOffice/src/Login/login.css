@@ -20,7 +20,12 @@
   flex-direction: column;
   justify-content: center;
 }
-
+.Login-btn{
+  /*width: 80px;*/
+  /*padding: 0 20px;*/
+  /*color:#fff;*/
+  margin-top: 3em;
+}
 
 .Login-logo {
   /*animation: App-logo-spin infinite 20s linear;*/
@@ -33,3 +38,7 @@ form,
   flex-direction: column;
   align-items: center;
 }
+/*
+form{
+  margin-bottom: 2em;
+}*/

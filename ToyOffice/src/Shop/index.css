@@ -1,0 +1,74 @@
+.Child-Cont{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Shop-Cont{
+  width: 100%;
+  margin: 1em;
+  /*height: 300px;*/
+  border: 1px solid #dbdbdb;
+  display: flex;
+  flex-direction: column;
+}
+
+.Shop-Search{
+  /*width: 100%;*/
+  margin: 1em;
+  height: 50px;
+  border: 1px solid #dbdbdb;
+}
+
+.Shop-Goods{
+  display: flex;
+  flex-direction: row;
+  /*border: 1px solid #dbdbdb;*/
+  justify-content: space-between;
+  height: 150px;
+  padding: 0.5em 1em;
+}
+
+.Shop-Select-vol{
+  width: 30%;
+  height: 100%;
+  border: 1px solid #dbdbdb;
+  /*margin: 1em;*/
+}
+.Shop-Select-level{
+  width: 69%;
+  height: 100%;
+  border: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Shop-Select-btn{
+  border: 1px solid #dbdbdb;
+  width: 63px;
+  height: 20px;
+  margin: 0.2em;
+  border-radius: 10px;
+
+}
+.Shop-Select-btn:hover{
+  background-color: #fff;
+}
+
+.Vol-brn{
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+}
+.Shop-Coming{
+  margin: 10px;
+  /*padding: 1em;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #dbdbdb;
+  border-radius: 2em;
+  height: 120px;
+  width: 100%;
+}

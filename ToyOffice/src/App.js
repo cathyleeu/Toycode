@@ -7,9 +7,10 @@ import { AppBar } from 'material-ui';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
 import Feature from './Feature'
+import { Shop } from './Shop'
 
 
-const Order = (props) => <div>Order</div>
+// const Order = (props) => <div>Order</div>
 const OrderDetail = () => <div>OrderDetail</div>
 const Account = (props) => <div>Account</div>
 const Kinder = (props) => <div>Kinder</div>
@@ -32,10 +33,10 @@ class App extends Component {
     this.props.tempoLogOut(history)
   }
   render() {
-    console.log("App",this.props)
+    // console.log("App",this.props)
     const { match } = this.props;
     let nav = [
-      {path:'order', component: Order, name: '주문하기'},
+      {path:'shop', component: Shop, name: '주문하기'},
       {path:'details', component: OrderDetail, name : '주문내역'},
       {path:'account', component: Account, name : '마이페이지'},
       {path:'kinder', component: Kinder, name : '키즈씽킹 원 설정'},
