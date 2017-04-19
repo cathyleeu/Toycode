@@ -1,13 +1,16 @@
 import React from 'react'
+import Goods from './Goods'
 
-const GoodsList = ({goods}) => (
-  <div>
-    {goods.map((g,i) => (
-      <div key={i}>
-        {g.title}{g.level}{g.volume}
+class GoodsList extends React.Component{
+  renderBook = (g, i) => <Goods g={g} key={i} {...this.props}/>
+  render(){
+    return(
+      <div className="Goods-List">
+        {this.props.goods.map(this.renderBook)}
       </div>
-    ))}
-  </div>
-)
+    )
+  }
+}
+
 
 export default GoodsList

@@ -3,43 +3,72 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
-.Shop-Cont{
+
+.Shop-Goods-desc{
+  display: flex;
+  flex-direction: row;
+  padding: 0.5em 1.8em;
+  align-items: center;
+}
+.Shop-Goods-desc > h3,
+.Shop-Goods-desc > p { margin: 0; }
+.Shop-Goods-desc > p { font-weight: 200; margin-left: 0.5em; font-size: 15px;}
+.Cart-Cont, .Shop-Cont{
   width: 100%;
   margin: 1em;
-  /*height: 300px;*/
-  border: 1px solid #dbdbdb;
   display: flex;
   flex-direction: column;
 }
 
 .Shop-Search{
-  /*width: 100%;*/
   margin: 1em;
   height: 50px;
   border: 1px solid #dbdbdb;
 }
+
+
 
 .Shop-Goods{
   display: flex;
   flex-direction: row;
   /*border: 1px solid #dbdbdb;*/
   justify-content: space-between;
-  height: 150px;
-  padding: 0.5em 1em;
+  height: 300px;
+  width: 700px;
+  padding: 0.5em 1.8em;
+}
+
+.Cart-Goods{
+  padding: 0.5em 1.8em;
+  width: 700px;
 }
 
 .Shop-Select-vol{
   width: 30%;
   height: 100%;
-  border: 1px solid #dbdbdb;
+  border: 3px solid #dbdbdb;
+  /*padding: 0 0.5em;*/
+  border-bottom-left-radius: 10px;
+  /*z-index: 10;*/
   /*margin: 1em;*/
 }
+
+.Shop-Select-vol-num{
+  /*display: grid;*/
+  padding: 1em;
+  /*grid-template-columns: 50% 1fr;*/
+}
+
 .Shop-Select-level{
   width: 69%;
   height: 100%;
-  border: 1px solid #dbdbdb;
+  border: 3px solid rgb(0, 188, 212);
+  margin-left: 0.5em;
+  /*padding: 0.5em;*/
   display: flex;
+  border-bottom-right-radius: 10px;
   align-items: center;
   justify-content: center;
 }
@@ -71,4 +100,62 @@
   border-radius: 2em;
   height: 120px;
   width: 100%;
+}
+
+.Goods-List{
+  display: grid;
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 50% 1fr;
+}
+.Goods-cover{
+  width: calc(718px/8);
+  height: calc(1014px/8);
+  margin-right: 0.3em;
+}
+.Goods-cont{
+  height: 130px;
+  display: flex;
+  flex-direction: row;
+  /*margin: 0.2em;*/
+  /*border: 1px solid #dbdbdb;*/
+  padding: 0.3em;
+}
+.Goods-cont:hover{
+  background-color: #dbdbdb;
+  /*display: none;*/
+}
+
+
+.Goods-ctx-cont{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Goods-title{
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0 0 0.3em 0;
+}
+
+.Goods-desc{
+  font-weight: 200;
+  font-size: 13px;
+  margin: 0 0 0.6em 0;
+}
+.Goods-price{
+  font-weight: 300;
+  font-size: 15px;
+  margin: 0;
+}
+
+.Goods-Cart-list{
+  padding: 0.5em;
+  border: 3px solid #dbdbdb;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  height: auto;
+  min-height: 300px;
 }
