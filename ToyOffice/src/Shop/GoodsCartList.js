@@ -17,8 +17,7 @@ const GoodsCartList = ({selected}) => (
       <tbody>
       {selected.map((s,i) => (
         <tr key={i} className="Select-Goods-Detail">
-
-          <td className="lang">{s.lang}</td>
+          <td className="lang">{s.lang === 'ko' ? '국문' : '영문'}</td>
           <td className="title">{s.title}</td>
           <td className="level">{s.level}</td>
           <td className="volume">{s.volume}</td>
