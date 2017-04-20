@@ -13,10 +13,13 @@ class Cart extends PureComponent {
   }
   componentWillReceiveProps(newProps){
     if(this.state.books !== newProps.books){
+      console.log(this.state.books);
+      console.log(newProps.books);
       this.setState({books: newProps.books})
     }
   }
   isDelete = (id) => {
+    console.log("Cart",id)
     this.props.goodsDelete(id)
   }
   render(){

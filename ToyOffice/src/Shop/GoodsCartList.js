@@ -1,37 +1,33 @@
-import React from 'react'
+import React, {Component} from 'react'
+import GoodsCartDetail from './GoodsCartDetail'
 
 
-const GoodsCartList = ({selected}) => (
-  <div >
-    <table className="Select-Goods-List">
-      <thead>
-        <tr className="Select-Goods-Title">
-          <th className="lang">lang</th>
-          <th className="title">title</th>
-          <th className="level">level</th>
-          <th className="volume">volume</th>
-          <th className="order">order</th>
-          <th className="etc">etc</th>
-        </tr>
-      </thead>
-      <tbody>
-      {selected.map((s,i) => (
-        <tr key={i} className="Select-Goods-Detail">
-          <td className="lang">{s.lang === 'ko' ? '국문' : '영문'}</td>
-          <td className="title">{s.title}</td>
-          <td className="level">{s.level}</td>
-          <td className="volume">{s.volume}</td>
-          <td className="order"><input /></td>
-          <td className="etc"><button>delete</button></td>
+class GoodsCartList extends Component{
+  renderCartDetail = (s,i) => <GoodsCartDetail key={i} s={s} {...this.props}/>
+  render(){
+    return(
+      <div>
+        <table className="Select-Goods-List">
+          <thead>
+            <tr className="Select-Goods-Title">
+              <th className="lang">언어</th>
+              <th className="title">상품명</th>
+              <th className="level">레벨</th>
+              <th className="volume">호</th>
+              <th className="order">수량</th>
+            </tr>
+          </thead>
+          <tbody>
+          {this.props.goodsInCart.map(this.renderCartDetail)}
+          </tbody>
+        </table>
+        <div className="Select-Goods-Statement">
 
-        </tr>
-      ))}
-      </tbody>
-    </table>
-    <div className="Select-Goods-Statement">
+        </div>
+      </div>
+    )
+  }
+}
 
-    </div>
-  </div>
-)
 
 export default GoodsCartList

@@ -6,6 +6,7 @@ import './index.css'
 import ComingSoon from './ComingSoon'
 import GoodsList from './GoodsList'
 import GoodsCartList from './GoodsCartList'
+import GoodsDelivery from './GoodsDelivery'
 import {
   Step,
   Stepper,
@@ -23,24 +24,65 @@ class ShopContainer extends Component{
     goods: this.props.goods,
     finished: false,
     stepIndex: 0,
+    goodsInCart: this.props.selected
   }
   componentDidMount(){
     this.props.fetchBooks()
   }
   componentWillReceiveProps(newProps){
-    this.setState({goods: newProps.goods})
+    this.setState({
+      goods: newProps.goods,
+      goodsInCart: newProps.selected
+    })
   }
   handleNext = () => {
-    const {stepIndex} = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
+    const {stepIndex, goodsInCart} = this.state;
+    switch (stepIndex) {
+      case 0:
+        if(goodsInCart.length !== 0){
+          return this.setState({
+            stepIndex: stepIndex + 1,
+            finished: stepIndex >= 2,
+          });
+        } else {
+          return alert('상품을 선택해주세요.')
+        }
+      case 1:
+        console.log("goodsInCart",goodsInCart)
+        let filterZero = [];
+        goodsInCart.forEach(
+          f => {
+            if(f.amount === 0 || !f.hasOwnProperty("amount")){
+              filterZero.push(f)
+            }
+          }
+        )
+        if(filterZero.length === 0){
+          return this.setState({
+            stepIndex: stepIndex + 1,
+            finished: stepIndex >= 2,
+          })
+        } else {
+          return alert('모든 상품의 수량을 입력해주세요.')
+        }
+      default:
+        return this.setState({
+          stepIndex: stepIndex + 1,
+          finished: stepIndex >= 2,
+        });
+    }
   }
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
       this.setState({stepIndex: stepIndex - 1});
+    }
+  }
+  handleDeleteId = (s) => {
+    if(confirm(`선택하신 ${s.title} ${s.level} ${s.volume}을 삭제하시겠습니까?`)){
+      this.props.goodsDelete(s.code)
+    } else {
+      return false
     }
   }
   renderStepActions = (step) => {
@@ -85,15 +127,15 @@ class ShopContainer extends Component{
     }
   }
   renderSelectedGoods = () => {
-    let { selected } = this.props;
-    if(selected.length === 0){
+    let { goodsInCart } = this.state;
+    if(goodsInCart.length === 0){
       return <div>상품을 선택해 주세요.</div>
     } else {
-      return <GoodsCartList selected={selected} />
+      return <GoodsCartList {...this.props} goodsInCart={goodsInCart} handleDeleteId={this.handleDeleteId}/>
     }
   }
   render(){
-    const {finished, stepIndex} = this.state;
+    const {finished, stepIndex, goodsInCart} = this.state;
     let lang = [{lang:'ko', name: '한글'}, {lang:'en', name: 'English'}]
     let vol = [
       {volume:'1', sub: '1권'},
@@ -178,9 +220,7 @@ class ShopContainer extends Component{
             <StepContent>
               <div className="Cart-Goods">
                 <div className="Goods-Cart-list">
-                  <p>
-                    배송지 입력
-                  </p>
+                  <GoodsDelivery goodsInCart={goodsInCart}/>
                 </div>
               </div>
               {this.renderStepActions(2)}
