@@ -33,7 +33,6 @@
 .Shop-Goods{
   display: flex;
   flex-direction: row;
-  /*border: 1px solid #dbdbdb;*/
   justify-content: space-between;
   height: 300px;
   width: 700px;
@@ -49,24 +48,18 @@
   width: 30%;
   height: 100%;
   border: 3px solid #dbdbdb;
-  /*padding: 0 0.5em;*/
   border-bottom-left-radius: 10px;
-  /*z-index: 10;*/
-  /*margin: 1em;*/
 }
 
 .Shop-Select-vol-num{
-  /*display: grid;*/
   padding: 1em;
-  /*grid-template-columns: 50% 1fr;*/
 }
 
 .Shop-Select-level{
   width: 69%;
   height: 100%;
-  border: 3px solid rgb(0, 188, 212);
+  border: 3px solid #dbdbdb;
   margin-left: 0.5em;
-  /*padding: 0.5em;*/
   display: flex;
   border-bottom-right-radius: 10px;
   align-items: center;
@@ -92,7 +85,6 @@
 }
 .Shop-Coming{
   margin: 10px;
-  /*padding: 1em;*/
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,13 +110,11 @@
   height: 130px;
   display: flex;
   flex-direction: row;
-  /*margin: 0.2em;*/
-  /*border: 1px solid #dbdbdb;*/
+  margin: 0.2em;
   padding: 0.3em;
 }
 .Goods-cont:hover{
   background-color: #dbdbdb;
-  /*display: none;*/
 }
 
 
@@ -157,7 +147,8 @@
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   height: auto;
-  min-height: 300px;
+  overflow: scroll;
+  min-height: 250px;
 }
 
 .Select-Goods-List{
@@ -167,16 +158,33 @@
   background-color: rgb(0, 188, 212);
   color: #fff;
   height: 30px;
+  font-size: 13px;
   /*margin-bottom: 50px;*/
 }
-.Select-Goods-Detail{
 
-}
 .Select-Goods-Statement{
 
 }
-.lang, .title, .level, .volume, .order, .etc {
+
+.Select-Goods-Detail > td {
+  font-weight: 200;
+  margin: 0;
+  text-align: center;
+}
+.lang, .title, .level, .volume, .order {
   font-weight: 300;
   margin: 0;
   text-align: center;
+}
+
+.order > input {
+  outline: 0;
+  width: 70%;
+  height: 35px;
+  padding: 0 0.5em;
+  border: 2px solid #f2f2f2;
+  border-radius: 5px;
+}
+.order > input:focus{
+  border: 2px solid rgb(0, 188, 212);
 }
