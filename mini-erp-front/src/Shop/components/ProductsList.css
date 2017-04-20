@@ -13,13 +13,17 @@
   max-height: 300px;
   box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
   margin-top: 1em;
+  overflow: scroll;
 }
 
 h4{
   font-family: 'Jeju Gothic', serif;
   margin: 0.5em 0;
 }
-
+.goods-list-cont{
+  display: flex;
+  flex-direction: column;
+}
 .goods-list{
   display: flex;
   flex-direction: row;

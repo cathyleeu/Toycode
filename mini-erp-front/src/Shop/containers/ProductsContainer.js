@@ -8,21 +8,34 @@ import {ProductsList, ProductItem} from '../components'
 
 
 class ProductsContainer extends Component{
+  state = {
+    selectedVol: "1",
+    goods: this.props.books
+  }
+  componentWillReceiveProps(newProps){
+    this.setState({goods: newProps.books})
+  }
   render(){
-    const { books, selected, addToCartUnsafe, customType } = this.props;
+    const { selected, addToCartUnsafe, customType } = this.props;
+    let volume = ["1", "2", "3"], filterGoods = this.state.goods.filter(g => g.volume === this.state.selectedVol)
     return(
       <ProductsList title="1단계: 주문하실 교재를 선택하세요.">
-        <div className="goods-list">
-          {books.map((book, i) =>
-            <ProductItem
-              key={i}
-              book={book}
-              onAddToCartClicked={() => {
-                selected.map((Id) => Id.id).indexOf(book.code) === -1 &&
-                  addToCartUnsafe(book, customType === "A" ? book.bPrice : book.dPrice)
-              }}
-            />
-          )}
+        <div className="goods-list-cont">
+          <div className="goods-list" style={{marginBottom:10 }}>
+            {volume.map((v,i) => <button className="button-addClass" style={{marginRight: 10}} key={i} onClick={() => this.setState({selectedVol: v})}>{v}권</button>)}
+          </div>
+          <div className="goods-list">
+            {filterGoods.map((book, i) =>
+              <ProductItem
+                key={i}
+                book={book}
+                onAddToCartClicked={() => {
+                  selected.map((Id) => Id.id).indexOf(book.code) === -1 &&
+                    addToCartUnsafe(book, customType === "A" ? book.bPrice : book.dPrice)
+                }}
+              />
+            )}
+          </div>
         </div>
       </ProductsList>
     )
