@@ -159,3 +159,24 @@
   height: auto;
   min-height: 300px;
 }
+
+.Select-Goods-List{
+  width: 100%;
+}
+.Select-Goods-Title{
+  background-color: rgb(0, 188, 212);
+  color: #fff;
+  height: 30px;
+  /*margin-bottom: 50px;*/
+}
+.Select-Goods-Detail{
+
+}
+.Select-Goods-Statement{
+
+}
+.lang, .title, .level, .volume, .order, .etc {
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+}
