@@ -125,8 +125,8 @@
 }
 
 .Goods-title{
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: 500;
+  font-size: 16px;
   margin: 0 0 0.3em 0;
 }
 
@@ -135,10 +135,17 @@
   font-size: 13px;
   margin: 0 0 0.6em 0;
 }
-.Goods-price{
-  font-weight: 300;
-  font-size: 15px;
+.Goods-fixed-price{
+  font-weight: 100;
+  font-size: 10px;
+  margin: 0 0 0.1em 0;
+}
+.Goods-sales-price{
+  font-weight: 500;
+  font-size: 14px;
   margin: 0;
+  color: #FF4081;
+  margin: 0 0 0.2em 0;
 }
 
 .Goods-Cart-list{
@@ -151,19 +158,22 @@
   min-height: 250px;
 }
 
+.Delivery-Statement-List,
 .Select-Goods-List{
   width: 100%;
 }
+.Delivery-Statement-List{
+  border-bottom: 1px solid #dbdbdb;
+  padding-bottom: 2em;
+  /*margin-bottom: 1em;*/
+}
+
 .Select-Goods-Title{
   background-color: rgb(0, 188, 212);
   color: #fff;
   height: 30px;
   font-size: 13px;
   /*margin-bottom: 50px;*/
-}
-
-.Select-Goods-Statement{
-
 }
 
 .Select-Goods-Detail > td {
@@ -187,4 +197,104 @@
 }
 .order > input:focus{
   border: 2px solid rgb(0, 188, 212);
+}
+
+.Goods-Delivery{
+  display: flex;
+  flex-direction: row;
+}
+.Goods-Delivery-Title{
+  font-weight: 500;
+  font-size: 14px;
+  color: rgb(0, 188, 212);
+}
+.Goods-Delivery-Statement{ width: 50%; padding: 0.3em; }
+.Goods-Delivery-Addr{ width: 50%; padding: 1em; }
+.Goods-Delivery-Addr label{
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  margin-bottom: 1.8em;
+  font-weight: 300;
+  /*width: 50%;*/
+}
+.Goods-Delivery-Addr label input{ margin-top: 0.5em; border: 1px solid #dbdbdb;}
+.Goods-Delivery-Addr label input:focus{border: 1px solid rgb(0, 188, 212);}
+.Delivery-Addr-btn{
+  width: 70px;
+  margin: 0 0.3em;
+  height: 30px;
+  border: 0;
+  background: rgb(0, 188, 212);
+  color: #fff;
+  font-weight: 200;
+  outline: none;
+}
+.Delivery-Addr-btn:hover{ background: rgba(0, 188, 212,0.7);}
+.Delivery-Addr-btn:active{ background: rgba(0, 181, 202,0.9);}
+.Delivery-Addr-Row label{
+  flex: 1;
+}
+.half{ margin-right: 0.3em;}
+.Delivery-input{
+  padding: 0.2em;
+  height: 25px;
+  outline: none;
+}
+
+.SpaceBtw{
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Delivery-Statement-Item{
+  color: rgb(0, 188, 212);
+  height: 30px;
+  font-size: 10px;
+}
+
+.Delivery-Statement-Detail > td {
+  font-weight: 200;
+  font-size: 13px;
+  margin: 0;
+}
+.Delivery-Statement-Bill{
+  padding: 1em;
+}
+.Delivery-Statement-Bill p {
+  margin: 0;
+}
+.Delivery-Statement-Fixed{
+  font-weight: 200;
+  font-size: 15px;
+  color: #dbdbdb;
+  text-decoration: line-through;
+
+}
+.Delivery-Statement-Total{
+  font-weight: 200;
+  font-size: 15px;
+}
+.Delivery-Statement-Sales{
+  font-weight: 400;
+  font-size: 30px;
+}
+.Delivery-Statement-Sales-Per{
+  font-weight: 200;
+  font-size: 11px;
+}
+.Delivery-Statement-Col{
+  display: flex;
+  flex-direction: column;
+}
+.Delivery-Statement-Row{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.Delivery-Addr-Row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

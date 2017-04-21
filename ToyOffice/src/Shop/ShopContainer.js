@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import * as actions from './actions'
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -17,7 +17,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
 
-class ShopContainer extends Component{
+class ShopContainer extends PureComponent{
   state = {
     lang: 'ko',
     volume: '',
@@ -48,7 +48,6 @@ class ShopContainer extends Component{
           return alert('상품을 선택해주세요.')
         }
       case 1:
-        console.log("goodsInCart",goodsInCart)
         let filterZero = [];
         goodsInCart.forEach(
           f => {
@@ -250,9 +249,11 @@ class ShopContainer extends Component{
   }
 }
 
-const mapStateToProps = ({goods}) => ({
-  goods: goods.books,
-  selected: goods.selectedGoods
+const mapStateToProps = (state) => ({
+  goods: state.goods.books,
+  selected: state.goods.selectedGoods,
+  addr: state.goods.addr,
+  user: state.login.user,
 })
 
 export default connect(mapStateToProps, actions)(ShopContainer)

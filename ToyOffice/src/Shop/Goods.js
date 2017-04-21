@@ -19,7 +19,8 @@ class Goods extends React.Component{
         <div className="Goods-ctx-cont">
           <p className="Goods-title">{g.title}{g.level}{g.volume}</p>
           <p className="Goods-desc">{g.desc}</p>
-          <p className="Goods-price">소비자가 : {g.dPrice}</p>
+          <p className="Goods-fixed-price">정가 : {g.dPrice}</p>
+          <p className="Goods-sales-price">판매가 : {g.dPrice*0.6}</p>
           <button onClick={this.handleSelectGoods}>장바구니 담기</button>
         </div>
       </div>
