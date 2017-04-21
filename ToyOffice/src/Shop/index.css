@@ -208,15 +208,8 @@
   font-size: 14px;
   color: rgb(0, 188, 212);
 }
-.Goods-Delivery-Statement{
-  width: 40%;
-  padding: 0.3em;
-}
-.Goods-Delivery-Addr{
-  width: 60%;
-  /*border: 1px solid #dbdbdb;*/
-  padding: 1em;
-}
+.Goods-Delivery-Statement{ width: 50%; padding: 0.3em; }
+.Goods-Delivery-Addr{ width: 50%; padding: 1em; }
 .Goods-Delivery-Addr label{
   display: flex;
   flex-direction: column;

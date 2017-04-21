@@ -21,9 +21,6 @@ class GoodsCartList extends Component{
           {this.props.goodsInCart.map(this.renderCartDetail)}
           </tbody>
         </table>
-        <div className="Select-Goods-Statement">
-
-        </div>
       </div>
     )
   }

@@ -5,6 +5,7 @@ export const START_BOOKS_FETCH = 'START_BOOKS_FETCH'
 export const COMPLETE_BOOKS_FETCH = 'COMPLETE_BOOKS_FETCH'
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const ENTER_GOODS_QUTT = 'ENTER_GOODS_QUTT'
+export const ENTER_DELIVERY_ADDR = 'ENTER_DELIVERY_ADDR'
 export const DELETE_GOODS = 'DELETE_GOODS'
 
 
@@ -21,6 +22,9 @@ export const addToCartUnsafe = (book) => (dispatch) => {
 
 export const enterGoodsQutt = (code, qutt) => (dispatch) => {
   dispatch({ type: ENTER_GOODS_QUTT, code, qutt })
+}
+export const enterDeliveryAddr = (addr) => (dispatch) => {
+  dispatch({ type: ENTER_DELIVERY_ADDR, addr})
 }
 
 export const goodsDelete = (code) => ({ type: DELETE_GOODS, code })

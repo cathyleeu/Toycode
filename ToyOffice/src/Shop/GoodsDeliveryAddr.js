@@ -10,6 +10,10 @@ class GoodsDeliveryAddr extends Component{
 		detailAddr: '',//address.detailAddr|| '',
     recipient: '' //acct.A_manager || '',
   }
+  handleChange = e => {
+    this.setState({[e.target.name]: e.target.value})
+    // enterDeliveryAddr
+  }
   render(){
     return(
       <div className="Goods-Delivery-Addr">

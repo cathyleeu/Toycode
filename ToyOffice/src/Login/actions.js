@@ -25,6 +25,10 @@ export const tempoLogin = (userData) => (dispatch) => {
     })
 }
 
+export const getUserInfo = () => (dispatch) => {
+  // axios.get()
+}
+
 export const tempoLogOut = (history) => (dispatch) => {
   if(confirm('로그아웃 하시겠습니까?')){
     localStorage.removeItem('token')
@@ -38,6 +42,7 @@ export const tempoLogOut = (history) => (dispatch) => {
 
 export const tempoUserState = () => (dispatch) => {
   let token = localStorage.getItem('token')
+  let email = localStorage.getItem('email')
   if(token){
     dispatch({type: AUTH_USER})
   } else {

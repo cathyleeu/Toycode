@@ -1,13 +1,15 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import GoodsDeliveryAddr from './GoodsDeliveryAddr'
 import { Commas } from '../CommonFunc'
 
-class GoodsDelivery extends Component{
+class GoodsDelivery extends PureComponent{
   renderStatement = (state, i) => (
     <tr className="Delivery-Statement-Detail" key={i}>
       <td className="lang">{state.title}{state.level}{state.volume}</td>
       <td className="title">{state.amount}</td>
-      <td className="level">{Commas(state.dPrice*state.amount)}</td>
+      <td className="title">{Commas(state.dPrice)}</td>
+      <td className="title">60%</td>
+      <td className="level">{Commas(state.dPrice*state.amount*0.6)}</td>
     </tr>
   )
   render(){
@@ -22,6 +24,8 @@ class GoodsDelivery extends Component{
               <tr className="Delivery-Statement-Item">
                 <th className="lang">상품명</th>
                 <th className="title">수량</th>
+                <th className="title">단가</th>
+                <th className="title">공급률</th>
                 <th className="title">가격</th>
               </tr>
             </thead>
