@@ -35,6 +35,7 @@ class IssuedClass extends PureComponent {
   }
   render(){
     const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId } = this.props;
+    console.log("luusedclass",studentsNames);
     let needNames = studentsNames.needNames;
     let mon = moment().set({year:2017, month:3});
     // YBM 대구지사 3월로 고정 예외처리
@@ -57,7 +58,7 @@ class IssuedClass extends PureComponent {
             <button
               className='button-edit'
               disabled={disabled} onClick={() => {
-              return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>{mon.format('MM')}월 로그인발급</button>
+              return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인발급</button>
           </form>
         </div>
         {(needNames && (needNames.indexOf(kclassId) !== -1))
