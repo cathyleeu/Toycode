@@ -10,12 +10,23 @@ class CustomerContainer extends Component {
     super(props)
     this.state = {
       searchString: '',
-      searchTag: 'All'
+      searchTag: 'All',
+      allUsers: this.props.allUsers,
+      allKCNames: this.props.allKCNames,
+      userloaded: false
     }
   }
   componentDidMount(){
     this.props.fetchAllUserInfo()
     this.props.fetchAllKClassNames()
+  }
+  componentWillReceiveProps(newProps){
+    if(newProps.allUsers !== this.props.allUsers){
+      this.setState({allUsers: newProps.allUsers, userloaded: true})
+    }
+    if(newProps.allKCNames !== this.props.allKCNames){
+      this.setState({allKCNames: newProps.allKCNames })
+    }
   }
   isSearching = (e) => {
     this.setState({[e.target.name]: e.target.value})
@@ -24,7 +35,7 @@ class CustomerContainer extends Component {
     this.setState({searchTag: tag})
   }
   render(){
-    let { allUsers, allKCNames, status } = this.props,
+    let { status } = this.props, {allUsers, allKCNames, userloaded } = this.state,
         searchString = this.state.searchString.trim().toLowerCase(),
         searchTag = this.state.searchTag;
     const tags = [
@@ -55,13 +66,16 @@ class CustomerContainer extends Component {
             <SearchTags tag={tag} isGetTags={this.isGetTags} key={tag.type} cssName={tag.css}/>
           ))}
         </div>
-        <AllUserLists
-          status={status}
-          allKCNames={allKCNames}
-          allUsers={allUsers}
-          isUpdateByAdmin={this.props.isUpdateByAdmin}
-          fetchInfoForIssued={this.props.fetchInfoForIssued}
-          listTitle={tags.find(l => l.type === searchTag).title}/>
+        {allKCNames.length > 0 && (
+          <AllUserLists
+            status={status}
+            allKCNames={allKCNames}
+            allUsers={allUsers}
+            userloaded={userloaded}
+            isUpdateByAdmin={this.props.isUpdateByAdmin}
+            fetchInfoForIssued={this.props.fetchInfoForIssued}
+            listTitle={tags.find(l => l.type === searchTag).title}/>
+        )}
       </div>
     )
   }

@@ -26,26 +26,28 @@ class AllUsersDetail extends Component {
   render(){
     const { user } = this.props;
     return(
-      <div className={this.state.class}>
-        <div className="all-user-abbr">
-          <button onClick={this.handleClick}>+</button>
-          <div className="all-user-name">{user.branch.name}</div>
-          <div className="all-user-info">
-            <p>{user.code} | {user.branch.repr} | {user.email} </p>
-            <p>{user.branch.address.zipNo} | {user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>
+      <div className="cst-container">
+        <div className={this.state.class}>
+          <div className="all-user-abbr">
+            <button onClick={this.handleClick}>+</button>
+            <div className="all-user-name">{user.branch.name}</div>
+            <div className="all-user-info">
+              <p>{user.code} | {user.branch.repr} | {user.email} </p>
+              <p>{user.branch.address.zipNo} | {user.branch.address.roadAddr} | {user.branch.address.detailAddr}</p>
+            </div>
+            <button onClick={() => this.handleOpenModal('block')}>M</button>
           </div>
-          <button onClick={() => this.handleOpenModal('block')}>M</button>
-        </div>
-        <CustomModal
-          ModalOpen={this.state.modalOpen}
-          handleCloseModal={this.handleCloseModal}
-          handleOpenModal={this.handleOpenModal}
-          isUpdateByAdmin={this.props.isUpdateByAdmin}
-          user={user}
-          code={user.code}
-        />
-        <div className="user-info-detail">
-          {this.props.children}
+          <CustomModal
+            ModalOpen={this.state.modalOpen}
+            handleCloseModal={this.handleCloseModal}
+            handleOpenModal={this.handleOpenModal}
+            isUpdateByAdmin={this.props.isUpdateByAdmin}
+            user={user}
+            code={user.code}
+          />
+          <div className="user-info-detail">
+            {this.props.children}
+          </div>
         </div>
       </div>
     )

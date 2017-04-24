@@ -1,52 +1,34 @@
 import React from 'react'
 import AllUsersDetail from './AllUsersDetail'
 import './AllUserLists.css'
+import AllUserKinders from './AllUserKinders'
 
 
-
-// class AllUserLists extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state={
-//       currentPage: 1
-//     }
-//   }
-//   componentWillReceiveProps(nextProps){
-//     this.setState({currentPage: 1})
-//   }
-//   getPage = () => {
-//     var start = this.props.pageSize * (this.state.currentPage - 1)
-//     var end = start + this.props.pageSize
-//     return {
-//       currentPage: this.state.currentPage
-//     , allUsers: this.props.allUsers.slice(start, end)
-//     , numPages: this.getNumPages()
-//     , handleClick: function(pageNum) {
-//         return function() { this.handlePageChange(pageNum) }.bind(this)
-//       }.bind(this)
-//     }
-//   }
-//   getNumPages = () => {
-//     var numPages = Math.floor(this.props.allUsers.length / this.props.pageSize)
-//     if (this.props.allUsers.length % this.props.pageSize > 0) {
-//       numPages++
-//     }
-//     return numPages
-//   }
-//   handlePageChange = (pageNum) => {
-//     this.setState({currentPage: pageNum})
-//   }
-//
-// }
-
-
-const AllUserLists = ({allUsers, listTitle, isUpdateByAdmin}) => (
-  <div>
-    <h5>{listTitle}리스트</h5>
-    { allUsers.map(
-      (user , i) => (
-          <div key={i} className="cst-container">
-            <AllUsersDetail user={user} isUpdateByAdmin={isUpdateByAdmin}>
+class AllUserLists extends React.PureComponent {
+  state = {
+    allUsers: this.props.allUsers,
+    allKCNames: this.props.allKCNames,
+    userloaded: this.props.userloaded
+  }
+  componentWillReceiveProps(newProps){
+    if(newProps.userloaded !== this.props.userloaded){
+      this.setState({userloaded: newProps.userloaded })
+    }
+  }
+  renderKinderInfo = (kinder, i) => {
+    let {allKCNames} = this.state;
+    return <AllUserKinders kinder={kinder} key={i} allKCNames={allKCNames}/>
+  }
+  render(){
+    let {allUsers, listTitle, isUpdateByAdmin} = this.props;
+    if(!this.state.userloaded){
+      return <div> 유저 로딩 중 </div>
+    } else {
+      return(
+        <div>
+          <h5>{listTitle}리스트</h5>
+          {allUsers.map((user, i) => (
+            <AllUsersDetail user={user} isUpdateByAdmin={isUpdateByAdmin} key={i}>
               <div>
                 <div>
                   <p>사업자 번호 : {user.branch.license} | 지사 명칭: {user.branch.sub_name}</p>
@@ -57,45 +39,15 @@ const AllUserLists = ({allUsers, listTitle, isUpdateByAdmin}) => (
                 <div className="User-Acct-Manager">
                   <p>회계 담당자 : {user.account.A_manager} | {user.account.A_phone} | {user.account.A_email}</p>
                 </div>
-                {user.kinders.map((kinder, i) => {
-                  return(
-                  <div className="User-Kinders" key={i}>
-                    <div className="User-Kinder-Info">
-                      <p>유치원 명: {kinder.name} | {kinder.phone} | <strong>접속주소코드 <a href={`https://toycode.org/code/${kinder.url}`} target="_blank">toycode.org/code/{kinder.url}</a></strong></p>
-                      <p>유치원 담당자 : {kinder.manager} | {kinder.managerPh}</p>
-                    </div>
-                    <div className="Uesr-Kinder-Addr">
-                      <p>유치원 주소 : {kinder.zipNo} | {kinder.roadAddr} | {kinder.detailAddr}</p>
-                    </div>
-                    <div className="User-Kinder-Classes">
-                      {kinder.kinderClasses.map((kdc, i) => {
-                        return(
-                        <div key={i} >
-
-                          {kdc.className}-{kdc.level}
-                        </div>
-                      )})}
-                    </div>
-                  </div>
-                )})}
+                {user.kinders.map(this.renderKinderInfo)}
               </div>
             </AllUsersDetail>
-          </div>
-        )
+          )) }
+        </div>
       )
     }
-  </div>
-)
+  }
+}
+
 
 export default AllUserLists
-
-
-/* <form action="https://toycode.org/issue" method="POST" target="_blank">
-  <input type="hidden" name="code" value={kinder.url} />
-  <input type="hidden" name="school" value={kinder.name} />
-  <input type="hidden" name="className" value={kdc.className} />
-  <input type="hidden" name="yearmonth" value="201703" />
-  <input type="hidden" name="level" value={kdc.level} />
-  <input type="hidden" name="students" value={studentsNames[kclassName] ? studentsNames[kclassName].students : ''} />
-  <button className='button-edit' type='submit'>{kdc.className}-{kdc.level}</button>
-</form> */
