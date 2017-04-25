@@ -310,7 +310,7 @@ const allUsersEmails = async ctx => {
   ctx.body = await User.find().select('email -_id');
 }
 const loggedUser = async ctx => {
-  ctx.body = await User.find().where({email: ctx.params.user}).select('-password');
+  ctx.body = await User.findOne().where({email: ctx.params.user}).select('-password');
 }
 
 // 원-지사코드 매칭

@@ -51,7 +51,7 @@ class ShopContainer extends PureComponent{
         let filterZero = [];
         goodsInCart.forEach(
           f => {
-            if(f.amount === 0 || !f.hasOwnProperty("amount")){
+            if( !f.amount || !f.hasOwnProperty("amount")){
               filterZero.push(f)
             }
           }
@@ -219,7 +219,7 @@ class ShopContainer extends PureComponent{
             <StepContent>
               <div className="Cart-Goods">
                 <div className="Goods-Cart-list">
-                  <GoodsDelivery goodsInCart={goodsInCart}/>
+                  <GoodsDelivery goodsInCart={goodsInCart} {...this.props}/>
                 </div>
               </div>
               {this.renderStepActions(2)}
@@ -252,7 +252,7 @@ class ShopContainer extends PureComponent{
 const mapStateToProps = (state) => ({
   goods: state.goods.books,
   selected: state.goods.selectedGoods,
-  addr: state.goods.addr,
+  deliveryInfo: state.goods.deliveryInfo,
   user: state.login.user,
 })
 
