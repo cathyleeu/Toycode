@@ -6,6 +6,7 @@ const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
 export const AUTH_USER = 'AUTH_USER'
 export const UNAUTH_USER = 'UNAUTH_USER'
+export const GET_USER_INFO = 'GET_USER_INFO'
 
 
 export const tempoLogin = (userData) => (dispatch) => {
@@ -25,8 +26,21 @@ export const tempoLogin = (userData) => (dispatch) => {
     })
 }
 
-export const getUserInfo = () => (dispatch) => {
-  // axios.get()
+export const getUserInfo = (email) => (dispatch) => {
+  axios.get(`${ROOT_URL}/user/${email}`)
+  .then( res => {
+    dispatch({type: GET_USER_INFO, user: res.data[0]})
+  })
+}
+
+export const tempoUserState = () => (dispatch) => {
+  let token = localStorage.getItem('token'), email = localStorage.getItem('email');
+  if(token){
+    dispatch({type: AUTH_USER})
+    dispatch(getUserInfo(email))
+  } else {
+    dispatch({type: UNAUTH_USER})
+  }
 }
 
 export const tempoLogOut = (history) => (dispatch) => {
@@ -40,15 +54,7 @@ export const tempoLogOut = (history) => (dispatch) => {
 
 
 
-export const tempoUserState = () => (dispatch) => {
-  let token = localStorage.getItem('token')
-  let email = localStorage.getItem('email')
-  if(token){
-    dispatch({type: AUTH_USER})
-  } else {
-    dispatch({type: UNAUTH_USER})
-  }
-}
+
 
 
 // export const signinUser = (userData) => (dispatch) => {

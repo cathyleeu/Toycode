@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom' // withRouter
 import App from './App'
 import Login from './Login'
@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute'
 
 
 
-class Routers extends Component {
+class Routers extends PureComponent {
   state = {
      login: this.props.login.authenticated
   }
@@ -15,7 +15,6 @@ class Routers extends Component {
     this.setState({login: newProps.login.authenticated})
   }
   render(){
-    console.log(this.state.login)
     const RedirectToLogin = (path) => this.state.login ? <Redirect to={`/${path}`}/> : <Redirect to="/login" />
     return(
       <Router>

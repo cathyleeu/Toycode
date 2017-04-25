@@ -15,6 +15,8 @@ export default function (state = initialState, action) {
       return { ...state, authenticated: true}
     case types.UNAUTH_USER:
       return { ...state, authenticated: false, err: action.err}
+    case types.GET_USER_INFO:
+      return { ...state, user: action.user }
     default:
       return state
   }

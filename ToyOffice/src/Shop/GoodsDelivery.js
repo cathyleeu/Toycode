@@ -44,7 +44,7 @@ class GoodsDelivery extends PureComponent{
             </div>
           </div>
         </div>
-        <GoodsDeliveryAddr />
+        <GoodsDeliveryAddr {...this.props}/>
       </div>
     )
   }

@@ -3,7 +3,7 @@ import * as types from './actions'
 const initialState =  {
   books: [],
   selectedGoods: [],
-  addr: {}
+  deliveryInfo: {}
 }
 
 export const selectedGoods = (state, action) => {
@@ -34,8 +34,11 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case types.COMPLETE_BOOKS_FETCH:
       return { ...state, books: action.books}
-    case types.ENTER_DELIVERY_ADDR:
-      return { ...state, addr: action.addr}
+    case types.ENTER_DELIVERY_INFO:
+    console.log(action.deliveryInfo)
+      return { ...state, deliveryInfo: action.deliveryInfo}
+    case types.COMPLETE_ADDRESS_FETCH:
+      return { ...state, juso: action.juso }
     default:
       return {
         ...state,

@@ -1,0 +1,80 @@
+.outerStyle {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	z-index: 300;
+}
+
+.searchModal {
+	position: relative;
+	width: 500px;
+	height: 520px;
+	padding: 0.8em;
+	box-sizing: border-box;
+	background-color: #fff;
+	margin: 200px auto;
+	z-index: 2;
+	text-align: left;
+	border: 10px solid rgb(0, 188, 212);
+	border-radius: 5px;
+	box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+}
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	/*background-color: rgba(0,0,0,0.5);*/
+}
+.search-bar {
+	display: flex; flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	/*padding: 0.2em;*/
+  /*margin: 0.5em 1em;*/
+}
+.search-input{
+	outline: none;
+	padding: 0.3em;
+	height: 40px;
+  border: 1px solid #dbdbdb;
+  width: 80%;
+	font-size: 13px;
+}
+
+.search-btn{
+	padding: 0.3em;
+	background: rgb(0, 188, 212);
+	color: #fff;
+	border: none;
+	outline: none;
+	width: 80px;
+	height: 40px;
+}
+
+.search-address-results{
+  margin: 1em 1em 0;
+  overflow: scroll;
+  height: 80%;
+}
+.search-address-results p,
+.search-address-results-header p {
+  margin:0;
+  font-size: 15px;
+}
+.search-address-result{
+  padding: 0.3em 0.7em;
+  width: 100%;
+  margin: 0.4em 0;
+  border-left: 3px solid rgb(0, 188, 212);
+}
+.search-address-results > div:hover{
+  background-color: #dbdbdb;
+  cursor: pointer;
+}
