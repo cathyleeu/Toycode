@@ -24,7 +24,7 @@ class ShopContainer extends PureComponent{
     goods: this.props.goods,
     finished: false,
     stepIndex: 0,
-    goodsInCart: this.props.selected
+    goodsInCart: this.props.selected,
   }
   componentDidMount(){
     this.props.fetchBooks()
@@ -36,7 +36,7 @@ class ShopContainer extends PureComponent{
     })
   }
   handleNext = () => {
-    const {stepIndex, goodsInCart} = this.state;
+    const {stepIndex, goodsInCart} = this.state, {deliveryInfo, selected, user} = this.props;
     switch (stepIndex) {
       case 0:
         if(goodsInCart.length !== 0){
@@ -64,6 +64,22 @@ class ShopContainer extends PureComponent{
         } else {
           return alert('모든 상품의 수량을 입력해주세요.')
         }
+       case 2:
+        if(!deliveryInfo.phone){
+          return alert('연락처를 입력하세요.')
+        } else if(!deliveryInfo.recipient){
+          return alert('수령인을 입력하세요.')
+        } else {
+          if(confirm('주문을 완료 하시겠습니까?')){
+            this.props.requestGoodsOrder(deliveryInfo, selected, user)
+            return this.setState({
+              stepIndex: stepIndex + 1,
+              finished: stepIndex >= 2,
+            });
+          } else {
+            return false;
+          }
+        }
       default:
         return this.setState({
           stepIndex: stepIndex + 1,
@@ -77,6 +93,9 @@ class ShopContainer extends PureComponent{
       this.setState({stepIndex: stepIndex - 1});
     }
   }
+  // handleChange = e => {
+  //   this.setState({[e.target.name]:e.target.value})
+  // }
   handleDeleteId = (s) => {
     if(confirm(`선택하신 ${s.title} ${s.level} ${s.volume}을 삭제하시겠습니까?`)){
       this.props.goodsDelete(s.code)

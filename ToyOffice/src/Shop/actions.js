@@ -9,6 +9,8 @@ export const ENTER_DELIVERY_INFO = 'ENTER_DELIVERY_INFO'
 export const DELETE_GOODS = 'DELETE_GOODS'
 export const SEARCH_ADDRESS = 'SEARCH_ADDRESS'
 export const COMPLETE_ADDRESS_FETCH = 'COMPLETE_ADDRESS_FETCH'
+export const REQUEST_GOODS_ORDER = 'REQUEST_GOODS_ORDER'
+export const COMPLETE_GOODS_ORDER = "COMPLETE_GOODS_ORDER"
 
 const currentPage = 1;
 const countPerPage = 200;
@@ -42,6 +44,43 @@ export const enterGoodsQutt = (code, qutt) => (dispatch) => {
 }
 export const enterDeliveryDetail = (deliveryInfo) => (dispatch) => {
   dispatch({ type: ENTER_DELIVERY_INFO, deliveryInfo})
+}
+
+export const requestGoodsOrder = (deli, goods, user) => (dispatch) => {
+  let requestedGoods = [], totalSales = 0;
+  goods.forEach( g => {
+    let item = {};
+    item['sales'] = (g.dPrice*g.amount)*0.6;
+    item['qutt']= g.amount;
+    item['name'] = `${g.title} ${g.level}단계/${g.volume}권`;
+    return requestedGoods.push(item);
+  })
+  goods.forEach(g => {
+    totalSales += (g.dPrice*g.amount)*0.6
+    return totalSales
+  })
+  let iv = {
+    userName: user.branch.name,
+    userEmail: user.email,
+    userCode: user.code,
+    requestDesc: deli.rqcontent,
+    totalSales: goods.map(g => g.amount*g.dPrice*0.6 ).reduce((a,b)=>a+b),
+    requestedGoods,
+    delivery: {
+      to: deli.recipient,
+      address: {
+        zipNo: deli.zipNo,
+        roadAddr: deli.roadAddr,
+        detailAddr: deli.detailAddr
+      },
+      phone: deli.phone,
+    }
+  }
+  axios.post(`${ROOT_URL}/invoices`, iv)
+    .then(res => {
+      dispatch({ type: COMPLETE_GOODS_ORDER })
+    })
+  // dispatch({ type: REQUEST_GOODS_ORDER})
 }
 
 export const goodsDelete = (code) => ({ type: DELETE_GOODS, code })
