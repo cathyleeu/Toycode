@@ -15,7 +15,7 @@ export function fetchMatchedBranch(branchCode) {
       .then((response) => {
         dispatch({
           type: types.MATCHED_BRANCH,
-          matchedB: response.data[0].kinders
+          matchedB: response.data.kinders
         })
       })
       .catch(response => {
@@ -83,7 +83,7 @@ export function fetchUserInfo() {
     const user = localStorage.getItem('email')
     return axios.get(`${ROOT_URL}/user/${user}`)
       .then((response) => {
-        dispatch(receiveUserInfo(response.data[0]))
+        dispatch(receiveUserInfo(response.data))
       })
   }
 }
