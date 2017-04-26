@@ -16,6 +16,8 @@ class GoodsDeliveryAddr extends Component{
   handleChange = e => {
     e.preventDefault()
     this.setState({[e.target.name]: e.target.value})
+  }
+  handleSendAddr = () => {
     this.props.enterDeliveryDetail(this.state)
   }
   handleAddrModal = (modal, boolean) => {
@@ -64,11 +66,11 @@ class GoodsDeliveryAddr extends Component{
             <label>배송처
             <input
               className="Delivery-input"
-              placeholder='배송지'
+              placeholder='주소를 검색하여 배송지를 입력해주세요.'
               type='text'
               name="roadAddr"
               value={this.state.roadAddr}
-              onChange={this.handleChange}
+              readOnly
             />
             </label>
             <label>배송지 상세주소
@@ -79,6 +81,7 @@ class GoodsDeliveryAddr extends Component{
               name="detailAddr"
               value={this.state.detailAddr}
               onChange={this.handleChange}
+              onBlur={this.handleSendAddr}
             />
             </label>
           </div>
@@ -92,6 +95,7 @@ class GoodsDeliveryAddr extends Component{
               name="recipient"
               value={this.state.recipient}
               onChange={this.handleChange}
+              onBlur={this.handleSendAddr}
             />
             </label>
             <label>연락처
@@ -102,6 +106,7 @@ class GoodsDeliveryAddr extends Component{
               name="phone"
               value={this.state.phone}
               onChange={this.handleChange}
+              onBlur={this.handleSendAddr}
             />
             </label>
           </div>
@@ -115,6 +120,7 @@ class GoodsDeliveryAddr extends Component{
               name="rqcontent"
               value={this.state.rqcontent}
               onChange={this.handleChange}
+              onBlur={this.handleSendAddr}
             />
             </label>
           </div>
@@ -125,7 +131,7 @@ class GoodsDeliveryAddr extends Component{
           <i className="fa fa-times-circle search-close" aria-hidden="true" onClick={() => this.handleAddrModal('addrModal', false)}></i>
           <form onSubmit={this.handleSearchAddr} className="search-bar">
             <input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
-            <button type="button" className="search-btn">주소 검색</button>
+            <button type="button" className="search-btn" onClick={this.handleSearchAddr}>주소 검색</button>
           </form>
           <div className="search-address-results">
             {juso && juso.map((result, i)=> (

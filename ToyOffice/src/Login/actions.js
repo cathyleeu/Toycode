@@ -29,7 +29,7 @@ export const tempoLogin = (userData) => (dispatch) => {
 export const getUserInfo = (email) => (dispatch) => {
   axios.get(`${ROOT_URL}/user/${email}`)
   .then( res => {
-    dispatch({type: GET_USER_INFO, user: res.data[0]})
+    dispatch({type: GET_USER_INFO, user: res.data})
   })
 }
 
