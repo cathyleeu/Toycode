@@ -1,0 +1,78 @@
+.Order-detail-card{
+  border: 1px solid #dbdbdb;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+.Order{
+  width: 90%;
+  border: 1px solid #dbdbdb;
+  padding: 0 3em;
+  /*align-self: flex-start;*/
+}
+.Order-detail-top{
+  height: 20px;
+  background: #dbdbdb;
+  padding: 1em;
+}
+
+.Order-detail-top p {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 200;
+}
+.Order h3{
+
+  /*align-self: flex-start;*/
+}
+
+.Order-detail-top,
+.Order-detail-body{
+  display: flex;
+  flex-direction: row;
+}
+.Order-detail-body{
+  padding: 1em;
+  /*margin:1em; */
+}
+.Order-detail-state{
+
+  /*border: 1px solid #dbdbdb;*/
+  width: 100%;
+}
+.Order-detail-deli{
+  border-left: 3px solid rgb(0, 188, 212);
+  padding-left: 1.3em;
+  margin-left: 1em;
+  width: 100%;
+}
+
+.Order-detail-table{
+  width: 100%;
+  padding-right: 1em;
+}
+
+.Order-detail-table > thead > tr > th {
+  font-weight: 500;
+  height: 30px;
+  padding: 0.3em;
+  margin: 0;
+  color: rgb(0, 188, 212);
+  text-align: center;
+}
+.Order-detail-table > tbody > tr > td {
+  font-weight: 300;
+  padding-bottom: 0.5em;
+  text-align: center;
+}
+
+.Order-detail-deli > table > tbody > tr > th {
+  font-weight: 300;
+  padding-right: 1em;
+  font-size: 14px;
+  color: rgb(0, 188, 212);
+  text-align: left;
+}
+.Order-detail-deli > table > tbody > tr > td {
+  font-weight: 200;
+  font-size: 13px;
+}

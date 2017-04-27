@@ -8,10 +8,9 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom'
 import Feature from './Feature'
 import { Shop } from './Shop'
+import { OrderDetail } from './OrderDetail'
 
 
-// const Order = (props) => <div>Order</div>
-const OrderDetail = () => <div>OrderDetail</div>
 const Account = (props) => <div>Account</div>
 const Kinder = (props) => <div>Kinder</div>
 const IssueLogin = (props) => <div>IssueLogin</div>
