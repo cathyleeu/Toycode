@@ -16,7 +16,7 @@ const OrderItem = ({item}) => {
   return(
   <div className="Order-detail-card">
     <div className="Order-detail-top">
-      <p>주문 일자</p><p>{moment(item.createdOn).tz("Asia/Seoul").format('YYYY.MM.DD')}</p>
+      <p>주문 일자 {moment(item.createdOn).tz("Asia/Seoul").format('YYYY.MM.DD')}</p>
     </div>
     <div className="Order-detail-body">
       <div className="Order-detail-state">

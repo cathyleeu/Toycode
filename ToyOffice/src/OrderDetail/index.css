@@ -7,8 +7,9 @@
   width: 90%;
   border: 1px solid #dbdbdb;
   padding: 0 3em;
-  /*align-self: flex-start;*/
+
 }
+
 .Order-detail-top{
   height: 20px;
   background: #dbdbdb;
@@ -20,10 +21,6 @@
   font-size: 17px;
   font-weight: 200;
 }
-.Order h3{
-
-  /*align-self: flex-start;*/
-}
 
 .Order-detail-top,
 .Order-detail-body{
@@ -32,11 +29,8 @@
 }
 .Order-detail-body{
   padding: 1em;
-  /*margin:1em; */
 }
 .Order-detail-state{
-
-  /*border: 1px solid #dbdbdb;*/
   width: 100%;
 }
 .Order-detail-deli{
@@ -50,11 +44,10 @@
   width: 100%;
   padding-right: 1em;
 }
-
 .Order-detail-table > thead > tr > th {
   font-weight: 500;
   height: 30px;
-  padding: 0.3em;
+  padding-bottom: 0.8em;
   margin: 0;
   color: rgb(0, 188, 212);
   text-align: center;

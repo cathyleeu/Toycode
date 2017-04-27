@@ -20,13 +20,11 @@ class OrderDetail extends PureComponent {
   renderOrderItem = (item) => <OrderItem key={item._id} item={item}/>
   render(){
     let {loaded, order} = this.state;
-
     if(loaded){
-      console.log(order);
       return(
         <div className="Child-Cont">
           <div className="Order">
-            <h3>주문내역</h3>
+            <h3>키즈씽킹 주문내역</h3>
             {order.map(this.renderOrderItem)}
           </div>
         </div>
