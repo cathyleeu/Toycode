@@ -5,9 +5,7 @@
 }
 .Order{
   width: 90%;
-  border: 1px solid #dbdbdb;
-  padding: 0 3em;
-
+  padding: 1em 3em;
 }
 
 .Order-detail-top{

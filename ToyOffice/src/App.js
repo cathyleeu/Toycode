@@ -9,22 +9,24 @@ import { Route, Switch } from 'react-router-dom'
 import Feature from './Feature'
 import { Shop } from './Shop'
 import { OrderDetail } from './OrderDetail'
+import { Account } from './Account'
 
 
-const Account = (props) => <div>Account</div>
+
 const Kinder = (props) => <div>Kinder</div>
 const IssueLogin = (props) => <div>IssueLogin</div>
 
 
 class App extends Component {
   state = {
-    drawerOpen: false
+    drawerOpen: false,
+    header: "토이코드 오피스 사이트"
   }
   handleToggle = () => {
     this.setState({drawerOpen: !this.state.drawerOpen})
   }
-  handleLink = (match, path) => {
-    this.setState({drawerOpen: !this.state.drawerOpen})
+  handleLink = (match, path, name) => {
+    this.setState({drawerOpen: !this.state.drawerOpen, header: name})
     this.props.history.replace(`${match.url}/${path}`)
   }
   handleLogOut = (history) => {
@@ -32,7 +34,6 @@ class App extends Component {
     this.props.tempoLogOut(history)
   }
   render() {
-    // console.log("App",this.props)
     const { match } = this.props;
     let nav = [
       {path:'shop', component: Shop, name: '주문하기'},
@@ -44,7 +45,7 @@ class App extends Component {
     return (
       <div>
         <AppBar
-          title="토이코드 오피스 사이트"
+          title={this.state.header}
           onLeftIconButtonTouchTap={this.handleToggle}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
@@ -53,7 +54,7 @@ class App extends Component {
           <Route exact path={match.url} component={Feature}/>
         </Switch>
         <Drawer open={this.state.drawerOpen}>
-          {nav.map((n, i) => <MenuItem key={i} onTouchTap={() => this.handleLink(match, n.path)}>{n.name}</MenuItem>)}
+          {nav.map((n, i) => <MenuItem key={i} onTouchTap={() => this.handleLink(match, n.path, n.name)}>{n.name}</MenuItem>)}
           <MenuItem onTouchTap={() => this.handleLogOut(this.props.history)}>로그아웃</MenuItem>
         </Drawer>
       </div>
