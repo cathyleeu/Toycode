@@ -24,7 +24,6 @@ class OrderDetail extends PureComponent {
       return(
         <div className="Child-Cont">
           <div className="Order">
-            <h3>키즈씽킹 주문내역</h3>
             {order.map(this.renderOrderItem)}
           </div>
         </div>
