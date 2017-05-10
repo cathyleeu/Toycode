@@ -315,7 +315,7 @@ const loggedUser = async ctx => {
 
 // 원-지사코드 매칭
 const allBranchKinders = async ctx => {
-  ctx.body = await User.find().where({ code: ctx.params.branch }).select('kinders');
+  ctx.body = await User.findOne().where({ code: ctx.params.branch }).select('kinders');
 }
 
 const isFetchedKinderInfo = async ctx => {

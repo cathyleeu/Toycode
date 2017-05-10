@@ -30,7 +30,8 @@ const invoiceSchema = new Schema({
   requestedGoods:[],
   createdOn : { type: Date, default: Date.now },
   requestDesc: String,
-  totalSales: Number
+  totalSales: Number,
+  modifiability: Boolean
 });
 
 
