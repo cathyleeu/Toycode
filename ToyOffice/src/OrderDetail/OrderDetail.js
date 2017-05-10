@@ -17,9 +17,10 @@ class OrderDetail extends PureComponent {
   componentDidMount(){
     this.props.isGetIVesByUser()
   }
-  renderOrderItem = (item) => <OrderItem key={item._id} item={item}/>
+  renderOrderItem = (item) => <OrderItem key={item._id} item={item} {...this.props}/>
   render(){
     let {loaded, order} = this.state;
+    console.log("oerderDetail",order);
     if(loaded){
       return(
         <div className="Child-Cont">
@@ -40,7 +41,9 @@ class OrderDetail extends PureComponent {
 
 
 const mapStateToProps = (state) => ({
-  order: state.order.detail
+  order: state.order.detail,
+  modiGoods: state.order.modiGoods
+
 })
 
 export default connect(mapStateToProps, actions)(OrderDetail)

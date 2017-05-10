@@ -12,10 +12,13 @@ class OrderItem extends PureComponent {
     transport: false
 
   }
-  handleOrderModal = (name, state) => this.setState({[name]: state})
+  handleOrderModal = (name, state) => {
+    this.setState({[name]: state})
+  }
 
   render(){
     let { item } = this.props, { delivery } = item, { address } = delivery;
+    console.log("OrderItem",item.requestedGoods)
     let deliInfo = [
       { title : "받는이", ctx: delivery.to },
       { title : "연락처", ctx: delivery.phone },

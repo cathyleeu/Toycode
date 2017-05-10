@@ -285,7 +285,29 @@ const isGetXlsx = async ctx => {
 
 }
 
-
+const isModifyingIVes = async ctx => {
+  try{
+    console.log("modi", ctx.request.body, ctx.params)
+    let { userCode, invoiceId } = ctx.params;
+    ctx.body = await Invoices.findOneAndUpdate({ userCode, invoiceId }, {$set: { requestedGoods: ctx.request.body }}, { new: true })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+const isRemoveIVes = async ctx => {
+  console.log("deleteAAAA");
+  try{
+    console.log("deleteBBBB");
+    let { invoiceId, userCode } = ctx.params;
+    ctx.body = await Invoices.findOneAndDelete({ invoiceId, userCode })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
 
 const isGetXlsxDayFFMT = async ctx => {
   console.log(ctx.params.date)
@@ -348,6 +370,8 @@ module.exports = {
   isFetchedOrderStatus,
   isPostTrackNumber,
   isGetXlsx,
-  isGetXlsxDayFFMT
+  isGetXlsxDayFFMT,
+  isModifyingIVes,
+  isRemoveIVes
   // isFetchedOrderFFMT
  };
