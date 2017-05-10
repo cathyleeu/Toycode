@@ -47,6 +47,7 @@ class KinderSignUp extends Component {
   onSubmit = e => {
     e.preventDefault()
     const { signupUser, kinderCode } = this.props
+    console.log("signinUser",kinderCode);
     const matchedKinder = kinderCode.map(matched => matched.name).indexOf(this.state.kinderName)
     let regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
     let regexPassword = /^[a-z0-9_]{4,20}$/;

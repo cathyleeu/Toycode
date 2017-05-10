@@ -11,8 +11,10 @@ export const errMsg = (errM) => ({ type: types.LOGIN_ERROR, errM })
 
 export function fetchMatchedBranch(branchCode) {
   return function (dispatch) {
+    console.log("fetchMatchedBranch",branchCode)
     axios.get(`${ROOT_URL}/branch/${branchCode}`)
       .then((response) => {
+        console.log("matchedB",response);
         dispatch({
           type: types.MATCHED_BRANCH,
           matchedB: response.data.kinders

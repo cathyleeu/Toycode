@@ -15,7 +15,10 @@ import { Account } from './Account'
 
 const Kinder = (props) => <div>Kinder</div>
 const IssueLogin = (props) => <div>IssueLogin</div>
-
+const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
+const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
+const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
+const Statement = (props) => <div>Statement 어드민 페이지 </div>
 
 class App extends Component {
   state = {
@@ -40,7 +43,11 @@ class App extends Component {
       {path:'details', component: OrderDetail, name : '주문내역'},
       {path:'account', component: Account, name : '마이페이지'},
       {path:'kinder', component: Kinder, name : '키즈씽킹 원 설정'},
-      {path:'issue', component: IssueLogin, name : '키즈씽킹 로그인 발급'}
+      {path:'issue', component: IssueLogin, name : '키즈씽킹 로그인 발급'},
+      {path:'orderlist', component: OrderList, name : '주문상황'},
+      {path:'customlist', component: CustomList, name : '지사상황'},
+      {path:'goodslist', component: GoodsList, name : '상품목록'},
+      {path:'statement', component: Statement, name : '매출장부'}
     ]
     return (
       <div>
