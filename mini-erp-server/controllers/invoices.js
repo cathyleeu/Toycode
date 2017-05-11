@@ -32,6 +32,7 @@ const isRegisteredNewIVes = async (ctx, next) => {
         invoiceId = "IV" + (zero+count).slice(-zero.length);
     const invoice = new Invoices({
       invoiceId, userName, userEmail, userCode, userErp,
+      modifiability: true,
       delivery: { to, address: { zipNo, roadAddr, detailAddr }, phone },
       requestedGoods, requestDesc, totalSales
     });
@@ -285,7 +286,28 @@ const isGetXlsx = async ctx => {
 
 }
 
-
+const isModifyingIVes = async ctx => {
+  try{
+    console.log("modi", ctx.request.body, ctx.params)
+    let { userCode, invoiceId } = ctx.params;
+    ctx.body = await Invoices.findOneAndUpdate({ userCode, invoiceId }, {$set: { requestedGoods: ctx.request.body }}, { new: true })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+const isRemoveIVes = async ctx => {
+  try{
+    console.log("deleteBBBB");
+    let { invoiceId, userCode } = ctx.params;
+    ctx.body = await Invoices.findOneAndRemove({ invoiceId, userCode })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
 
 const isGetXlsxDayFFMT = async ctx => {
   console.log(ctx.params.date)
@@ -348,6 +370,8 @@ module.exports = {
   isFetchedOrderStatus,
   isPostTrackNumber,
   isGetXlsx,
-  isGetXlsxDayFFMT
+  isGetXlsxDayFFMT,
+  isModifyingIVes,
+  isRemoveIVes
   // isFetchedOrderFFMT
  };

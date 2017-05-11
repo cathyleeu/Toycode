@@ -3,17 +3,28 @@ import React, {PureComponent} from 'react'
 
 class OrderModiItem extends PureComponent {
   state = {
-    qutt: this.props.qutt
+    qutt: this.props.qutt || 0
+    // sales: this.props.sales || 0
   }
   handleChange = e => {
+    let {isModiGoodsQutt, name, modiId} = this.props;
     this.setState({[e.target.name]: e.target.value})
+    isModiGoodsQutt(name, parseInt(e.target.value, 10), modiId)
+  }
+  handleDelete = () => {
+    let { isDeleteGoods, name, modiId } = this.props;
+    if(confirm(`${name}을 삭제하시겠습니까?`)){
+      isDeleteGoods(name, modiId)
+    }
   }
   render(){
     return(
-      <div>
-        {this.props.name}
-        <input type="number" name="qutt" value={this.state.qutt} onChange={this.handleChange}/>
-      </div>
+      <tr>
+        <td>{this.props.name}</td>
+        <td><input type="number" name="qutt" value={parseInt(this.props.qutt, 10)} min='1' onChange={this.handleChange}/></td>
+        <td>{this.props.sales}</td>
+        <td><button onClick={this.handleDelete}>DELETE</button></td>
+      </tr>
     )
   }
 }

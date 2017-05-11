@@ -10,12 +10,13 @@ class OrderItem extends PureComponent {
     modifiability: this.props.item.modifiability,
     modi: false,
     transport: false
-
   }
-  handleOrderModal = (name, state) => this.setState({[name]: state})
-
+  handleOrderModal = (name, state) => {
+    this.setState({[name]: state})
+    // console.log("handleOrderModal", this.props);
+  }
   render(){
-    let { item } = this.props, { delivery } = item, { address } = delivery;
+    let { item, modiItem } = this.props, { delivery } = item, { address } = delivery;
     let deliInfo = [
       { title : "받는이", ctx: delivery.to },
       { title : "연락처", ctx: delivery.phone },
@@ -34,7 +35,7 @@ class OrderItem extends PureComponent {
                 <OrderModal
                   isModalOpen={this.state.modi}
                   closeModal={() => this.handleOrderModal('modi', false)}>
-                  <OrderModi {...this.props}/>
+                  <OrderModi {...this.props} closeModal={() => this.handleOrderModal('modi', false)} modiItem={modiItem} />
                 </OrderModal>
                 <button onClick={() => this.handleOrderModal('modi', true)}> 수정하기 </button>
               </div>)
