@@ -7,14 +7,14 @@ class OrderModiItem extends PureComponent {
     // sales: this.props.sales || 0
   }
   handleChange = e => {
-    let {isModiGoodsQutt, name} = this.props;
+    let {isModiGoodsQutt, name, modiId} = this.props;
     this.setState({[e.target.name]: e.target.value})
-    isModiGoodsQutt(name, parseInt(e.target.value, 10))
+    isModiGoodsQutt(name, parseInt(e.target.value, 10), modiId)
   }
   handleDelete = () => {
-    let { isDeleteGoods, name } = this.props;
+    let { isDeleteGoods, name, modiId } = this.props;
     if(confirm(`${name}을 삭제하시겠습니까?`)){
-      isDeleteGoods(name)
+      isDeleteGoods(name, modiId)
     }
   }
   render(){

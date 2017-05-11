@@ -26,14 +26,19 @@ class OrderDetail extends PureComponent {
   }
   componentWillReceiveProps(newProps){
     console.log("OrderDetail _ componentWillReceiveProps");
-    if(newProps.order !== this.props.order){
+    if(newProps.modiGoods !== this.props.modiGoods){
       this.setState({order: newProps.order, loaded: true})
     }
   }
   componentDidMount(){
     this.props.isGetIVesByUser()
   }
-  renderOrderItem = (item) => <OrderItem key={item._id} item={item} {...this.props}/>
+  renderOrderItem = (item) => {
+
+    let modiItem = this.props.modiGoods.valueOf()[item.invoiceId]
+    // .find(modi => modi.id === item.invoiceId)
+    return <OrderItem key={item._id} item={item} {...this.props} modiItem={modiItem ? modiItem : false }/>
+  }
   render(){
     let {loaded, order} = this.state;
     if(loaded){
