@@ -32,6 +32,7 @@ const isRegisteredNewIVes = async (ctx, next) => {
         invoiceId = "IV" + (zero+count).slice(-zero.length);
     const invoice = new Invoices({
       invoiceId, userName, userEmail, userCode, userErp,
+      modifiability: true,
       delivery: { to, address: { zipNo, roadAddr, detailAddr }, phone },
       requestedGoods, requestDesc, totalSales
     });
@@ -297,11 +298,10 @@ const isModifyingIVes = async ctx => {
   }
 }
 const isRemoveIVes = async ctx => {
-  console.log("deleteAAAA");
   try{
     console.log("deleteBBBB");
     let { invoiceId, userCode } = ctx.params;
-    ctx.body = await Invoices.findOneAndDelete({ invoiceId, userCode })
+    ctx.body = await Invoices.findOneAndRemove({ invoiceId, userCode })
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;

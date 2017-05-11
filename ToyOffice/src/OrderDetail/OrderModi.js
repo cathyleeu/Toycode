@@ -9,22 +9,31 @@ class OrderModi extends PureComponent {
     if(newProps.modiGoods !== this.props.modiGoods)
     this.setState({modiGoods: newProps.modiGoods})
   }
-  componentWillMount(){
-    let { item, isOpenModiModal } = this.props;
-    isOpenModiModal(item.requestedGoods)
-  }
   renderModiItems = (item, i) => <OrderModiItem {...item} key={i} isDeleteGoods={this.props.isDeleteGoods} isModiGoodsQutt={this.props.isModiGoodsQutt}/>
   handleModiBtn = (e, name) => {
-    console.log("handleModiBtn",name, this.props);
     let {modiGoods, item } = this.props, {userCode, invoiceId} = item;
     e.preventDefault()
     if(name === 'modi'){
-      this.props.isRequestModi( userCode, invoiceId, modiGoods)
+      if(confirm('주문 수정 완료 하시겠습니까?')){
+        this.props.isRequestModi( userCode, invoiceId, modiGoods)
+        alert('주문 수정이 완료되었습니다.')
+      } else {
+        alert('주문 수정이 취소되었습니다. ')
+      }
     } else if (name === 'cancle') {
-      this.props.isCancleModi()
+      if(confirm('주문 수정 취소 하시겠습니까?')){
+        this.props.isCancleModi()
+        alert('주문 수정이 완료되었습니다.')
+      }
     } else {
-      this.props.isCancleAll(userCode, invoiceId)
+      if(confirm('주문을 전체 취소 하시겠습니까?')){
+        this.props.isCancleAll(userCode, invoiceId)
+        alert('전체 주문 취소 완료되었습니다.')
+      } else {
+        alert('취소 되었습니다.')
+      }
     }
+    this.props.closeModal()
   }
   render(){
     let { modiGoods } = this.props;

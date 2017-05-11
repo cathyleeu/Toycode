@@ -52,6 +52,7 @@ export const requestGoodsOrder = (deli, goods, user) => (dispatch) => {
     let item = {};
     item['sales'] = (g.dPrice*g.amount)*0.6;
     item['qutt']= g.amount;
+    item['price'] = g.dPrice*0.6;
     item['name'] = `${g.title} ${g.level}단계/${g.volume}권`;
     return requestedGoods.push(item);
   })

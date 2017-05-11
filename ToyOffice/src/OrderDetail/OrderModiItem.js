@@ -4,14 +4,18 @@ import React, {PureComponent} from 'react'
 class OrderModiItem extends PureComponent {
   state = {
     qutt: this.props.qutt || 0
+    // sales: this.props.sales || 0
   }
   handleChange = e => {
+    let {isModiGoodsQutt, name} = this.props;
     this.setState({[e.target.name]: e.target.value})
-    this.props.isModiGoodsQutt(this.props.name, parseInt(e.target.value, 10))
+    isModiGoodsQutt(name, parseInt(e.target.value, 10))
   }
   handleDelete = () => {
     let { isDeleteGoods, name } = this.props;
-    isDeleteGoods(name)
+    if(confirm(`${name}을 삭제하시겠습니까?`)){
+      isDeleteGoods(name)
+    }
   }
   render(){
     return(
