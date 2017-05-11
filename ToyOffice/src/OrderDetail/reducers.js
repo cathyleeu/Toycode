@@ -6,8 +6,9 @@ const initialState =  {
   originGoods: {}
 }
 
+
+//TODO: 중복되어서 변경되는 현상
 const originGoodsDetail = (state, action) => {
-  console.log("originGoodsDetail", state);
   switch (action.type) {
     case types.IS_SAVE_MODI_ITEMS:
       return action.goods
@@ -22,7 +23,6 @@ const originGoodsDetail = (state, action) => {
 
 
 const modiGoodsDetail = (state, action) => {
-  console.log("modiGoodsDetail", state);
   let modiItem = state.valueOf()[action.modiId];
   switch (action.type) {
     case types.IS_SAVE_MODI_ITEMS:
