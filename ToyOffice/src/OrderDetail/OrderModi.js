@@ -9,10 +9,12 @@ class OrderModi extends PureComponent {
     if(newProps.modiItem !== this.props.modiItem)
     this.setState({modiItem: newProps.modiItem})
   }
-  renderModiItems = (item, i) => <OrderModiItem {...item} modiId={this.props.item.invoiceId} key={i} isDeleteGoods={this.props.isDeleteGoods} isModiGoodsQutt={this.props.isModiGoodsQutt}/>
+  renderModiItems = (item, i) => {
+    return <OrderModiItem {...item} modiId={this.props.item.invoiceId} key={i} isDeleteGoods={this.props.isDeleteGoods} isModiGoodsQutt={this.props.isModiGoodsQutt}/>
+  }
   handleModiBtn = (e, name) => {
-    let {modiItem, item } = this.props, {userCode, invoiceId} = item;
     e.preventDefault()
+    let {modiItem, item } = this.props, {userCode, invoiceId} = item;
     if(name === 'modi'){
       if(confirm('주문 수정 완료 하시겠습니까?')){
         this.props.isRequestModi( userCode, invoiceId, modiItem)
@@ -36,7 +38,7 @@ class OrderModi extends PureComponent {
     this.props.closeModal()
   }
   render(){
-    let { modiItem } = this.props;
+    let { modiItem } = this.state;
     if(modiItem){
       return(
         <div>

@@ -25,7 +25,6 @@ class OrderDetail extends PureComponent {
     order : this.props.order
   }
   componentWillReceiveProps(newProps){
-    console.log("OrderDetail _ componentWillReceiveProps");
     if(newProps.modiGoods !== this.props.modiGoods){
       this.setState({order: newProps.order, loaded: true})
     }
@@ -34,15 +33,12 @@ class OrderDetail extends PureComponent {
     this.props.isGetIVesByUser()
   }
   renderOrderItem = (item) => {
-
     let modiItem = this.props.modiGoods.valueOf()[item.invoiceId]
-    // .find(modi => modi.id === item.invoiceId)
     return <OrderItem key={item._id} item={item} {...this.props} modiItem={modiItem ? modiItem : false }/>
   }
   render(){
     let {loaded, order} = this.state;
     if(loaded){
-      console.log("OrderDetail _ render");
       return(
         <div className="Child-Cont">
           <div className="Order">

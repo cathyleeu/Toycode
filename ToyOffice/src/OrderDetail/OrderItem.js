@@ -13,7 +13,6 @@ class OrderItem extends PureComponent {
   }
   handleOrderModal = (name, state) => {
     this.setState({[name]: state})
-    // console.log("handleOrderModal", this.props);
   }
   render(){
     let { item, modiItem } = this.props, { delivery } = item, { address } = delivery;
