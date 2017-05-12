@@ -1,0 +1,22 @@
+.Account-table{
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 1em;
+}
+
+.Account-table > tbody > tr > th {
+  height: 40px;
+  text-align: left;
+  border-left: 3px solid #dbdbdb;
+  padding-left: 1em;
+  width: 100px;
+}
+
+.Account-table-top{
+  display: flex;
+  flex-direction: row;
+}
+/*.Account-table > tbody > tr {
+  margin: 0;
+  padding: 0;
+}*/

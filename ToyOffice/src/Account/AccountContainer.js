@@ -1,42 +1,49 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-
+import AccountBranch from './AccountBranch'
+import AccountManager from './AccountManager'
+import AccountTableHeader from './AccountTableHeader'
+import './index.css'
 
 class AccountContainer extends PureComponent {
   state = {
-    loaded : false
+    loaded : false,
+    branchModi: false,
+    mngModi: false,
   }
   componentWillReceiveProps(newProps){
+    console.log("componentWillReceiveProps")
     if(newProps.user !== this.props.user){
       this.setState({loaded: true})
     }
   }
+  handleModiTrue = (name) => {
+    this.setState({[name]: true})
+  }
+  handleModiFalse = (name) => {
+    this.setState({[name]: false})
+  }
   render(){
     if(this.state.loaded){
-      let { user } = this.props, { branch } = user,
-          info = [
-            { title: '지사 코드', ctx: user.code },
-            { title: '지사 명', ctx: branch.name },
-            { title: '지사 대표', ctx: branch.repr },
-            { title: '지사 구분', ctx: branch.location },
-            { title: '사업자 번호', ctx: branch.license },
-          ]
+      console.log(this.state)
       return(
         <div className="Child-Cont">
           <div>
-            <table>
-              <tbody>
-                {info.map(
-                  (info, i) =>
-                    <tr key={i}>
-                      <th>{info.title}</th>
-                      <td>{info.ctx}</td>
-                    </tr> )}
-              </tbody>
-            </table>
+            <AccountTableHeader
+              title="지사정보"
+              onClickTrue={() => this.handleModiTrue('branchModi')}
+              onClickFalse={() => this.handleModiFalse('branchModi')}
+              modi={!this.state.branchModi}/>
+            <AccountBranch {...this.props} readOnly={!this.state.branchModi}/>
           </div>
-          <div>회계 담당자</div>
-          <div>교육 담당자</div>
+          <div>
+            <AccountTableHeader
+              title="담당자 정보"
+              onClickTrue={() => this.handleModiTrue('mngModi')}
+              onClickFalse={() => this.handleModiFalse('mngModi')}
+              modi={!this.state.mngModi} />
+            <AccountManager readOnly={!this.state.mngModi}/>
+          </div>
         </div>
       )
     }
