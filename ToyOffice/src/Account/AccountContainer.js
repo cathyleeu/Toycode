@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
+import * as actions from './actions'
 import AccountBranch from './AccountBranch'
 import AccountManager from './AccountManager'
 import AccountTableHeader from './AccountTableHeader'
@@ -11,23 +12,34 @@ class AccountContainer extends PureComponent {
     branchModi: false,
     mngModi: false,
   }
+  componentWillMount(){
+    if(this.props.user.code){
+      this.setState({loaded: true})
+      this.props.isDefalutModi(this.props.user)
+    }
+  }
   componentWillReceiveProps(newProps){
-    console.log("componentWillReceiveProps")
     if(newProps.user !== this.props.user){
+      this.props.isDefalutModi(newProps.user)
       this.setState({loaded: true})
     }
   }
   handleModiTrue = (name) => {
     this.setState({[name]: true})
+    this.props.isDefalutModi(this.props.user)
   }
   handleModiFalse = (name) => {
     this.setState({[name]: false})
+    if(confirm('수정을 완료하시겠습니까?')){
+      this.props.isCompoleteModi(name, this.props.branchModiData)
+    } else {
+      this.props.isDefalutModi(this.props.user)
+    }
   }
   render(){
     if(this.state.loaded){
-      console.log(this.state)
       return(
-        <div className="Child-Cont">
+        <div className="Child-Cont Account">
           <div>
             <AccountTableHeader
               title="지사정보"
@@ -55,9 +67,11 @@ class AccountContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({login}) => ({
-  user : login.user
+const mapStateToProps = (state) => ({
+  user : state.login.user,
+  branchModiData: state.account.branch,
+  mangerModiData: state.account.manager
 })
 
 
-export default connect(mapStateToProps, null)(AccountContainer)
+export default connect(mapStateToProps, actions)(AccountContainer)

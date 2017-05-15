@@ -2,6 +2,7 @@
   width: 100%;
   max-width: 700px;
   margin-bottom: 1em;
+  /*justify-content: space-between;*/
 }
 
 .Account-table > tbody > tr > th {
@@ -20,3 +21,38 @@
   margin: 0;
   padding: 0;
 }*/
+
+.Account > div {
+  min-width: 700px;
+}
+.AccountManager-Input,
+.AccountManager-Cont{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  /*min-width: 700px;*/
+}
+.AccountManager-Cont > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.3em;
+}
+
+/*.AccountManager-Input{
+
+}*/
+.AccountManager-Input > p {
+  width: 70px;
+  margin: 0 10px 0 0;
+
+}
+.AccountManager-Cont > div > label > input {
+  width: 250px;
+  height: 40px;
+  margin-left: 10px;
+
+}
