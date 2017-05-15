@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import login from './Login/reducers'
 import goods from './Shop/reducers'
 import order from './OrderDetail/reducers'
+import account from './Account/reducers'
 // import shop from './Shop/reducers'
 // import auth from './Auth/reducers'
 // import cstList from './CustomerLists/reducers'
@@ -13,7 +14,7 @@ import order from './OrderDetail/reducers'
 // import notice from './Feature/reducers'
 
 const rootReducer = combineReducers({
-  login, goods, order
+  login, goods, order, account
   // products,
 });
 
