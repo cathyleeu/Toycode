@@ -18,7 +18,8 @@ class AccountManagerInput extends PureComponent {
           placeholder={this.props.holder}
           name={this.props.name}
           onChange={this.props.onChange}
-          readOnly={this.props.readOnly}/>
+          disabled={this.props.readOnly}
+        />
       </div>
     )
   }
