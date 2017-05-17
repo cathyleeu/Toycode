@@ -5,6 +5,18 @@
   /*justify-content: space-between;*/
 }
 
+.Account-table > tbody > tr {
+  color: #434343;
+}
+
+.Account-colSpan > th ,
+.Account-nonColSpan > th ,
+.Account-colSpan > th > p {
+  font-weight: 300;
+  margin: 0;
+  font-size: 13px;
+}
+
 .Account-table > tbody > tr > th {
   height: 40px;
   text-align: left;
@@ -16,6 +28,11 @@
 .Account-table-top{
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+.Account-table-top > h3 {
+  margin-right: 1em;
+  color: #434343;
 }
 /*.Account-table > tbody > tr {
   margin: 0;
@@ -41,10 +58,33 @@
   align-items: center;
   margin: 0.3em;
 }
+.AccountManager-Cont > div > h3 {
+  align-self: flex-start;
+  font-weight: 500;
+  margin: 0 0 1em 0;
+  font-size: 15px;
+}
 
-/*.AccountManager-Input{
+.AccountManager-Input > p {
+  font-weight: 300;
+  margin: 0;
+  font-size: 13px;
+}
+.AccountBranch-Input,
+.AccountManager-Input {
+  align-items: center;
+}
+.AccountBranch-Input > input{
+  height: 30px;
+  width: 170px;
+  padding: 0.3em;
+}
+.AccountManager-Input > input {
+  height: 30px;
+  width: 230px;
+  padding: 0.3em;
+}
 
-}*/
 .AccountManager-Input > p {
   width: 70px;
   margin: 0 10px 0 0;

@@ -31,8 +31,14 @@ class AccountContainer extends PureComponent {
   handleModiFalse = (name) => {
     this.setState({[name]: false})
     if(confirm('수정을 완료하시겠습니까?')){
-      this.props.isCompoleteModi(name, this.props.branchModiData)
+      this.props.isCompoleteModi(name, this.props[name])
     } else {
+      this.props.isDefalutModi(this.props.user)
+    }
+  }
+  handleModiCancle = (name) => {
+    if(confirm('취소 하시겠습니까?')){
+      this.setState({[name]: false})
       this.props.isDefalutModi(this.props.user)
     }
   }
@@ -45,6 +51,7 @@ class AccountContainer extends PureComponent {
               title="지사정보"
               onClickTrue={() => this.handleModiTrue('branchModi')}
               onClickFalse={() => this.handleModiFalse('branchModi')}
+              onClickCancle={() => this.handleModiCancle('branchModi')}
               modi={!this.state.branchModi}/>
             <AccountBranch {...this.props} readOnly={!this.state.branchModi}/>
           </div>
@@ -53,8 +60,9 @@ class AccountContainer extends PureComponent {
               title="담당자 정보"
               onClickTrue={() => this.handleModiTrue('mngModi')}
               onClickFalse={() => this.handleModiFalse('mngModi')}
+              onClickCancle={() => this.handleModiCancle('mngModi')}
               modi={!this.state.mngModi} />
-            <AccountManager readOnly={!this.state.mngModi}/>
+            <AccountManager {...this.props} readOnly={!this.state.mngModi}/>
           </div>
         </div>
       )
@@ -69,8 +77,8 @@ class AccountContainer extends PureComponent {
 
 const mapStateToProps = (state) => ({
   user : state.login.user,
-  branchModiData: state.account.branch,
-  mangerModiData: state.account.manager
+  branchModi: state.account.branch,
+  mngModi: state.account.manager
 })
 
 

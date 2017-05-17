@@ -11,7 +11,7 @@ class AccountTableTd extends PureComponent{
   }
   render(){
     return(
-      <td colSpan={this.props.colSpan}>
+      <td colSpan={this.props.colSpan} className="AccountBranch-Input">
         <input
           value={this.state.value}
           readOnly={this.props.readOnly}

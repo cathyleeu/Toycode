@@ -332,15 +332,15 @@ const userKinders = async ctx => {
 const userInfoUpdate = async ctx => {
   try {
     // body에소 보내는 명과 model 스키마 명과 일치하는 것이 좋음!!
-    const sub_name = ctx.request.body.sub_name;
+    const { sub_name, account, education } = ctx.request.body;
     console.log(ctx.request.body)
 
     ctx.body = await User.findOneAndUpdate(
       {email: ctx.params.user},
       {$set: {
         "branch.sub_name": sub_name,
-        account: { ...ctx.request.body.account },
-        education:{ ...ctx.request.body.education },
+        account: { ...account },
+        education:{ ...education },
       }},
       { new: true })
   } catch(err) {

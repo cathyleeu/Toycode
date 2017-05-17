@@ -5,17 +5,17 @@ import AccountTableTd from './AccountTableTd'
 class AccountBranch extends PureComponent {
   constructor(props){
     super(props)
-    let { branchModiData, user } = props;
+    let { branchModi, user } = props;
     this.state = {
       code: user.code,
-      name: branchModiData.name,
-      location: branchModiData.location,
-      sub_name: branchModiData.sub_name,
-      license: branchModiData.license,
-      repr: branchModiData.repr,
-      zipNo: branchModiData.zipNo,
-      roadAddr: branchModiData.roadAddr,
-      detailAddr: branchModiData.detailAddr,
+      name: branchModi.name,
+      location: branchModi.location,
+      sub_name: branchModi.sub_name,
+      license: branchModi.license,
+      repr: branchModi.repr,
+      zipNo: branchModi.zipNo,
+      roadAddr: branchModi.roadAddr,
+      detailAddr: branchModi.detailAddr,
       phone: '',
       fax: '',
       readOnly: props.readOnly,
@@ -26,8 +26,8 @@ class AccountBranch extends PureComponent {
     if(newProps.readOnly !== this.props.readOnly){
       this.setState({ readOnly: newProps.readOnly})
     }
-    if(newProps.branchModiData !== this.props.branchModiData){
-      this.setState({ ...newProps.branchModiData, loaded: true })
+    if(newProps.branchModi !== this.props.branchModi){
+      this.setState({ ...newProps.branchModi, loaded: true })
     }
   }
   handleChange = (e) => {
@@ -49,7 +49,7 @@ class AccountBranch extends PureComponent {
           (info, i) =>
             <tbody key={i}>
               <tr className="Account-colSpan">
-                <th colSpan="1">{info.title}</th>
+                <th colSpan="1"><p>{info.title}</p></th>
                 <AccountTableTd
                   colSpan="3"
                   value={info.ctx}
