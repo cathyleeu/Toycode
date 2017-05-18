@@ -6,7 +6,7 @@ class KinderCardInput extends PureComponent{
     return(
       <div className="KinderCard-Input">
         <p>{this.props.label}</p>
-        <input value={this.props.value} disabled/>
+        <input value={this.props.value} disabled={this.props.modi}/>
       </div>
     )
   }

@@ -1,17 +1,33 @@
 import React, {PureComponent} from 'react'
-
+import Perf from 'react-addons-perf'
 
 class OrderModiItem extends PureComponent {
-  state = {
-    qutt: this.props.qutt || 0
-    // sales: this.props.sales || 0
+  constructor(props){
+    super(props)
+    this.state = {
+      qutt: props.qutt || 0
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
-  handleChange = e => {
+  componentWillMount(){
+    window.performance.mark('OrderModiItem')
+  }
+  componentDidMount(){
+    console.log(window.performance.now('OrderModiItem'))
+  }
+  componentDidUpdate() {
+    Perf.stop()
+    Perf.printInclusive()
+    Perf.printWasted()
+  }
+  handleChange(e){
+    Perf.start()
     let {isModiGoodsQutt, name, modiId} = this.props;
     this.setState({[e.target.name]: e.target.value})
     isModiGoodsQutt(name, parseInt(e.target.value, 10), modiId)
   }
-  handleDelete = () => {
+  handleDelete(){
     let { isDeleteGoods, name, modiId } = this.props;
     if(confirm(`${name}을 삭제하시겠습니까?`)){
       isDeleteGoods(name, modiId)

@@ -20,23 +20,36 @@ shouldComponentUpdate(nextProps, nextState){
 
 */
 class OrderDetail extends PureComponent {
-  state = {
-    loaded: false,
-    order : this.props.order
+  constructor(props){
+    super(props)
+    this.state = {
+      loaded: false,
+      order : props.order
+    }
+    this.renderOrderItem = this.renderOrderItem.bind(this)
   }
-  componentWillReceiveProps(newProps){
-    if(newProps.modiGoods !== this.props.modiGoods){
+  componentWillMount(){
+    this.setState({loaded: true})
+  }
+  componentWillReceiveProps(newProps, newState){
+    if(newProps.order !== this.props.order){
       this.setState({order: newProps.order, loaded: true})
     }
   }
   componentDidMount(){
     this.props.isGetIVesByUser()
   }
-  renderOrderItem = (item) => {
+  renderOrderItem(item){
     let modiItem = this.props.modiGoods.valueOf()[item.invoiceId]
-    return <OrderItem key={item._id} item={item} {...this.props} modiItem={modiItem ? modiItem : false }/>
+    return <OrderItem
+              key={item._id}
+              item={item} // {...this.props}
+              modiGoods={this.props.modiGoods}
+              isModiGoodsQutt={this.props.isModiGoodsQutt}
+              modiItem={modiItem ? modiItem : false }/>
   }
   render(){
+    //FIXME: 중복 렌더링 되는 부분을 고쳐야 함... 그런데 어떻게 ㅠㅠ?
     let {loaded, order} = this.state;
     if(loaded){
       return(
@@ -64,7 +77,6 @@ class OrderDetail extends PureComponent {
 const mapStateToProps = (state) => ({
   order: state.order.detail,
   modiGoods: state.order.modiGoods
-
 })
 
 export default connect(mapStateToProps, actions)(OrderDetail)

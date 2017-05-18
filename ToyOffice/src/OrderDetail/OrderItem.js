@@ -3,15 +3,32 @@ import moment from 'moment-timezone'
 import OrderModal from './OrderModal'
 import OrderModi from './OrderModi'
 import OrderTrans from './OrderTrans'
-
+import Perf from 'react-addons-perf'
 
 class OrderItem extends PureComponent {
-  state = {
-    modifiability: this.props.item.modifiability,
-    modi: false,
-    transport: false
+  constructor(props){
+    super(props)
+    this.state = {
+      modifiability: props.item.modifiability,
+      modi: false,
+      transport: false
+    }
+    this.handleOrderModal = this.handleOrderModal.bind(this)
   }
-  handleOrderModal = (name, state) => {
+
+  componentWillMount(){
+    window.performance.mark('OrderItem')
+  }
+  componentDidMount(){
+    console.log(window.performance.now('OrderItem'))
+  }
+  componentDidUpdate() {
+    Perf.stop()
+    Perf.printInclusive()
+    Perf.printWasted()
+  }
+  handleOrderModal(name, state){
+    Perf.start()
     this.setState({[name]: state})
   }
   render(){
@@ -24,6 +41,7 @@ class OrderItem extends PureComponent {
       { title : "상세주소", ctx: address.detailAddr },
       { title : "요청 사항", ctx: item.requestDesc }
     ]
+    console.log(this.props);
     return(
       <div className="Order-detail-card">
         <div className="Order-detail-top">
@@ -34,7 +52,7 @@ class OrderItem extends PureComponent {
                 <OrderModal
                   isModalOpen={this.state.modi}
                   closeModal={() => this.handleOrderModal('modi', false)}>
-                  <OrderModi {...this.props} closeModal={() => this.handleOrderModal('modi', false)} modiItem={modiItem} />
+                  {this.state.modi && <OrderModi {...this.props} closeModal={() => this.handleOrderModal('modi', false)} modiItem={modiItem} />}
                 </OrderModal>
                 <button onClick={() => this.handleOrderModal('modi', true)}> 수정하기 </button>
               </div>)
@@ -43,7 +61,7 @@ class OrderItem extends PureComponent {
                 <OrderModal
                   isModalOpen={this.state.transport}
                   closeModal={() => this.handleOrderModal('transport', false)}>
-                  <OrderTrans {...this.props}/>
+                  {this.state.transport && <OrderTrans {...this.props}/>}
                 </OrderModal>
                 <button onClick={() => this.handleOrderModal('transport', true)}> 운송장 번호 </button>
               </div>
