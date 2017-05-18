@@ -1,18 +1,29 @@
 import React, {PureComponent} from 'react'
 import OrderModiItem from './OrderModiItem'
+// import Perf from 'react-addons-perf'
 
 class OrderModi extends PureComponent {
-  state = {
-    modiItem: this.props.modiItem
+  constructor(props){
+    super(props)
+    this.state = {
+      modiItem: props.modiItem
+    }
+    this.renderModiItems = this.renderModiItems.bind(this)
+    this.handleModiBtn = this.handleModiBtn.bind(this)
   }
+
   componentWillReceiveProps(newProps){
     if(newProps.modiItem !== this.props.modiItem)
     this.setState({modiItem: newProps.modiItem})
   }
-  renderModiItems = (item, i) => {
-    return <OrderModiItem {...item} modiId={this.props.item.invoiceId} key={i} isDeleteGoods={this.props.isDeleteGoods} isModiGoodsQutt={this.props.isModiGoodsQutt}/>
+  renderModiItems(item, i){
+    return <OrderModiItem  key={i}
+              {...item}
+              modiId={this.props.item.invoiceId}
+              isDeleteGoods={this.props.isDeleteGoods}
+              isModiGoodsQutt={this.props.isModiGoodsQutt}/>
   }
-  handleModiBtn = (e, name) => {
+  handleModiBtn(e, name){
     e.preventDefault()
     let {modiItem, item } = this.props, {userCode, invoiceId} = item;
     if(name === 'modi'){

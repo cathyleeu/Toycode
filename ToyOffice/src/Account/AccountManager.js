@@ -28,6 +28,7 @@ class AccountManager extends PureComponent {
   render(){
     let { A_phone, A_manager, A_email, E_phone, E_manager, E_email } = this.state;
     if(!this.state.loaded){
+      //value값 props값을 받아올때 값이 한번 바뀌기 때문에 다 불러온 다음에 해줘야지 에러메세지가 발생하지 않는다.
       return <div>로딩중</div>
     }
     return(

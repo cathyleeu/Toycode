@@ -4,19 +4,36 @@ import * as actions from './actions'
 import AccountBranch from './AccountBranch'
 import AccountManager from './AccountManager'
 import AccountTableHeader from './AccountTableHeader'
+import Perf from 'react-addons-perf'
 import './index.css'
 
 class AccountContainer extends PureComponent {
-  state = {
-    loaded : false,
-    branchModi: false,
-    mngModi: false,
+  constructor(props){
+    super(props)
+    this.state = {
+      loaded : false,
+      branchModi: false,
+      mngModi: false,
+    }
+    this.handleModiTrue = this.handleModiTrue.bind(this)
+    this.handleModiFalse = this.handleModiFalse.bind(this)
+    this.handleModiCancle = this.handleModiCancle.bind(this)
   }
+
   componentWillMount(){
+    window.performance.mark('AccountContainer')
     if(this.props.user.code){
       this.setState({loaded: true})
       this.props.isDefalutModi(this.props.user)
     }
+  }
+  componentDidMount(){
+    console.log(window.performance.now('AccountContainer'))
+  }
+  componentDidUpdate() {
+    Perf.stop()
+    Perf.printInclusive()
+    Perf.printWasted()
   }
   componentWillReceiveProps(newProps){
     if(newProps.user !== this.props.user){
@@ -24,11 +41,13 @@ class AccountContainer extends PureComponent {
       this.setState({loaded: true})
     }
   }
-  handleModiTrue = (name) => {
+  handleModiTrue(name){
+    Perf.start()
     this.setState({[name]: true})
     this.props.isDefalutModi(this.props.user)
   }
-  handleModiFalse = (name) => {
+  handleModiFalse(name){
+    Perf.start()
     this.setState({[name]: false})
     if(confirm('수정을 완료하시겠습니까?')){
       this.props.isCompoleteModi(name, this.props[name])
@@ -36,7 +55,8 @@ class AccountContainer extends PureComponent {
       this.props.isDefalutModi(this.props.user)
     }
   }
-  handleModiCancle = (name) => {
+  handleModiCancle(name){
+    Perf.start()
     if(confirm('취소 하시겠습니까?')){
       this.setState({[name]: false})
       this.props.isDefalutModi(this.props.user)

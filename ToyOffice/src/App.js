@@ -10,10 +10,9 @@ import Feature from './Feature'
 import { Shop } from './Shop'
 import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
+import { Kinder } from './Kinder'
 
 
-
-const Kinder = (props) => <div>Kinder</div>
 const IssueLogin = (props) => <div>IssueLogin</div>
 const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
 const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
@@ -42,8 +41,8 @@ class App extends Component {
       {path:'shop', component: Shop, name: '주문하기'},
       {path:'details', component: OrderDetail, name : '주문내역'},
       {path:'account', component: Account, name : '마이페이지'},
-      {path:'kinder', component: Kinder, name : '키즈씽킹 원 설정'},
-      {path:'issue', component: IssueLogin, name : '키즈씽킹 로그인 발급'},
+      {path:'kinder', component: Kinder, name : '소속 원 설정'},
+      {path:'issue', component: IssueLogin, name : '소속 원 프로그램 설정'},
       {path:'orderlist', component: OrderList, name : '주문상황'},
       {path:'customlist', component: CustomList, name : '지사상황'},
       {path:'goodslist', component: GoodsList, name : '상품목록'},

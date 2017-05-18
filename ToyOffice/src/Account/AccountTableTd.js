@@ -14,10 +14,10 @@ class AccountTableTd extends PureComponent{
       <td colSpan={this.props.colSpan} className="AccountBranch-Input">
         <input
           value={this.state.value}
-          readOnly={this.props.readOnly}
           type="text"
           name={this.props.name}
           onChange={this.props.onChange}
+          disabled={this.props.readOnly}
         />
       </td>
     )
