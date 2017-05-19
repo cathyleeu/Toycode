@@ -13,24 +13,25 @@ class AccountTableHeader extends Component {
     }
   }
   render(){
+    let { typeOf, onClick, title } = this.props;
     return(
       <div className="Account-table-top">
-        <h3>{this.props.title}</h3>
+        <h3>{title}</h3>
         {this.state.modi
           ? <FlatButton
               label="수정하기"
               secondary={true}
-              onClick={this.props.onClickTrue}
+              onClick={() => onClick(typeOf, "수정")}
             />
           : <div>
               <FlatButton
                 label="수정완료"
                 primary={true}
-                onClick={this.props.onClickFalse}
+                onClick={() => onClick(typeOf, "완료")}
                />
               <FlatButton
                 label="취소하기"
-                onClick={this.props.onClickCancle}
+                onClick={() => onClick(typeOf, "취소")}
                />
             </div>
         }
