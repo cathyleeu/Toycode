@@ -15,9 +15,7 @@ class AccountContainer extends PureComponent {
       branchModi: false,
       mngModi: false,
     }
-    this.handleModiTrue = this.handleModiTrue.bind(this)
-    this.handleModiFalse = this.handleModiFalse.bind(this)
-    this.handleModiCancle = this.handleModiCancle.bind(this)
+    this.handleModiToggle = this.handleModiToggle.bind(this)
   }
 
   componentWillMount(){
@@ -41,26 +39,25 @@ class AccountContainer extends PureComponent {
       this.setState({loaded: true})
     }
   }
-  handleModiTrue(name){
-    Perf.start()
-    this.setState({[name]: true})
-    this.props.isDefalutModi(this.props.user)
-  }
-  handleModiFalse(name){
-    Perf.start()
-    this.setState({[name]: false})
-    if(confirm('수정을 완료하시겠습니까?')){
-      this.props.isCompoleteModi(name, this.props[name])
+  handleModiToggle(name, btn){
+    // Perf.start()
+    if(this.state[name]){
+      if(btn === "완료"){
+        if(confirm('수정을 완료하시겠습니까?')){
+          this.props.isCompoleteModi(name, this.props[name])
+        } else {
+          this.props.isDefalutModi(this.props.user)
+        }
+      } else {
+        if(confirm('취소 하시겠습니까?')){
+          this.setState(prevState => ({[name]: !prevState[name]}))
+          this.props.isDefalutModi(this.props.user)
+        }
+      }
     } else {
-      this.props.isDefalutModi(this.props.user)
+      this.setState(prevState => ({[name]: !prevState[name]}))
     }
-  }
-  handleModiCancle(name){
-    Perf.start()
-    if(confirm('취소 하시겠습니까?')){
-      this.setState({[name]: false})
-      this.props.isDefalutModi(this.props.user)
-    }
+    this.props.isDefalutModi(this.props.user)
   }
   render(){
     if(this.state.loaded){
@@ -69,18 +66,16 @@ class AccountContainer extends PureComponent {
           <div>
             <AccountTableHeader
               title="지사정보"
-              onClickTrue={() => this.handleModiTrue('branchModi')}
-              onClickFalse={() => this.handleModiFalse('branchModi')}
-              onClickCancle={() => this.handleModiCancle('branchModi')}
+              typeOf="branchModi"
+              onClick={this.handleModiToggle}
               modi={!this.state.branchModi}/>
             <AccountBranch {...this.props} readOnly={!this.state.branchModi}/>
           </div>
           <div>
             <AccountTableHeader
               title="담당자 정보"
-              onClickTrue={() => this.handleModiTrue('mngModi')}
-              onClickFalse={() => this.handleModiFalse('mngModi')}
-              onClickCancle={() => this.handleModiCancle('mngModi')}
+              typeOf="mngModi"
+              onClick={this.handleModiToggle}
               modi={!this.state.mngModi} />
             <AccountManager {...this.props} readOnly={!this.state.mngModi}/>
           </div>
