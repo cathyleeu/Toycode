@@ -17,18 +17,16 @@ class KinderCard extends PureComponent{
       modi: false
     }
     this.handleModi = this.handleModi.bind(this)
-    this.renderKinderClasses = this.renderKinderClasses.bind(this)
   }
 
   handleModi(status){
     this.setState({modi: status})
   }
-  renderKinderClasses(cl, i){
-    return <div key={i}>{cl.className}</div>
-  }
   render(){
     console.log(this.props);
-    let { name, lang, phone, zipNo, roadAddr, detailAddr, manager, managerPh, modi, classes } = this.state;
+    let { name, lang, phone, zipNo, roadAddr, detailAddr, manager, managerPh, modi, classes } = this.state,
+        kinderClasses = classes.map((cl, i) => <div key={i}>{cl.className}</div>);
+
     return(
       <div className="KinderCard-Cont">
         <div className="KinderCard-top">
@@ -60,7 +58,7 @@ class KinderCard extends PureComponent{
           </div>
           <div>
             <KinderCardInput label={'언어'} value={lang} modi={!modi}/>
-            {classes.map(this.renderKinderClasses)}
+            {kinderClasses}
           </div>
         </div>
       </div>

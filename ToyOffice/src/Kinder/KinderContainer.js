@@ -19,20 +19,18 @@ class KinderContainer extends PureComponent {
       this.setState({kinders: newProps.kinders, loaded: true})
     }
   }
-  renderKinderCard = (kin,i) => {
-    return <KinderCard key={i} {...kin} />
-  }
   render(){
     if(!this.state.loaded){
       return <div>로딩중</div>
     }
+    let kinderCard = this.state.kinders.map((kin,i) => <KinderCard key={i} {...kin} />)
     return(
       <div className="Child-Cont">
         <div className="Kinder-Cont-top">
           <h3>소속 원 정보</h3>
           <FlatButton label="유치원 등록하기" primary={true}/>
         </div>
-        {this.state.kinders.map(this.renderKinderCard)}
+        {kinderCard}
       </div>
     )
   }
