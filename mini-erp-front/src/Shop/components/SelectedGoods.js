@@ -2,9 +2,10 @@ import React, {PureComponent} from 'react'
 
 class SelectedGoods extends PureComponent {
   render(){
+    let { title, level, volume, amount, price } = this.props.detail;
     return(
       <div className="selected-goods-detailed-ctx">
-        <div> {this.props.detail.title}{this.props.detail.level}{this.props.detail.volume} X {this.props.detail.amount} = {this.props.detail.amount*this.props.detail.price}원 </div>
+        <div> {title}{level}{volume} X {amount} = {amount*price}원 </div>
       </div>
     )
   }
