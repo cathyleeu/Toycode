@@ -13,8 +13,6 @@ class Cart extends PureComponent {
   }
   componentWillReceiveProps(newProps){
     if(this.state.books !== newProps.books){
-      console.log(this.state.books);
-      console.log(newProps.books);
       this.setState({books: newProps.books})
     }
   }
