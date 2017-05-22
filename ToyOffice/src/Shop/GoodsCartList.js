@@ -3,8 +3,8 @@ import GoodsCartDetail from './GoodsCartDetail'
 
 
 class GoodsCartList extends Component{
-  renderCartDetail = (s,i) => <GoodsCartDetail key={i} s={s} {...this.props}/>
   render(){
+    let cardDetail = this.props.goodsInCart.map((s,i) => <GoodsCartDetail key={i} s={s} {...this.props}/>)
     return(
       <div>
         <table className="Select-Goods-List">
@@ -18,7 +18,7 @@ class GoodsCartList extends Component{
             </tr>
           </thead>
           <tbody>
-          {this.props.goodsInCart.map(this.renderCartDetail)}
+          {cardDetail}
           </tbody>
         </table>
       </div>

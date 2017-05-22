@@ -8,20 +8,12 @@ class OrderModi extends PureComponent {
     this.state = {
       modiItem: props.modiItem
     }
-    this.renderModiItems = this.renderModiItems.bind(this)
     this.handleModiBtn = this.handleModiBtn.bind(this)
   }
 
   componentWillReceiveProps(newProps){
     if(newProps.modiItem !== this.props.modiItem)
     this.setState({modiItem: newProps.modiItem})
-  }
-  renderModiItems(item, i){
-    return <OrderModiItem  key={i}
-              {...item}
-              modiId={this.props.item.invoiceId}
-              isDeleteGoods={this.props.isDeleteGoods}
-              isModiGoodsQutt={this.props.isModiGoodsQutt}/>
   }
   handleModiBtn(e, name){
     e.preventDefault()
@@ -49,7 +41,13 @@ class OrderModi extends PureComponent {
     this.props.closeModal()
   }
   render(){
-    let { modiItem } = this.state;
+    let { modiItem } = this.state
+        , modiItems = modiItem.map(
+          (item,i) => <OrderModiItem  key={i}
+                    {...item}
+                    modiId={this.props.item.invoiceId}
+                    isDeleteGoods={this.props.isDeleteGoods}
+                    isModiGoodsQutt={this.props.isModiGoodsQutt}/> )
     if(modiItem){
       return(
         <div>
@@ -64,7 +62,7 @@ class OrderModi extends PureComponent {
               </tr>
             </thead>
             <tbody>
-              {modiItem.map(this.renderModiItems)}
+              {modiItems}
             </tbody>
           </table>
           <button onClick={() => this.handleModiBtn(event,'modi')}>수정 완료</button>

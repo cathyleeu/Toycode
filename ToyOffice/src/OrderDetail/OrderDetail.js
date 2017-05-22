@@ -26,7 +26,6 @@ class OrderDetail extends PureComponent {
       loaded: false,
       order : props.order
     }
-    this.renderOrderItem = this.renderOrderItem.bind(this)
   }
   componentWillMount(){
     this.setState({loaded: true})
@@ -39,33 +38,34 @@ class OrderDetail extends PureComponent {
   componentDidMount(){
     this.props.isGetIVesByUser()
   }
-  renderOrderItem(item){
-    let modiItem = this.props.modiGoods.valueOf()[item.invoiceId]
-    return <OrderItem
-              key={item._id}
-              item={item} // {...this.props}
-              modiGoods={this.props.modiGoods}
-              isModiGoodsQutt={this.props.isModiGoodsQutt}
-              modiItem={modiItem ? modiItem : false }/>
-  }
   render(){
     //FIXME: 중복 렌더링 되는 부분을 고쳐야 함... 그런데 어떻게 ㅠㅠ?
-    let {loaded, order} = this.state;
-    if(loaded){
-      return(
-        <div className="Child-Cont">
-          <div className="Order">
-            {order.map(this.renderOrderItem)}
-          </div>
-        </div>
+    let {loaded, order} = this.state
+      , orderItems = order.map(
+        item => {
+          let modiItem = this.props.modiGoods.valueOf()[item.invoiceId]
+          return <OrderItem
+                  key={item._id}
+                  item={item} // {...this.props}
+                  modiGoods={this.props.modiGoods}
+                  isModiGoodsQutt={this.props.isModiGoodsQutt}
+                  modiItem={modiItem ? modiItem : false }/>
+        }
       )
-    } else {
+    if(!loaded){
       return(
         <div>
           <p>로딩중</p>
         </div>
       )
     }
+    return(
+      <div className="Child-Cont">
+        <div className="Order">
+          {orderItems}
+        </div>
+      </div>
+    )
   }
   componentWillUnmount(){
     //화면에서 아예 페이지가 사라질때 발생!
