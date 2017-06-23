@@ -219,7 +219,10 @@ function sheet_from_array_of_arrays(data, opts) {
       if(range.s.c > C) range.s.c = C;
       if(range.e.r < R) range.e.r = R;
       if(range.e.c < C) range.e.c = C;
-      var cell = {v: data[R][C] };
+      var cell = {
+        v: data[R][C]
+        // , s: ????
+      };
       if(cell.v == null) continue;
       var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
 
@@ -229,7 +232,7 @@ function sheet_from_array_of_arrays(data, opts) {
         cell.t = 'n'; cell.z = XLSX.SSF._table[14];
         cell.v = datenum(cell.v);
       }
-      else cell.t = 's';
+      else cell.t = 's'; //string
 
       ws[cell_ref] = cell;
     }
@@ -260,6 +263,13 @@ const isGetXlsx = async ctx => {
     let totalQutt = 0
     var data = [
       ["거래명세서", null, null, null, null, null, null, null, null],
+      // FIXME: v:, s: 등등으로 스타일을 입힐 수 있을 것 같은데 obj obj 라고 결과가 도출 -0 -;;;
+      //   s: { alignment: {horizontal: "left"},
+          //     border: {
+          //         left: {style: 'thick', color: {auto: 1}},
+          //         top: {style: 'thick', color: {auto: 1}},
+          //         bottom: {style: 'thick', color: {auto: 1}}
+          //       }}}
       [null, null, null, null, null, null, null, null, null ],
       ["일자", "우편번호","전표:1", null, null, null, null, null, null],
       [today, state.delivery.address.zipNo , "공급자", '등록번호'   , "764-86-00016"                 , null, null],
