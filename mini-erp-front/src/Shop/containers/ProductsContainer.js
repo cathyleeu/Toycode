@@ -17,7 +17,7 @@ class ProductsContainer extends Component{
   }
   render(){
     const { selected, addToCartUnsafe, customType } = this.props;
-    let volume = ["1", "2", "3", "4", "5", "특별1", "6", "7"], filterGoods = this.state.goods.filter(g => g.volume === this.state.selectedVol)
+    let volume = ["1", "2", "3", "4", "5", "특별1", "6", "7", "8"], filterGoods = this.state.goods.filter(g => g.volume === this.state.selectedVol)
     return(
       <ProductsList title="1단계: 주문하실 교재를 선택하세요.">
         <div className="goods-list-cont">
