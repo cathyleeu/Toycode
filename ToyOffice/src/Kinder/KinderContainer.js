@@ -28,7 +28,7 @@ class KinderContainer extends PureComponent {
       <div className="Child-Cont">
         <div className="Kinder-Cont-top">
           <h3>소속 원 정보</h3>
-          <FlatButton label="유치원 등록하기" primary={true}/>
+          <FlatButton label="유치원 등록하기" primary={true} onClick={() => console.log("addddd")}/>
         </div>
         {kinderCard}
       </div>

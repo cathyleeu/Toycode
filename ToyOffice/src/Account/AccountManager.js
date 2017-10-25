@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import AccountManagerInput from './AccountManagerInput'
+import { ToyCodeInput } from '../Components'
 
 
 class AccountManager extends PureComponent {
@@ -35,50 +35,56 @@ class AccountManager extends PureComponent {
       <form className="AccountManager-Cont">
           <div>
             <h3>회계 담당자</h3>
-            <AccountManagerInput
+            <ToyCodeInput
+              inputContStyle="AccountManager-Input"
               label="담당자 명"
               holder="담당자 명을 입력하세요."
               name="A_manager"
               value={A_manager}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
               readOnly={this.props.readOnly} />
-            <AccountManagerInput
+            <ToyCodeInput
+              inputContStyle="AccountManager-Input"
               label="전화번호"
               holder="전화번호를 입력하세요."
               name="A_phone"
               value={A_phone}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
               readOnly={this.props.readOnly} />
-            <AccountManagerInput
+            <ToyCodeInput
+              inputContStyle="AccountManager-Input"
               label="이메일"
               holder="이메일을 입력하세요."
               name="A_email"
               value={A_email}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
               readOnly={this.props.readOnly} />
           </div>
           <div>
             <h3>교육 담당자</h3>
-            <AccountManagerInput
+            <ToyCodeInput
+              inputContStyle="AccountManager-Input"
               label="담당자 명"
               holder="담당자 명을 입력하세요."
               name="E_manager"
               value={E_manager}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
               readOnly={this.props.readOnly} />
-            <AccountManagerInput
+            <ToyCodeInput
+              inputContStyle="AccountManager-Input"
               label="전화번호"
               holder="전화번호를 입력하세요."
               name="E_phone"
               value={E_phone}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
               readOnly={this.props.readOnly} />
-            <AccountManagerInput
+            <ToyCodeInput
+              inputContStyle="AccountManager-Input"
               label="이메일"
               holder="이메일을 입력하세요."
               name="E_email"
               value={E_email}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
               readOnly={this.props.readOnly} />
           </div>
       </form>

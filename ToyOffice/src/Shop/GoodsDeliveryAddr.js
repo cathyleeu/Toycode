@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import AddrModal from './AddrModal'
+import { Modal, ToyCodeButton, ToyCodeInput } from '../Components'
 
 class GoodsDeliveryAddr extends Component{
   state = {
@@ -20,8 +20,9 @@ class GoodsDeliveryAddr extends Component{
   handleSendAddr = () => {
     this.props.enterDeliveryDetail(this.state)
   }
-  handleAddrModal = (modal, boolean) => {
-    this.setState({[modal]: boolean})
+  handleAddrModal = (e) => {
+    let name = e.target.tagName === "DIV" ? e.target.dataset.name : e.target.name;
+    this.setState({[name]: !this.state[name]})
   }
   handleSearchAddr = e => {
     e.preventDefault();
@@ -43,7 +44,6 @@ class GoodsDeliveryAddr extends Component{
     this.props.searchAddress('')
   }
   render(){
-    // console.log();
     let { juso } = this.props;
     return(
       <div className="Goods-Delivery-Addr">
@@ -59,32 +59,37 @@ class GoodsDeliveryAddr extends Component{
               value={this.state.zipNo}
               readOnly/>
             </label>
-            <button className="Delivery-Addr-btn" onClick={() => this.handleAddrModal('addrModal', true)}>주소 검색</button>
-            <button className="Delivery-Addr-btn">주소록</button>
-          </div>
-          <div>
-            <label>배송처
-            <input
-              className="Delivery-input"
-              placeholder='주소를 검색하여 배송지를 입력해주세요.'
-              type='text'
-              name="roadAddr"
-              value={this.state.roadAddr}
-              readOnly
+            <ToyCodeButton
+              buttonType="button"
+              buttonStyle="Delivery-Addr-btn"
+              handleButtonEvent={this.handleAddrModal}
+              buttonName="addrModal"
+              content="주소 검색"
             />
-            </label>
-            <label>배송지 상세주소
-            <input
-              className="Delivery-input"
-              placeholder='배송지 상세주소'
-              type='text'
-              name="detailAddr"
-              value={this.state.detailAddr}
-              onChange={this.handleChange}
-              onBlur={this.handleSendAddr}
+            <ToyCodeButton
+              buttonType="button"
+              buttonStyle="Delivery-Addr-btn"
+              content="주소록"
             />
-            </label>
           </div>
+          <ToyCodeInput
+            inputStyle="Delivery-input"
+            label="배송처"
+            holder="주소를 검색하여 배송지를 입력해주세요."
+            name="roadAddr"
+            inputType="text"
+            value={this.state.roadAddr}
+            readOnly={true} />
+          <ToyCodeInput
+            inputStyle="Delivery-input"
+            label="배송지 상세주소"
+            holder="배송지 상세주소"
+            name="detailAddr"
+            inputType="text"
+            value={this.state.detailAddr}
+            handleChange={this.handleChange}
+            handleBlur={this.handleSendAddr}
+            readOnly={true} />
           <div className="Delivery-Addr-Row SpaceBtw">
             <label>
               수령인
@@ -110,38 +115,43 @@ class GoodsDeliveryAddr extends Component{
             />
             </label>
           </div>
-          <div>
-            <label>
-              요구사항
-            <input
-              className="Delivery-input"
-              placeholder='요구사항'
-              type='text'
-              name="rqcontent"
-              value={this.state.rqcontent}
-              onChange={this.handleChange}
-              onBlur={this.handleSendAddr}
-            />
-            </label>
-          </div>
+          <ToyCodeInput
+            label="요구사항"
+            inputStyle="Delivery-input"
+            inputType="text"
+            holder='요청 사항을 적어주세요.'
+            name="rqcontent"
+            value={this.state.rqcontent}
+            handleChange={this.handleChange}
+            handleBlur={this.handleSendAddr}
+            readOnly={true} />
         </div>
-        <AddrModal
+        <Modal
           isModalOpen={this.state.addrModal}
-          closeModal={() => this.handleAddrModal('addrModal', false)}>
-          <i className="fa fa-times-circle search-close" aria-hidden="true" onClick={() => this.handleAddrModal('addrModal', false)}></i>
-          <form onSubmit={this.handleSearchAddr} className="search-bar">
-            <input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
-            <button type="button" className="search-btn" onClick={this.handleSearchAddr}>주소 검색</button>
-          </form>
-          <div className="search-address-results">
-            {juso && juso.map((result, i)=> (
-              <div className="search-address-result" key={i} onClick={() => this.handleSelectAddr(result)}>
-                <p>{result.roadAddr}</p>
-              </div>
-            ))}
-          </div>
-          {/* <button className="search-btn" onClick={() => this.setState({addrModal: false })}>닫기</button> */}
-        </AddrModal>
+          closeName="addrModal"
+          closeModal={this.handleAddrModal}
+          styleType="searchModal"
+          >
+            <i className="fa fa-times-circle search-close" aria-hidden="true" onClick={() => this.handleAddrModal('addrModal', false)}></i>
+            <form onSubmit={this.handleSearchAddr} className="search-bar">
+              <input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
+              <ToyCodeButton
+                buttonStyle="search-btn"
+                buttonType="button"
+                buttonName="modi"
+                handleButtonEvent={this.handleSearchAddr}
+                content="주소 검색"
+              />
+            </form>
+            <div className="search-address-results">
+              {juso && juso.map((result, i)=> (
+                <div className="search-address-result" key={i} onClick={() => this.handleSelectAddr(result)}>
+                  <p>{result.roadAddr}</p>
+                </div>
+              ))}
+            </div>
+        </Modal>
+
       </div>
     )
   }
@@ -154,3 +164,9 @@ const mapStateToProps = ({goods}) => ({
 
 
 export default connect(mapStateToProps, null)(GoodsDeliveryAddr)
+
+
+
+
+
+{/* <button className="search-btn" onClick={() => this.setState({addrModal: false })}>닫기</button> */}

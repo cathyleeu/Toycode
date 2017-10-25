@@ -24,7 +24,7 @@ class GoodsCartDetail extends PureComponent {
             placeholder='주문수량'
             type='number'
             name='qutt'
-            value={ s.amount ? parseInt(s.amount, 10) : "" }
+            value={ s.amount ? +s.amount : "" }
             onChange={this.handleChange}
             min='1'
           />

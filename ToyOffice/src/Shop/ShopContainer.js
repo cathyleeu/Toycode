@@ -1,12 +1,18 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import * as actions from './actions'
-import {Tabs, Tab} from 'material-ui/Tabs';
+
 import './index.css'
+
 import ComingSoon from './ComingSoon'
 import GoodsList from './GoodsList'
 import GoodsCartList from './GoodsCartList'
 import GoodsDelivery from './GoodsDelivery'
+
+import {
+  Tabs,
+  Tab
+} from 'material-ui/Tabs';
 import {
   Step,
   Stepper,
@@ -21,14 +27,19 @@ class ShopContainer extends PureComponent{
   state = {
     lang: 'ko',
     volume: '',
-    goods: this.props.goods,
+    goods: [],
     finished: false,
     stepIndex: 0,
     goodsInCart: this.props.selected,
   }
+
   componentDidMount(){
     this.props.fetchBooks()
+    this.setState({
+      goods: this.props.goods
+    })
   }
+
   componentWillReceiveProps(newProps){
     this.setState({
       goods: newProps.goods,
@@ -36,7 +47,9 @@ class ShopContainer extends PureComponent{
     })
   }
   handleNext = () => {
-    const {stepIndex, goodsInCart} = this.state, {deliveryInfo, selected, user} = this.props;
+    const { stepIndex, goodsInCart} = this.state,
+          { deliveryInfo, selected, user } = this.props;
+
     switch (stepIndex) {
       case 0:
         if(goodsInCart.length !== 0){
@@ -104,7 +117,7 @@ class ShopContainer extends PureComponent{
     }
   }
   renderStepActions = (step) => {
-    const {stepIndex} = this.state;
+    const { stepIndex } = this.state;
     return (
       <div style={{margin: '12px 0'}}>
         <RaisedButton
@@ -127,12 +140,15 @@ class ShopContainer extends PureComponent{
       </div>
     );
   }
+
   handleSelectVal = (name, val) => this.setState({[name]: val})
+
   renderGoods = () => {
     //TODO: 리팩토링
     if(this.state.goods.length === 0){
       return <ComingSoon />
     }
+    // console.log(this.state.goods)
     if(this.state.volume){ //권을 선택 한 상황
       let goods = this.state.goods.filter(g => g.lang === this.state.lang && g.volume === this.state.volume)
       if(goods.length === 0){

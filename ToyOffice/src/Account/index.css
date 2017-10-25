@@ -65,7 +65,7 @@
   font-size: 15px;
 }
 
-.AccountManager-Input > p {
+.AccountManager-Input > label {
   font-weight: 300;
   margin: 0;
   font-size: 13px;
