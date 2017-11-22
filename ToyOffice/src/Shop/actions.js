@@ -31,7 +31,8 @@ export const searchAddress = (location) => (dispatch) => {
 
 export const fetchBooks = () => (dispatch, getState) => {
   axios.get(`${ROOT_URL}/books`)
-  .then((books) => dispatch({type: COMPLETE_BOOKS_FETCH, books: books.data}))
+  .then((books) => dispatch({ type: COMPLETE_BOOKS_FETCH, books: books.data }))
+  .catch(err => console.log("fetchBooks", err))
 }
 
 export const addToCartUnsafe = (book) => (dispatch) => {

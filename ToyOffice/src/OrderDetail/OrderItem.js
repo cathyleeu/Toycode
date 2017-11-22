@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import moment from 'moment-timezone'
-import OrderModal from './OrderModal'
+import { Modal, ToyCodeButton } from '../Components'
 import OrderModi from './OrderModi'
 import OrderTrans from './OrderTrans'
 import Perf from 'react-addons-perf'
@@ -27,9 +27,11 @@ class OrderItem extends PureComponent {
     Perf.printInclusive()
     Perf.printWasted()
   }
-  handleOrderModal(name, state){
+  handleOrderModal(e){
     Perf.start()
-    this.setState({[name]: state})
+    debugger
+    let name = e.target.tagName === "DIV" ? e.target.dataset.name : e.target.name;
+    this.setState({[name]: !this.state[name]})
   }
   render(){
     let { item, modiItem } = this.props, { delivery } = item, { address } = delivery;
@@ -41,7 +43,7 @@ class OrderItem extends PureComponent {
       { title : "상세주소", ctx: address.detailAddr },
       { title : "요청 사항", ctx: item.requestDesc }
     ]
-    console.log(this.props);
+    // console.log(this.props);
     return(
       <div className="Order-detail-card">
         <div className="Order-detail-top">
@@ -49,21 +51,37 @@ class OrderItem extends PureComponent {
           {this.state.modifiability
             ? (
               <div>
-                <OrderModal
+                <Modal
                   isModalOpen={this.state.modi}
-                  closeModal={() => this.handleOrderModal('modi', false)}>
-                  {this.state.modi && <OrderModi {...this.props} closeModal={() => this.handleOrderModal('modi', false)} modiItem={modiItem} />}
-                </OrderModal>
-                <button onClick={() => this.handleOrderModal('modi', true)}> 수정하기 </button>
+                  closeName="modi"
+                  closeModal={this.handleOrderModal}
+                  styleType="OrderModal"
+                  >
+                  {this.state.modi && <OrderModi {...this.props} closeModal={() => this.handleOrderModal('modi')} modiItem={modiItem} />}
+                </Modal>
+                <ToyCodeButton
+                  buttonType="button"
+                  buttonName="modi"
+                  handleButtonEvent={this.handleOrderModal}
+                  content="수정하기"
+                />
               </div>)
             : (
               <div>
-                <OrderModal
+                <Modal
                   isModalOpen={this.state.transport}
-                  closeModal={() => this.handleOrderModal('transport', false)}>
+                  closeName="modi"
+                  closeModal={this.handleOrderModal}
+                  styleType="OrderModal"
+                  >
                   {this.state.transport && <OrderTrans {...this.props}/>}
-                </OrderModal>
-                <button onClick={() => this.handleOrderModal('transport', true)}> 운송장 번호 </button>
+                </Modal>
+                <ToyCodeButton
+                  buttonType="button"
+                  buttonName="transport"
+                  handleButtonEvent={this.handleOrderModal}
+                  content="운송장 번호"
+                />
               </div>
             )
           }
