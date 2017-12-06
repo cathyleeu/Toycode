@@ -1,15 +1,14 @@
 import React, { PureComponent } from 'react'
 
-
 export default class ToyCodeButton extends PureComponent {
-  constructor(props){
-    super(props)
-  }
-  componentWillReceiveProps(newProps) {
-
-  }
   render() {
-    let { content, buttonStyle, handleButtonEvent, buttonName, buttonType } = this.props;
+    let {
+      content,
+      buttonStyle,
+      handleButtonEvent,
+      buttonName,
+      buttonType
+    } = this.props;
     return (
       <button
         type={buttonType}

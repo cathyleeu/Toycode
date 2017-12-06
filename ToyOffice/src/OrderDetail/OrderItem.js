@@ -29,7 +29,6 @@ class OrderItem extends PureComponent {
   }
   handleOrderModal(e){
     Perf.start()
-    debugger
     let name = e.target.tagName === "DIV" ? e.target.dataset.name : e.target.name;
     this.setState({[name]: !this.state[name]})
   }

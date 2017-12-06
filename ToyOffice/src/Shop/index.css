@@ -1,11 +1,3 @@
-.Child-Cont{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
 .Shop-Goods-desc{
   display: flex;
   flex-direction: row;
@@ -210,41 +202,37 @@
 }
 .Goods-Delivery-Statement{ width: 50%; padding: 0.3em; }
 .Goods-Delivery-Addr{ width: 50%; padding: 1em; }
-.Goods-Delivery-Addr label{
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
-  margin-bottom: 1.8em;
-  font-weight: 300;
-  /*width: 50%;*/
-}
-.Goods-Delivery-Addr label input{ margin-top: 0.5em; border: 1px solid #dbdbdb;}
-.Goods-Delivery-Addr label input:focus{border: 1px solid rgb(0, 188, 212);}
-.Delivery-Addr-btn{
+/*.Goods-Delivery-Addr label input{ margin-top: 0.5em; border: 1px solid #dbdbdb;}
+.Goods-Delivery-Addr label input:focus{border: 1px solid rgb(0, 188, 212);}*/
+/*.Delivery-Addr-btn{
   width: 70px;
-  margin: 0 0.3em;
   height: 30px;
+  margin-left: 5px;
   border: 0;
   background: rgb(0, 188, 212);
   color: #fff;
   font-weight: 200;
   outline: none;
-}
+}*/
 .Delivery-Addr-btn:hover{ background: rgba(0, 188, 212,0.7);}
 .Delivery-Addr-btn:active{ background: rgba(0, 181, 202,0.9);}
-.Delivery-Addr-Row label{
-  flex: 1;
-}
+
 .half{ margin-right: 0.3em;}
+.Delivery-Container {
+  flex: 1
+}
+.Delivery-Container, .Delivery-Container > label {
+  margin-bottom: 5px;
+}
 .Delivery-input{
-  padding: 0.2em;
+  padding: 0.2%;
   height: 25px;
   outline: none;
+  width: 99%;
 }
 
 .SpaceBtw{
   justify-content: space-between;
-  align-items: center;
 }
 
 .Delivery-Statement-Item{
@@ -303,7 +291,3 @@ input[type=number]::-webkit-inner-spin-button {
   -moz-appearance: none;
   -webkit-appearance: none;
 }
-/*input[type="number"]:hover,
-input[type="number"]:focus {
-  -moz-appearance: none;
-}*/

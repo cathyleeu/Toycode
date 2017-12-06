@@ -21,6 +21,9 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import {
+  BodyContainer
+} from '../Components'
 
 
 class ShopContainer extends PureComponent{
@@ -196,7 +199,7 @@ class ShopContainer extends PureComponent{
       },
     };
     return(
-      <div className="Child-Cont">
+      <BodyContainer>
         <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>
@@ -279,7 +282,7 @@ class ShopContainer extends PureComponent{
             </p>
           </div>
         )}
-      </div>
+      </BodyContainer>
     )
   }
 }

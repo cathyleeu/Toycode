@@ -1,0 +1,60 @@
+
+.Kinder-Cont-top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 700px;
+}
+
+
+.KinderCard-Cont {
+  min-width: 700px;
+  border: 1px dashed #dbdbdb;
+  padding: 0.8em;
+}
+
+.KinderCard-info > div {
+  width: 100%;
+  margin-right: 0.5em;
+}
+
+
+.academy-card-cont {
+  padding: 0.8em;
+  min-width: 600px;
+  border: 1px solid #dbdbdb;
+  margin: 1em;
+}
+
+.academy-card-header {
+  font-weight: 600;
+  font-size: 22px;
+  display: inline;
+  margin: 1em;
+}
+
+.academy-card-link,
+.academy-card-text {
+  margin: 0;
+  width: 59%;
+  margin: 0.5em;
+  display: inline;
+  font-weight: 200;
+  color: black;
+}
+
+.academy-card-header2 {
+  font-size: 12px;
+  width: 40%;
+  margin: 0.5em 0;
+  display: inline;
+  font-weight: 500;
+}
+
+.academy-card-link {
+  text-decoration: none;
+}
+
+.academy-card-link:hover {
+  font-weight: 500;
+}

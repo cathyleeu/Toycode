@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 
 export default class ToyCodeInput extends PureComponent {
   state = {
@@ -10,21 +10,27 @@ export default class ToyCodeInput extends PureComponent {
     }
   }
   render(){
-    let { handleChange, holder, name, readOnly, inputContStyle, label, inputStyle, inputType, handleBlur} = this.props;
+    let {
+      handleChange,
+      holder,
+      name,
+      readOnly,
+      // inputContStyle,
+      // inputStyle,
+      inputType,
+      handleBlur
+    } = this.props;
     return(
-      <div className={inputContStyle}>
-        <label>{label}</label>
         <input
           type={inputType}
-          className={inputStyle}
+          className="toycode_input"
           value={this.state.value}
-          placeholder={holder}
+          placeholder={`${holder} 을/를 기입해주세요.`}
           name={name}
           onChange={handleChange}
           disabled={readOnly}
           onBlur={handleBlur}
         />
-      </div>
     )
   }
 }

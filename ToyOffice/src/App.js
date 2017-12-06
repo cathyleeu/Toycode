@@ -10,14 +10,15 @@ import Feature from './Feature'
 import { Shop } from './Shop'
 import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
-import { Kinder } from './Kinder'
+import { SettingAcademy } from './SettingAcademy'
+import { SettingStudent } from './SettingStudent'
 
 
-const IssueLogin = (props) => <div>IssueLogin</div>
-const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
+// const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
 const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
-const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
-const Statement = (props) => <div>Statement 어드민 페이지 </div>
+// const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
+// const Statement = (props) => <div>Statement 어드민 페이지 </div>
+const SettingClass = (props) => <div>SettingClass 어드민 페이지 </div>
 
 class App extends Component {
   state = {
@@ -28,6 +29,7 @@ class App extends Component {
     this.setState({drawerOpen: !this.state.drawerOpen})
   }
   handleLink = (match, path, name) => {
+    // 각 페이지에 들어갈때 필요한 데이터 각 불러오도록 해야 할 듯
     this.setState({drawerOpen: !this.state.drawerOpen, header: name})
     this.props.history.replace(`${match.url}/${path}`)
   }
@@ -37,16 +39,19 @@ class App extends Component {
   }
   render() {
     const { match } = this.props;
+    // {path:'orderlist', component: OrderList, name : '주문상황'},
+    // {path:'shop', component: Shop, name: '주문하기'},
+    // {path:'details', component: OrderDetail, name : '주문내역'},
+    // {path:'goodslist', component: GoodsList, name : '상품목록'},
+    // {path:'statement', component: Statement, name : '매출장부'}
     let nav = [
-      {path:'shop', component: Shop, name: '주문하기'},
-      {path:'details', component: OrderDetail, name : '주문내역'},
+
       {path:'account', component: Account, name : '마이페이지'},
-      {path:'kinder', component: Kinder, name : '소속 원 설정'},
-      {path:'issue', component: IssueLogin, name : '소속 원 프로그램 설정'},
-      {path:'orderlist', component: OrderList, name : '주문상황'},
-      {path:'customlist', component: CustomList, name : '지사상황'},
-      {path:'goodslist', component: GoodsList, name : '상품목록'},
-      {path:'statement', component: Statement, name : '매출장부'}
+      {path:'settingAcademy', component: SettingAcademy, name : '소속 학원 설정하기'},
+      {path:'settingClass', component: SettingClass, name : '반 설정하기'},
+      {path:'settingStudent', component: SettingStudent, name : '학생 설정하기'},
+      {path:'customlist', component: CustomList, name : '지사상황'}
+
     ]
     return (
       <div>
@@ -69,22 +74,3 @@ class App extends Component {
 }
 
 export default connect(null, actions)(App);
-
-
-
-/*
-  RaisedButton: onClick, onTouchTap 사용가능
-
-
-
-  <div className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <h2>Welcome to React</h2>
-  </div>
-
-
-  <p className="App-intro">
-    To get started, edit <code>src/App.js</code> and save to reload.
-  </p>
-
-*/

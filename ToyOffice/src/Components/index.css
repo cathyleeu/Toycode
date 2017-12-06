@@ -1,0 +1,103 @@
+div[class$="direction"] {
+  display: inline-flex;
+  justify-content: space-between;
+}
+.body_container {
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.row_direction {
+  flex-direction: row;
+}
+.column_direction {
+  flex-direction: column;
+}
+
+div[class$="aligned"] {
+  width: 100%;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.top_aligned{
+  flex-direction: column;
+}
+
+.right_aligned, .left_aligned {
+  flex-direction: row;
+}
+
+.right_aligned > label,
+.left_aligned > label {
+  width: 30%;
+  font-size: 15px;
+  height: 25px;
+  padding: 5px;
+  line-height: 30px;
+}
+
+.right_aligned > label {
+  text-align: end;
+}
+
+
+.toycode_label{
+  font-size: 13px;
+  height: 15px;
+  font-weight: 300;
+  margin: 5px;
+}
+
+
+.toycode_input {
+  height: 25px;
+  padding: 5px;
+  border: 1px solid #ebebeb;
+  font-size: 10px;
+  margin: 5px;
+  outline: none;
+}
+.toycode_input:focus {
+  border: 1px solid #00bcd4;
+}
+
+
+.toycode_button {
+  width: 80px;
+  border: 0;
+  background: #00bcd4;
+  color: #fff;
+  font-weight: 200;
+  outline: none;
+}
+
+.row_direction > button {
+  height: 37px;
+  margin: 30px 5px 5px;
+}
+
+.toycode_select {
+  /*width: 100px;*/
+  margin: 5px;
+  height: 35px;
+  padding: 5px 10px;
+  font-size: 13px;
+  background-color: white;
+  font-weight: 300;
+  color: black;
+  border: 1px solid rgb(0, 188, 212);
+  border-radius: 3px;
+  -webkit-appearance: none; /* 화살표 없애기 for chrome*/
+  -moz-appearance: none;    /* 화살표 없애기 for firefox*/
+  appearance: none;         /* 화살표 없애기 공통*/
+  outline: none;
+}
+.toycode_select::-ms-expand {
+  display: none;            /* 화살표 없애기 for IE10, 11*/
+}

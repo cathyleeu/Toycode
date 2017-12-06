@@ -3,6 +3,7 @@ import login from './Login/reducers'
 import goods from './Shop/reducers'
 import order from './OrderDetail/reducers'
 import account from './Account/reducers'
+import kinder from './SettingAcademy/reducers'
 // import shop from './Shop/reducers'
 // import auth from './Auth/reducers'
 // import cstList from './CustomerLists/reducers'
@@ -14,7 +15,7 @@ import account from './Account/reducers'
 // import notice from './Feature/reducers'
 
 const rootReducer = combineReducers({
-  login, goods, order, account
+  login, goods, order, account, kinder
   // products,
 });
 
