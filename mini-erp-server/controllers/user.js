@@ -417,45 +417,117 @@ const getNewUrl = ( bId , names ) => {
         sum++;
       }
     }
-    console.log("urls",urls);
+    // console.log("urls",urls);
     console.log("newUrls",newUrls);
     resolve(newUrls);
   });
 }
 
-const userKinderUpdate = async ctx => {
-  try{
-    let kinders = ctx.request.body.kinders,
-        names = kinders.map(kinder => kinder.name),
-        urls = await getNewUrl(ctx.request.body.branch, names);
-    for(var i = 0; i < kinders.length; i++) {
-      const kinder = kinders[i];
-      const kinderId = 'K'+(i+1);
-      const kinderCode = kinder.parentId+'-'+kinderId;
-      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
-      console.log(url)
-      kinders[i] = {
-        code: kinderCode, manager, parentId,
-        zipNo, roadAddr, detailAddr, lang,
-        managerPh,
-        url: url || urls[i],
-        name: name.trim(), phone,
-        kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
-          return({
-          _id: kinderId+'-KC'+(i+1),
-          code: kinderCode+'-KC'+(i+1),
-          className: kinderClass.className,
-          level: kinderClass.level
-        })})
-      };
-      console.log(kinders[i])
-    }
+// const createAcademy = async ctx => {
+//   ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{$push: {"kinders": ctx.request.body}});
+// }
 
-    ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
-  } catch(err){
-    ctx.status = 500;
-    ctx.body = err;
-    console.log(err);
+const editAcademy = async ctx => {
+  // 수정하고자 하는 key 값을 뽑음
+  let modified = Object.keys(ctx.request.body)
+  let modiObj = {}
+  // 그에 맞춰서 sub Class 수정
+  modified.forEach( mo => {
+    modiObj[`kinders.$.${mo}`] = ctx.request.body[mo]
+  })
+  ctx.body = await User.findOneAndUpdate(
+    //find subSchema
+    {
+      email: ctx.params.user,
+      "kinders._id" : ctx.params.academyId
+    },
+    modiObj
+  );
+}
+
+const deleteAcademy = async ctx => {
+  ctx.body = await User.findOneAndUpdate(
+    //find subSchema
+    {
+      email: ctx.params.user,
+      "kinders._id" : ctx.params.academyId
+    },
+    // delete subSchema
+    {
+      '$pull' : {
+        'kinders' : {
+          '_id' : ctx.params.academyId
+        }
+      }
+    }
+  );
+}
+
+
+
+const getAcademyByUser = async ctx => {
+  console.log(ctx.params.user, ctx.params.academyId);
+  let result = await User.findOne(
+    {
+      email: ctx.params.user,
+      "kinders._id" : ctx.params.academyId
+    }
+  )
+  console.log(result);
+  ctx.body = result
+}
+
+const userKinderUpdate = async ctx => {
+  if(ctx.request.body.renewal) {
+    let { name, phone, parentId, lang, managerPh, manager } = ctx.request.body,
+          urls = await getNewUrl(ctx.request.body.branch, [name]),
+          codeRes = await Code.findOne({ dbcollection: parentId }),
+          count = codeRes ? codeRes.count : 1,
+          academyData = {
+            code: `${parentId}-K${count}`,
+            url: urls, name, phone, parentId, lang, managerPh, manager
+          };
+    codeRes = codeRes || new Code({
+      dbcollection: parentId,
+      count: count
+    });
+    codeRes.count++;
+    await codeRes.save();
+    ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
+  } else {
+    try{
+      console.log("kinders",ctx.request.body.kinders, "branch", ctx.request.body.branch);
+      let kinders = ctx.request.body.kinders,
+          names = kinders.map(kinder => kinder.name),
+          urls = await getNewUrl(ctx.request.body.branch, names);
+      for(var i = 0; i < kinders.length; i++) {
+        const kinder = kinders[i];
+        const kinderId = 'K'+(i+1);
+        const kinderCode = kinder.parentId+'-'+kinderId;
+        const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
+        // console.log(url)
+        kinders[i] = {
+          code: kinderCode, manager, parentId,
+          zipNo, roadAddr, detailAddr, lang,
+          managerPh,
+          url: url || urls[i],
+          name: name.trim(), phone,
+          kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
+            return({
+            _id: kinderId+'-KC'+(i+1),
+            code: kinderCode+'-KC'+(i+1),
+            className: kinderClass.className,
+            level: kinderClass.level
+          })})
+        };
+        console.log(kinders[i])
+      }
+      ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
+    } catch(err){
+      ctx.status = 500;
+      ctx.body = err;
+      console.log(err);
+    }
   }
 }
 
@@ -482,5 +554,19 @@ const userUpdateByAdmin = async ctx => {
 
 
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo, allUsersEmails, userUpdateByAdmin
+  signin,
+  signup,
+  confirmSignUp,
+  allUsers,
+  loggedUser,
+  userKinders,
+  userInfoUpdate,
+  userKinderUpdate,
+  allBranchKinders,
+  isFetchedKinderInfo,
+  allUsersEmails,
+  userUpdateByAdmin,
+  editAcademy,
+  getAcademyByUser,
+  deleteAcademy
 };

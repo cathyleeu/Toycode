@@ -28,6 +28,9 @@ router.get('/branch/:branch/:kinderInfo', Users.isFetchedKinderInfo)
 router.get('/user/:user/kinders',  Users.userKinders)
 router.put('/user/:user/info',  Users.userInfoUpdate)
 router.put('/user/:user/kinder',  Users.userKinderUpdate)
+router.put('/user/:user/kinder/:academyId',  Users.editAcademy)
+router.get('/user/:user/kinder/:academyId',  Users.getAcademyByUser)
+router.del('/user/:user/kinder/:academyId',  Users.deleteAcademy)
 router.put('/user/:code', Users.userUpdateByAdmin )
 
 
