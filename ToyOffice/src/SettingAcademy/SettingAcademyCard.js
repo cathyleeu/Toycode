@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { DirectionContainer } from '../Components'
 import FlatButton from 'material-ui/FlatButton';
-import SettingAcademyCardModal from './SettingAcademyCardModal'
 
 class SettingAcademyCard extends PureComponent{
   constructor(props){
@@ -13,7 +12,7 @@ class SettingAcademyCard extends PureComponent{
       manager: props.manager || "",
       managerPh: props.managerPh || "",
       url: props.url || "",
-      handleModal: false
+      academy_id: props._id || ""
     }
     this.handleClick = this.handleClick.bind(this)
   }
@@ -22,17 +21,16 @@ class SettingAcademyCard extends PureComponent{
   }
   handleClick(e) {
     let { result } = e.currentTarget.dataset;
-    if(result === "cancle") {
-      // this.setState(this.isGetInitialState())
+    if(result === "edit") {
+      this.props.handleSettingAcademy(e, this.state)
     } else {
-      // this.props.completedAddAcademy(this.state)
-      console.log(result, this.state);
-      // this.props.createAcademy
+      if(confirm('반을 삭제하시겠습니까?')){
+        this.props.completedDeleteAcademy(this.state.academy_id)
+        console.log("delete");
+      } else {
+        console.log("delete cancle");
+      }
     }
-    this.setState({
-      handleModal: !this.props.handleModal
-    })
-    // this.props.handleModal()
   }
   render(){
     let { name, lang, phone, manager, managerPh, url } = this.state;
@@ -42,13 +40,6 @@ class SettingAcademyCard extends PureComponent{
     }
     return(
       <div className="academy-card-cont">
-        <SettingAcademyCardModal
-          // completedAddAcademy={this.props.completedAddAcademy}
-          // modalStatus={this.state.createAcademyModal}
-          handleModal={this.state.handleModal}
-          getAcademyByUser={this.props.getAcademyByUser}
-          {...this.props}
-        />
         <DirectionContainer direction="column">
           <div>
             <p className="academy-card-header">{name}</p>

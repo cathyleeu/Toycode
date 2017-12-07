@@ -13,10 +13,13 @@ class SettingAcademyContainer extends PureComponent {
     this.state = {
       academies: props.academies,
       loaded: false,
-      createAcademyModal: false
+      createAcademyModal: false,
+      settingAcademyModal: false,
+      modalRenderData: {}
     }
     this.handleAddAcademy = this.handleAddAcademy.bind(this)
-    // this.renderChild = this.renderChild.bind(this)
+    this.handleSettingAcademy = this.handleSettingAcademy.bind(this)
+    this.renderChild = this.renderChild.bind(this)
   }
   componentWillMount(){
     this.props.getAcademyByUser()
@@ -34,20 +37,21 @@ class SettingAcademyContainer extends PureComponent {
     this.setState({
       createAcademyModal: !this.state.createAcademyModal
     })
-    // console.log(this.state.createAcademyModal);
-
-    // const handleTyle = {
-    //   createAcademy : "addAcademy",
-    //   createAcademyClass : "addAcademyClass"
-    // }
-    // // debugger
-    // let name = e.target.name || e.target.parentElement.parentElement.dataset.name;
-    // const academiesId = this.props[name](this.props.user._id).kinderId
-    // this.props[handleTyle[name]](academiesId)
+  }
+  handleSettingAcademy(e, data){
+    this.setState({
+      settingAcademyModal: !this.state.settingAcademyModal,
+      modalRenderData: { ...data }
+    })
   }
   renderChild(academy, i){
-    // console.log("renderChild", academy);
-    return <SettingAcademyCard key={i} {...academy} />
+    // console.log("renderChild",academy);
+    return (
+      <SettingAcademyCard
+        key={i} {...academy}
+        completedDeleteAcademy={this.props.completedDeleteAcademy}
+        handleSettingAcademy={this.handleSettingAcademy}/>
+    )
   }
   render(){
     if(!this.state.loaded){
@@ -60,15 +64,24 @@ class SettingAcademyContainer extends PureComponent {
           headerStyle="Kinder-Cont-top"
           headerType="normal"
           name="createAcademy"
-          headerTitle="프로그램 설정"
-          btnTitle="반 등록하기"
+          headerTitle="소속 원 리스트"
+          btnTitle="원 등록하기"
           primary={true}
           onClick={this.handleAddAcademy}
         />
         <SettingAcademyCardModal
           completedAddAcademy={this.props.completedAddAcademy}
           modalStatus={this.state.createAcademyModal}
+          modalPurpose="create"
           handleModal={this.handleAddAcademy}
+          getAcademyByUser={this.props.getAcademyByUser}
+        />
+        <SettingAcademyCardModal
+          {...this.state.modalRenderData}
+          modalPurpose="edit"
+          completedEditAcademy={this.props.completedEditAcademy}
+          modalStatus={this.state.settingAcademyModal}
+          handleModal={this.handleSettingAcademy}
           getAcademyByUser={this.props.getAcademyByUser}
         />
         {nodes}

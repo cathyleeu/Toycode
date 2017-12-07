@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
-import { ToyCodeInput, ToyCodeInputCont, DirectionContainer, Modal, ToyCodeButton, ToyCodeSelect } from '../Components'
+import { ToyCodeInputCont, DirectionContainer, Modal, ToyCodeSelect } from '../Components'
 import FlatButton from 'material-ui/FlatButton';
 
-class SettingAcademyCardModal
- extends PureComponent{
+class SettingAcademyCardModal extends PureComponent{
   constructor(props){
     super(props)
     this.isGetInitialState = () => ({
@@ -23,25 +22,37 @@ class SettingAcademyCardModal
     this.handleClick = this.handleClick.bind(this)
   }
   componentWillMount(){
-
+    // console.log("SettingAcademyCardModal", this.props);
   }
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
   }
+  componentWillReceiveProps(newProps) {
+    this.setState({ ...newProps })
+  }
   handleClick(e){
+    // debugger
+    let { modalPurpose } = this.props;
     let { result } = e.currentTarget.dataset;
-    if(result === "cancle") {
-      this.setState(this.isGetInitialState())
-    } else {
-      this.props.completedAddAcademy(this.state)
-      console.log(result, this.state);
-      // this.props.createAcademy
+
+    let handleEvent = {
+      "create" : {
+        complete : () => this.props.completedAddAcademy(this.state),
+        cancle : () => this.setState(this.isGetInitialState())
+      },
+      "edit" : {
+        complete : () => this.props.completedEditAcademy(this.state, this.props.academy_id),
+        cancle : () => this.setState(this.isGetInitialState())
+      }
     }
+
+    handleEvent[modalPurpose][result]()
+
     this.props.handleModal()
     this.props.getAcademyByUser()
   }
   render(){
-    console.log("render Setting");
+    // console.log("render Setting");
     let { name, lang, phone, manager, managerPh } = this.state;
     let languageOptions = [
       {value: "ko", lang: "한국어"},

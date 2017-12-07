@@ -7,10 +7,10 @@ import { AppBar } from 'material-ui';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
 import Feature from './Feature'
-import { Shop } from './Shop'
-import { OrderDetail } from './OrderDetail'
+// import { Shop } from './Shop'
+// import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
-import { SettingAcademy } from './SettingAcademy'
+import { SettingAcademy, SettingAcademyClass } from './SettingAcademy'
 import { SettingStudent } from './SettingStudent'
 
 
@@ -18,7 +18,7 @@ import { SettingStudent } from './SettingStudent'
 const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
 // const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
 // const Statement = (props) => <div>Statement 어드민 페이지 </div>
-const SettingClass = (props) => <div>SettingClass 어드민 페이지 </div>
+// const SettingClass = (props) => <div>SettingClass 어드민 페이지 </div>
 
 class App extends Component {
   state = {
@@ -48,7 +48,7 @@ class App extends Component {
 
       {path:'account', component: Account, name : '마이페이지'},
       {path:'settingAcademy', component: SettingAcademy, name : '소속 학원 설정하기'},
-      {path:'settingClass', component: SettingClass, name : '반 설정하기'},
+      {path:'settingClass', component: SettingAcademyClass, name : '반 설정하기'},
       {path:'settingStudent', component: SettingStudent, name : '학생 설정하기'},
       {path:'customlist', component: CustomList, name : '지사상황'}
 

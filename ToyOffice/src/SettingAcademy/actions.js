@@ -14,6 +14,8 @@ export const UPDATE_KINDER_CLASS = 'UPDATE_KINDER_CLASS'
 export const DELETE_KINDER_CLASS = 'DELETE_KINDER_CLASS'
 
 
+const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
+
 let nextKinId = 0
 export function createAcademy(_id){
   console.log("createAcademy",_id);
@@ -48,7 +50,14 @@ export const addAcademyClass = (childId) => {
 }
 
 
-const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
+export const getAcademyByUser = () => (dispatch) => {
+  const user = localStorage.getItem('email')
+  // FIXME: server 에서 날려주는거 고치기
+  axios.get(`${ROOT_URL}/user/${user}/kinders`)
+       .then( res => dispatch({ type: FETCH_ACAMEDY, kinders: res.data[0].kinders }))
+}
+
+
 export const completedAddAcademy = (academy) => (dispatch, getState) => {
   let { code, branch } = getState().login.user
   academy = {
@@ -58,17 +67,30 @@ export const completedAddAcademy = (academy) => (dispatch, getState) => {
   }
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder`, { ...academy, branch: branch.name })
-  // dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})
-  // KinData.kinders.map(kinder => (
-  //   kinder.kinderClasses.map(kdc => dispatch(isFetchedNamesByClass(kdc.code, kdc.className)))
-  // ))
-  alert('수정이 완료되었습니다.')
+
+  alert('반 등록이 완료되었습니다.')
 }
 
-export const getAcademyByUser = () => (dispatch) => {
-  console.log("getAcsdemyByUser");
+export const completedEditAcademy = (academy, academy_id) => (dispatch, getState) => {
+  let { name, lang, manager, managerPh, phone } = academy;
+
+  academy = {
+    name, lang, manager, managerPh, phone
+  }
+
   const user = localStorage.getItem('email')
-  // FIXME: server 에서 날려주는거 고치기
-  axios.get(`${ROOT_URL}/user/${user}/kinders`)
-       .then( res => dispatch({ type: FETCH_ACAMEDY, kinders: res.data[0].kinders }))
+  axios.put(`${ROOT_URL}/user/${user}/kinder/${academy_id}`, { ...academy })
+       .then( res => {
+         getAcademyByUser()
+         alert('반 수정이 완료되었습니다.')
+       })
+}
+
+export const completedDeleteAcademy = (academy_id) => (dispatch, getState) => {
+  const user = localStorage.getItem('email')
+  axios.delete(`${ROOT_URL}/user/${user}/kinder/${academy_id}`)
+       .then( res => {
+         getAcademyByUser()
+         alert('반이 삭제되었습니다.')
+       })
 }
