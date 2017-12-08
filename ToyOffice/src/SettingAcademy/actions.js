@@ -33,21 +33,21 @@ export const addAcademy = (childId) => {
 }
 
 
-let nextKinClassId = 0
-export function createAcademyClass(_id){
-  console.log("createAcademyClass",_id);
-  return {
-    type: CREATE_ACADEMY_CLASS,
-    kinderId: `${_id}_class_${nextKinClassId++}`
-  }
-}
-export const addAcademyClass = (childId) => {
-  console.log("addAcademyClass", childId);
-  return({
-    type: ADD_ACADEMY_CLASS,
-    childId
-  })
-}
+// let nextKinClassId = 0
+// export function createAcademyClass(_id){
+//   console.log("createAcademyClass",_id);
+//   return {
+//     type: CREATE_ACADEMY_CLASS,
+//     kinderId: `${_id}_class_${nextKinClassId++}`
+//   }
+// }
+// export const addAcademyClass = (childId) => {
+//   console.log("addAcademyClass", childId);
+//   return({
+//     type: ADD_ACADEMY_CLASS,
+//     childId
+//   })
+// }
 
 
 export const getAcademyByUser = () => (dispatch) => {
@@ -68,7 +68,7 @@ export const completedAddAcademy = (academy) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder`, { ...academy, branch: branch.name })
 
-  alert('반 등록이 완료되었습니다.')
+  alert('원 등록이 완료되었습니다.')
 }
 
 export const completedEditAcademy = (academy, academy_id) => (dispatch, getState) => {
@@ -82,7 +82,7 @@ export const completedEditAcademy = (academy, academy_id) => (dispatch, getState
   axios.put(`${ROOT_URL}/user/${user}/kinder/${academy_id}`, { ...academy })
        .then( res => {
          getAcademyByUser()
-         alert('반 수정이 완료되었습니다.')
+         alert('원 수정이 완료되었습니다.')
        })
 }
 
@@ -91,6 +91,50 @@ export const completedDeleteAcademy = (academy_id) => (dispatch, getState) => {
   axios.delete(`${ROOT_URL}/user/${user}/kinder/${academy_id}`)
        .then( res => {
          getAcademyByUser()
-         alert('반이 삭제되었습니다.')
+         alert('원이 삭제되었습니다.')
        })
+}
+
+
+
+export const createAcademyClass = (academyClass) => (dispatch, getState) => {
+
+  let { parentId, className, level, academyId  } = academyClass;
+  academyClass = {
+    parentId, className, level, academyId
+  }
+
+  const user = localStorage.getItem('email')
+  axios.put(`${ROOT_URL}/user/${user}/academyClass/${academyId}`, {...academyClass})
+       .then(res => {
+          alert('반 등록이 완료되었습니다.')
+       })
+}
+
+export const editAcademyClass = (academyClass) => (dispatch, getState) => {
+  console.log("createAcademyClass");
+  // let { code, branch } = getState().login.user
+  // academy = {
+  //   ...academy,
+  //   parentId: code,
+  //   renewal : true
+  // }
+  // const user = localStorage.getItem('email')
+  // axios.put(`${ROOT_URL}/user/${user}/kinder`, { ...academy, branch: branch.name })
+
+  alert('반 수정이 완료되었습니다.')
+}
+
+export const deleteAcademyClass = (academyClass) => (dispatch, getState) => {
+  console.log("createAcademyClass");
+  // let { code, branch } = getState().login.user
+  // academy = {
+  //   ...academy,
+  //   parentId: code,
+  //   renewal : true
+  // }
+  // const user = localStorage.getItem('email')
+  // axios.put(`${ROOT_URL}/user/${user}/kinder`, { ...academy, branch: branch.name })
+
+  alert('반이 삭제되었습니다.')
 }

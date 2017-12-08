@@ -38,16 +38,17 @@ class SettingAcademyCardModal extends PureComponent{
     let handleEvent = {
       "create" : {
         complete : () => this.props.completedAddAcademy(this.state),
-        cancle : () => this.setState(this.isGetInitialState())
+        cancle : () => false
       },
       "edit" : {
         complete : () => this.props.completedEditAcademy(this.state, this.props.academy_id),
-        cancle : () => this.setState(this.isGetInitialState())
+        cancle : () => false
       }
     }
 
     handleEvent[modalPurpose][result]()
-
+    
+    this.setState(this.isGetInitialState())
     this.props.handleModal()
     this.props.getAcademyByUser()
   }
@@ -55,8 +56,8 @@ class SettingAcademyCardModal extends PureComponent{
     // console.log("render Setting");
     let { name, lang, phone, manager, managerPh } = this.state;
     let languageOptions = [
-      {value: "ko", lang: "한국어"},
-      {value: "en", lang: "English"}
+      {value: "ko", name: "한국어"},
+      {value: "en", name: "English"}
     ]
     return(
       <Modal

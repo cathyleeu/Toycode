@@ -13,7 +13,7 @@ export default class ToyCodeSelect extends PureComponent {
           value={this.props.value}
           onChange={this.props.handleChange}
         >
-          {this.props.options.map((o, i) => <option key={i} value={o.value}>{o.lang}</option>)}
+          {this.props.options.map((o, i) => <option key={i} value={o.value}>{o.name}</option>)}
         </select>
       </div>
     )
