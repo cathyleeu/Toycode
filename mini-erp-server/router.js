@@ -31,6 +31,15 @@ router.put('/user/:user/kinder',  Users.userKinderUpdate)
 router.put('/user/:user/kinder/:academyId',  Users.editAcademy)
 router.get('/user/:user/kinder/:academyId',  Users.getAcademyByUser)
 router.del('/user/:user/kinder/:academyId',  Users.deleteAcademy)
+router.put('/user/:user/academyClass/:academyId',  Users.createAcademyClass)
+// router.get('/user/:user/kinder/:academyId/',  Users.getAcademyByUser)
+// router.del('/user/:user/kinder/:academyId/',  Users.deleteAcademy)
+
+//
+// createAcademyClass,
+// updateAcademyClass,
+// deleteAcademyClass
+
 router.put('/user/:code', Users.userUpdateByAdmin )
 
 

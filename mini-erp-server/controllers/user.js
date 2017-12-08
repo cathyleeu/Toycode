@@ -463,8 +463,6 @@ const deleteAcademy = async ctx => {
   );
 }
 
-
-
 const getAcademyByUser = async ctx => {
   console.log(ctx.params.user, ctx.params.academyId);
   let result = await User.findOne(
@@ -475,6 +473,28 @@ const getAcademyByUser = async ctx => {
   )
   console.log(result);
   ctx.body = result
+}
+
+const createAcademyClass = async ctx => {
+  ctx.body = await User.findOneAndUpdate(
+    {
+      email: ctx.params.user,
+      "kinders.code" : ctx.params.academyId
+    },
+    { $push:
+      { "kinders.$.kinderClasses": ctx.request.body }
+    }
+  );
+}
+
+const updateAcademyClass = async ctx => {
+  console.log(ctx.request.body);
+  // ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
+}
+
+const deleteAcademyClass = async ctx => {
+  console.log(ctx.request.body);
+  // ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
 }
 
 const userKinderUpdate = async ctx => {
@@ -568,5 +588,8 @@ module.exports = {
   userUpdateByAdmin,
   editAcademy,
   getAcademyByUser,
-  deleteAcademy
+  deleteAcademy,
+  createAcademyClass,
+  updateAcademyClass,
+  deleteAcademyClass
 };
