@@ -488,8 +488,39 @@ const createAcademyClass = async ctx => {
 }
 
 const updateAcademyClass = async ctx => {
-  console.log(ctx.request.body);
-  // ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
+  let nested = await User.findOne({
+    email: ctx.params.user,
+    "kinders.code" : ctx.params.academyId,
+    "kinders.kinderClasses._id" : ctx.params.classId
+  }).select('kinders -_id')
+  let parentIndex, childIndex;
+  nested.kinders.forEach( (aca, i) => {
+    if(aca.code === ctx.params.academyId) {
+      parentIndex = i;
+      aca.kinderClasses.forEach((cl, i) => {
+        if(cl._id.toString() === ctx.params.classId) {
+          childIndex = i
+        }
+      })
+    }
+  })
+
+  let modified = Object.keys(ctx.request.body)
+  let modiObj = {}
+  // 그에 맞춰서 sub Class 수정
+  modified.forEach( mo => {
+    modiObj[`kinders.${parentIndex}.kinderClasses.${childIndex}.${mo}`] = ctx.request.body[mo]
+  })
+
+  let filter = await User.findOneAndUpdate(
+    {
+      email: ctx.params.user,
+      "kinders.code" : ctx.params.academyId,
+      "kinders.kinderClasses._id" : ctx.params.classId
+    },
+    modiObj
+  )
+  ctx.body = filter;
 }
 
 const deleteAcademyClass = async ctx => {
