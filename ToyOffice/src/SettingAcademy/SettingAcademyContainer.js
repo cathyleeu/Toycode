@@ -25,7 +25,6 @@ class SettingAcademyContainer extends PureComponent {
     this.props.getAcademyByUser()
   }
   componentWillReceiveProps(newProps) {
-    console.log(this.props.academies);
     if(newProps.academies !== this.props.academies) {
       this.setState({
         academies: newProps.academies,

@@ -10,8 +10,11 @@ export const FETCH_ACAMEDY = 'FETCH_ACAMEDY'
 // 지사 유치원의 반 관리
 export const CREATE_ACADEMY_CLASS = 'CREATE_ACADEMY_CLASS'
 export const ADD_ACADEMY_CLASS = 'ADD_ACADEMY_CLASS'
+export const FETCH_STUDENT_NAMES = 'FETCH_STUDENT_NAMES'
+export const INITIAL_FETCH_STUDENT_NAMES = 'INITIAL_FETCH_STUDENT_NAMES'
 export const UPDATE_KINDER_CLASS = 'UPDATE_KINDER_CLASS'
 export const DELETE_KINDER_CLASS = 'DELETE_KINDER_CLASS'
+
 
 
 const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
@@ -112,17 +115,17 @@ export const createAcademyClass = (academyClass) => (dispatch, getState) => {
 }
 
 export const editAcademyClass = (academyClass) => (dispatch, getState) => {
-  console.log("createAcademyClass");
-  // let { code, branch } = getState().login.user
-  // academy = {
-  //   ...academy,
-  //   parentId: code,
-  //   renewal : true
-  // }
-  // const user = localStorage.getItem('email')
-  // axios.put(`${ROOT_URL}/user/${user}/kinder`, { ...academy, branch: branch.name })
-
-  alert('반 수정이 완료되었습니다.')
+  console.log("editAcademyClass", academyClass);
+  let { parentId, className, level, academyId, _id, classId  } = academyClass;
+  academyClass = {
+    parentId, className, level, academyId, classId
+  }
+  // /user/:user/academyClass/:academyId/:classId
+  const user = localStorage.getItem('email')
+  axios.put(`${ROOT_URL}/user/${user}/academyClass/${academyId}/${_id}`, {...academyClass})
+       .then(res => {
+          alert('반 수정이 완료되었습니다.')
+       })
 }
 
 export const deleteAcademyClass = (academyClass) => (dispatch, getState) => {
@@ -137,4 +140,39 @@ export const deleteAcademyClass = (academyClass) => (dispatch, getState) => {
   // axios.put(`${ROOT_URL}/user/${user}/kinder`, { ...academy, branch: branch.name })
 
   alert('반이 삭제되었습니다.')
+}
+
+export const createStudentIds = (studentInfo) => (dispatch, getState) => {
+  console.log("createStudentIds", studentInfo);
+  let { parentId, academyId, _id, className, students, classId } = studentInfo;
+  students = students.split("\n").map(name => name.trim()).filter(name => name)
+  let obj = {
+    renew: true,
+    parentId,
+    kinderId: academyId,
+    classId,
+    className,
+    students
+  }
+  // console.log(obj);
+  axios.post(`${ROOT_URL}/login`, obj)
+       .then(res => {
+          alert(`반의 학생이 등록되었습니다.`)
+       })
+}
+
+export const getStudentNames = (parentId, academyId, classId) => (dispatch) => {
+  axios.get(`${ROOT_URL}/login/${parentId}/${academyId}/${classId}`)
+       .then( res => {
+         if(res.status === 204) {
+           dispatch({
+             type: INITIAL_FETCH_STUDENT_NAMES
+           })
+         } else {
+           dispatch({ type: FETCH_STUDENT_NAMES, students: res.data.students, classId})
+         }
+       })
+       // .catch(
+       //
+       // )
 }

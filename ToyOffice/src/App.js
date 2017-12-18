@@ -10,8 +10,8 @@ import Feature from './Feature'
 // import { Shop } from './Shop'
 // import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
-import { SettingAcademy, SettingAcademyClass } from './SettingAcademy'
-import { SettingStudent } from './SettingStudent'
+import { SettingAcademy, SettingAcademyClass, SettingStudent } from './SettingAcademy'
+
 
 
 // const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
@@ -31,6 +31,7 @@ class App extends Component {
   handleLink = (match, path, name) => {
     // 각 페이지에 들어갈때 필요한 데이터 각 불러오도록 해야 할 듯
     this.setState({drawerOpen: !this.state.drawerOpen, header: name})
+    // console.log("handleLink",`${match.url}/${path}`);
     this.props.history.replace(`${match.url}/${path}`)
   }
   handleLogOut = (history) => {
@@ -61,11 +62,25 @@ class App extends Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
         <Switch>
-          {nav.map((n, i) => <Route key={i} path={`${match.url}/${n.path}`} component={n.component}/>)}
+          {nav.map((n, i) =>
+            {
+              if(n.patn === 'SettingStudent') {
+                return <Route key={i} path={`${match.url}/${n.path}/:id`} component={n.component} />
+              }
+                return <Route key={i} path={`${match.url}/${n.path}`} component={n.component} />
+            }
+          )}
           <Route exact path={match.url} component={Feature}/>
         </Switch>
         <Drawer open={this.state.drawerOpen}>
-          {nav.map((n, i) => <MenuItem key={i} onTouchTap={() => this.handleLink(match, n.path, n.name)}>{n.name}</MenuItem>)}
+          {nav.map((n, i) =>
+            {
+              if(n.path === 'settingStudent') {
+                return false
+              }
+              return <MenuItem key={i} onTouchTap={() => this.handleLink(match, n.path, n.name)}>{n.name}</MenuItem>
+            }
+          )}
           <MenuItem onTouchTap={() => this.handleLogOut(this.props.history)}>로그아웃</MenuItem>
         </Drawer>
       </div>

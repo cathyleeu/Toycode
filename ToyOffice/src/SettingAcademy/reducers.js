@@ -10,10 +10,15 @@ const kinders = {
   _id: null,
   name: null,
   parentId: null,
-  kinderClasses: [...kinderClasses]
+  kinderClasses: [...kinderClasses],
+}
+const classInfo = {
+  // classId: null,
+  // studentNames: []
 }
 const initialState =  {
-  kinders: [...kinders]
+  kinders: [...kinders],
+  students: [...classInfo]
 }
 
 
@@ -95,6 +100,14 @@ export default function (state = initialState, action) {
             ? deleteAcademy(item.kinderClasses, +action.childId.slice(-1))
             : (index === +action.childId.slice(-1) ? AcademyClass(item, action) : item.kinderClasses)
         }))
+      }
+    case types.FETCH_STUDENT_NAMES:
+      return {
+        ...state,
+        students: {
+          ...state.students,
+          [action.classId]: action.students
+        }
       }
     default:
       return state

@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react'
 import {connect} from 'react-redux'
 import * as actions from './actions'
-import { BodyContainer, ToyCodeSelect, FilteredList } from '../Components'
+import { BodyContainer, ToyCodeSelect } from '../Components'
+import FilteredList from './FilteredList'
 import SettingAcademyClassModal from './SettingAcademyClassModal'
+
+// import { Route } from 'react-router-dom'
+
 // import './index.css'
 
 class SettingAcademyClassContainer extends PureComponent {
@@ -12,7 +16,9 @@ class SettingAcademyClassContainer extends PureComponent {
       loaded: false,
       academies: [],
       selectedAcademy: {},
-      createAcademyClass: false
+      createAcademyClass: false,
+      editAcademyClass: false,
+      modalRenderData: {}
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleModal = this.handleModal.bind(this)
@@ -21,7 +27,6 @@ class SettingAcademyClassContainer extends PureComponent {
     this.props.getAcademyByUser()
   }
   componentWillReceiveProps(newProps) {
-    console.log(newProps.academies, this.props.academies);
     if(newProps.academies !== this.props.academies){
       this.setState({
         academies: newProps.academies,
@@ -36,14 +41,15 @@ class SettingAcademyClassContainer extends PureComponent {
       [e.target.name]: targetAcademy
     })
   }
-  handleModal(e) {
+  handleModal(e, modalData) {
     let { name } = e.currentTarget.dataset;
     this.setState({
-      [name] : !this.state[name]
+      [name] : !this.state[name],
+      modalRenderData: {...modalData}
     })
   }
   render(){
-    let { parentId, code } = this.state.selectedAcademy
+    let { parentId, code, lang } = this.state.selectedAcademy
     if(!this.state.loaded){
       return false
     }
@@ -58,6 +64,16 @@ class SettingAcademyClassContainer extends PureComponent {
           parentId={parentId}
           academyId={code}
         />
+        <SettingAcademyClassModal
+          {...this.state.modalRenderData}
+          modalPurpose="edit"
+          modalHandleName="editAcademyClass"
+          editAcademyClass={this.props.editAcademyClass}
+          modalStatus={this.state.editAcademyClass}
+          handleModal={this.handleModal}
+          parentId={parentId}
+          academyId={code}
+        />
         <ToyCodeSelect
           name="selectedAcademy"
           value={this.state.selectedAcademy.name}
@@ -66,7 +82,10 @@ class SettingAcademyClassContainer extends PureComponent {
           handleChange={this.handleChange}
         />
         <FilteredList
+          match={this.props.match}
+          history={this.props.history}
           handleModal={this.handleModal}
+          modalHandleName="editAcademyClass"
           filtered={this.state.selectedAcademy}
         />
       </BodyContainer>
