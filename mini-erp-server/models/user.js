@@ -11,6 +11,7 @@ const kinderClassesSchema = new Schema({
   parentId: String, //branch
   academyId: String, // kinder code
   className: String,
+  classId: String,
   code: String,
   level: String,
 })

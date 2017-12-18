@@ -69,6 +69,7 @@ router.get('/login', Login.isFetchedAllNames)
 router.post('/login', Login.isRegisteredNames)
 router.get('/login/:parentId', Login.isAllNamesByBranch)
 router.get('/login/:classId/:className', Login.isFetchedNamesByClass)
+router.get('/login/:parentId/:academyId/:classId', Login.isFetchedNamesByClassId)
 router.put('/login/update/:classId/:className', Login.isUpdateNames)
 
 

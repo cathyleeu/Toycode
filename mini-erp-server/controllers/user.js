@@ -476,13 +476,29 @@ const getAcademyByUser = async ctx => {
 }
 
 const createAcademyClass = async ctx => {
+  //FIXME:
+
+  let { academyId } = ctx.params,
+      codeRes = await Code.findOne({ dbcollection: academyId }),
+      count = codeRes ? codeRes.count : 1;
+
+    codeRes = codeRes || new Code({
+    dbcollection: academyId,
+    count: count
+    });
+    codeRes.count++;
+    await codeRes.save();
+      // parentId, className, level, academyId
   ctx.body = await User.findOneAndUpdate(
     {
       email: ctx.params.user,
-      "kinders.code" : ctx.params.academyId
+      "kinders.code" : academyId
     },
     { $push:
-      { "kinders.$.kinderClasses": ctx.request.body }
+      { "kinders.$.kinderClasses": {
+        ...ctx.request.body,
+        classId: `${academyId}-KC${count}`
+      } }
     }
   );
 }

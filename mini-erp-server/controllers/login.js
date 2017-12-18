@@ -2,19 +2,39 @@ const Login = require('../models/login');
 
 
 const isRegisteredNames = async (ctx, next) => {
-  try{
-    const { parentId, kinderId, classId, className, students } = ctx.request.body;
-    let studentsList = [];
-    students.map(name => {
-      studentsList.push(name)
-    })
+  const { parentId, kinderId, classId, className, students } = ctx.request.body;
+  if(ctx.request.body.renew) {
+    let filterStudent = students.map(name => (
+      {
+        name,
+        parentId,
+        kinderId,
+        classId
+      }
+    ))
+    console.log("BBBB", filterStudent);
     const login = new Login({
-      parentId, kinderId, classId, className,
-      students : studentsList
+      parentId,
+      kinderId,
+      classId,
+      className,
+      students : filterStudent
     });
     ctx.body = await login.save();
-  } catch(err) {
-    ctx.body = await next(err);
+  } else {
+    try{
+      let studentsList = [];
+      students.map(name => {
+        studentsList.push(name)
+      })
+      const login = new Login({
+        parentId, kinderId, classId, className,
+        students : studentsList
+      });
+      ctx.body = await login.save();
+    } catch(err) {
+      ctx.body = await next(err);
+    }
   }
 }
 
@@ -66,4 +86,27 @@ const isFetchedNamesByClass = async ctx => {
   }
 };
 
-module.exports = { isRegisteredNames, isFetchedNamesByClass, isUpdateNames, isFetchedAllNames, isAllNamesByBranch};
+const isFetchedNamesByClassId = async ctx => {
+  try {
+    let studentsNames = await Login.findOne({ classId: ctx.params.classId }).select('students -_id');
+    // if(!studentsNames) {
+    //   ctx.status = 204;
+    //   ctx.body = { message: ""}
+    // }
+    ctx.body = studentsNames
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+};
+
+
+module.exports = {
+  isRegisteredNames,
+  isFetchedNamesByClass,
+  isFetchedNamesByClassId,
+  isUpdateNames,
+  isFetchedAllNames,
+  isAllNamesByBranch
+};

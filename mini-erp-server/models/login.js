@@ -12,7 +12,7 @@ const studentsSchema = new Schema({
 const loginSchema = new Schema({
   parentId: String,
   kinderId: String,
-  classId: String,
+  classId: String, //_id 값으로 받아와야 할 듯 함
   className: String,
   students: [studentsSchema],
   updateOn: {type: Date, default: Date.now}
