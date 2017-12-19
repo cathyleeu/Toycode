@@ -4,8 +4,12 @@ import React, { PureComponent } from 'react'
 
 export default class ToyCodeSelect extends PureComponent {
   render() {
+    const selectStyle = {
+      width: this.props.width,
+      height : this.props.height,
+    }
     return (
-      <div className="top_aligned">
+      <div className="top_aligned" style={selectStyle}>
       <label className="toycode_label">{this.props.labelName}</label>
         <select
           className="toycode_select"

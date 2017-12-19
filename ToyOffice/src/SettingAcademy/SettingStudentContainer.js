@@ -4,9 +4,9 @@ import * as actions from './actions'
 
 import moment from 'moment-timezone'
 
-import { BodyContainer, ToyCodeSelect } from '../Components'
-import FilteredList from './FilteredList'
-import SettingAcademyClassModal from './SettingAcademyClassModal'
+import { BodyContainer } from '../Components'
+// import FilteredList from './FilteredList'
+// import SettingAcademyClassModal from './SettingAcademyClassModal'
 import StudentNamesCard from './StudentNamesCard'
 import './index.css'
 
@@ -66,6 +66,8 @@ class SettingStudentContainer extends PureComponent {
   renderStudentNames(name){
     return <StudentNamesCard key={name._id}
               {...name}
+              history={this.props.history}
+              // location={this.props.location}
               academyName={this.state.academyName}
               className={this.state.className}
            />

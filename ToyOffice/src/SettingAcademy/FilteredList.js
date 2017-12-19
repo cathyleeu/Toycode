@@ -93,15 +93,19 @@ export default class FilteredList extends PureComponent {
     let { name, kinderClasses } = this.props.filtered;
     return(
       <div>
-        <ConditionalHeader
-          headerStyle="Kinder-Cont-top"
-          headerType="normal"
-          name="createAcademyClass"
-          headerTitle={name}
-          btnTitle="반 등록하기"
-          primary={true}
-          onClick={(e) => this.props.handleModal(e)}
-        />
+        <DirectionContainer direction="row">
+          <ConditionalHeader
+            headerStyle="Kinder-Cont-top"
+            customMinWidth="250px"
+            headerType="normal"
+            name="createAcademyClass"
+            headerTitle={name}
+            btnTitle="반 등록하기"
+            primary={true}
+            onClick={(e) => this.props.handleModal(e)}
+          />
+          {this.props.children}
+        </DirectionContainer>
         {kinderClasses.map(this.renderFilterLists)}
       </div>
     )

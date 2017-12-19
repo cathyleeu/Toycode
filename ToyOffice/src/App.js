@@ -10,7 +10,7 @@ import Feature from './Feature'
 // import { Shop } from './Shop'
 // import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
-import { SettingAcademy, SettingAcademyClass, SettingStudent } from './SettingAcademy'
+import { SettingAcademy, SettingAcademyClass, SettingStudent, StudentDashboard } from './SettingAcademy'
 
 
 
@@ -46,14 +46,16 @@ class App extends Component {
     // {path:'goodslist', component: GoodsList, name : '상품목록'},
     // {path:'statement', component: Statement, name : '매출장부'}
     let nav = [
-
+      { path:'settingStudent', component: SettingStudent, name : '학생 설정하기' },
+      { path:'studentDashboard', component: StudentDashboard, name : '학생 리포트' },
+    ]
+    let menu = [
       {path:'account', component: Account, name : '마이페이지'},
       {path:'settingAcademy', component: SettingAcademy, name : '소속 학원 설정하기'},
       {path:'settingClass', component: SettingAcademyClass, name : '반 설정하기'},
-      {path:'settingStudent', component: SettingStudent, name : '학생 설정하기'},
       {path:'customlist', component: CustomList, name : '지사상황'}
-
     ]
+    nav = nav.concat(menu)
     return (
       <div>
         <AppBar
@@ -73,13 +75,15 @@ class App extends Component {
           <Route exact path={match.url} component={Feature}/>
         </Switch>
         <Drawer open={this.state.drawerOpen}>
-          {nav.map((n, i) =>
-            {
-              if(n.path === 'settingStudent') {
-                return false
-              }
-              return <MenuItem key={i} onTouchTap={() => this.handleLink(match, n.path, n.name)}>{n.name}</MenuItem>
-            }
+          {menu.map(
+            (n, i) => (
+              <MenuItem
+                key={i}
+                onTouchTap={() => this.handleLink(match, n.path, n.name)}
+              >
+                {n.name}
+              </MenuItem>
+            )
           )}
           <MenuItem onTouchTap={() => this.handleLogOut(this.props.history)}>로그아웃</MenuItem>
         </Drawer>

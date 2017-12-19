@@ -3,9 +3,14 @@ import FlatButton from 'material-ui/FlatButton';
 import './index.css'
 
 export default class StudentNamesCard extends PureComponent {
-  // constructor(props){
-  //   super(props)
-  // }
+  constructor(props){
+    super(props)
+    this.handleRouter = this.handleRouter.bind(this)
+  }
+  handleRouter() {
+    let { history, ...restProps} = this.props;
+    this.props.history.push(`/home/studentDashboard/${this.props._id}`, restProps)
+  }
   render(){
     return (
       <div className="academy-card-cont">
@@ -26,7 +31,7 @@ export default class StudentNamesCard extends PureComponent {
          data-result="student"
          label="학생 이력관리"
          secondary={true}
-         // onClick={this.handleRouter}
+         onClick={this.handleRouter}
         />
       </div>
     )

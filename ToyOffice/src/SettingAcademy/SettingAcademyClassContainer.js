@@ -49,7 +49,7 @@ class SettingAcademyClassContainer extends PureComponent {
     })
   }
   render(){
-    let { parentId, code, lang } = this.state.selectedAcademy
+    let { parentId, code } = this.state.selectedAcademy
     if(!this.state.loaded){
       return false
     }
@@ -74,20 +74,20 @@ class SettingAcademyClassContainer extends PureComponent {
           parentId={parentId}
           academyId={code}
         />
-        <ToyCodeSelect
-          name="selectedAcademy"
-          value={this.state.selectedAcademy.name}
-          labelName="유치원을 선택해주세요."
-          options={this.state.academies}
-          handleChange={this.handleChange}
-        />
         <FilteredList
           match={this.props.match}
           history={this.props.history}
           handleModal={this.handleModal}
           modalHandleName="editAcademyClass"
-          filtered={this.state.selectedAcademy}
-        />
+          filtered={this.state.selectedAcademy}>
+          <ToyCodeSelect
+            name="selectedAcademy"
+            value={this.state.selectedAcademy.name}
+            labelName="유치원을 선택해주세요."
+            options={this.state.academies}
+            handleChange={this.handleChange}
+          />
+        </FilteredList>
       </BodyContainer>
     )
   }

@@ -50,8 +50,12 @@ export default class ConditionalHeader extends PureComponent {
       normal: this.normal(),
       flipped: this.flipped(),
     }
+    let customStyle = {
+      width: this.props.customWidth,
+      minWidth: this.props.customMinWidth
+    }
     return (
-      <div className={this.props.headerStyle}>
+      <div className={this.props.headerStyle} style={customStyle}>
         <h3>{this.props.headerTitle}</h3>
         {type[this.state.headerType]}
       </div>
