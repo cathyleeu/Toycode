@@ -144,15 +144,15 @@ export const deleteAcademyClass = (academyClass) => (dispatch, getState) => {
 
 export const createStudentIds = (studentInfo) => (dispatch, getState) => {
   console.log("createStudentIds", studentInfo);
-  let { parentId, academyId, _id, className, students, classId } = studentInfo;
-  students = students.split("\n").map(name => name.trim()).filter(name => name)
+  let { parentId, academyId, _id, className, registerStudents, classId } = studentInfo;
+  registerStudents = registerStudents.split("\n").map(name => name.trim()).filter(name => name)
   let obj = {
     renew: true,
     parentId,
     kinderId: academyId,
     classId,
     className,
-    students
+    students: registerStudents
   }
   // console.log(obj);
   axios.post(`${ROOT_URL}/login`, obj)

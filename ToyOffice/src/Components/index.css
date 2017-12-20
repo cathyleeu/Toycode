@@ -101,3 +101,28 @@ div[class$="aligned"] {
 .toycode_select::-ms-expand {
   display: none;            /* 화살표 없애기 for IE10, 11*/
 }
+
+.TextWithLabel {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.TextWithLabel p {
+  margin: 0;
+  display: inline;
+}
+.TextWithLabel> p:nth-child(odd) {
+  font-size: 70%;
+  font-weight: 800;
+  margin-bottom: 3px;
+  color: rgb(27, 123, 136);
+}
+.TextWithLabel> span > p:nth-child(odd) {
+  font-size: 210%;
+  font-weight: 200;
+}
+.TextWithLabel> span > p:nth-child(even) {
+  /* margin-left: 10%; */
+  font-size: 120%;
+  font-weight: 200;
+}

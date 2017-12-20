@@ -22,8 +22,14 @@
 .academy-card-cont {
   padding: 0.8em;
   min-width: 600px;
-  border: 1px solid #dbdbdb;
   margin: 1em;
+}
+
+.academy-card-cont:nth-child(even) {
+  background-color: #dbdbdb;
+}
+.academy-card-cont:nth-child(odd) {
+  border: 1px solid #dbdbdb;
 }
 
 .academy-card-header {
@@ -71,14 +77,122 @@
   outline:0;
   padding: 1em;
   display: block;
-  width: 70%;
+  width: 100%;
   margin-top: 1em;
   border-radius: 8px;
   resize: none;
   height: 200px;
+  font-size: 100%;
   border: 3px solid rgb(0, 188, 212);
 }
 
 .names-disabled{
   border: 3px solid #d7d7d7;
+}
+
+.dash_chapter,
+.dash_title {
+  border: 1px solid #dbdbdb;
+  width: 15%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* text-align: center; */
+  /* height:100%; */
+}
+.empty_cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.dash_chart{
+  width: 62%;
+  /* border: 1px solid #dbdbdb; */
+}
+.menu_header {
+  font-size: 15px;
+  text-align: center;
+}
+.menu_element{
+  border: 1px solid #198c8c;
+  padding: 0.5em;
+  box-sizing: border-box;
+  color: #198c8c;
+  font-size: 12px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 0.4em 0;
+}
+.menu_element:hover {
+  color: white;
+  background-color: #198c8c;
+}
+.report_card {
+  display: inline-flex;
+  flex-direction: column;
+  height: 140px;
+  width: 47%;
+  margin: 5px;
+  border: 1px solid #dbdbdb;
+}
+.report_card_header{
+  width: 100%;
+  height: 20%;
+  background: #696969;
+  color: white;
+  font-weight: 200;
+  text-align: center;
+  font-size: 100%;
+  line-height: 200%;
+}
+
+.report_card_foot > p,
+.report_card_body > p {
+  text-align: center;
+  margin: 0;
+}
+
+.report_card_body > p:nth-child(odd) {
+  color: #198c8c;
+}
+.report_card_body > p:nth-child(even) {
+  font-size: 200%;
+  font-weight: 800;
+}
+
+
+.report_card_foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.report_card_foot > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+}
+
+.report_card_foot > div > p:nth-child(odd) {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  /* margin-right: 5px; */
+  color: #198c8c;
+  /* margin-bottom: 10px; */
+}
+.report_card_foot > div > p:nth-child(even) {
+  font-size: 20px;
+  font-weight: 200;
+  margin: 3px 0 0;
+}
+
+.registerButton {
+  width: 200px;
+  margin: 10px !important;
 }

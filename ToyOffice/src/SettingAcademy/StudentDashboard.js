@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import { BodyContainer, DirectionContainer } from '../Components'
 import StageChart from './StageChart'
+import DashBoardSelect from './DashBoardSelect'
+import { Paper } from 'material-ui';
 import './index.css'
 
 export default class StudentDashboard extends PureComponent {
@@ -15,9 +17,6 @@ export default class StudentDashboard extends PureComponent {
       selectedData: []
     }
     this.selectTitle = this.selectTitle.bind(this)
-    this.selectChapter = this.selectChapter.bind(this)
-    this.renderTitle = this.renderTitle.bind(this)
-    this.renderChapter = this.renderChapter.bind(this)
     this.renderDataChart = this.renderDataChart.bind(this)
 
   }
@@ -44,47 +43,28 @@ export default class StudentDashboard extends PureComponent {
 
   }
   selectTitle(e) {
-    // console.log(e.target.dataset.name);
-    let selectedTitle = e.target.dataset.name,
-        selectedChapter = Object.keys(this.state.bookIndex[selectedTitle])
-    // console.log(this.state.bookIndex[selectedTitle])
+    let selectedTitle = e.currentTarget.dataset.title,
+        chapter= e.currentTarget.dataset.chapter,
+        selectedChapter = Object.keys(this.state.bookIndex[selectedTitle]),
+        selectedData = this.state.bookIndex[selectedTitle][chapter] || []
+
     this.setState({
       selectedTitle,
-      selectedChapter
-    })
-  }
-  selectChapter(e) {
-    let { title, chapter } = e.target.dataset,
-        selectedData = this.state.bookIndex[title][chapter];
-    this.setState({
+      selectedChapter,
       selectedData
     })
   }
-  renderTitle(t, i){
-    let level = t[0].toLocaleUpperCase(),
-        volume = t.split(/[a-z]/)[1];
-    return (
-      <p key={i} onClick={this.selectTitle} data-name={t}> 키즈씽킹 {level}-{volume}</p>
-    )
-  }
-  renderChapter(chapter) {
-    return (
-      <div>
-        { chapter.map(
-           (ch, i) => <p key={i} onClick={this.selectChapter} data-title={this.state.selectedTitle} data-chapter={ch}> {i+1} 주차  {ch} </p>)
-        }
-      </div>
-    )
-  }
   renderDataChart(data) {
     let stage = Object.keys(data)
-    // if(stage.length > 0){
-    //   debugger
-    // }
-
-    return stage.map((s,i) => <StageChart key={i} data={data[s][0]}></StageChart>)
+    if(stage.length === 0){
+      return <div className="empty_cont">프로그램과 주차를 선택해주세요.</div>
+    }
+    return stage.map((s,i) => {
+      return <StageChart key={i} data={data[s][0]} stage={s} studentName={this.state.name}></StageChart>
+    })
   }
   render() {
+
     return(
       <BodyContainer>
         <DirectionContainer direction="row">
@@ -93,15 +73,22 @@ export default class StudentDashboard extends PureComponent {
           <p>{this.state.name}</p>
         </DirectionContainer>
         <DirectionContainer direction="row">
-          <div className="dash_title">
-            { this.state.title.map(this.renderTitle)}
-          </div>
-          <div className="dash_chapter">
-            {this.renderChapter(this.state.selectedChapter)}
-          </div>
-          <div className="dash_chart">
+          <DashBoardSelect
+            header={'프로그램'}
+            menu={this.state.title}
+            handleSelect={this.selectTitle}
+            purpose={'title'}
+          />
+          <DashBoardSelect
+            header={'주차'}
+            handleSelect={this.selectTitle}
+            selectedTitle={this.state.selectedTitle}
+            menu={this.state.selectedChapter}
+            purpose={'weekly'}
+          />
+          <Paper className="dash_chart">
             {this.renderDataChart(this.state.selectedData)}
-          </div>
+          </Paper>
         </DirectionContainer>
       </BodyContainer>
     )

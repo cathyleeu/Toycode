@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { ConditionalHeader, DirectionContainer } from '../Components'
+import { ConditionalHeader, DirectionContainer, TextWithLabel } from '../Components'
 import FlatButton from 'material-ui/FlatButton';
 
 class AcademyClassCard extends PureComponent {
@@ -31,14 +31,24 @@ class AcademyClassCard extends PureComponent {
     )
   }
   render(){
+    let subContent = {
+      "A": "(만3세용)",
+      "B": "(만4세용)",
+      "C": "(만5세용)"
+    }
     return(
       <div className="academy-card-cont">
         <DirectionContainer direction="row" alignItems="center">
-          <DirectionContainer direction="row" width="60%">
-            <p>반 명</p>
-            <p>{this.props.className}</p>
-            <p>|</p>
-            <p>{this.props.level} 레벨</p>
+          <DirectionContainer direction="row" width="60%" justifyContent="space-around">
+            <TextWithLabel
+              title={this.props.academyName}
+              content={this.props.className}
+            />
+            <TextWithLabel
+              title={'프로그램 레벨'}
+              content={this.props.level}
+              subContent={subContent[this.props.level]}
+            />
           </DirectionContainer>
           <FlatButton
             data-result="student"
@@ -62,7 +72,6 @@ class AcademyClassCard extends PureComponent {
             secondary={true}
             onClick={this.handleClick}
            />
-
         </DirectionContainer>
       </div>
     )

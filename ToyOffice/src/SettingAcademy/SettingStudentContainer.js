@@ -4,7 +4,8 @@ import * as actions from './actions'
 
 import moment from 'moment-timezone'
 
-import { BodyContainer } from '../Components'
+import { BodyContainer, DirectionContainer } from '../Components'
+import FlatButton from 'material-ui/FlatButton';
 // import FilteredList from './FilteredList'
 // import SettingAcademyClassModal from './SettingAcademyClassModal'
 import StudentNamesCard from './StudentNamesCard'
@@ -22,6 +23,7 @@ class SettingStudentContainer extends PureComponent {
       // editAcademyClass: false,
       // modalRenderData: {}
       students: [],
+      registerStudents: "",
       disabled: false
     }
     this.handleChange = this.handleChange.bind(this)
@@ -39,7 +41,6 @@ class SettingStudentContainer extends PureComponent {
   }
   componentWillReceiveProps(newProps) {
     if(newProps.students !== this.props.students){
-
       this.setState({
         students: newProps.students[this.state.classId],
         // selectedAcademy: newProps.academies[0],
@@ -60,14 +61,16 @@ class SettingStudentContainer extends PureComponent {
     })
   }
   handleSubmit() {
-    // debugger
+    if(!this.state.registerStudents){
+      alert('학생을 입력해주세요.')
+      return false
+    }
     this.props.createStudentIds(this.state)
   }
   renderStudentNames(name){
     return <StudentNamesCard key={name._id}
               {...name}
               history={this.props.history}
-              // location={this.props.location}
               academyName={this.state.academyName}
               className={this.state.className}
            />
@@ -93,29 +96,35 @@ class SettingStudentContainer extends PureComponent {
                   <input type="hidden" name="yearmonth" value={mon.format('YYYYMM')} />
                   <input type="hidden" name="level" value={level} />
                   <input type="hidden" name="students" value={names} />
-                  <button
+                  <FlatButton
                     // className='button-edit'
                     onClick={() => {
-                    return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인발급</button>
+                    return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인발급</FlatButton>
                 </form>
-                <button>학생 추가하기</button>
+                <FlatButton>학생 추가하기</FlatButton>
               </div>
             : <p> 한줄에 한명의 이름을 입력하여, 학생을 등록해주세요 </p>
           }
 
         </div>
 
-        {this.state.loaded
-          ? this.state.students.map(this.renderStudentNames)
-          : <div>
-              <textarea
-              className="students-names"
-              onChange={this.handleChange}
-              value={this.state.students}
-              name="students"
-             />
-             <button onClick={this.handleSubmit}>학생 이름 등록하기</button>
-           </div>
+        {
+          this.state.loaded
+            ? this.state.students.map(this.renderStudentNames)
+            : <DirectionContainer direction="column" width="70%" alignItems="center">
+                <textarea
+                className="students-names"
+                onChange={this.handleChange}
+                value={this.state.registerStudents}
+                name="registerStudents"
+               />
+               <FlatButton
+                 className="registerButton"
+                 labelStyle={{color: "white"}}
+                 backgroundColor="rgb(0, 188, 212)"
+                 label="학생 이름 등록하기"
+                 onClick={this.handleSubmit} />
+             </DirectionContainer>
         }
       </BodyContainer>
     )

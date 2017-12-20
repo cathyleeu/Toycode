@@ -12,6 +12,7 @@
               duration: "01:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 2,
               history: [
                 { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
@@ -25,6 +26,7 @@
               duration: "00:35", // 첫 성공
               block: 10, // 첫 성공
               success: true, // 첫 성공
+              failed: 2,
               runtime: [
                 { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
@@ -40,10 +42,9 @@
               duration: "00:35", // 첫 성공
               block: 11, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
-                { time: "00:35", block: 8, success: true }
+                { time: "00:43", block: 10, success: false }
               ],
               date: '20171219:00:00:00'
             }
@@ -59,9 +60,9 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 1,
               history: [
                 { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171218:00:00:00' // 문제 시작 하는 시점
@@ -72,7 +73,10 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 4,
               runtime: [
+                { time: "00:43", block: 10, success: false },
+                { time: "00:30", block: 7, success: false },
                 { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
@@ -87,9 +91,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -106,7 +109,14 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 6,
               history: [
+                { time: "00:43", block: 10, success: false },
+                { time: "00:30", block: 7, success: false },
+                { time: "00:43", block: 10, success: false },
+                { time: "00:30", block: 7, success: false },
+                { time: "00:43", block: 10, success: false },
+                { time: "00:30", block: 7, success: false },
                 { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
@@ -119,9 +129,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -134,9 +143,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -153,6 +161,7 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 2,
               history: [
                 { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
@@ -166,8 +175,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 1,
               runtime: [
-                { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
@@ -181,8 +190,10 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 3,
               runtime: [
                 { time: "00:43", block: 10, success: false },
+                { time: "00:30", block: 7, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
@@ -200,9 +211,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               history: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171218:00:00:00' // 문제 시작 하는 시점
@@ -213,9 +223,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -228,10 +237,9 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
-                { time: "00:35", block: 8, success: true }
+                { time: "01:30", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
             }
@@ -245,6 +253,7 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 2,
               runtime: [
                 { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
@@ -260,9 +269,12 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 4,
               runtime: [
                 { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
+                { time: "01:20", block: 7, success: false },
+                { time: "00:50", block: 7, success: false },
+                { time: "01:35", block: 8, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -275,8 +287,11 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 4,
               runtime: [
                 { time: "00:43", block: 10, success: false },
+                { time: "00:50", block: 7, success: false },
+                { time: "01:35", block: 8, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
@@ -294,9 +309,10 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 2,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
+                { time: "00:50", block: 7, success: false },
+                { time: "01:35", block: 8, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -309,8 +325,10 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 3,
               runtime: [
-                { time: "00:43", block: 10, success: false },
+                { time: "00:50", block: 7, success: false },
+                { time: "01:35", block: 8, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
@@ -324,8 +342,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 1,
               runtime: [
-                { time: "00:43", block: 10, success: false },
                 { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
@@ -343,9 +361,8 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 0,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -358,9 +375,11 @@
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
               success: true, // 첫 성공
+              failed: 3,
               runtime: [
                 { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
+                { time: "00:50", block: 7, success: false },
+                { time: "01:35", block: 8, success: false },
                 { time: "00:35", block: 8, success: true }
               ],
               date: '20171219:00:00:00'
@@ -372,11 +391,10 @@
               score: 2,
               duration: "00:35", // 첫 성공
               block: 8, // 첫 성공
-              success: true, // 첫 성공
+              success: false, // 첫 성공
+              failed: 1,
               runtime: [
-                { time: "00:43", block: 10, success: false },
-                { time: "00:30", block: 7, success: false },
-                { time: "00:35", block: 8, success: true }
+                { time: "00:35", block: 8, success: false }
               ],
               date: '20171219:00:00:00'
             }
