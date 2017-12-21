@@ -8,3 +8,9 @@ export { default as ConditionalHeader } from './ConditionalHeader'
 export { default as BodyContainer } from './BodyContainer'
 export { default as ToyCodeSelect } from './ToyCodeSelect'
 export { default as TextWithLabel } from './TextWithLabel'
+
+
+export { default as ToyCodeLoginButton } from './ToyCodeLoginButton'
+export { default as ToyCodePaper } from './ToyCodePaper'
+
+export { default as PrimaryButton } from './PrimaryButton'

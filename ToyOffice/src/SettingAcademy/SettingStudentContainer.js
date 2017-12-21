@@ -2,12 +2,10 @@ import React, { PureComponent } from 'react'
 import {connect} from 'react-redux'
 import * as actions from './actions'
 
-import moment from 'moment-timezone'
 
-import { BodyContainer, DirectionContainer } from '../Components'
-import FlatButton from 'material-ui/FlatButton';
-// import FilteredList from './FilteredList'
-// import SettingAcademyClassModal from './SettingAcademyClassModal'
+
+import { BodyContainer, DirectionContainer, ConditionalHeader, PrimaryButton, ToyCodeLoginButton } from '../Components'
+
 import StudentNamesCard from './StudentNamesCard'
 import './index.css'
 
@@ -76,38 +74,34 @@ class SettingStudentContainer extends PureComponent {
            />
   }
   render(){
-    let { academyUrl, academyName, academyLang, className, level, students } = this.state,
-        mon = moment().set({year:2017, month:3}),
+    let { academyName, className, students } = this.state,
         names = students.map(name => name.name);
-        // console.log(names);
     return(
       <BodyContainer>
-        {/* <h3 className='issued-notice'>로그인 발급 : 로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h3> */}
-        <div className="issued-login-top issued-kinder-info">
-          <i className="fa fa-id-card" aria-hidden="true"></i>
-          <p className="issued-info">{this.state.className}</p>
-          {this.state.loaded
-            ? <div>
-                <form action="https://toycode.org/issue" method="POST" target="_blank">
-                  <input type="hidden" name="code" value={academyUrl} />
-                  <input type="hidden" name="school" value={academyName} />
-                  <input type="hidden" name="lang" value={academyLang} />
-                  <input type="hidden" name="className" value={className} />
-                  <input type="hidden" name="yearmonth" value={mon.format('YYYYMM')} />
-                  <input type="hidden" name="level" value={level} />
-                  <input type="hidden" name="students" value={names} />
-                  <FlatButton
-                    // className='button-edit'
-                    onClick={() => {
-                    return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인발급</FlatButton>
-                </form>
-                <FlatButton>학생 추가하기</FlatButton>
-              </div>
-            : <p> 한줄에 한명의 이름을 입력하여, 학생을 등록해주세요 </p>
-          }
-
-        </div>
-
+        <DirectionContainer direction="row" width="70%" alignItems="center">
+          <ConditionalHeader
+            headerIcon="fa fa-id-card"
+            headerStyle="row_direction"
+            headerTitle={`${academyName} > ${className}`}
+            headerType="normal"
+            customWidth="100%"
+            alignItems="center"
+            >
+                {this.state.loaded
+                  ? <div>
+                      <ToyCodeLoginButton
+                        {...this.props.location.state}
+                        names={names}
+                      />
+                      <PrimaryButton
+                        purpose="create"
+                        content="학생 추가하기"
+                      />
+                    </div>
+                  : <p> 한줄에 한명의 이름을 입력하여, 학생을 등록해주세요 </p>
+                }
+            </ConditionalHeader>
+          </DirectionContainer>
         {
           this.state.loaded
             ? this.state.students.map(this.renderStudentNames)
@@ -118,12 +112,12 @@ class SettingStudentContainer extends PureComponent {
                 value={this.state.registerStudents}
                 name="registerStudents"
                />
-               <FlatButton
-                 className="registerButton"
-                 labelStyle={{color: "white"}}
-                 backgroundColor="rgb(0, 188, 212)"
-                 label="학생 이름 등록하기"
-                 onClick={this.handleSubmit} />
+                <PrimaryButton
+                  purpose="create"
+                  content="학생 등록하기"
+                  buttonWidth="50%"
+                  onClick={this.handleSubmit}
+                />
              </DirectionContainer>
         }
       </BodyContainer>

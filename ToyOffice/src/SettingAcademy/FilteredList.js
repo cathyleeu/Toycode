@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { ConditionalHeader, DirectionContainer, TextWithLabel } from '../Components'
+import { ConditionalHeader, DirectionContainer, TextWithLabel, ToyCodePaper } from '../Components'
 import FlatButton from 'material-ui/FlatButton';
 
 class AcademyClassCard extends PureComponent {
@@ -37,7 +37,7 @@ class AcademyClassCard extends PureComponent {
       "C": "(만5세용)"
     }
     return(
-      <div className="academy-card-cont">
+      <ToyCodePaper>
         <DirectionContainer direction="row" alignItems="center">
           <DirectionContainer direction="row" width="60%" justifyContent="space-around">
             <TextWithLabel
@@ -73,7 +73,7 @@ class AcademyClassCard extends PureComponent {
             onClick={this.handleClick}
            />
         </DirectionContainer>
-      </div>
+      </ToyCodePaper>
     )
   }
 }
@@ -106,11 +106,13 @@ export default class FilteredList extends PureComponent {
           <ConditionalHeader
             headerStyle="Kinder-Cont-top"
             customMinWidth="250px"
-            headerType="normal"
             name="createAcademyClass"
             headerTitle={name}
-            btnTitle="반 등록하기"
-            primary={true}
+            btnFront={
+              [
+                { purpose: "create", name: "반 등록하기" }
+              ]
+            }
             onClick={(e) => this.props.handleModal(e)}
           />
           {this.props.children}

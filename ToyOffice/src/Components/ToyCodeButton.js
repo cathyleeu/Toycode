@@ -17,6 +17,7 @@ export default class ToyCodeButton extends PureComponent {
         onClick={handleButtonEvent}
       >
         {content}
+        {this.props.children}
       </button>
     )
   }

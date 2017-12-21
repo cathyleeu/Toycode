@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 // import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux'
 import * as actions from './actions'
-import { ConditionalHeader, BodyContainer } from '../Components'
+import { ConditionalHeader, BodyContainer, Modal } from '../Components'
 import SettingAcademyCardModal from './SettingAcademyCardModal'
 import SettingAcademyCard from './SettingAcademyCard'
 import './index.css'
@@ -15,11 +15,14 @@ class SettingAcademyContainer extends PureComponent {
       loaded: false,
       createAcademyModal: false,
       settingAcademyModal: false,
-      modalRenderData: {}
+      modalRenderData: {},
+      modalStatus: false,
+      // selectedAcademy: ""
     }
     this.handleAddAcademy = this.handleAddAcademy.bind(this)
     this.handleSettingAcademy = this.handleSettingAcademy.bind(this)
     this.renderChild = this.renderChild.bind(this)
+    this.handleModalStatus = this.handleModalStatus.bind(this)
   }
   componentWillMount(){
     this.props.getAcademyByUser()
@@ -37,6 +40,33 @@ class SettingAcademyContainer extends PureComponent {
       createAcademyModal: !this.state.createAcademyModal
     })
   }
+  handleModalStatus(academy_id){
+
+    let selectedAcademy = this.state.academies.find(aca => aca._id === academy_id),
+        { kinderClasses } = selectedAcademy
+
+    console.log("handleModalStatus");
+    //
+    //
+    // this.props.getStudentNames(
+    //   this.state.parentId,
+    //   this.state.academyId,
+    //   this.state.classId
+    // )
+    // debugger
+
+
+    // this.setState({
+    //   modalStatus: !this.state.modalStatus
+    // })
+
+    // academyUrl,
+    // academyName,
+    // academyLang,
+    // className,
+    // level,
+    // names
+  }
   handleSettingAcademy(e, data){
     this.setState({
       settingAcademyModal: !this.state.settingAcademyModal,
@@ -44,10 +74,10 @@ class SettingAcademyContainer extends PureComponent {
     })
   }
   renderChild(academy, i){
-    // console.log("renderChild",academy);
     return (
       <SettingAcademyCard
         key={i} {...academy}
+        handleModalStatus={this.handleModalStatus}
         completedDeleteAcademy={this.props.completedDeleteAcademy}
         handleSettingAcademy={this.handleSettingAcademy}/>
     )
@@ -61,11 +91,13 @@ class SettingAcademyContainer extends PureComponent {
       <BodyContainer>
         <ConditionalHeader
           headerStyle="Kinder-Cont-top"
-          headerType="normal"
           name="createAcademy"
           headerTitle="소속 원 리스트"
-          btnTitle="원 등록하기"
-          primary={true}
+          btnFront={
+            [
+              { purpose: "create", name: "원 등록하기" }
+            ]
+          }
           onClick={this.handleAddAcademy}
         />
         <SettingAcademyCardModal
@@ -83,6 +115,13 @@ class SettingAcademyContainer extends PureComponent {
           handleModal={this.handleSettingAcademy}
           getAcademyByUser={this.props.getAcademyByUser}
         />
+        <Modal
+          isModalOpen={this.state.modalStatus}
+          modalWidth="600px"
+          >
+
+          <button onClick={() => this.setState({modalStatus: !this.state.modalStatus})}>close</button>
+        </Modal>
         {nodes}
       </BodyContainer>
     )
@@ -91,6 +130,7 @@ class SettingAcademyContainer extends PureComponent {
 
 const mapStateToProps = (state, route) => ({
   academies: state.kinder.kinders,
+  students: state.kinder.students,
   user: state.login.user
 })
 

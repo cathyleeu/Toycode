@@ -14,6 +14,7 @@ div[class$="direction"] {
 
 .row_direction {
   flex-direction: row;
+  margin: 0.5em 0;
 }
 .column_direction {
   flex-direction: column;
@@ -77,10 +78,6 @@ div[class$="aligned"] {
   outline: none;
 }
 
-.row_direction > button {
-  height: 37px;
-  margin: 30px 5px 5px;
-}
 
 .toycode_select {
   /*width: 100px;*/
@@ -114,7 +111,7 @@ div[class$="aligned"] {
 .TextWithLabel> p:nth-child(odd) {
   font-size: 70%;
   font-weight: 800;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   color: rgb(27, 123, 136);
 }
 .TextWithLabel> span > p:nth-child(odd) {
@@ -125,4 +122,41 @@ div[class$="aligned"] {
   /* margin-left: 10%; */
   font-size: 120%;
   font-weight: 200;
+}
+
+
+
+.primary_btn {
+  color:#fff;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius:5px;
+  box-shadow: 0 5px #CAC7C7;
+  padding: 8px 32px;
+  margin: 8px;
+  /* font-size: 100%; */
+}
+
+.primary_btn:active {
+  box-shadow: 0 2px #CAC7C7;
+  transform: translateY(3px);
+}
+
+
+.toycode_paper {
+  padding: 0.8em;
+  min-width: 600px;
+  margin: 1em;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 5px #CAC7C7;
+}
+
+.toycode_paper:nth-child(even) {
+  background-color: #EAEAEA;
+}
+.toycode_paper:nth-child(odd) {
+  border: 1px solid #EAEAEA;
 }

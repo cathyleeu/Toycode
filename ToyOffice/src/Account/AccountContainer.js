@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import * as actions from './actions'
 import AccountBranch from './AccountBranch'
 import AccountManager from './AccountManager'
-// import AccountTableHeader from './AccountTableHeader'
 import Perf from 'react-addons-perf'
 import './index.css'
 import { ConditionalHeader, BodyContainer } from '../Components'
@@ -41,10 +40,11 @@ class AccountContainer extends PureComponent {
     }
   }
   handleModiToggle(e){
-    let { name, result } = e.target.parentElement.parentElement.dataset,
+
+    let { name, purpose } = e.target.dataset,
         textContent = e.target.textContent;
     if(confirm(`${textContent} 하시겠습니까?`)){
-      if(result === "complete"){
+      if(purpose === "complete"){
         this.props.isCompoleteModi(name, this.props[name])
       }
     } else {
@@ -56,34 +56,40 @@ class AccountContainer extends PureComponent {
 
   }
   renderAccountTable = (account , i) => {
-    let headerType = this.state[account.type] ? "flipped" : "normal"
+    let { Component } = account;
     return(
     <div key={i} style={{"width": "90%", "maxWidth": "800px"}}>
       <ConditionalHeader
-        headerType={headerType}
         headerStyle="Account-table-top"
-        name={account.type}
         headerTitle={account.title}
-        btnTitle="수정"
-        secondary={true}
+        flipStatus={this.state[account.type]}
+        btnFront={
+          [
+            {purpose: "edit", name: "수정", dataName: account.type}
+          ]
+        }
+        btnBack={
+          [
+            {purpose: "complete", name: "완료", dataName: account.type},
+            {purpose: "cancle", name: "취소", dataName: account.type}
+          ]
+        }
         onClick={this.handleModiToggle}
       />
-      {
-        account.type === "branchModi"
-          ? <AccountBranch {...this.props} readOnly={!this.state[account.type]}/>
-          : <AccountManager {...this.props} readOnly={!this.state[account.type]}/>
-      }
+      <Component {...this.props} readOnly={!this.state[account.type]}/>
     </div>
   )}
   render(){
     const AccountTableList = [
       {
         title:"지사정보",
-        type: "branchModi"
+        type: "branchModi",
+        Component: AccountBranch
       },
       {
         title:"담당자 정보",
-        type: "mngModi"
+        type: "mngModi",
+        Component: AccountManager
       }
     ];
      if(this.state.loaded){
@@ -109,32 +115,3 @@ const mapStateToProps = (state) => ({
 
 
 export default connect(mapStateToProps, actions)(AccountContainer)
-
-
-/* <AccountTableHeader
-  title={account.title}
-  typeOf={account.type}
-  onClick={this.handleModiToggle}
-  modi={!this.state[account.type]}/> */
-
-
-
-  // debugger
-  // Perf.start()
-  // if(this.state[name]){
-  //   if(btn === "완료"){
-  //     if(confirm('수정 하시겠습니까?')){
-  //       this.props.isCompoleteModi(name, this.props[name])
-  //     } else {
-  //       this.props.isDefalutModi(this.props.user)
-  //     }
-  //   } else {
-  //     if(confirm('취소 하시겠습니까?')){
-  //       this.setState(prevState => ({[name]: !prevState[name]}))
-  //       this.props.isDefalutModi(this.props.user)
-  //     }
-  //   }
-  // } else {
-  //
-  // }
-  //

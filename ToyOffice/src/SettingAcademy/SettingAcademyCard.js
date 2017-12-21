@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
-import { DirectionContainer } from '../Components'
-import FlatButton from 'material-ui/FlatButton';
+import { DirectionContainer, ToyCodePaper, TextWithLabel, ConditionalHeader, PrimaryButton } from '../Components'
 
 class SettingAcademyCard extends PureComponent{
   constructor(props){
@@ -23,6 +22,8 @@ class SettingAcademyCard extends PureComponent{
     let { result } = e.currentTarget.dataset;
     if(result === "edit") {
       this.props.handleSettingAcademy(e, this.state)
+    } else if (result === "login") {
+      this.props.handleModalStatus(this.state.academy_id)
     } else {
       if(confirm('반을 삭제하시겠습니까?')){
         this.props.completedDeleteAcademy(this.state.academy_id)
@@ -39,50 +40,62 @@ class SettingAcademyCard extends PureComponent{
       ko : "한국어",
     }
     return(
-      <div className="academy-card-cont">
+      <ToyCodePaper>
         <DirectionContainer direction="column">
-          <div>
-            <p className="academy-card-header">{name}</p>
-            <p className="academy-card-text">{phone}</p>
-            <FlatButton
-              data-result="edit"
-              label="수정"
+          <ConditionalHeader
+            headerStyle="row_direction"
+            headerTitle={name}
+            headerIcon={'fa fa-university'}
+            headerIconSize={'25px'}
+            headerIconColor={'#468499'}
+            headerIconMargin={'0.5em'}
+            headerSecondTitle={phone}
+            headerType="normal"
+          >
+            <PrimaryButton
+              dataResult="edit"
+              content="수정"
               onClick={this.handleClick}
-             />
-            <FlatButton
-              data-result="delete"
-              label="삭제"
-              secondary={true}
+              purpose={'edit'}
+            />
+            <PrimaryButton
+              dataResult="delete"
+              content="삭제"
               onClick={this.handleClick}
-             />
-          </div>
+              purpose={"delete"}
+            />
+            <PrimaryButton
+              dataResult="login"
+              content="원 로그인 아이디"
+              onClick={this.handleClick}
+              purpose={"multi"}
+            />
+          </ConditionalHeader>
           <DirectionContainer direction="row">
-            <DirectionContainer direction="row" width="50%" alignItems="center">
-              <p className="academy-card-header2">담당자</p>
-              <p className="academy-card-text">{manager}</p>
-            </DirectionContainer>
-            <DirectionContainer direction="row" width="50%" alignItems="center">
-              <p className="academy-card-header2">담당자 전화번호</p>
-              <p className="academy-card-text">{managerPh}</p>
-            </DirectionContainer>
-          </DirectionContainer>
-          <DirectionContainer direction="row">
-            <DirectionContainer direction="row" width="50%" alignItems="center">
-              <p className="academy-card-header2">프로그램 사이트</p>
-              <a
+            <TextWithLabel
+              title={`담당자`}
+              subContent={manager}
+            />
+            <TextWithLabel
+              title={`담당자 전화번호`}
+              subContent={managerPh}
+            />
+            <TextWithLabel
+              title={`프로그램 사이트`}
+              subContent={<a
                 target="_blank"
                 href={`https://www.toycode.org/code/${url}`}
                 className="academy-card-link">
                 {`toycode.org/code/${url}`}
-              </a>
-            </DirectionContainer>
-            <DirectionContainer direction="row" width="50%" alignItems="center">
-              <p className="academy-card-header2">프로그램 언어</p>
-              <p className="academy-card-text">{languageOptions[lang]}</p>
-            </DirectionContainer>
+              </a>}
+            />
+            <TextWithLabel
+              title={`프로그램 언어`}
+              subContent={languageOptions[lang]}
+            />
           </DirectionContainer>
         </DirectionContainer>
-      </div>
+      </ToyCodePaper>
     )
   }
 }

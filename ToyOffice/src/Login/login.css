@@ -32,13 +32,8 @@
   height: 40px;
 }
 
-form,
 .Login-logo-cont{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-/*
-form{
-  margin-bottom: 2em;
-}*/

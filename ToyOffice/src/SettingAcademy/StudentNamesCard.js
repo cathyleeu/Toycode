@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import FlatButton from 'material-ui/FlatButton';
-import { TextWithLabel, DirectionContainer } from '../Components'
+import { TextWithLabel, DirectionContainer, ToyCodePaper } from '../Components'
 import './index.css'
 
 export default class StudentNamesCard extends PureComponent {
@@ -12,9 +12,10 @@ export default class StudentNamesCard extends PureComponent {
     let { history, ...restProps} = this.props;
     this.props.history.push(`/home/studentDashboard/${this.props._id}`, restProps)
   }
+  //style={{display: "flex", alignItems: "center"}}
   render(){
     return (
-      <div className="academy-card-cont" style={{display: "flex", alignItems: "center"}}>
+      <ToyCodePaper>
         <DirectionContainer direction="row" width="30%" alignItems="center">
           <TextWithLabel
             title={`${this.props.academyName} > ${this.props.className}`}
@@ -43,7 +44,7 @@ export default class StudentNamesCard extends PureComponent {
            onClick={this.handleRouter}
           />
       </DirectionContainer>
-      </div>
+      </ToyCodePaper>
     )
   }
 }

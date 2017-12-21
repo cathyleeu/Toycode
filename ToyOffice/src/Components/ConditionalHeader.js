@@ -1,63 +1,73 @@
 import React, { PureComponent } from 'react'
-import FlatButton from 'material-ui/FlatButton';
+// import FlatButton from 'material-ui/FlatButton';
+import PrimaryButton from './PrimaryButton'
+
+
+
+/*
+  headerType = [flip, normal]
+    flipStatus = true || false
+    flip
+      btnFront = [edit, ? ]
+      btnBack = [done, cancle]
+    normal
+      btnFront = [ ? , ? ]
+*/
 
 
 export default class ConditionalHeader extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      headerType: props.headerType
+      // headerType: props.headerType,
+      displayBtn: {
+        true : props.btnBack,
+        false : props.btnFront
+      },
+      flipStatus: props.flipStatus || false
     }
-    // this.normal = this.normal.bind(this)
+  }
+  componentWillMount(){
+
   }
   componentWillReceiveProps(newProps){
-    if(newProps.headerType !== this.props.headerType){
-      this.setState({ headerType: newProps.headerType})
+    if(newProps.flipStatus !== this.props.flipStatus){
+      this.setState({ flipStatus: newProps.flipStatus})
     }
-  }
-  normal = () => {
-    return (
-      <FlatButton
-        data-name={this.props.name}
-        label={this.props.btnTitle}
-        primary={this.props.primary}
-        secondary={this.props.secondary}
-        onClick={this.props.onClick}
-      />
-    )
-  }
-  flipped(){
-    return (
-      <div>
-        <FlatButton
-          data-name={this.props.name}
-          data-result="complete"
-          label="완료"
-          primary={true}
-          onClick={this.props.onClick}
-         />
-        <FlatButton
-          data-name={this.props.name}
-          data-result="cancle"
-          label="취소"
-          onClick={this.props.onClick}
-         />
-      </div>
-    )
   }
   render(){
-    let type = {
-      normal: this.normal(),
-      flipped: this.flipped(),
-    }
     let customStyle = {
       width: this.props.customWidth,
-      minWidth: this.props.customMinWidth
+      minWidth: this.props.customMinWidth,
+      alignItems: this.props.alignItems || "center"
     }
+    let customIconStyle = {
+      fontSize: this.props.headerIconSize,
+      color: this.props.headerIconColor,
+      margin: this.props.headerIconMargin
+    }
+    let { displayBtn, flipStatus } = this.state;
     return (
       <div className={this.props.headerStyle} style={customStyle}>
+        <i className={this.props.headerIcon} aria-hidden="true" style={customIconStyle}></i>
         <h3>{this.props.headerTitle}</h3>
-        {type[this.state.headerType]}
+        <p>{this.props.headerSecondTitle}</p>
+        { this.props.headerType === "normal"
+            ? false
+            : displayBtn[flipStatus].map(
+                (btn, i) => (
+                  <PrimaryButton
+                    key={i}
+                    dataName={btn.dataName}
+                    dataPurpose={btn.purpose}
+                    content={btn.name}
+                    onClick={this.props.onClick}
+                    purpose={btn.purpose}
+                  />
+                )
+              )
+        }
+        {this.props.children}
       </div>
     )
   }
