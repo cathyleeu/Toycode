@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+// import ReactDOM from 'react-dom';
 import {connect} from 'react-redux'
 import * as actions from './actions'
 
@@ -41,7 +42,6 @@ class SettingStudentContainer extends PureComponent {
     if(newProps.students !== this.props.students){
       this.setState({
         students: newProps.students[this.state.classId],
-        // selectedAcademy: newProps.academies[0],
         loaded: true
       })
     }
@@ -92,6 +92,8 @@ class SettingStudentContainer extends PureComponent {
                       <ToyCodeLoginButton
                         {...this.props.location.state}
                         names={names}
+                        history={this.props.history}
+                        directLink={this.state.directLink}
                       />
                       <PrimaryButton
                         purpose="create"

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import './index.css'
 
 
@@ -37,7 +37,7 @@ const ButtonColors = {
 
 
 
-export default class PrimaryButton extends PureComponent {
+export default class PrimaryButton extends Component {
   // onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}
   constructor(props){
     super(props)
@@ -91,7 +91,6 @@ export default class PrimaryButton extends PureComponent {
       backgroundColor: this.state.buttonColor,
       width: buttonWidth,
     }
-
     return (
       <button
         onMouseEnter={this.handleHover}

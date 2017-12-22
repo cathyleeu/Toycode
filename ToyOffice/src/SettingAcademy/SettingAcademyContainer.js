@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 // import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux'
 import * as actions from './actions'
-import { ConditionalHeader, BodyContainer, Modal } from '../Components'
+import { ConditionalHeader, BodyContainer, Modal, PrimaryButton } from '../Components'
 import SettingAcademyCardModal from './SettingAcademyCardModal'
 import SettingAcademyCard from './SettingAcademyCard'
 import './index.css'
@@ -17,6 +17,7 @@ class SettingAcademyContainer extends PureComponent {
       settingAcademyModal: false,
       modalRenderData: {},
       modalStatus: false,
+      academyClasses: []
       // selectedAcademy: ""
     }
     this.handleAddAcademy = this.handleAddAcademy.bind(this)
@@ -43,29 +44,22 @@ class SettingAcademyContainer extends PureComponent {
   handleModalStatus(academy_id){
 
     let selectedAcademy = this.state.academies.find(aca => aca._id === academy_id),
-        { kinderClasses } = selectedAcademy
+        { kinderClasses, name, url, lang } = selectedAcademy,
+        academyClasses = []
 
-    console.log("handleModalStatus");
-    //
-    //
-    // this.props.getStudentNames(
-    //   this.state.parentId,
-    //   this.state.academyId,
-    //   this.state.classId
-    // )
-    // debugger
-
-
-    // this.setState({
-    //   modalStatus: !this.state.modalStatus
-    // })
-
-    // academyUrl,
-    // academyName,
-    // academyLang,
-    // className,
-    // level,
-    // names
+    kinderClasses.forEach((cl,i) => {
+      academyClasses.push({
+        ...cl,
+        academyUrl : url,
+        academyName: name,
+        academyLang: lang,
+        directLink: true
+      })
+    })
+    this.setState({
+      modalStatus: !this.state.modalStatus,
+      academyClasses
+    })
   }
   handleSettingAcademy(e, data){
     this.setState({
@@ -119,8 +113,30 @@ class SettingAcademyContainer extends PureComponent {
           isModalOpen={this.state.modalStatus}
           modalWidth="600px"
           >
-
-          <button onClick={() => this.setState({modalStatus: !this.state.modalStatus})}>close</button>
+          <div>
+            {
+              this.state.academyClasses
+                ? this.state.academyClasses.map( (cl,i) => {
+                  return (
+                    <PrimaryButton
+                      onClick={() => {
+                        // home/settingStudent/A00016-K8/코넬
+                        this.props.history.push(
+                          `/home/settingStudent/${cl.academyId}/${cl.className}`,
+                          { ...cl }
+                        )
+                      }}
+                      key={i} content={cl.className} purpose={"multi"}
+                    />
+                  )
+                })
+                : false
+            }
+          </div>
+          <PrimaryButton
+            purpose={'delete'}
+            content={'close'}
+            onClick={() => this.setState({modalStatus: !this.state.modalStatus})} />
         </Modal>
         {nodes}
       </BodyContainer>

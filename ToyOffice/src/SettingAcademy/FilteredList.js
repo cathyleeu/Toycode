@@ -106,14 +106,13 @@ export default class FilteredList extends PureComponent {
           <ConditionalHeader
             headerStyle="Kinder-Cont-top"
             customMinWidth="250px"
-            name="createAcademyClass"
             headerTitle={name}
             btnFront={
               [
-                { purpose: "create", name: "반 등록하기" }
+                { purpose: "create", name: "반 등록하기", dataName: "createAcademyClass" }
               ]
             }
-            onClick={(e) => this.props.handleModal(e)}
+            onClick={this.props.handleModal}
           />
           {this.props.children}
         </DirectionContainer>

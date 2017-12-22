@@ -78,6 +78,7 @@ class SettingAcademyClassContainer extends PureComponent {
           match={this.props.match}
           history={this.props.history}
           handleModal={this.handleModal}
+
           modalHandleName="editAcademyClass"
           filtered={this.state.selectedAcademy}>
           <ToyCodeSelect
