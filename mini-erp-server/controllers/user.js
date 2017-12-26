@@ -350,6 +350,37 @@ const userInfoUpdate = async ctx => {
   }
 }
 
+const userInfoUpdatebyRenew = async ctx => {
+  let { user, info } = ctx.params;
+  let setObj = {}
+  if(info === "branch") {
+    setObj[info] = {
+      ...ctx.request.body,
+      address: {
+        detailAddr: ctx.request.body.detailAddr,
+        roadAddr: ctx.request.body.roadAddr,
+        zipNo: ctx.request.body.zipNo
+      }
+    }
+  } else {
+    let keyObjs = Object.keys(ctx.request.body)
+    keyObjs.forEach( d => {
+      setObj[d] = {
+        ...ctx.request.body[d]
+      }
+    })
+  }
+  ctx.body = await User.findOneAndUpdate(
+    { email: ctx.params.user },
+    { $set: {
+      ...setObj
+    } },
+    { new: true }
+  )
+
+  // const { sub_name, account, education } = ctx.request.body;
+}
+
 const getNewUrl = ( bId , names ) => {
   return new Promise(async(resolve, reject) => {
     let users = await User.find(),
@@ -628,6 +659,7 @@ module.exports = {
   loggedUser,
   userKinders,
   userInfoUpdate,
+  userInfoUpdatebyRenew,
   userKinderUpdate,
   allBranchKinders,
   isFetchedKinderInfo,
