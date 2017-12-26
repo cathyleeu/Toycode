@@ -1,4 +1,5 @@
 import * as types from './actions'
+import * as loginTypes from '../Login/actions'
 
 
 const initialState =  {
@@ -10,6 +11,7 @@ const initialState =  {
 export default function (state = initialState, action) {
   switch (action.type) {
     case types.IS_DEFALUT_MODI:
+    case loginTypes.GET_USER_INFO :
       let { branch, education, account } = action.user;
       return {
         ...state,

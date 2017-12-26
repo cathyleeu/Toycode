@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './index.css'
 
 
@@ -37,8 +37,7 @@ const ButtonColors = {
 
 
 
-export default class PrimaryButton extends Component {
-  // onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}
+export default class PrimaryButton extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
@@ -47,22 +46,14 @@ export default class PrimaryButton extends Component {
     }
     this.handleHover = this.handleHover.bind(this)
     this.replacer = this.replacer.bind(this)
+    this.handleDataSet = this.handleDataSet.bind(this)
   }
   componentWillMount(){
-    let propsKeys = Object.keys(this.props), dataAttr = {}
-        propsKeys = propsKeys.filter( key => key.match('data'));
-
-    if(propsKeys) {
-      propsKeys = propsKeys.forEach( key => {
-        let newKey = key.replace(/([A-Z])/g, this.replacer);
-        dataAttr = {
-          ...dataAttr,
-          [newKey] : this.props[key]
-        }
-      })
-      this.setState({
-        dataAttr
-      })
+    this.handleDataSet(this.props)
+  }
+  componentWillReceiveProps(newProps){
+    if(newProps.content !== this.props.content) {
+      this.handleDataSet(newProps)
     }
   }
   handleHover(e){
@@ -71,9 +62,24 @@ export default class PrimaryButton extends Component {
       buttonColor: ButtonColors[purpose][e.type]
     })
   }
+  handleDataSet(propsData){
+    let propsKeys = Object.keys(propsData), dataAttr = {}
+        propsKeys = propsKeys.filter( key => key.match('data'));
+    if(propsKeys) {
+      propsKeys = propsKeys.forEach( key => {
+        let newKey = key.replace(/([A-Z])/g, this.replacer);
+        dataAttr = {
+          ...dataAttr,
+          [newKey] : propsData[key]
+        }
+      })
+      this.setState({
+        dataAttr
+      })
+    }
+  }
   replacer(match, p1) {
-
-	return match.replace(p1, `-${p1.toLocaleLowerCase()}`)
+	   return match.replace(p1, `-${p1.toLocaleLowerCase()}`)
   }
   render() {
     let {

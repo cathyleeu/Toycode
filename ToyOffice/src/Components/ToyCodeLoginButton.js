@@ -20,8 +20,7 @@ class ToyCodeLoginButton extends PureComponent {
     } = this.props;
     return (
       <form
-        ref="issedButton"
-        ref={(submit) => { this.btnSubmit = submit; }}
+        ref={(submit) => { this.btnSubmit = submit }}
         style={{display: "inline"}}
         action="https://toycode.org/issue" method="POST" target="_blank">
         <input type="hidden" name="code" value={academyUrl} />

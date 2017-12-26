@@ -14,6 +14,7 @@ export default class StudentNamesCard extends PureComponent {
   }
   //style={{display: "flex", alignItems: "center"}}
   render(){
+    let { handleModal, history, modalHandleName, ...restProps} = this.props;
     return (
       <ToyCodePaper>
         <DirectionContainer direction="row" width="30%" alignItems="center">
@@ -26,9 +27,9 @@ export default class StudentNamesCard extends PureComponent {
           <FlatButton
             labelStyle={{color: "#e8a735"}}
             data-result="edit"
-            // data-name={this.props.modalHandleName}
+            data-name={this.props.modalHandleName}
             label="수정"
-            // onClick={this.handleClick}
+            onClick={(e) => this.props.handleModal(e, restProps)}
            />
           <FlatButton
             data-result="delete"

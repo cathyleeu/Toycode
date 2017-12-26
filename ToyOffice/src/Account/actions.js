@@ -1,5 +1,5 @@
-// import axios from 'axios'
-// const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
+import axios from 'axios'
+const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
 
 
 export const IS_MODIFYING_INFO = 'IS_MODIFYING_INFO'
@@ -9,9 +9,10 @@ export const IS_COMPLETE_MODI = 'IS_COMPLETE_MODI'
 // dispatch({type: IS_DEFALUT_MODI_MNG})
 
 
-// const localUser = localStorage.getItem('email')
+const localUser = localStorage.getItem('email')
 
 export const isDefalutModi = (user) => (dispatch) => {
+  console.log("cancle", user);
   dispatch({type: IS_DEFALUT_MODI, user})
 }
 
@@ -21,31 +22,29 @@ export const isModifyingInfo = (modiType, modiKey, modiTxt) => (dispatch) => {
 }
 
 export const isCompoleteModi = (modiType, data) => (dispatch) => {
-
   console.log('isCompoleteModi', modiType, data);
-  //
-  // let {
-  //   A_phone,
-  //   A_email,
-  //   A_manager,
-  //   E_phone,
-  //   E_email,
-  //   E_manager,
-  // } = data,
-  //   obj = {
-  //     account: {
-  //       A_phone,
-  //       A_email,
-  //       A_manager
-  //     },
-  //     education: {
-  //       E_phone,
-  //       E_email,
-  //       E_manager
-  //     }
-  //   }
-  // dispatch({type: IS_COMPLETE_MODI})
-  // axios.put(`${ROOT_URL}/user/${localUser}/info`, obj)
+
+  let temp = {}
+  if(modiType === "manager") {
+    let objKeys = Object.keys(data);
+    objKeys.forEach( d => {
+      if(d.match(/([A])\w+/g)){
+        temp["account"] = {
+          ...temp["account"],
+          [d] : data[d]
+        }
+      } else {
+        temp["education"] = {
+          ...temp["education"],
+          [d] : data[d]
+        }
+      }
+    })
+    data = temp;
+  }
+  // log.match(/([A])\w+/g)
+
+  axios.put(`${ROOT_URL}/user/${localUser}/info/${modiType}`, data)
   alert('수정이 완료되었습니다.')
 }
 

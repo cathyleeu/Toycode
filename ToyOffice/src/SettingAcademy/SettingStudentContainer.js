@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 // import ReactDOM from 'react-dom';
 import {connect} from 'react-redux'
 import * as actions from './actions'
+import SettingStudentModal from './SettingStudentModal'
 
 
 
@@ -18,12 +19,11 @@ class SettingStudentContainer extends PureComponent {
       loaded: false,
       // academies: [],
       selectedAcademy: {},
-      // createAcademyClass: false,
-      // editAcademyClass: false,
-      // modalRenderData: {}
+      createStudent: false,
+      editStudent: false,
+      modalRenderData: {},
       students: [],
-      registerStudents: "",
-      disabled: false
+      registerStudents: ""
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleModal = this.handleModal.bind(this)
@@ -52,6 +52,7 @@ class SettingStudentContainer extends PureComponent {
     })
   }
   handleModal(e, modalData) {
+    // debugger
     let { name } = e.currentTarget.dataset;
     this.setState({
       [name] : !this.state[name],
@@ -71,6 +72,10 @@ class SettingStudentContainer extends PureComponent {
               history={this.props.history}
               academyName={this.state.academyName}
               className={this.state.className}
+              //TODO: 각 버튼에 onClick 연결하여 모달 컨트롤
+              handleModal={this.handleModal}
+              modalHandleName={'editStudent'}
+              // modalPurpose={"edit"}
            />
   }
   render(){
@@ -78,6 +83,19 @@ class SettingStudentContainer extends PureComponent {
         names = students.map(name => name.name);
     return(
       <BodyContainer>
+        <SettingStudentModal
+          handleModal={this.handleModal}
+          modalHandleName={'createStudent'}
+          modalPurpose={"create"}
+          modalStatus={this.state.createStudent}
+        />
+        <SettingStudentModal
+          {...this.state.modalRenderData}
+          handleModal={this.handleModal}
+          modalHandleName={'editStudent'}
+          modalPurpose={"edit"}
+          modalStatus={this.state.editStudent}
+        />
         <DirectionContainer direction="row" width="70%" alignItems="center">
           <ConditionalHeader
             headerIcon="fa fa-id-card"
@@ -98,6 +116,9 @@ class SettingStudentContainer extends PureComponent {
                       <PrimaryButton
                         purpose="create"
                         content="학생 추가하기"
+                        dataName={'createStudent'}
+                        onClick={this.handleModal}
+                        //TODO: onClick 연결
                       />
                     </div>
                   : <p> 한줄에 한명의 이름을 입력하여, 학생을 등록해주세요 </p>

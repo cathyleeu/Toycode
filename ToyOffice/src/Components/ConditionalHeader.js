@@ -27,9 +27,6 @@ export default class ConditionalHeader extends PureComponent {
       flipStatus: props.flipStatus || false
     }
   }
-  componentWillMount(){
-
-  }
   componentWillReceiveProps(newProps){
     if(newProps.flipStatus !== this.props.flipStatus){
       this.setState({ flipStatus: newProps.flipStatus})
@@ -47,6 +44,7 @@ export default class ConditionalHeader extends PureComponent {
       margin: this.props.headerIconMargin
     }
     let { displayBtn, flipStatus } = this.state;
+    //FIXME: dataName : data 들어가는 props들을 다 뿌려주는 것
     return (
       <div className={this.props.headerStyle} style={customStyle}>
         <i className={this.props.headerIcon} aria-hidden="true" style={customIconStyle}></i>
@@ -54,18 +52,19 @@ export default class ConditionalHeader extends PureComponent {
         <p>{this.props.headerSecondTitle}</p>
         { this.props.headerType === "normal"
             ? false
-            : displayBtn[flipStatus].map(
-                (btn, i) => (
+            : displayBtn[flipStatus].map((btn, i) => {
+                 return (
                   <PrimaryButton
                     key={i}
                     dataName={btn.dataName}
+                    dataApi={btn.dataApi}
                     dataPurpose={btn.purpose}
                     content={btn.name}
                     onClick={this.props.onClick}
                     purpose={btn.purpose}
                   />
                 )
-              )
+              })
         }
         {this.props.children}
       </div>
