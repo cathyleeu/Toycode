@@ -47,8 +47,50 @@ const isFetchedAllNames = async (ctx) => {
     console.log(err);
   }
 }
+const editStudentName = async (ctx) => {
+  let { editType, classId } = ctx.params;
+  if(editType === "add") {
+    ctx.body = await Login.findOneAndUpdate(
+      { classId },
+      { $push: {
+        students: ctx.request.body
+      }}
+    )
+  } else {
+    let modified = Object.keys(ctx.request.body)
+    let modiObj = {}
+    // 그에 맞춰서 sub Class 수정
+    modified.forEach( mo => {
+      modiObj[`students.$.${mo}`] = ctx.request.body[mo]
+    })
+    ctx.body = await Login.findOneAndUpdate(
+      {
+        classId,
+        "students._id" : ctx.request.body._id
+      },
+      modiObj
+    )
+  }
+}
+const delStudentName = async (ctx) => {
+  ctx.body = await Login.findOneAndUpdate(
+    //find subSchema
+    {
+      "students._id" : ctx.params.studentId
+    },
+    // delete subSchema
+    {
+      '$pull' : {
+        'students' : {
+          '_id' : ctx.params.studentId
+        }
+      }
+    }
+  );
+}
 
 const isUpdateNames = async (ctx) => {
+
   try{
     const { students } = ctx.request.body;
     ctx.body = await Login.findOneAndUpdate({classId: ctx.params.classId, className: ctx.params.className}, {$set: { students, updateOn: Date.now() }}, { new: true })
@@ -108,5 +150,7 @@ module.exports = {
   isFetchedNamesByClassId,
   isUpdateNames,
   isFetchedAllNames,
-  isAllNamesByBranch
+  isAllNamesByBranch,
+  editStudentName,
+  delStudentName
 };

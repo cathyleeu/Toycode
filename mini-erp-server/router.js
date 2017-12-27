@@ -72,6 +72,11 @@ router.get('/login/:parentId', Login.isAllNamesByBranch)
 router.get('/login/:classId/:className', Login.isFetchedNamesByClass)
 router.get('/login/:parentId/:academyId/:classId', Login.isFetchedNamesByClassId)
 router.put('/login/update/:classId/:className', Login.isUpdateNames)
+router.put('/login/:editType/:classId', Login.editStudentName)
+router.del('/login/:studentId', Login.delStudentName)
+// router.put('/login/edit/:classId', Login.editStudentName)
+
+
 
 
 
