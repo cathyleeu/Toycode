@@ -162,6 +162,8 @@ export const createStudentIds = (studentInfo) => (dispatch, getState) => {
 }
 
 export const getStudentNames = (parentId, academyId, classId) => (dispatch) => {
+  console.log("getStudentNames");
+  // debugger
   axios.get(`${ROOT_URL}/login/${parentId}/${academyId}/${classId}`)
        .then( res => {
          if(res.status === 204) {
@@ -172,7 +174,29 @@ export const getStudentNames = (parentId, academyId, classId) => (dispatch) => {
            dispatch({ type: FETCH_STUDENT_NAMES, students: res.data.students, classId})
          }
        })
-       // .catch(
-       //
-       // )
+}
+
+export const editStudentName = (editType, studentInfo) => (dispatch, getState) => {
+  let { parentId, kinderId, classId } = studentInfo
+  axios.put(`${ROOT_URL}/login/${editType}/${classId}`, {...studentInfo })
+       .then(res => {
+          if(alert('완료되었습니다.')){
+            // TODO: 새로고침
+              getStudentNames(parentId, kinderId, classId)
+          }
+       })
+}
+
+export const delStudentName = (studentInfo) => (dispatch, getState) => {
+  let { name, parentId, kinderId, classId, _id } = studentInfo
+  if(confirm(`${name} 학생을 삭제 하시겠습니까?`)){
+    console.log("yes", name, parentId, kinderId, classId, _id );
+    axios.delete(`${ROOT_URL}/login/${_id}/`)
+          .then(res => {
+            alert(`${name} 학생 삭제가 완료되었습니다.`)
+          })
+  } else {
+    console.log("no");
+    return false
+  }
 }

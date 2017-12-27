@@ -75,6 +75,7 @@ class SettingStudentContainer extends PureComponent {
               //TODO: 각 버튼에 onClick 연결하여 모달 컨트롤
               handleModal={this.handleModal}
               modalHandleName={'editStudent'}
+              delStudentName={this.props.delStudentName}
               // modalPurpose={"edit"}
            />
   }
@@ -87,13 +88,16 @@ class SettingStudentContainer extends PureComponent {
           handleModal={this.handleModal}
           modalHandleName={'createStudent'}
           modalPurpose={"create"}
+          modalRenderData={this.props.location.state}
+          editStudentName={this.props.editStudentName}
           modalStatus={this.state.createStudent}
         />
         <SettingStudentModal
-          {...this.state.modalRenderData}
+          modalRenderData={this.state.modalRenderData}
           handleModal={this.handleModal}
           modalHandleName={'editStudent'}
           modalPurpose={"edit"}
+          editStudentName={this.props.editStudentName}
           modalStatus={this.state.editStudent}
         />
         <DirectionContainer direction="row" width="70%" alignItems="center">

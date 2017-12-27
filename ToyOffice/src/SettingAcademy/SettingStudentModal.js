@@ -14,24 +14,37 @@ class SettingStudentModal extends PureComponent{
     this.state = this.isGetInitialState()
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+
   }
   handleChange(e) {
+    // console.log(e);
     this.setState({[e.target.name]: e.target.value})
   }
   componentWillReceiveProps(newProps) {
-    this.setState({ ...newProps })
+    if(newProps.modalStatus !== this.props.modalStatus) {
+      // console.log( "modal componentWillReceiveProps" );
+      this.setState({ ...newProps.modalRenderData })
+    }
+    return false
   }
+  // shouldComponentUpdate(newProps){
+  //   if(newProps.modalStatus !== this.props.modalStatus) {
+  //     console.log( "modal shouldComponentUpdate AAAA" );
+  //     return true
+  //   }
+  //   return false
+  // }
   handleClick(e){
     let { modalPurpose } = this.props;
     let { result } = e.currentTarget.dataset;
     //TODO: action api 만 짜면 됨
     let handleEvent = {
       "create" : {
-        complete : () => this.props.createAcademyClass(this.state),
+        complete : () => this.props.editStudentName("add", this.state),
         cancle : () => false
       },
       "edit" : {
-        complete : () => this.props.editAcademyClass(this.state, this.props.academyClass_id),
+        complete : () => this.props.editStudentName("edit", this.state),
         cancle : () => false
       }
     }

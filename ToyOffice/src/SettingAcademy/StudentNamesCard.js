@@ -35,7 +35,7 @@ export default class StudentNamesCard extends PureComponent {
             data-result="delete"
             label="삭제"
             secondary={true}
-            // onClick={this.handleClick}
+            onClick={() => this.props.delStudentName(restProps)}
            />
          <FlatButton
            labelStyle={{color: "#03396c"}}
