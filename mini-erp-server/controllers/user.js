@@ -279,6 +279,65 @@ const signup = async (ctx, next) => {
   // TODO: async await에서 Promise reject의 경우 처리 필요
 };
 
+
+const verifiedCode = async ctx => {
+  try {
+    let codeType = ctx.params.code;
+    let { parentId, userType, code } = ctx.request.body;
+
+    let userTypes = {
+      "branch" : {
+        "think2018" : "A"
+      },
+      "academy" : {
+        "ybm2018" : "B",
+        "ecc2018" : "C",
+        "psa2018" : "D",
+        "toy2018" : "E"
+      },
+      "teacher" : {
+      },
+      "admin" : {
+        "toycode_admin": "Z"
+      }
+    }
+
+    if(userType === "teacher") {
+      let verification = await User.findOne({
+        "kinders.parentId" : parentId,
+        "kinders.url" : code
+      }).select('kinders.$ -_id')
+
+      codeType = code;
+      userTypes[userType][codeType] = "T";
+    }
+
+    if(!userTypes[userType][codeType]) {
+      ctx.body = {
+        message: "인증된 가입코드가 아닙니다.",
+        result: false
+      }
+      return false
+    }
+    ctx.body = {
+      customerType: userTypes[userType][codeType],
+      message: "인증된 가입코드 입니다.",
+      result: true
+    }
+  } catch (e) {
+    ctx.body = {
+      message: "인증코드를 확인해주세요.",
+      result: false
+    }
+  }
+
+}
+
+
+const renewalSignin = async (ctx) => {
+
+}
+
 const confirmSignUp = async ctx => {
   try {
     const url = ctx.params.url;
@@ -654,6 +713,8 @@ const userUpdateByAdmin = async ctx => {
 module.exports = {
   signin,
   signup,
+  renewalSignin,
+  verifiedCode,
   confirmSignUp,
   allUsers,
   loggedUser,

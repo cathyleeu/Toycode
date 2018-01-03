@@ -16,6 +16,7 @@ const ReturnGoods = require('./controllers/return');
 router.post('/signin', Users.signin)
 router.post('/signup', Users.signup);
 router.get('/signup/:url', Users.confirmSignUp)
+router.post('/verification/:code', Users.verifiedCode)
 
 
 router.get('/user', Users.allUsers)
