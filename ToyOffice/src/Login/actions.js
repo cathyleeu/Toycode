@@ -25,6 +25,33 @@ export const tempoLogin = (userData) => (dispatch) => {
       dispatch({type: UNAUTH_USER, err: err.response.data.msg})
     })
 }
+//
+// export async function asyncVerifiedCode(userType, code) {
+//   // let message, result, customerType;
+//   code = code.trim().toLocaleLowerCase()
+//
+//   const a = await axios.post(`${ROOT_URL}/verification/${code}`, { userType } )
+//
+//   debugger
+// }
+//
+// export const fetchOffersSuccess = (res) => {
+//   console.log(res);
+// }
+//
+// export const verifiedCode = (userType, code) => (dispatch) => {
+//   // console.log(userType, code);
+//   let message, result, customerType;
+//
+//   code = code.trim().toLocaleLowerCase()
+//   let resultMessage = axios.post(`${ROOT_URL}/verification/${code}`, { userType } )
+//
+//   return resultMessage.then(
+//     response => dispatch(fetchOffersSuccess(response))
+//   )
+// }
+
+
 
 export const getUserInfo = (email) => (dispatch) => {
   axios.get(`${ROOT_URL}/user/${email}`)

@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom' // withRouter
 import App from './App'
 import Login from './Login'
+// import Register from './Login/Register'
 import { connect } from 'react-redux'
 import PrivateRoute from './PrivateRoute'
 
@@ -21,6 +22,7 @@ class Routers extends PureComponent {
         <Switch>
           <PrivateRoute path="/home" component={App} auth={this.state.login}/>
           <Route exact path="/" render={() => RedirectToLogin('home')} />
+          {/* <Route path="/register" component={Register}/> */}
           <Route path="/login" render={() => (
             this.state.login
               ? <Redirect to="/home" />

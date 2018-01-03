@@ -87,25 +87,30 @@ export default class PrimaryButton extends PureComponent {
       // buttonStyle,
       onClick,
       buttonName,
-      // buttonType,
+      buttonType,
       // buttonColor,
       buttonWidth,
+      buttonHeight,
+      customClassName,
       // buttonHoverColor,
       // purpose
     } = this.props;
     let customStyle = {
       backgroundColor: this.state.buttonColor,
       width: buttonWidth,
+      height: buttonHeight
     }
+    let className = customClassName ? customClassName : "";
     return (
       <button
         onMouseEnter={this.handleHover}
         onMouseLeave={this.handleHover}
         name={buttonName}
         {...this.state.dataAttr}
-        className="primary_btn"
+        className={`primary_btn ${className}`}
         style={customStyle}
         onClick={onClick}
+        type={buttonType}
       >
         {content}
         {this.props.children}

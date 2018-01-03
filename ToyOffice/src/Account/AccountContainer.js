@@ -11,7 +11,6 @@ class AccountContainer extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      loaded : false,
       branchModi: false,
       mngModi: false,
     }
@@ -19,7 +18,7 @@ class AccountContainer extends PureComponent {
   }
 
   componentWillMount(){
-    window.performance.mark('AccountContainer')
+    console.log(window.performance.now('AccountContainer'))
   }
   componentDidMount(){
     console.log(window.performance.now('AccountContainer'))
@@ -28,11 +27,6 @@ class AccountContainer extends PureComponent {
     Perf.stop()
     Perf.printInclusive()
     Perf.printWasted()
-  }
-  componentWillReceiveProps(newProps){
-    if(newProps.branchModi !== this.props.branchModi){
-      this.setState({loaded: true})
-    }
   }
   handleModiToggle(e){
     let { name, purpose, api } = e.target.dataset,
@@ -96,14 +90,6 @@ class AccountContainer extends PureComponent {
         Component: AccountManager
       }
     ];
-
-    if(!this.state.loaded){
-      return(
-        <BodyContainer>
-          로딩중
-        </BodyContainer>
-      )
-    }
     return(
       <BodyContainer>
         {AccountTableList.map(this.renderAccountTable)}
