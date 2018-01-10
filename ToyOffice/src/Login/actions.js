@@ -8,6 +8,34 @@ export const AUTH_USER = 'AUTH_USER'
 export const UNAUTH_USER = 'UNAUTH_USER'
 export const GET_USER_INFO = 'GET_USER_INFO'
 
+export const SEARCH_ADDRESS = 'SEARCH_ADDRESS'
+export const COMPLETE_ADDRESS_FETCH = 'COMPLETE_ADDRESS_FETCH'
+
+
+// 주소 api
+const currentPage = 1;
+const countPerPage = 200;
+const confmKey = 'U01TX0FVVEgyMDE3MDEyMzA5MzE0NDE4NTA0';
+const searchUrl = 'http://www.juso.go.kr/addrlink/addrLinkApi.do';
+
+
+export const searchAddress = (location) => (dispatch) => {
+  axios.get(`${searchUrl}?currentPage=${currentPage}&countPerPage=${countPerPage}&keyword=${encodeURIComponent(location)}&confmKey=${confmKey}&resultType=json`)
+  .then((address) => {
+    let length = address.data.results.juso.length;
+    
+    if( length > 10) {
+      alert("주소를 자세히 입력하세요.")
+    } else {
+      dispatch({type:SEARCH_ADDRESS})
+      dispatch({
+        type: COMPLETE_ADDRESS_FETCH,
+        juso: address.data.results.juso
+      })
+    }
+  })
+}
+
 
 export const tempoLogin = (userData) => (dispatch) => {
   axios.post(`${ROOT_URL}/signin`, userData)

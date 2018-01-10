@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Card } from 'material-ui/Card';
 import { TextField } from 'material-ui';
-import { PrimaryButton } from '../Components'
+import { PrimaryButton, Modal } from '../Components'
 import { connect } from 'react-redux'
 import * as actions from './actions'
 import './login.css'
@@ -14,20 +14,33 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      passwordConfirm: '',
+      zipNo: "",
+      roadAddr:"",
+      detailAddr:"",
+      emailErr: '',
+      passwordErr: '',
+      passwordConfirmErr: '',
+      roadAddrErr: "",
+      detailAddrErr:"",
       code: '',
       parentId: "",
-      passwordConfirm: '',
       err: props.err || '',
       height: window.innerHeight,
       registerStep1: "none",
       registerStep2: "none",
-      loginDisplay: "",
+      loginDisplay: "", //""
       customerType: "",
-      selectedOption: "branch"
+      selectedOption: "branch",
+      location: "",
+      modalStatus: false
     }
+
     this.handleOptionChange = this.handleOptionChange.bind(this)
     this.handleLoginStep = this.handleLoginStep.bind(this)
     this.handleVerifiedCode = this.handleVerifiedCode.bind(this)
+    this.handleSearchAddr = this.handleSearchAddr.bind(this)
+    this.handleSignUp = this.handleSignUp.bind(this)
   }
   async verifiedCode(userType, code, step, nextStep) {
     const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
@@ -69,7 +82,10 @@ class Login extends Component {
   }
   handleChange = e => {
     e.preventDefault()
-    this.setState({[e.target.name]: e.target.value})
+    this.setState({
+      [e.target.name]: e.target.value,
+      [`${e.target.name}Err`]: ""
+    })
   }
   handleOptionChange(e){
     this.setState({selectedOption: e.target.value})
@@ -85,14 +101,116 @@ class Login extends Component {
     //   registerStep2: ""
     // })
   }
+  handleSearchAddr(e) {
+    e.preventDefault()
+    this.props.searchAddress(this.state.location)
+  }
+  handleSelectAddr = (result) => {
+    console.log(result);
+    // const {selectedJuso} = this.props
+		// selectedJuso(result)
+		this.setState({
+			zipNo: result.zipNo,
+			roadAddr: result.roadAddr,
+      // detailAddr: result.detailAddr || '',
+      location: '',
+      modalStatus: false
+		})
+    this.props.searchAddress('')
+  }
+  validate = () => {
+    let isError = false;
+    let { email, password, passwordConfirm, detailAddr, roadAddr, customerType } = this.state;
+    const errors = {
+      emailErr: '',
+      passwordErr: '',
+      passwordConfirmErr: '',
+      roadAddrErr: "",
+      detailAddrErr:""
+    };
+
+    if (email.indexOf("@") === -1) {
+      isError = true;
+      errors.emailErr = "정확한 이메일을 기입하세요.";
+    }
+    if (password === "") {
+      isError = true;
+      errors.passwordErr = "비밀번호를 기입하세요.";
+    }
+    if (passwordConfirm === "") {
+      isError = true;
+      errors.passwordConfirmErr = "비밀번호를 기입하세요.";
+    }
+    if(password !== passwordConfirm) {
+      isError = true;
+      errors.passwordConfirmErr = "비밀번호가 일치하지 않습니다.";
+    }
+    if(customerType === "Z") {
+      if (roadAddr === "") {
+        isError = true;
+        errors.roadAddrErr = "주소를 기입하세요.";
+      }
+      if (detailAddr === "") {
+        isError = true;
+        errors.detailAddrErr = "상세주소를 기입하세요.";
+      }
+    }
+
+
+    this.setState({
+      ...errors
+    });
+
+    return isError;
+  }
+  handleSignUp() {
+    let validateErr = this.validate()
+
+    if(!validateErr) {
+      alert("success")
+
+    }
+  }
   render(){
     let radioName = [
       { name: "지사", value: "branch" },
       { name: "학원", value: "academy" },
       { name: "선생님", value: "teacher" },
     ]
+    let { juso } = this.props;
     return(
       <div className="Login-temp" style={{height: `${this.state.height}px`}}>
+        <Modal
+          isModalOpen={this.state.modalStatus}
+          modalWidth="600px">
+
+          <form onSubmit={this.handleSearchAddr} className="search-bar">
+            <input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
+            <PrimaryButton
+              // buttonStyle="search-btn"
+              buttonType="button"
+              purpose="create"
+              onClick={this.handleSearchAddr}
+              // handleButtonEvent={this.handleSearchAddr}
+              content="검색"
+            />
+          </form>
+          <div className="search-address-results">
+            {juso && juso.map((result, i)=> (
+              <div className="search-address-result" key={i} onClick={() => this.handleSelectAddr(result)}>
+                <p><strong>도로명주소</strong> {result.roadAddr}</p>
+                <hr className="search-address-hr"/>
+                <p><strong>지번주소</strong> : {result.jibunAddr}</p>
+              </div>
+            ))}
+          </div>
+
+          <PrimaryButton
+            content="닫기"
+            buttonType="button"
+            onClick={() => this.setState({modalStatus: false })}
+            purpose="create" />
+        </Modal>
         <div className="Login-temp-back" style={{height: `${this.state.height}px`}}>
         <Card className="Login-cont" onSubmit={this.handleLogin} >
           <LoginTemp displayStatus={this.state.loginDisplay}>
@@ -194,37 +312,68 @@ class Login extends Component {
                 floatingLabelText="이메일"
                 type="email"
                 name="email"
+                className="registerStep2"
                 value={this.state.email}
                 onChange={this.handleChange}
-                errorText={this.state.err}
+                errorText={this.state.emailErr}
               />
               <TextField
                 hintText="비밀번호"
                 floatingLabelText="비밀번호"
                 type="password"
                 name="password"
+                className="registerStep2"
                 value={this.state.password}
                 onChange={this.handleChange}
-                errorText={this.state.err}
+                errorText={this.state.passwordErr}
               />
               <TextField
                 hintText="비밀번호 확인"
                 floatingLabelText="비밀번호 확인"
-                type="passwordConfirm"
+                type="password"
                 name="passwordConfirm"
+                className="registerStep2"
                 value={this.state.passwordConfirm}
                 onChange={this.handleChange}
-                errorText={this.state.err}
+                errorText={this.state.passwordConfirmErr}
               />
+
+              { this.state.selectedOption !== "teacher"
+                ? (
+                  <div className="addrForm">
+                    <TextField
+                      hintText="우편주소"
+                      floatingLabelText="우편주소"
+                      inputStyle={{color: "black"}}
+                      type="text"
+                      className="registerStep2"
+                      disabled={true}
+                      name="zipNo"
+                      value={this.state.zipNo}
+                    />
+                    <PrimaryButton
+                      content="주소"
+                      onClick={() => this.setState({
+                        modalStatus: true
+                      })}
+                      // customClassName="Loing-Btn"
+                      buttonType="button"
+                      purpose="create" />
+                  </div>
+                )
+                : false
+              }
               { this.state.selectedOption !== "teacher"
                 ? <TextField
-                  hintText="우편주소"
-                  floatingLabelText="우편주소"
+                  hintText="주소"
+                  floatingLabelText="주소"
                   type="text"
-                  // name="passwordConfirm"
-                  // value={this.state.passwordConfirm}
-                  // onChange={this.handleChange}
-                  errorText={this.state.err}
+                  className="registerStep2"
+                  inputStyle={{color: "black"}}
+                  disabled={true}
+                  name="roadAddr"
+                  value={this.state.roadAddr}
+                  errorText={this.state.roadAddrErr}
                 />
                 : false
               }
@@ -233,10 +382,11 @@ class Login extends Component {
                   hintText="상세주소"
                   floatingLabelText="상세주소"
                   type="text"
-                  // name="passwordConfirm"
-                  // value={this.state.passwordConfirm}
-                  // onChange={this.handleChange}
-                  errorText={this.state.err}
+                  className="registerStep2"
+                  name="detailAddr"
+                  value={this.state.detailAddr}
+                  onChange={this.handleChange}
+                  errorText={this.state.detailAddrErr}
                 />
                 : false
               }
@@ -245,6 +395,7 @@ class Login extends Component {
               content="회원가입"
               customClassName="Loing-Btn"
               buttonType="submit"
+              onClick={this.handleSignUp}
               purpose="create" />
           </LoginTemp>
         </Card>
@@ -255,7 +406,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  err: state.login.err
+  err: state.login.err,
+  juso: state.login.juso
 })
 
 export default connect(mapStateToProps, actions)(Login)

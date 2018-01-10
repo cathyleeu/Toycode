@@ -17,6 +17,8 @@ export default function (state = initialState, action) {
       return { ...state, authenticated: false, err: action.err}
     case types.GET_USER_INFO:
       return { ...state, user: action.user }
+    case types.COMPLETE_ADDRESS_FETCH:
+      return { ...state, juso: action.juso }
     default:
       return state
   }
