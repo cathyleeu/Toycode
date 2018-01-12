@@ -68,9 +68,7 @@ const LoginInput = (props) => {
         />
         <PrimaryButton
           content="검색"
-          // onClick={() => this.setState({
-          //   modalStatus: true
-          // })}
+          onClick={props.onClick}
           buttonType="button"
           purpose="create" />
       </div>
@@ -132,14 +130,14 @@ const LoginTemp = (props) => {
         handleChange={onChange}
         options={radioName}
       />
-      <LoginInput text="이메일" name="email" value={props["email"]} {...inputProps}/>
-      <LoginInput text="비밀번호" name="password" value={props["password"]} {...inputProps}/>
-      <LoginInput text="비밀번호 확인" name="passwordConfirm" value={props["passwordConfirm"]} {...inputProps}/>
+      <LoginInput text="이메일" name="email" value={props["email"]} errText={props["emailErr"]} {...inputProps}/>
+      <LoginInput text="비밀번호" name="password" value={props["password"]} errText={props["passwordErr"]} {...inputProps}/>
+      <LoginInput text="비밀번호 확인" name="passwordConfirm" value={props["passwordConfirm"]} errText={props["passwordConfirmErr"]} {...inputProps}/>
       <LoginInput text="지사코드 입력" name="parentId" value={props["parentId"]} {...inputProps}/>
       <LoginInput text="코드입력" name="code" value={props["code"]} {...inputProps}/>
-      <LoginInput text="우편주소" name="zipNo" value={props["zipNo"]} {...inputProps}/>
-      <LoginInput text="주소" name="roadAddr" value={props["roadAddr"]} disabled={true} {...inputProps}/>
-      <LoginInput text="상세주소" name="detailAddr" value={props["detailAddr"]} {...inputProps}/>
+      <LoginInput text="우편주소" name="zipNo" value={props["zipNo"]} {...inputProps} onClick={props.modalControl}/>
+      <LoginInput text="주소" name="roadAddr" value={props["roadAddr"]} errText={props["roadAddrErr"]} disabled={true} {...inputProps}/>
+      <LoginInput text="상세주소" name="detailAddr" value={props["detailAddr"]} errText={props["detailAddrErr"]} {...inputProps}/>
 
       {/* {props.children} */}
       <LoginButton type="button" name={"enter"} {...buttonProps} content="전송" />

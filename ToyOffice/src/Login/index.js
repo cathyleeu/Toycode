@@ -10,7 +10,6 @@ import axios from 'axios'
 
 
 const Step = (PassedComponent) => ({ children, ...props }) => {
-  console.log("Step",props.match, props.step);
   if(props.match !== props.step) {
     return <div style={{display: "none"}}></div>
   }
@@ -28,6 +27,8 @@ class Login extends Component {
   constructor(props){
     super(props)
     this.state = {
+      step: 1,
+
       email: '',
       password: '',
       passwordConfirm: '',
@@ -41,21 +42,23 @@ class Login extends Component {
       detailAddrErr:"",
       code: '',
       parentId: "",
-      err: props.err || '',
-      height: window.innerHeight,
+
+      err: props.err || '', //로그인 잘못할 경우 오는 err
+
       customerType: "",
       selectedOption: "branch",
+
       location: "",
       modalStatus: false,
+      height: window.innerHeight,
 
 
-      step: 1
+
     }
 
-    this.handleOptionChange = this.handleOptionChange.bind(this)
     this.handleVerifiedCode = this.handleVerifiedCode.bind(this)
     this.handleSearchAddr = this.handleSearchAddr.bind(this)
-    this.handleSignUp = this.handleSignUp.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -96,9 +99,6 @@ class Login extends Component {
       [e.target.name]: e.target.value,
       [`${e.target.name}Err`]: ""
     })
-  }
-  handleOptionChange(e){
-    this.setState({selectedOption: e.target.value})
   }
   handleVerifiedCode(e){
     let { selectedOption, code } = this.state;
@@ -154,14 +154,13 @@ class Login extends Component {
         errors.detailAddrErr = "상세주소를 기입하세요.";
       }
     }
-
     this.setState({
       ...errors
     });
-
+    console.log(errors);
     return isError;
   }
-  handleSignUp() {
+  handleSubmit() {
     let validateErr = this.validate()
 
     if(!validateErr) {
@@ -171,7 +170,6 @@ class Login extends Component {
   }
   handleClick(e){
     e.preventDefault()
-    // console.log(e.target.name)
     if(e.target.name === "link") {
       window.open("https://www.toycode.co.kr:125/")
     }
@@ -185,29 +183,18 @@ class Login extends Component {
     if(e.target.name === "enter"){
       //TODO: 여기서 전송하기 버튼 다 구분해줘야함
       let filterStep = {
-        1 : () => false,
+        1 : () => this.handleSubmit(),
         2 : () => this.handleVerifiedCode(),
-        3 : () => false
+        3 : () => this.handleSubmit()
       }
       filterStep[e.target.dataset.step]()
     }
   }
   render(){
-    let {email, password, code, passwordConfirm, zipNo, roadAddr, detailAddr, parentId, selectedOption} = this.state;
-    let stateObj = {
-      email,
-      password,
-      parentId,
-      code,
-      passwordConfirm,
-      zipNo,
-      roadAddr,
-      detailAddr
-    }
-
+    let { location, modalStatus, height, selectedOption, ...restState } = this.state;
     let { juso } = this.props;
     return(
-      <div className="Login-temp" style={{height: `${this.state.height}px`}}>
+      <div className="Login-temp" style={{height: `${height}px`}}>
         <Modal
           isModalOpen={this.state.modalStatus}
           modalWidth="600px">
@@ -238,14 +225,14 @@ class Login extends Component {
             onClick={() => this.setState({modalStatus: false })}
             purpose="create" />
         </Modal>
-        <div className="Login-temp-back" style={{height: `${this.state.height}px`}}>
+        <div className="Login-temp-back" style={{height: `${height}px`}}>
         <Card className="Login-cont" onSubmit={this.handleLogin} >
           <LoginStep
             match={1}
             step={this.state.step}
             onChange={this.handleChange}
             onClick={this.handleClick}
-            {...stateObj}
+            {...restState}
            />
           <LoginStep
             match={2}
@@ -253,7 +240,7 @@ class Login extends Component {
             step={this.state.step}
             onChange={this.handleChange}
             onClick={this.handleClick}
-            {...stateObj}
+            {...restState}
             selectedOption={selectedOption}
            />
           <LoginStep
@@ -262,7 +249,8 @@ class Login extends Component {
             step={this.state.step}
             onChange={this.handleChange}
             onClick={this.handleClick}
-            {...stateObj}
+            {...restState}
+            modalControl={() => this.setState({ modalStatus: true })}
             selectedOption={selectedOption}
            />
         </Card>
