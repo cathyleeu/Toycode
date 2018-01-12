@@ -92,13 +92,15 @@ export default class PrimaryButton extends PureComponent {
       buttonWidth,
       buttonHeight,
       customClassName,
+      buttonDisplay,
       // buttonHoverColor,
       // purpose
     } = this.props;
     let customStyle = {
       backgroundColor: this.state.buttonColor,
       width: buttonWidth,
-      height: buttonHeight
+      height: buttonHeight,
+      display: buttonDisplay
     }
     let className = customClassName ? customClassName : "";
     return (

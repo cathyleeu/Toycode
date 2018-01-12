@@ -71,14 +71,14 @@
 }
 
 
-.registerStep2 {
+.registerInput {
   height: 65px !important;
   font-size: 12px !important;
   line-height: 18px !important;
   margin-top: -12px;
 }
 
-.addrForm > .registerStep2 {
+.addrForm > .registerInput {
   width: 55% !important;
 }
 

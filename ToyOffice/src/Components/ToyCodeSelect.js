@@ -7,6 +7,7 @@ export default class ToyCodeSelect extends PureComponent {
     const selectStyle = {
       width: this.props.width,
       height : this.props.height,
+      display: this.props.display
     }
     return (
       <div className="top_aligned" style={selectStyle}>
