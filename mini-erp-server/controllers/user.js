@@ -159,6 +159,8 @@ const signup = async (ctx, next) => {
     let { userType } = ctx.request.body;
     let errObj = [];
     let customerType = "A";
+
+    //validation
     if(!email){
       errObj.push({ type: "emailErr", msg: "이메일을 입력하세요." })
     }
@@ -196,6 +198,8 @@ const signup = async (ctx, next) => {
       ctx.body = errObj;
       return;
     }
+
+
     let user = await User.findOne({ email: email });
     let codeRes = await Code.findOne({ dbcollection: 'User' });
 
@@ -279,6 +283,51 @@ const signup = async (ctx, next) => {
   // TODO: async await에서 Promise reject의 경우 처리 필요
 };
 
+const renewalExistingUser = async (ctx) => {
+  let { email } = ctx.params;
+
+  let user = await User.findOne({ email });
+  if(!user) {
+    ctx.body = { type: "available", msg: '사용 가능한 이메일입니다.' }
+    return;
+  }
+
+  const result = await createTempUser(user);
+  if(result.existingPersistentUser) {
+    ctx.status = 401;
+    ctx.body = { type: "existErr", msg: '이미 가입된 이메일입니다.' }
+    return;
+  }
+
+}
+const renewalSignup = async (ctx, next) => {
+  const { email, password, passwordConfirm, zipNo, roadAddr, detailAddr, customerType } = ctx.request.body;
+  let errObj = [];
+  let essential = [
+    { name: "email", msg: "이메일", value: email },
+    { name: "password", msg: "비밀번호", value: password },
+    { name: "passwordConfirm", msg: "비밀번호 확인", value: passwordConfirm },
+    { name: "roadAddr", msg: "주소", value: roadAddr },
+    { name: "detailAddr", msg: "상세 주소", value: detailAddr }
+  ]
+
+
+  // console.log(ctx.request.body);
+
+  essential.map( e => {
+    let valid = e.value ? e.value.trim() : e.value;
+    if(!valid) {
+      errObj.push({ type: `${e.name}Err`, msg: `${e.msg}을(를) 입력해주세요.` })
+    }
+  })
+
+  if(errObj.length > 0) {
+    ctx.status = 422;
+    ctx.body = errObj;
+    return;
+  }
+
+}
 
 const verifiedCode = async ctx => {
   try {
@@ -714,6 +763,8 @@ module.exports = {
   signin,
   signup,
   renewalSignin,
+  renewalExistingUser,
+  renewalSignup,
   verifiedCode,
   confirmSignUp,
   allUsers,

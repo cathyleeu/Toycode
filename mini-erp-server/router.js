@@ -15,6 +15,8 @@ const ReturnGoods = require('./controllers/return');
 // router.post('/signin', requireSignin, Users.signin)
 router.post('/signin', Users.signin)
 router.post('/signup', Users.signup);
+router.post('/renewalSignup', Users.renewalSignup);
+router.get('/renewalSignup/:email', Users.renewalExistingUser);
 router.get('/signup/:url', Users.confirmSignUp)
 router.post('/verification/:code', Users.verifiedCode)
 
