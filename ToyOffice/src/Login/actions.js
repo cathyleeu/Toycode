@@ -11,6 +11,18 @@ export const GET_USER_INFO = 'GET_USER_INFO'
 export const SEARCH_ADDRESS = 'SEARCH_ADDRESS'
 export const COMPLETE_ADDRESS_FETCH = 'COMPLETE_ADDRESS_FETCH'
 
+export const ACCURATE_EMAIL = 'ACCURATE_EMAIL'
+export const AVAILABLE_EMAIL = 'AVAILABLE_EMAIL'
+export const UNAVAILABLE_EMAIL = 'UNAVAILABLE_EMAIL'
+
+export const ERR_EMAIL = 'ERR_EMAIL'
+export const ERR_PASSWORD = 'ERR_PASSWORD'
+export const ERR_PASSWORD_CONFIRM = 'ERR_PASSWORD_CONFIRM'
+export const ERR_PASSWORD_MISMATCH = 'ERR_PASSWORD_MISMATCH'
+export const ERR_ROAD_ADDR = 'ERR_ROAD_ADDR'
+export const ERR_DETAIL_ADDR = 'ERR_DETAIL_ADDR'
+
+export const ERR_EMPTY = 'ERR_EMPTY'
 
 // 주소 api
 const currentPage = 1;
@@ -23,7 +35,7 @@ export const searchAddress = (location) => (dispatch) => {
   axios.get(`${searchUrl}?currentPage=${currentPage}&countPerPage=${countPerPage}&keyword=${encodeURIComponent(location)}&confmKey=${confmKey}&resultType=json`)
   .then((address) => {
     let length = address.data.results.juso.length;
-    
+
     if( length > 10) {
       alert("주소를 자세히 입력하세요.")
     } else {
@@ -36,8 +48,7 @@ export const searchAddress = (location) => (dispatch) => {
   })
 }
 
-
-export const tempoLogin = (userData) => (dispatch) => {
+export const postLogin = (userData) => (dispatch) => {
   axios.post(`${ROOT_URL}/signin`, userData)
     .then(response => {
       // 요청이 좋다면?
@@ -53,6 +64,51 @@ export const tempoLogin = (userData) => (dispatch) => {
       dispatch({type: UNAUTH_USER, err: err.response.data.msg})
     })
 }
+
+export const existingEmail = (email) => (dispatch) => {
+  //TODO: email err에 관련된 것
+  let emailExp = /^[\w.+]+@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  if(!emailExp.test(email)) {
+    dispatch({ type: ACCURATE_EMAIL, err: "정확한 이메일을 입력하세요." })
+    // alert("정확한 이메일을 입력하세요.")
+    return false
+  }
+  axios.get(`${ROOT_URL}/renewalSignup/${email}`)
+      .then(res => {
+        dispatch({ type: AVAILABLE_EMAIL, err: "" })
+        alert("사용 가능한 이메일 입니다.")
+        console.log(res.data.msg);
+      })
+      .catch(res => {
+        dispatch({ type: UNAVAILABLE_EMAIL, err: res.response.data.msg })
+      })
+}
+
+export const postRegister = (userData) => (dispatch) => {
+  axios.post(`${ROOT_URL}/renewalSignup`, userData)
+    .then(res => {
+      console.log(res)
+      // alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
+      // dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
+      // browserHistory.push('login')
+    })
+    .catch(res => {
+      let errTypes = {
+        emailErr: ERR_EMAIL,
+        passwordErr: ERR_PASSWORD,
+        passwordConfirmErr: ERR_PASSWORD_CONFIRM,
+        passwordMismatch: ERR_PASSWORD_MISMATCH,
+        roadAddrErr: ERR_ROAD_ADDR,
+        detailAddrErr: ERR_DETAIL_ADDR
+      }
+      res.response.data.map(err => dispatch({ type: errTypes[err.type] ,err: err.msg, name: err.type}))
+    })
+}
+
+export const emptyErr = (name) => (dispatch) => {
+  dispatch({ type: ERR_EMPTY, name })
+}
+
 //
 // export async function asyncVerifiedCode(userType, code) {
 //   // let message, result, customerType;

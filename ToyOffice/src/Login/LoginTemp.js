@@ -2,10 +2,7 @@ import React from 'react'
 import { TextField } from 'material-ui';
 import { PrimaryButton, ToyCodeSelect } from '../Components'
 
-
 const logo = require('../../public/logo.png');
-
-
 
 const LoginButton = (props) => {
   let filterButton = {
@@ -76,7 +73,6 @@ const LoginInput = (props) => {
   }
   return (
       <TextField
-        // className={props.customStyle}
         className={"registerInput"}
         hintText={props.text}
         floatingLabelText={props.text}
@@ -84,6 +80,7 @@ const LoginInput = (props) => {
         name={props.name}
         value={props.value}
         onChange={props.onChange}
+        onBlur={props.onBlur}
         errorText={props.errText}
         disabled={props.disabled}
       />
@@ -130,16 +127,14 @@ const LoginTemp = (props) => {
         handleChange={onChange}
         options={radioName}
       />
-      <LoginInput text="이메일" name="email" value={props["email"]} errText={props["emailErr"]} {...inputProps}/>
-      <LoginInput text="비밀번호" name="password" value={props["password"]} errText={props["passwordErr"]} {...inputProps}/>
-      <LoginInput text="비밀번호 확인" name="passwordConfirm" value={props["passwordConfirm"]} errText={props["passwordConfirmErr"]} {...inputProps}/>
+      <LoginInput text="이메일" name="email" type={"email"} value={props["email"]} errText={props.err["emailErr"]} errorStyle={props.errorStyle} onBlur={props.onBlur} {...inputProps}/>
+      <LoginInput text="비밀번호" name="password" type={"password"} value={props["password"]} errText={props.err["passwordErr"]} {...inputProps}/>
+      <LoginInput text="비밀번호 확인" name="passwordConfirm" type={"password"} value={props["passwordConfirm"]} errText={props.err["passwordConfirmErr"]} {...inputProps}/>
       <LoginInput text="지사코드 입력" name="parentId" value={props["parentId"]} {...inputProps}/>
       <LoginInput text="코드입력" name="code" value={props["code"]} {...inputProps}/>
       <LoginInput text="우편주소" name="zipNo" value={props["zipNo"]} {...inputProps} onClick={props.modalControl}/>
-      <LoginInput text="주소" name="roadAddr" value={props["roadAddr"]} errText={props["roadAddrErr"]} disabled={true} {...inputProps}/>
-      <LoginInput text="상세주소" name="detailAddr" value={props["detailAddr"]} errText={props["detailAddrErr"]} {...inputProps}/>
-
-      {/* {props.children} */}
+      <LoginInput text="주소" name="roadAddr" value={props["roadAddr"]} errText={props.err["roadAddrErr"]} disabled={true} {...inputProps}/>
+      <LoginInput text="상세주소" name="detailAddr" value={props["detailAddr"]} errText={props.err["detailAddrErr"]} {...inputProps}/>
       <LoginButton type="button" name={"enter"} {...buttonProps} content="전송" />
       <p style={{display: textDisplay}}>회원이 아니신가요?</p>
       <LoginButton type="button" name={"next"} {...buttonProps} content="회원가입" />
@@ -148,7 +143,6 @@ const LoginTemp = (props) => {
     </div>
   )
 }
-
 
 
 export default LoginTemp

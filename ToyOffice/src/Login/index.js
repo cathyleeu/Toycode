@@ -27,7 +27,7 @@ class Login extends Component {
   constructor(props){
     super(props)
     this.state = {
-      step: 1,
+      step: 3,
 
       email: '',
       password: '',
@@ -35,24 +35,17 @@ class Login extends Component {
       zipNo: "",
       roadAddr:"",
       detailAddr:"",
-      emailErr: '',
-      passwordErr: '',
-      passwordConfirmErr: '',
-      roadAddrErr: "",
-      detailAddrErr:"",
+
       code: '',
       parentId: "",
-
-      err: props.err || '', //로그인 잘못할 경우 오는 err
-
       customerType: "",
       selectedOption: "branch",
+
+      err: props.err || {}, //로그인 잘못할 경우 오는 err
 
       location: "",
       modalStatus: false,
       height: window.innerHeight,
-
-
 
     }
 
@@ -61,6 +54,7 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
   async verifiedCode(userType, code) {
     const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
@@ -89,16 +83,12 @@ class Login extends Component {
   componentWillReceiveProps(newProps){
     this.setState({err: newProps.err})
   }
-  handleLogin = e => {
-    e.preventDefault()
-    this.props.tempoLogin(this.state)
-  }
   handleChange(e){
     e.preventDefault()
     this.setState({
-      [e.target.name]: e.target.value,
-      [`${e.target.name}Err`]: ""
+      [e.target.name]: e.target.value
     })
+    this.props.emptyErr(e.target.name)
   }
   handleVerifiedCode(e){
     let { selectedOption, code } = this.state;
@@ -115,58 +105,20 @@ class Login extends Component {
       location: '',
       modalStatus: false
 		})
+    this.props.emptyErr('roadAddr')
     this.props.searchAddress('')
   }
-  validate = () => {
-    let isError = false;
-    let { email, password, passwordConfirm, detailAddr, roadAddr, customerType } = this.state;
-    const errors = {
-      emailErr: '',
-      passwordErr: '',
-      passwordConfirmErr: '',
-      roadAddrErr: "",
-      detailAddrErr:""
-    };
-
-    if (email.indexOf("@") === -1) {
-      isError = true;
-      errors.emailErr = "정확한 이메일을 기입하세요.";
-    }
-    if (password === "") {
-      isError = true;
-      errors.passwordErr = "비밀번호를 기입하세요.";
-    }
-    if (passwordConfirm === "") {
-      isError = true;
-      errors.passwordConfirmErr = "비밀번호를 기입하세요.";
-    }
-    if(password !== passwordConfirm) {
-      isError = true;
-      errors.passwordConfirmErr = "비밀번호가 일치하지 않습니다.";
-    }
-    if(customerType === "Z") {
-      if (roadAddr === "") {
-        isError = true;
-        errors.roadAddrErr = "주소를 기입하세요.";
-      }
-      if (detailAddr === "") {
-        isError = true;
-        errors.detailAddrErr = "상세주소를 기입하세요.";
-      }
-    }
-    this.setState({
-      ...errors
-    });
-    console.log(errors);
-    return isError;
+  handleBlur(e) {
+    this.props.existingEmail(this.state.email)
   }
-  handleSubmit() {
-    let validateErr = this.validate()
-
-    if(!validateErr) {
-      alert("success")
-
+  handleSubmit(e) {
+    //TODO: 서버로 날리기~~~ step에 있는 버튼에 따라 로그인, 회원가입 Submit 구분해주기
+    let step = e.target.dataset.step
+    let submitType = {
+      1 : () => this.props.postLogin(this.state),
+      3 : () => this.props.postRegister(this.state)
     }
+    submitType[step]()
   }
   handleClick(e){
     e.preventDefault()
@@ -174,20 +126,18 @@ class Login extends Component {
       window.open("https://www.toycode.co.kr:125/")
     }
     if(e.target.name === "next") {
-
       this.setState({ step : this.state.step+1 })
     }
     if(e.target.name === "back") {
       this.setState({ step : this.state.step-1 })
     }
     if(e.target.name === "enter"){
-      //TODO: 여기서 전송하기 버튼 다 구분해줘야함
       let filterStep = {
-        1 : () => this.handleSubmit(),
+        1 : (e) => this.handleSubmit(e),
         2 : () => this.handleVerifiedCode(),
-        3 : () => this.handleSubmit()
+        3 : (e) => this.handleSubmit(e)
       }
-      filterStep[e.target.dataset.step]()
+      filterStep[e.target.dataset.step](e)
     }
   }
   render(){
@@ -202,11 +152,9 @@ class Login extends Component {
           <form onSubmit={this.handleSearchAddr} className="search-bar">
             <input className="search-input" type="search" value={this.state.location} onChange={this.handleChange} name="location" placeholder="ex) 강남구 강남대로 408" />
             <PrimaryButton
-              // buttonStyle="search-btn"
               buttonType="button"
               purpose="create"
               onClick={this.handleSearchAddr}
-              // handleButtonEvent={this.handleSearchAddr}
               content="검색"
             />
           </form>
@@ -248,6 +196,7 @@ class Login extends Component {
             subHeader={'오피스 사이트 회원가입'}
             step={this.state.step}
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
             onClick={this.handleClick}
             {...restState}
             modalControl={() => this.setState({ modalStatus: true })}
