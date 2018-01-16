@@ -301,19 +301,18 @@ const renewalExistingUser = async (ctx) => {
 
 }
 const renewalSignup = async (ctx, next) => {
-  const { email, password, passwordConfirm, zipNo, roadAddr, detailAddr, customerType } = ctx.request.body;
+  const { name, email, password, passwordConfirm, zipNo, roadAddr, detailAddr, customerType, userType, parentId, code } = ctx.request.body;
   let errObj = [];
   let essential = [
     { name: "email", msg: "이메일", value: email },
     { name: "password", msg: "비밀번호", value: password },
-    { name: "passwordConfirm", msg: "비밀번호 확인", value: passwordConfirm },
-    { name: "roadAddr", msg: "주소", value: roadAddr },
-    { name: "detailAddr", msg: "상세 주소", value: detailAddr }
+    { name: "passwordConfirm", msg: "비밀번호 확인", value: passwordConfirm }
   ]
+  if(!customerType === "T") {
+    essential.push({ name: "roadAddr", msg: "주소", value: roadAddr })
+    essential.push({ name: "detailAddr", msg: "상세 주소", value: detailAddr })
 
-
-  // console.log(ctx.request.body);
-
+  }
   essential.map( e => {
     let valid = e.value ? e.value.trim() : e.value;
     if(!valid) {
@@ -321,11 +320,94 @@ const renewalSignup = async (ctx, next) => {
     }
   })
 
+  if(passwordConfirm !== password) {
+    errObj.push({ type: `passwordConfirmErr`, msg: `비밀번호가 일치하지 않습니다.` })
+  }
+
   if(errObj.length > 0) {
     ctx.status = 422;
     ctx.body = errObj;
     return;
   }
+
+  let user = await User.findOne({ email: email });
+  let codeRes = await Code.findOne({ dbcollection: 'User' });
+
+  let count = codeRes ? codeRes.count : 1,
+      zero = "0".repeat(5),
+      resultId = customerType + (zero+count).slice(-zero.length);
+
+  let commonValue = {
+    userType, email, password,
+    code: resultId,
+    customerType,
+  }
+
+  let exceptTeacher = {
+    branch: {
+      name,
+      address:{ zipNo, roadAddr, detailAddr }
+    },
+    account:{ A_manager: '', A_email: '', A_phone: '' },
+    education:{ E_manager: '', E_email: '', E_phone: '' }
+  }
+
+  if((customerType === 'B') || (customerType === 'D') || (customerType === 'E')){
+    user = new User({
+      ...commonValue,
+      kinders:[{
+        parentId: resultId,
+        name, zipNo, roadAddr, detailAddr,
+        kinderClasses:[]
+      }],
+      ...exceptTeacher
+    });
+  } else if(customerType === 'T'){
+    let academy = await User.findOne({ 'kinders.parentId': parentId, 'kinders.url' : code }).select('kinders.$')
+    let { name, kinderClasses } = academy.kinders[0]
+
+    user = new User({
+      ...commonValue,
+      kinders:[{
+        parentId,
+        name,
+        kinderClasses: kinderClasses
+      }]
+    });
+
+  } else {
+    user = new User({
+      ...commonValue,
+      ...exceptTeacher
+    });
+  }
+
+  const result = await createTempUser(user);
+  if(result.newTempUser) {
+      const url = result.newTempUser[nev.options.URLFieldName];
+      const info = await sendVerificationEmail(email, url);
+
+      codeRes = codeRes || new Code({
+        dbcollection: 'User',
+        count: count
+      });
+      codeRes.count++;
+      const err = await codeRes.save();
+
+      if(err) {
+        await next(err);
+      }
+
+      ctx.body = {
+        msg: '가입이 완료 되었습니다.\n기입하신 이메일에 인증 메일을 확인하세요.\n인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.',
+        token: tokenForUser(user),
+        info: info
+      };
+  } else {
+      errObj.push({ type: "sendErr", msg: '이미 이메일 인증메일을 보냈습니다. 확인해주세요.' })
+      ctx.body = errObj;
+  }
+
 
 }
 
