@@ -100,10 +100,13 @@ export default class FilteredList extends PureComponent {
   }
   render(){
     let { name, kinderClasses } = this.props.filtered;
+
+
     return(
       <div>
         <DirectionContainer direction="row">
           <ConditionalHeader
+            customerType={this.props.customerType}
             headerStyle="Kinder-Cont-top"
             customMinWidth="250px"
             headerTitle={name}

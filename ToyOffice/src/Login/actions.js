@@ -8,10 +8,14 @@ export const AUTH_USER = 'AUTH_USER'
 export const UNAUTH_USER = 'UNAUTH_USER'
 export const GET_USER_INFO = 'GET_USER_INFO'
 
+export const REGISTERED_STATUS = 'REGISTERED_STATUS'
+
 export const SEARCH_ADDRESS = 'SEARCH_ADDRESS'
 export const COMPLETE_ADDRESS_FETCH = 'COMPLETE_ADDRESS_FETCH'
 
 export const ACCURATE_EMAIL = 'ACCURATE_EMAIL'
+export const ACCURATE_PASSWORD = 'ACCURATE_PASSWORD'
+
 export const AVAILABLE_EMAIL = 'AVAILABLE_EMAIL'
 export const UNAVAILABLE_EMAIL = 'UNAVAILABLE_EMAIL'
 
@@ -23,6 +27,8 @@ export const ERR_ROAD_ADDR = 'ERR_ROAD_ADDR'
 export const ERR_DETAIL_ADDR = 'ERR_DETAIL_ADDR'
 
 export const ERR_EMPTY = 'ERR_EMPTY'
+
+export const INITIAL_COMPLETE = 'INITIAL_COMPLETE'
 
 // 주소 api
 const currentPage = 1;
@@ -56,41 +62,63 @@ export const postLogin = (userData) => (dispatch) => {
         localStorage.setItem('token', response.data.token)
         localStorage.setItem('email', userData.email)
         //유저상태 업데이트
-        dispatch({type: AUTH_USER})
+        dispatch(tempoUserState())
         // feature페이지 re다이렉트
         // browserHistory.push('feature')
     })
     .catch(err => {
+      console.log(err.response.data.msg);
+      alert(err.response.data.msg)
       dispatch({type: UNAUTH_USER, err: err.response.data.msg})
     })
 }
 
-export const existingEmail = (email) => (dispatch) => {
+export const validatedValue = (value, name) => (dispatch) => {
   //TODO: email err에 관련된 것
-  let emailExp = /^[\w.+]+@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-  if(!emailExp.test(email)) {
-    dispatch({ type: ACCURATE_EMAIL, err: "정확한 이메일을 입력하세요." })
+
+  let validation = {
+    email : {
+      exp : /^[\w.+]+@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+      type: ACCURATE_EMAIL,
+      err: "정확한 이메일을 입력하세요."
+    },
+    password : {
+      exp : /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      type: ACCURATE_PASSWORD,
+      err: "최소 8 자, 문자와 숫자 입력하세요"
+    }
+  }
+  // let emailExp = /^[\w.+]+@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  let { exp, type, err } = validation[name]
+  if(!exp.test(value)) {
+    dispatch({ type, err, name })
     // alert("정확한 이메일을 입력하세요.")
     return false
   }
-  axios.get(`${ROOT_URL}/renewalSignup/${email}`)
-      .then(res => {
-        dispatch({ type: AVAILABLE_EMAIL, err: "" })
-        alert("사용 가능한 이메일 입니다.")
-        console.log(res.data.msg);
-      })
-      .catch(res => {
-        dispatch({ type: UNAVAILABLE_EMAIL, err: res.response.data.msg })
-      })
+  if(name === "email") {
+    axios.get(`${ROOT_URL}/renewalSignup/${value}`)
+        .then(res => {
+          dispatch({ type: AVAILABLE_EMAIL, err: "" })
+          alert("사용 가능한 이메일 입니다.")
+          console.log(res.data.msg);
+        })
+        .catch(res => {
+          dispatch({ type: UNAVAILABLE_EMAIL, err: res.response.data.msg })
+        })
+  }
+
 }
 
+
+export const initialComplete = () => (dispatch) => {
+  dispatch({ type: INITIAL_COMPLETE, complete: false})
+}
 export const postRegister = (userData) => (dispatch) => {
   axios.post(`${ROOT_URL}/renewalSignup`, userData)
     .then(res => {
-      console.log(res)
-      // alert('인증메일을 보냈습니다. 인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.')
-      // dispatch({ type: types.REGISTERED_STATUS, status: false, error:'' })
-      // browserHistory.push('login')
+      // console.log(res.data.msg)
+      alert(`${res.data.msg}`)
+      dispatch({ type: REGISTERED_STATUS, status: false, err:'', complete: true})
     })
     .catch(res => {
       let errTypes = {
@@ -106,54 +134,36 @@ export const postRegister = (userData) => (dispatch) => {
 }
 
 export const emptyErr = (name) => (dispatch) => {
-  dispatch({ type: ERR_EMPTY, name })
+  dispatch({ type: ERR_EMPTY, name, err: "" })
 }
 
-//
-// export async function asyncVerifiedCode(userType, code) {
-//   // let message, result, customerType;
-//   code = code.trim().toLocaleLowerCase()
-//
-//   const a = await axios.post(`${ROOT_URL}/verification/${code}`, { userType } )
-//
-//   debugger
-// }
-//
-// export const fetchOffersSuccess = (res) => {
-//   console.log(res);
-// }
-//
-// export const verifiedCode = (userType, code) => (dispatch) => {
-//   // console.log(userType, code);
-//   let message, result, customerType;
-//
-//   code = code.trim().toLocaleLowerCase()
-//   let resultMessage = axios.post(`${ROOT_URL}/verification/${code}`, { userType } )
-//
-//   return resultMessage.then(
-//     response => dispatch(fetchOffersSuccess(response))
-//   )
-// }
 
 
-
-export const getUserInfo = (email) => (dispatch) => {
-  axios.get(`${ROOT_URL}/user/${email}`)
-  .then( res => {
-    console.log(res.data)
-    dispatch({
-      type: GET_USER_INFO,
-      user: res.data,
-      kinders: res.data.kinders
-    })
-  })
-}
+// export const getUserInfo = (email) => (dispatch) => {
+//   axios.get(`${ROOT_URL}/user/${email}`)
+//   .then( res => {
+//     console.log(res.data)
+//     debugger
+//     dispatch({
+//       type: GET_USER_INFO,
+//       user: res.data,
+//       kinders: res.data.kinders
+//     })
+//   })
+// }
 
 export const tempoUserState = () => (dispatch) => {
   let token = localStorage.getItem('token'), email = localStorage.getItem('email');
   if(token){
-    dispatch({type: AUTH_USER})
-    dispatch(getUserInfo(email))
+    axios.get(`${ROOT_URL}/user/${email}`)
+      .then( res => {
+        dispatch({
+          type: AUTH_USER,
+          user: res.data,
+          kinders: res.data.kinders
+        })
+      })
+    // dispatch(getUserInfo(email))
   } else {
     dispatch({type: UNAUTH_USER})
   }
@@ -167,24 +177,3 @@ export const tempoLogOut = (history) => (dispatch) => {
     history.replace('/')
   }
 }
-
-
-
-
-
-
-// export const signinUser = (userData) => (dispatch) => {
-//   // 서버에 이메일과 비밀번호 전송
-//   axios.post(`${ROOT_URL}/signin`, userData)
-//     .then(response => {
-//       // 요청이 좋다면?
-//         // JWT token 저장
-//         localStorage.setItem('token', response.data.token)
-//         localStorage.setItem('email', userData.email)
-//         //유저상태 업데이트
-//         dispatch({type: AUTH_USER})
-//         // feature페이지 re다이렉트
-//         // browserHistory.push('feature')
-//     })
-//     .catch((res) => dispatch({type: UNAUTH_USER}))
-// }

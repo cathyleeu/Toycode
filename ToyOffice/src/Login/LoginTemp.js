@@ -37,8 +37,8 @@ const LoginInput = (props) => {
      "teacher" : ["code", "parentId"]
     },
     3: {
-     "branch" : ["email", "password", "passwordConfirm", "zipNo", "roadAddr", "detailAddr"],
-     "academy" : ["email", "password", "passwordConfirm", "zipNo", "roadAddr", "detailAddr"],
+     "branch" : ["name", "email", "password", "passwordConfirm", "zipNo", "roadAddr", "detailAddr"],
+     "academy" : ["name", "email", "password", "passwordConfirm", "zipNo", "roadAddr", "detailAddr"],
      "teacher" : ["email", "password", "passwordConfirm"]
     }
   }
@@ -127,8 +127,9 @@ const LoginTemp = (props) => {
         handleChange={onChange}
         options={radioName}
       />
+      <LoginInput text="상호명" name="name" value={props["name"]} errText={props.err["nameErr"]} {...inputProps}/>
       <LoginInput text="이메일" name="email" type={"email"} value={props["email"]} errText={props.err["emailErr"]} errorStyle={props.errorStyle} onBlur={props.onBlur} {...inputProps}/>
-      <LoginInput text="비밀번호" name="password" type={"password"} value={props["password"]} errText={props.err["passwordErr"]} {...inputProps}/>
+      <LoginInput text="비밀번호" name="password" type={"password"} value={props["password"]} errText={props.err["passwordErr"]} onBlur={props.onBlur} {...inputProps}/>
       <LoginInput text="비밀번호 확인" name="passwordConfirm" type={"password"} value={props["passwordConfirm"]} errText={props.err["passwordConfirmErr"]} {...inputProps}/>
       <LoginInput text="지사코드 입력" name="parentId" value={props["parentId"]} {...inputProps}/>
       <LoginInput text="코드입력" name="code" value={props["code"]} {...inputProps}/>

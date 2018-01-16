@@ -49,7 +49,8 @@ class SettingAcademyClassContainer extends PureComponent {
     })
   }
   render(){
-    let { parentId, code } = this.state.selectedAcademy
+    let { parentId, code } = this.state.selectedAcademy;
+    let { customerType } = this.props.location.state;
     if(!this.state.loaded){
       return false
     }
@@ -78,7 +79,7 @@ class SettingAcademyClassContainer extends PureComponent {
           match={this.props.match}
           history={this.props.history}
           handleModal={this.handleModal}
-
+          customerType={customerType}
           modalHandleName="editAcademyClass"
           filtered={this.state.selectedAcademy}>
           <ToyCodeSelect

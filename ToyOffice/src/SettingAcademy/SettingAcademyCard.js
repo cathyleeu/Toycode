@@ -16,7 +16,7 @@ class SettingAcademyCard extends PureComponent{
     this.handleClick = this.handleClick.bind(this)
   }
   componentWillMount(){
-
+    // console.log(this.props);
   }
   handleClick(e) {
     let { result } = e.currentTarget.dataset;
@@ -39,6 +39,7 @@ class SettingAcademyCard extends PureComponent{
       en : "English",
       ko : "한국어",
     }
+
     return(
       <ToyCodePaper>
         <DirectionContainer direction="column">
@@ -52,18 +53,30 @@ class SettingAcademyCard extends PureComponent{
             headerSecondTitle={phone}
             headerType="normal"
           >
-            <PrimaryButton
-              dataResult="edit"
-              content="수정"
-              onClick={this.handleClick}
-              purpose={'edit'}
-            />
-            <PrimaryButton
-              dataResult="delete"
-              content="삭제"
-              onClick={this.handleClick}
-              purpose={"delete"}
-            />
+            {
+              this.props.customerType === "T"
+                ? ""
+                : (
+                  <PrimaryButton
+                    dataResult="edit"
+                    content="수정"
+                    onClick={this.handleClick}
+                    purpose={'edit'}
+                  />
+                )
+            }
+            {
+              this.props.customerType === "T"
+                ? ""
+                : (
+                  <PrimaryButton
+                    dataResult="delete"
+                    content="삭제"
+                    onClick={this.handleClick}
+                    purpose={"delete"}
+                  />
+                )
+            }
             <PrimaryButton
               dataResult="login"
               content="원 로그인 아이디"

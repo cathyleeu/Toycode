@@ -68,9 +68,11 @@ class SettingAcademyContainer extends PureComponent {
     })
   }
   renderChild(academy, i){
+    let { customerType } = this.props.location.state;
     return (
       <SettingAcademyCard
         key={i} {...academy}
+        customerType={customerType}
         handleModalStatus={this.handleModalStatus}
         completedDeleteAcademy={this.props.completedDeleteAcademy}
         handleSettingAcademy={this.handleSettingAcademy}/>
@@ -80,6 +82,8 @@ class SettingAcademyContainer extends PureComponent {
     if(!this.state.loaded){
       return <div>로딩중</div>
     }
+    let { customerType } = this.props.location.state;
+    // console.log(this.props.location.state.customerType);
     let nodes = this.state.academies.map(this.renderChild) || []
     return(
       <BodyContainer>
@@ -87,6 +91,7 @@ class SettingAcademyContainer extends PureComponent {
           headerStyle="Kinder-Cont-top"
           name="createAcademy"
           headerTitle="소속 원 리스트"
+          customerType={customerType}
           btnFront={
             [
               { purpose: "create", name: "원 등록하기" }

@@ -14,8 +14,20 @@ import PrimaryButton from './PrimaryButton'
       btnFront = [ ? , ? ]
 */
 
+const Condition = (PassedComponent) => ({ children, ...props }) => {
+  if(props.customerType === "T") {
+    props["headerType"] = "normal"
+  }
+  return (
+    <PassedComponent {...props}>
+      {children}
+    </PassedComponent>
+  )
+}
 
-export default class ConditionalHeader extends PureComponent {
+
+// export default
+class Header extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
@@ -71,3 +83,6 @@ export default class ConditionalHeader extends PureComponent {
     )
   }
 }
+
+const ConditionalHeader = Condition(Header)
+export default ConditionalHeader

@@ -32,14 +32,16 @@ class App extends Component {
     // 각 페이지에 들어갈때 필요한 데이터 각 불러오도록 해야 할 듯
     this.setState({drawerOpen: !this.state.drawerOpen, header: name})
     // console.log("handleLink",`${match.url}/${path}`);
-    this.props.history.replace(`${match.url}/${path}`)
+    this.props.history.replace(`${match.url}/${path}`, {customerType: this.props.user.customerType})
   }
   handleLogOut = (history) => {
     this.setState({drawerOpen: !this.state.drawerOpen})
     this.props.tempoLogOut(history)
   }
   render() {
-    const { match } = this.props;
+    const { match, user } = this.props;
+
+
     // {path:'orderlist', component: OrderList, name : '주문상황'},
     // {path:'shop', component: Shop, name: '주문하기'},
     // {path:'details', component: OrderDetail, name : '주문내역'},
@@ -49,13 +51,25 @@ class App extends Component {
       { path:'settingStudent', component: SettingStudent, name : '학생 설정하기' },
       { path:'studentDashboard', component: StudentDashboard, name : '학생 리포트' },
     ]
-    let menu = [
-      {path:'account', component: Account, name : '마이페이지'},
+
+    let commonPage = [
       {path:'settingAcademy', component: SettingAcademy, name : '소속 학원 설정하기'},
-      {path:'settingClass', component: SettingAcademyClass, name : '반 설정하기'},
-      {path:'customlist', component: CustomList, name : '지사상황'}
+      {path:'settingClass', component: SettingAcademyClass, name : '반 설정하기'}
     ]
-    nav = nav.concat(menu)
+
+    // userType 에 따라서 drawer list 변경
+    let menu = {
+      "A" : [{path:'account', component: Account, name : '마이페이지'}].concat(commonPage),
+      "B" : commonPage,
+      "C" : commonPage,
+      "D" : commonPage,
+      "E" : commonPage,
+      "T" : commonPage,
+      "Z" : [{path:'customList', component: CustomList, name : '회원관리'}]
+    }
+
+    nav = nav.concat(menu[user.customerType])
+
     return (
       <div>
         <AppBar
@@ -75,7 +89,7 @@ class App extends Component {
           <Route exact path={match.url} component={Feature}/>
         </Switch>
         <Drawer open={this.state.drawerOpen}>
-          {menu.map(
+          {menu[user.customerType].map(
             (n, i) => (
               <MenuItem
                 key={i}
@@ -92,4 +106,8 @@ class App extends Component {
   }
 }
 
-export default connect(null, actions)(App);
+const mapStateToProps = (state, second) => ({
+  user: state.login.user
+})
+
+export default connect(mapStateToProps, actions)(App);

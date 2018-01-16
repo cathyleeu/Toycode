@@ -27,8 +27,9 @@ class Login extends Component {
   constructor(props){
     super(props)
     this.state = {
-      step: 3,
+      step: 1,
 
+      name: '',
       email: '',
       password: '',
       passwordConfirm: '',
@@ -81,7 +82,30 @@ class Login extends Component {
 
   }
   componentWillReceiveProps(newProps){
-    this.setState({err: newProps.err})
+    if(newProps.complete !== this.props.complete) {
+      this.setState({
+        step: 1,
+
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        zipNo: "",
+        roadAddr:"",
+        detailAddr:"",
+
+        code: '',
+        parentId: "",
+        customerType: "",
+      })
+      this.props.initialComplete()
+    }
+    if(newProps.err !== this.props.err) {
+      this.setState({
+        err: newProps.err
+      })
+    }
+
   }
   handleChange(e){
     e.preventDefault()
@@ -109,7 +133,9 @@ class Login extends Component {
     this.props.searchAddress('')
   }
   handleBlur(e) {
-    this.props.existingEmail(this.state.email)
+
+    this.props.validatedValue(e.target.value, e.target.name)
+
   }
   handleSubmit(e) {
     //TODO: 서버로 날리기~~~ step에 있는 버튼에 따라 로그인, 회원가입 Submit 구분해주기
@@ -213,6 +239,7 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
   err: state.login.err,
+  complete: state.login.complete,
   juso: state.login.juso
 })
 
