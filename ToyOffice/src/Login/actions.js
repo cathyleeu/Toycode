@@ -19,6 +19,7 @@ export const ACCURATE_PASSWORD = 'ACCURATE_PASSWORD'
 export const AVAILABLE_EMAIL = 'AVAILABLE_EMAIL'
 export const UNAVAILABLE_EMAIL = 'UNAVAILABLE_EMAIL'
 
+export const ERR_NAME = 'ERR_NAME'
 export const ERR_EMAIL = 'ERR_EMAIL'
 export const ERR_PASSWORD = 'ERR_PASSWORD'
 export const ERR_PASSWORD_CONFIRM = 'ERR_PASSWORD_CONFIRM'
@@ -54,6 +55,34 @@ export const searchAddress = (location) => (dispatch) => {
   })
 }
 
+
+export const getUserInfo = () => (dispatch) => {
+  let email = localStorage.getItem('email');
+  axios.get(`${ROOT_URL}/user/${email}`)
+      .then( res => {
+        dispatch({
+          type: GET_USER_INFO,
+          user: res.data,
+          kinders: res.data.kinders
+        })
+      })
+  if(email) {
+    return true
+  }
+}
+
+export const tempoUserState = () => (dispatch) => {
+  let token = localStorage.getItem('token');
+  if(token){
+
+    dispatch({ type: AUTH_USER })
+    dispatch(getUserInfo())
+
+  } else {
+    dispatch({type: UNAUTH_USER})
+  }
+}
+
 export const postLogin = (userData) => (dispatch) => {
   axios.post(`${ROOT_URL}/signin`, userData)
     .then(response => {
@@ -67,7 +96,8 @@ export const postLogin = (userData) => (dispatch) => {
         // browserHistory.push('feature')
     })
     .catch(err => {
-      console.log(err.response.data.msg);
+      console.log(err);
+      // console.log(err.response.data.msg);
       alert(err.response.data.msg)
       dispatch({type: UNAUTH_USER, err: err.response.data.msg})
     })
@@ -122,6 +152,7 @@ export const postRegister = (userData) => (dispatch) => {
     })
     .catch(res => {
       let errTypes = {
+        nameErr: ERR_NAME,
         emailErr: ERR_EMAIL,
         passwordErr: ERR_PASSWORD,
         passwordConfirmErr: ERR_PASSWORD_CONFIRM,
@@ -139,35 +170,8 @@ export const emptyErr = (name) => (dispatch) => {
 
 
 
-// export const getUserInfo = (email) => (dispatch) => {
-//   axios.get(`${ROOT_URL}/user/${email}`)
-//   .then( res => {
-//     console.log(res.data)
-//     debugger
-//     dispatch({
-//       type: GET_USER_INFO,
-//       user: res.data,
-//       kinders: res.data.kinders
-//     })
-//   })
-// }
 
-export const tempoUserState = () => (dispatch) => {
-  let token = localStorage.getItem('token'), email = localStorage.getItem('email');
-  if(token){
-    axios.get(`${ROOT_URL}/user/${email}`)
-      .then( res => {
-        dispatch({
-          type: AUTH_USER,
-          user: res.data,
-          kinders: res.data.kinders
-        })
-      })
-    // dispatch(getUserInfo(email))
-  } else {
-    dispatch({type: UNAUTH_USER})
-  }
-}
+
 
 export const tempoLogOut = (history) => (dispatch) => {
   if(confirm('로그아웃 하시겠습니까?')){

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 // import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux'
 import * as actions from './actions'
-import { ConditionalHeader, BodyContainer, Modal, PrimaryButton } from '../Components'
+import { ConditionalHeader, BodyContainer, Modal, PrimaryButton, DirectionContainer } from '../Components'
 import SettingAcademyCardModal from './SettingAcademyCardModal'
 import SettingAcademyCard from './SettingAcademyCard'
 import './index.css'
@@ -24,6 +24,7 @@ class SettingAcademyContainer extends PureComponent {
     this.handleSettingAcademy = this.handleSettingAcademy.bind(this)
     this.renderChild = this.renderChild.bind(this)
     this.handleModalStatus = this.handleModalStatus.bind(this)
+    this.renderFilterLists = this.renderFilterLists.bind(this)
   }
   componentWillMount(){
     this.props.getAcademyByUser()
@@ -78,12 +79,54 @@ class SettingAcademyContainer extends PureComponent {
         handleSettingAcademy={this.handleSettingAcademy}/>
     )
   }
+  renderFilterLists(academyClasses) {
+    let academyNodes, buttonObj= {};
+
+    if(academyClasses.length > 0 ) {
+      academyNodes = academyClasses.map((cl,i) => (
+          <PrimaryButton
+            onClick={() => {
+              // home/settingStudent/A00016-K8/코넬
+              this.props.history.push(
+                `/home/settingStudent/${cl.academyId}/${cl.className}`,
+                { ...cl }
+              )
+            }}
+            key={i} content={cl.className} purpose={"multi"}
+          />
+      ))
+      buttonObj["purpose"] = 'delete'
+      buttonObj["content"] = 'close'
+      buttonObj["onClick"] = () => this.setState({modalStatus: !this.state.modalStatus})
+    } else {
+      academyNodes = <h2>반 설정에서 반을 등록해주세요.</h2>
+      buttonObj["purpose"] = 'multi'
+      buttonObj["content"] = '반 등록하기'
+      buttonObj["onClick"] = () => {
+        this.setState({modalStatus: !this.state.modalStatus})
+        this.props.history.push(
+          `/home/settingClass`,
+          {customerType: this.props.user.customerType}
+        )
+      }
+    }
+    return (
+      <DirectionContainer direction="column" alignItems="center" justifyContent="center">
+        <div>
+          { academyNodes }
+        </div>
+        <PrimaryButton
+          purpose={buttonObj.purpose}
+          content={buttonObj.content}
+          onClick={buttonObj.onClick} />
+      </DirectionContainer>
+    )
+  }
   render(){
     if(!this.state.loaded){
       return <div>로딩중</div>
     }
     let { customerType } = this.props.location.state;
-    // console.log(this.props.location.state.customerType);
     let nodes = this.state.academies.map(this.renderChild) || []
     return(
       <BodyContainer>
@@ -118,30 +161,7 @@ class SettingAcademyContainer extends PureComponent {
           isModalOpen={this.state.modalStatus}
           modalWidth="600px"
           >
-          <div>
-            {
-              this.state.academyClasses
-                ? this.state.academyClasses.map( (cl,i) => {
-                  return (
-                    <PrimaryButton
-                      onClick={() => {
-                        // home/settingStudent/A00016-K8/코넬
-                        this.props.history.push(
-                          `/home/settingStudent/${cl.academyId}/${cl.className}`,
-                          { ...cl }
-                        )
-                      }}
-                      key={i} content={cl.className} purpose={"multi"}
-                    />
-                  )
-                })
-                : false
-            }
-          </div>
-          <PrimaryButton
-            purpose={'delete'}
-            content={'close'}
-            onClick={() => this.setState({modalStatus: !this.state.modalStatus})} />
+          {this.renderFilterLists(this.state.academyClasses)}
         </Modal>
         {nodes}
       </BodyContainer>

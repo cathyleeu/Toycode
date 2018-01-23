@@ -55,6 +55,7 @@ class AccountContainer extends PureComponent {
         headerStyle="Account-table-top"
         headerTitle={account.title}
         flipStatus={this.state[account.type]}
+        customerType={this.props.user.customerType}
         btnFront={
           [
             {purpose: "edit", name: "수정", dataName: account.type, dataApi: account.api}

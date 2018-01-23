@@ -43,9 +43,13 @@
 	outline: none;
 	padding: 0.3em;
 	height: 40px;
-  border: 1px solid #dbdbdb;
+	border-radius: 5px;
+  border: 3px solid #dbdbdb;
   width: 80%;
 	font-size: 13px;
+}
+.search-input:focus{
+  border: 3px solid rgb(0, 188, 212);
 }
 
 .search-btn{

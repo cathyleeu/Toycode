@@ -84,8 +84,15 @@ export default class FilteredList extends PureComponent {
     super()
     this.renderFilterLists = this.renderFilterLists.bind(this)
   }
-  renderFilterLists(f, i) {
-    return (
+  renderFilterLists(kinderClasses) {
+    if(kinderClasses.length === 0) {
+      return (
+        <ToyCodePaper>
+          <h2>반을 등록해주세요.</h2>
+        </ToyCodePaper>
+      )
+    }
+    return kinderClasses.map((f, i) => (
       <AcademyClassCard key={i}
         {...f}
         academyUrl={this.props.filtered.url}
@@ -96,11 +103,10 @@ export default class FilteredList extends PureComponent {
         match={this.props.match}
         modalHandleName={this.props.modalHandleName}
       />
-    )
+    ))
   }
   render(){
     let { name, kinderClasses } = this.props.filtered;
-
 
     return(
       <div>
@@ -110,6 +116,7 @@ export default class FilteredList extends PureComponent {
             headerStyle="Kinder-Cont-top"
             customMinWidth="250px"
             headerTitle={name}
+            headerPage="settingClass"
             btnFront={
               [
                 { purpose: "create", name: "반 등록하기", dataName: "createAcademyClass" }
@@ -119,7 +126,7 @@ export default class FilteredList extends PureComponent {
           />
           {this.props.children}
         </DirectionContainer>
-        {kinderClasses.map(this.renderFilterLists)}
+        {this.renderFilterLists(kinderClasses)}
       </div>
     )
   }

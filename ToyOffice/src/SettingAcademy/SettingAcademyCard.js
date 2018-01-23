@@ -18,6 +18,22 @@ class SettingAcademyCard extends PureComponent{
   componentWillMount(){
     // console.log(this.props);
   }
+  componentWillReceiveProps(newProps){
+    if(newProps !== this.props) {
+      let newStateObj = {
+        name: newProps.name,
+        lang: newProps.lang,
+        phone: newProps.phone,
+        manager: newProps.manager,
+        managerPh: newProps.managerPh,
+        url: newProps.url,
+        academy_id: newProps._id
+      }
+      this.setState({
+        ...newStateObj
+      })
+    }
+  }
   handleClick(e) {
     let { result } = e.currentTarget.dataset;
     if(result === "edit") {

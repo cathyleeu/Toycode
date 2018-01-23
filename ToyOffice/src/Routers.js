@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom' // withRouter
 import App from './App'
 import Login from './Login'
+import * as actions from './Login/actions'
 // import Register from './Login/Register'
 import { connect } from 'react-redux'
 import PrivateRoute from './PrivateRoute'
@@ -10,13 +11,30 @@ import PrivateRoute from './PrivateRoute'
 
 class Routers extends PureComponent {
   state = {
-     login: this.props.login.authenticated
+     login: this.props.login,
+     status: false
+  }
+  componentWillMount(){
+    this.props.getUserInfo()
   }
   componentWillReceiveProps(newProps){
-    this.setState({login: newProps.login.authenticated})
+    if(newProps.login !== this.props.login) {
+      this.setState({
+        login: newProps.login
+      })
+    }
+
+    if(newProps.user.customerType !== this.props.user.customerType) {
+      this.setState({
+        status: true
+      })
+    }
   }
   render(){
     const RedirectToLogin = (path) => this.state.login ? <Redirect to={`/${path}`}/> : <Redirect to="/login" />
+    if(this.state.login && !this.state.status) {
+      return false
+    }
     return(
       <Router>
         <Switch>
@@ -37,9 +55,10 @@ class Routers extends PureComponent {
 
 
 const mapStateToProps = ({login}) => ({
-  login
+  login: login.authenticated,
+  user: login.user,
 })
 
 
-export default connect(mapStateToProps, null)(Routers)
+export default connect(mapStateToProps, actions)(Routers)
 // export default withRouter(connect(mapStateToProps)(Routers))

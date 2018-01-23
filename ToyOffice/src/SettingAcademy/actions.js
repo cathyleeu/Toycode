@@ -84,8 +84,8 @@ export const completedEditAcademy = (academy, academy_id) => (dispatch, getState
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder/${academy_id}`, { ...academy })
        .then( res => {
-         getAcademyByUser()
          alert('원 수정이 완료되었습니다.')
+         dispatch(getAcademyByUser())
        })
 }
 
@@ -93,7 +93,7 @@ export const completedDeleteAcademy = (academy_id) => (dispatch, getState) => {
   const user = localStorage.getItem('email')
   axios.delete(`${ROOT_URL}/user/${user}/kinder/${academy_id}`)
        .then( res => {
-         getAcademyByUser()
+         dispatch(getAcademyByUser())
          alert('원이 삭제되었습니다.')
        })
 }

@@ -15,8 +15,11 @@ import PrimaryButton from './PrimaryButton'
 */
 
 const Condition = (PassedComponent) => ({ children, ...props }) => {
-  if(props.customerType === "T") {
+  if(props.customerType !== "A" && props.customerType !== "C") {
     props["headerType"] = "normal"
+  }
+  if(props.headerPage === "settingClass" && props.customerType !== "T") {
+    props["headerType"] = ""
   }
   return (
     <PassedComponent {...props}>

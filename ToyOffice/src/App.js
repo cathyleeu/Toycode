@@ -10,12 +10,13 @@ import Feature from './Feature'
 // import { Shop } from './Shop'
 // import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
+import { Management } from './UserManagement'
 import { SettingAcademy, SettingAcademyClass, SettingStudent, StudentDashboard } from './SettingAcademy'
 
 
 
 // const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
-const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
+// const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
 // const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
 // const Statement = (props) => <div>Statement 어드민 페이지 </div>
 // const SettingClass = (props) => <div>SettingClass 어드민 페이지 </div>
@@ -24,6 +25,23 @@ class App extends Component {
   state = {
     drawerOpen: false,
     header: "토이코드 오피스 사이트"
+  }
+  componentDidMount(){
+    window.addEventListener("load", this.handleLoad.bind(this));
+  }
+  handleLoad() {
+    let headerNameLists = [
+      { path:'settingStudent', name : '학생 설정하기' },
+      { path:'studentDashboard', name : '학생 리포트' },
+      { path:'settingAcademy', name : '소속 학원 설정하기' },
+      { path:'settingClass', name : '반 설정하기' },
+      { path:'management', name : '회원관리' },
+      { path:'', name : '토이코드 오피스 사이트' }
+    ]
+    let header = headerNameLists.find(l => this.props.location.pathname.includes(l.path)).name
+
+    this.setState({ header })
+
   }
   handleToggle = () => {
     this.setState({drawerOpen: !this.state.drawerOpen})
@@ -41,12 +59,6 @@ class App extends Component {
   render() {
     const { match, user } = this.props;
 
-
-    // {path:'orderlist', component: OrderList, name : '주문상황'},
-    // {path:'shop', component: Shop, name: '주문하기'},
-    // {path:'details', component: OrderDetail, name : '주문내역'},
-    // {path:'goodslist', component: GoodsList, name : '상품목록'},
-    // {path:'statement', component: Statement, name : '매출장부'}
     let nav = [
       { path:'settingStudent', component: SettingStudent, name : '학생 설정하기' },
       { path:'studentDashboard', component: StudentDashboard, name : '학생 리포트' },
@@ -65,11 +77,10 @@ class App extends Component {
       "D" : commonPage,
       "E" : commonPage,
       "T" : commonPage,
-      "Z" : [{path:'customList', component: CustomList, name : '회원관리'}]
+      "Z" : [{path:'management', component: Management, name : '회원관리'}]
     }
 
     nav = nav.concat(menu[user.customerType])
-
     return (
       <div>
         <AppBar
@@ -80,7 +91,7 @@ class App extends Component {
         <Switch>
           {nav.map((n, i) =>
             {
-              if(n.patn === 'SettingStudent') {
+              if(n.path === 'settingStudent') {
                 return <Route key={i} path={`${match.url}/${n.path}/:id`} component={n.component} />
               }
                 return <Route key={i} path={`${match.url}/${n.path}`} component={n.component} />
@@ -103,6 +114,9 @@ class App extends Component {
         </Drawer>
       </div>
     );
+  }
+  componentWillUnmount(){
+    window.removeEventListener("load", this.handleLoad.bind(this));
   }
 }
 
