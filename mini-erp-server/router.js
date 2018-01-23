@@ -37,8 +37,10 @@ router.get('/user/:user/kinder/:academyId',  Users.getAcademyByUser)
 router.del('/user/:user/kinder/:academyId',  Users.deleteAcademy)
 router.put('/user/:user/academyClass/:academyId',  Users.createAcademyClass)
 router.put('/user/:user/academyClass/:academyId/:classId',  Users.updateAcademyClass)
+router.get('/user/:size/:page', Users.getPagination)
 // router.get('/user/:user/kinder/:academyId/',  Users.getAcademyByUser)
 // router.del('/user/:user/kinder/:academyId/',  Users.deleteAcademy)
+
 
 //
 // createAcademyClass,

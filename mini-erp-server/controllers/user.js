@@ -301,25 +301,27 @@ const renewalExistingUser = async (ctx) => {
 
 }
 const renewalSignup = async (ctx, next) => {
-  const { name, email, password, passwordConfirm, zipNo, roadAddr, detailAddr, customerType, userType, parentId, code } = ctx.request.body;
+  const { name, email, password, passwordConfirm, zipNo, roadAddr, detailAddr, customerType, userType, parentId } = ctx.request.body;
   let errObj = [];
   let essential = [
     { name: "email", msg: "이메일", value: email },
     { name: "password", msg: "비밀번호", value: password },
     { name: "passwordConfirm", msg: "비밀번호 확인", value: passwordConfirm }
   ]
-  if(!customerType === "T") {
+  if(customerType !== "T") {
+    essential.push({ name: "name", msg: "상호명", value: name })
     essential.push({ name: "roadAddr", msg: "주소", value: roadAddr })
     essential.push({ name: "detailAddr", msg: "상세 주소", value: detailAddr })
 
   }
+
   essential.map( e => {
     let valid = e.value ? e.value.trim() : e.value;
     if(!valid) {
       errObj.push({ type: `${e.name}Err`, msg: `${e.msg}을(를) 입력해주세요.` })
     }
   })
-
+  console.log(errObj);
   if(passwordConfirm !== password) {
     errObj.push({ type: `passwordConfirmErr`, msg: `비밀번호가 일치하지 않습니다.` })
   }
@@ -363,14 +365,14 @@ const renewalSignup = async (ctx, next) => {
       ...exceptTeacher
     });
   } else if(customerType === 'T'){
-    let academy = await User.findOne({ 'kinders.parentId': parentId, 'kinders.url' : code }).select('kinders.$')
-    let { name, kinderClasses } = academy.kinders[0]
+    let academy = await User.findOne({ 'kinders.parentId': parentId, 'kinders.url' : ctx.request.body.code }).select('kinders.$')
+    let { name, kinderClasses, url, lang, phone, manager, managerPh } = academy.kinders[0]
 
     user = new User({
       ...commonValue,
       kinders:[{
-        parentId,
-        name,
+        parentId, lang, url, name,
+        phone, manager, managerPh,
         kinderClasses: kinderClasses
       }]
     });
@@ -418,18 +420,16 @@ const verifiedCode = async ctx => {
 
     let userTypes = {
       "branch" : {
-        "think2018" : "A"
+        "think2018" : "A",
+        "ybm2018" : "C",
+        "toycode_admin": "Z"
       },
       "academy" : {
-        "ybm2018" : "B",
-        "ecc2018" : "C",
+        "ecc2018" : "B",
         "psa2018" : "D",
         "toy2018" : "E"
       },
       "teacher" : {
-      },
-      "admin" : {
-        "toycode_admin": "Z"
       }
     }
 
@@ -841,6 +841,22 @@ const userUpdateByAdmin = async ctx => {
 }
 
 
+
+//==================pagination==========
+
+const getPagination = async ctx => {
+  let { page, size } = ctx.params;
+  let filterUser = await User.find().limit( +size ).skip((+page) * (+size)).sort( 'createdOn' ).select('-password')
+  ctx.body = filterUser
+}
+
+
+
+
+
+
+
+
 module.exports = {
   signin,
   signup,
@@ -864,5 +880,6 @@ module.exports = {
   deleteAcademy,
   createAcademyClass,
   updateAcademyClass,
-  deleteAcademyClass
+  deleteAcademyClass,
+  getPagination
 };
