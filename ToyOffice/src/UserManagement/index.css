@@ -43,6 +43,24 @@
   background-color: #dbdbdb;
 }
 
+.pagination{
+  list-style-type: none;
+  /* padding: 1em; */
+  padding: 0.5em;
+  border: 2px solid #dbdbdb;
+  border-radius: 10px;
+}
+
+.pagination > li {
+  display: inline;
+  padding: 0.5em;
+  border-right: 2px solid #dbdbdb;
+  font-weight: 300;
+}
+.pagination > li:last-child {
+  border: none;
+}
+
 
 
  /* > li {

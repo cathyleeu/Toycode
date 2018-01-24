@@ -1,14 +1,17 @@
 import * as types from './actions'
 
 const initialState =  {
-  management: {}
+  filterUser: []
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case types.ADD_ACADEMY:
+    case types.REQUEST_PAGE:
       return {
-        ...state
+        ...state,
+        filterUser: action.filterUser,
+        totalSize: action.totalSize,
+        pageRange: action.pageRange
       }
     default:
       return state

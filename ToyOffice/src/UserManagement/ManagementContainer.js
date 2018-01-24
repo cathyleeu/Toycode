@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
+  // Link,
   Switch
 } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -22,6 +22,11 @@ class ManagementContainer extends Component {
     this.state = {
       listStatus: "none",
       autocompleteStatus: "none",
+      pageState: {
+        currentPage: 1,
+        pageSize: 10
+      },
+      filterUser: [],
       search: "",
       autocomplete: [
         {name: "(주)에코에듀", email: "wuyo2757@hanmail.net", code: "A00088"},
@@ -40,6 +45,23 @@ class ManagementContainer extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.autocompleteNodes = this.autocompleteNodes.bind(this)
+    this.getPager = this.getPager.bind(this)
+    this.setPage = this.setPage.bind(this)
+  }
+  componentWillMount(){
+    let { currentPage, pageSize } = this.state.pageState
+    this.props.requestPage(pageSize, currentPage)
+  }
+  componentWillReceiveProps(newProps) {
+    if(newProps.filterUser !== this.props.filterUser) {
+      let pageState = this.getPager(this.state.pageState.currentPage)
+      this.setState({
+        filterUser: newProps.filterUser,
+        pageState
+      })
+    }
+
+
   }
   handleFocus = () => {
     this.setState({
@@ -55,8 +77,6 @@ class ManagementContainer extends Component {
   }
   handleMouseDown(e){
     e.preventDefault()
-    // debugger
-    // console.log("click", e.target.innerText);
     this.setState({
       listStatus: "none",
       autocompleteStatus: "none"
@@ -66,7 +86,6 @@ class ManagementContainer extends Component {
 
   }
   handleChange(e){
-    // console.log(e.target.value.length);
     if(e.target.value.length > 2) {
       this.setState({
         listStatus: "none",
@@ -88,6 +107,72 @@ class ManagementContainer extends Component {
       </li>
     ))
   }
+  setPage(page) {
+      // var items = this.props.items;
+      var pageState = this.state.pageState;
+
+      if (page < 1 || page > pageState.pageRange) {
+          return;
+      }
+
+      // get new pageState object for specified page
+      pageState = this.getPager(page);
+
+      // get new page of items from items array
+      this.props.requestPage(10, page)
+      // console.log("setPage",pageState);
+      // update state
+      this.setState({ pageState });
+
+      // call change page function in parent component
+
+  }
+  getPager(currentPage, pageSize) {
+      // default to first page
+      currentPage = currentPage || 1;
+
+      // default page size is 10
+      pageSize = pageSize || 10;
+      let pageRange = this.props.pageRange
+      //total item 을 여기서 정리하나봄...
+      // calculate total pages
+
+      var startPage, endPage;
+      if (pageRange <= 5) {
+          // less than 5 total pages so show all
+          startPage = 1;
+          endPage = pageRange;
+      } else {
+          // more than 5 total pages so calculate start and end pages
+          if (currentPage <= 3) {
+              startPage = 1;
+              endPage = 5;
+          } else if (currentPage + 2 >= pageRange) {
+              startPage = pageRange - 4;
+              endPage = pageRange;
+          } else {
+              startPage = currentPage - 2;
+              endPage = currentPage + 2;
+          }
+      }
+
+      // calculate start and end item indexes
+
+      let pages = [];
+      for(let i = startPage; i < endPage + 1; i++ ) {
+        pages.push(i)
+      }
+      // return object with all pager properties required by the view
+      return {
+
+          currentPage: currentPage, //현재 클릭 페이지
+          pageSize: pageSize, // 현 페이지에 들어가는 데이터 수
+          pageRange: pageRange, //전체 페이지 수
+          startPage: startPage, // 처음 시작하는 페이지 넘버
+          endPage: endPage, // 마지막 페이지 넘버
+          pages: pages // 페이저 클릭하는 수
+      };
+  }
   render(){
     let customerTypeLists = [
       {name: "직영지사", type: "A"},
@@ -106,6 +191,11 @@ class ManagementContainer extends Component {
             || l.email.toLowerCase().match(searchString)
       });
     }
+    let { pageState } = this.state;
+    if(!pageState.pages) {
+      return false
+    }
+    // console.log(pageState);
     return (
       <BodyContainer>
         <input
@@ -142,12 +232,41 @@ class ManagementContainer extends Component {
             {this.autocompleteNodes(filteredNodes)}
     			</ul>
     		</div>
+        <div>
+          {this.state.filterUser.map((u, i) => {
+            return <div key={i}>{u.email}</div>
+          })}
+        </div>
+        <div>
+          <ul className="pagination">
+              <li className={pageState.currentPage === 1 ? 'disabled' : ''}>
+                  <a onClick={() => this.setPage(1)}>First</a>
+              </li>
+              <li className={pageState.currentPage === 1 ? 'disabled' : ''}>
+                  <a onClick={() => this.setPage(pageState.currentPage - 1)}>Previous</a>
+              </li>
+              {pageState.pages.map((page, index) =>
+                  <li key={index} className={pageState.currentPage === page ? 'active' : ''}>
+                      <a onClick={() => this.setPage(page)}>{page}</a>
+                  </li>
+              )}
+              <li className={pageState.currentPage === pageState.totalPages ? 'disabled' : ''}>
+                  <a onClick={() => this.setPage(pageState.currentPage + 1)}>Next</a>
+              </li>
+              <li className={pageState.currentPage === pageState.totalPages ? 'disabled' : ''}>
+                  <a onClick={() => this.setPage(pageState.pageRange)}>Last</a>
+              </li>
+          </ul>
+        </div>
       </BodyContainer>
     )
   }
 }
 
 const mapStateToProps = (state, route) => ({
+  filterUser: state.management.filterUser,
+  pageRange : state.management.pageRange,
+  totalSize : state.management.totalSize,
   // customers: state.kinder.kinders,
   // students: state.kinder.students,
   // user: state.login.user
