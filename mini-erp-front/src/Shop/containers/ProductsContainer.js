@@ -17,12 +17,31 @@ class ProductsContainer extends Component{
   }
   render(){
     const { selected, addToCartUnsafe, customType } = this.props;
-    let volume = ["1", "2", "3", "4", "5", "특별1", "6", "7", "8", "9", "10"], filterGoods = this.state.goods.filter(g => g.volume === this.state.selectedVol)
+    let volume = ["1", "2", "3", "4", "5", "특별(상)", "6", "7", "8", "9", "10", "특별(하)"],
+        filterGoods = this.state.goods.filter(g => {
+          if(g.volume === "특별1") {
+            g.volume = "SP1"
+          }
+          return g.volume === this.state.selectedVol
+        })
     return(
       <ProductsList title="1단계: 주문하실 교재를 선택하세요.">
         <div className="goods-list-cont">
           <div className="goods-list" style={{marginBottom:10 }}>
-            {volume.map((v,i) => <button className="button-addClass" style={{marginRight: 10}} key={i} onClick={() => this.setState({selectedVol: v})}>{v}권</button>)}
+            {volume.map((v,i) => {
+              return(
+                  <button className="button-addClass"
+                          style={{marginRight: 10}}
+                          key={i} onClick={() => {
+                            if(v === "특별(상)") {
+                              v = 'SP1'
+                            }
+                            this.setState({selectedVol: v})
+                          }}>
+                      {v}권
+                  </button>
+              )
+            })}
           </div>
           <div className="goods-list">
             {filterGoods.map((book, i) =>
