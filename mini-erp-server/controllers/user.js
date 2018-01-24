@@ -846,8 +846,15 @@ const userUpdateByAdmin = async ctx => {
 
 const getPagination = async ctx => {
   let { page, size } = ctx.params;
-  let filterUser = await User.find().limit( +size ).skip((+page) * (+size)).sort( 'createdOn' ).select('-password')
-  ctx.body = filterUser
+
+  let totalSize = await User.find({customerType: { $nin: "Z" }}).count()
+  let filterUser = await User.find({customerType: { $nin: "Z" }})
+                             .limit( +size )
+                             .skip((+page) * (+size))
+                             .sort( 'createdOn' )
+                             .select('-password')
+  // console.log(filterUser.totalSize);
+  ctx.body = { filterUser, totalSize }
 }
 
 
