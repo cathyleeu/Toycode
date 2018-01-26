@@ -845,18 +845,52 @@ const userUpdateByAdmin = async ctx => {
 //==================pagination==========
 
 const getPagination = async ctx => {
-  let { page, size } = ctx.params;
+  let { page, size, customerType } = ctx.params;
+  let filter = customerType === "all" ? "true" : "false"
+  let filterObj = {
+    true : { customerType: { $nin: "Z" } },
+    false : {
+      $and : [
+        { customerType },
+        { customerType: { $nin: "Z" } }
+      ]
+    }
+  }
 
-  let totalSize = await User.find({customerType: { $nin: "Z" }}).count()
-  let filterUser = await User.find({customerType: { $nin: "Z" }})
+  let totalSize = await User.find(filterObj[filter]).count()
+  let filterUser = await User.find(filterObj[filter])
                              .limit( +size )
-                             .skip((+page) * (+size))
+                             .skip((+(page-1)) * (+size))
                              .sort( 'createdOn' )
                              .select('-password')
-  // console.log(filterUser.totalSize);
+
   ctx.body = { filterUser, totalSize }
 }
 
+const getAutoComplete = async ctx => {
+  let { searchText } = ctx.params;
+  let regex = new RegExp(searchText, 'g');
+
+  //{ customerType: { $nin: "Z" } } 를 뒤로 빼줬어야 했음.. or 을 다르게 사용 해줬어야지 필터링이 됨
+  let matchedUsers = await User.find(
+      {
+        $and:[
+        {
+          $or : [
+            { email: regex },
+            { code: regex },
+            { "branch.name": regex }
+          ]
+        },
+        { customerType: { $nin: "Z" } }
+      ]
+    }
+  ).limit( 10 )
+
+  ctx.body = matchedUsers
+
+
+}
 
 
 
@@ -888,5 +922,6 @@ module.exports = {
   createAcademyClass,
   updateAcademyClass,
   deleteAcademyClass,
-  getPagination
+  getPagination,
+  getAutoComplete
 };
