@@ -22,34 +22,23 @@ class ManagementContainer extends Component {
     this.state = {
       listStatus: "none",
       autocompleteStatus: "none",
+      selectedType : "all",
       pageState: {
         currentPage: 1,
         pageSize: 10
       },
       filterUser: [],
       search: "",
-      autocomplete: [
-        {name: "(주)에코에듀", email: "wuyo2757@hanmail.net", code: "A00088"},
-        {name: "다원교육", email: "pdk1014@daum.net", code: "A00087"},
-        {name: "통큰교육", email: "applekinder@hanmail.net", code: "A00072"},
-        {name: "성동ECC", email: "jayou03@hanmail.net", code: "B00163"},
-        {name: "ECC석계어학학원", email: "960960@hanmail.net", code: "B00024"},
-        {name: "쌍문ECC", email: "rladuddhrr@nate.com", code: "B00032"},
-        {name: "키즈월드교육사", email: "win3049@hanmail.net", code: "C00071"},
-        {name: "(주)열린브레멘", email: "yn115202@hanmail.net", code: "C000103"},
-        {name: "피에스에이분당어학학원", email: "bundangpsa@naver.com", code: "D00093"},
-        {name: "PSA용산어학학원", email: "bhjhsj2010@naver.com", code: "D00122"},
-        {name: "주식회사 설리번교육", email: "secyin@hotmail.com", code: "E00076"}
-      ]
+      autocomplete: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.autocompleteNodes = this.autocompleteNodes.bind(this)
     this.getPager = this.getPager.bind(this)
     this.setPage = this.setPage.bind(this)
   }
   componentWillMount(){
     let { currentPage, pageSize } = this.state.pageState
+    // this.props.requestPage(pageSize, currentPage, this.state.selectedType)
     this.props.requestPage(pageSize, currentPage)
   }
   componentWillReceiveProps(newProps) {
@@ -60,8 +49,11 @@ class ManagementContainer extends Component {
         pageState
       })
     }
-
-
+    if(newProps.autocomplete !== this.props.autocomplete) {
+      this.setState({
+        autocomplete: newProps.autocomplete
+      })
+    }
   }
   handleFocus = () => {
     this.setState({
@@ -77,11 +69,15 @@ class ManagementContainer extends Component {
   }
   handleMouseDown(e){
     e.preventDefault()
+    let selectedType = e.target.dataset.customertype;
+    // let { currentPage, pageSize } = this.state.pageState;
     this.setState({
       listStatus: "none",
-      autocompleteStatus: "none"
+      autocompleteStatus: "none",
+      // selectedType
     })
-    this.props.history.push(`${this.props.match.path}/${e.target.dataset.customertype}`)
+    this.props.history.push(`${this.props.match.path}/${selectedType}`)
+    // this.props.requestPage(pageSize, currentPage, selectedType)
     this.refs.searchInput.blur()
 
   }
@@ -91,21 +87,12 @@ class ManagementContainer extends Component {
         listStatus: "none",
         autocompleteStatus: ""
       })
+      this.props.requestAutocomplete(e.target.value)
     }
     this.setState({
       [e.target.name]: e.target.value
     })
 
-  }
-  autocompleteNodes(filteredNodes){
-    // console.log(filteredNodes);
-    return filteredNodes.map((l, i) => (
-      <li key={i} onMouseDown={this.handleMouseDown}>
-        {/* <a href=""> */}
-          {l.name}
-        {/* </a> */}
-      </li>
-    ))
   }
   setPage(page) {
       // var items = this.props.items;
@@ -181,21 +168,11 @@ class ManagementContainer extends Component {
       {name: "PSA", type: "D"},
       {name: "직영원", type: "E"}
     ]
-    let filteredNodes = [], searchString = this.state.search;
 
-    if(searchString.length > 2){
-        filteredNodes = this.state.autocomplete.filter(l => {
-          searchString = searchString.toLowerCase()
-        return l.name.toLowerCase().match(searchString)
-            || l.code.toLowerCase().match(searchString)
-            || l.email.toLowerCase().match(searchString)
-      });
-    }
     let { pageState } = this.state;
     if(!pageState.pages) {
       return false
     }
-    // console.log(pageState);
     return (
       <BodyContainer>
         <input
@@ -215,10 +192,8 @@ class ManagementContainer extends Component {
               {customerTypeLists.map((l,i) => (
                 <li key={i} onMouseDown={this.handleMouseDown} data-customerType={l.type}>
         					{/* <a href=""> */}
-                  {/* <Link to={l.type}> */}
       							{l.name}
         					{/* </a> */}
-                  {/* </Link> */}
         				</li>
               ))}
       			</ul>
@@ -229,7 +204,17 @@ class ManagementContainer extends Component {
         </Router>
         <div className="search-focus" style={{display: this.state.autocompleteStatus}}>
     			<ul className="autocomplete-list">
-            {this.autocompleteNodes(filteredNodes)}
+            {
+              this.state.autocomplete.map((l, i) => {
+                let name = l.customerType === "T" ? l.kinders[0].name : l.branch.name
+                return (
+                <li key={i} onMouseDown={this.handleMouseDown}>
+                  {/* <a href=""> */}
+                    {name} | {l.email} | {l.code}
+                  {/* </a> */}
+                </li>
+              )})
+            }
     			</ul>
     		</div>
         <div>
@@ -246,7 +231,7 @@ class ManagementContainer extends Component {
                   <a onClick={() => this.setPage(pageState.currentPage - 1)}>Previous</a>
               </li>
               {pageState.pages.map((page, index) =>
-                  <li key={index} className={pageState.currentPage === page ? 'active' : ''}>
+                  <li key={index} className={pageState.currentPage === page ? 'selected_page' : ''}>
                       <a onClick={() => this.setPage(page)}>{page}</a>
                   </li>
               )}
@@ -267,9 +252,7 @@ const mapStateToProps = (state, route) => ({
   filterUser: state.management.filterUser,
   pageRange : state.management.pageRange,
   totalSize : state.management.totalSize,
-  // customers: state.kinder.kinders,
-  // students: state.kinder.students,
-  // user: state.login.user
+  autocomplete : state.management.autocomplete
 })
 
 

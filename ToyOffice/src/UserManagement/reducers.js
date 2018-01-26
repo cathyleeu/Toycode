@@ -13,6 +13,11 @@ export default function (state = initialState, action) {
         totalSize: action.totalSize,
         pageRange: action.pageRange
       }
+    case types.REQUEST_AUTOCOMPLETE:
+      return {
+        ...state,
+        autocomplete: action.autocomplete
+      }
     default:
       return state
   }
