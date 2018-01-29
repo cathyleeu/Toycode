@@ -42,6 +42,7 @@ router.post('/user/search/:searchText', Users.getAutoComplete)
 // router.get('/user/:user/kinder/:academyId/',  Users.getAcademyByUser)
 // router.del('/user/:user/kinder/:academyId/',  Users.deleteAcademy)
 
+// router.post('/user/reports/:classId', Users.getClassReports)
 
 //
 // createAcademyClass,

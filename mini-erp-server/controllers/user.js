@@ -828,6 +828,10 @@ const userKinderUpdate = async ctx => {
 //   ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
 // }
 
+// const getClassReports = async ctx => {
+//   console.log("===============AAAA===============");
+// }
+
 const userUpdateByAdmin = async ctx => {
   try{
     console.log("UpdateByAdmin",ctx.request.body)
@@ -932,5 +936,6 @@ module.exports = {
   updateAcademyClass,
   deleteAcademyClass,
   getPagination,
-  getAutoComplete
+  getAutoComplete,
+  // getClassReports
 };
