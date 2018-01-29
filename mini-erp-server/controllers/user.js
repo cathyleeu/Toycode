@@ -639,7 +639,7 @@ const getNewUrl = ( bId , names ) => {
       }
     }
     // console.log("urls",urls);
-    console.log("newUrls",newUrls);
+    // console.log("newUrls",newUrls);
     resolve(newUrls);
   });
 }
@@ -766,58 +766,67 @@ const deleteAcademyClass = async ctx => {
 }
 
 const userKinderUpdate = async ctx => {
-  if(ctx.request.body.renewal) {
-    let { name, phone, parentId, lang, managerPh, manager } = ctx.request.body,
-          urls = await getNewUrl(ctx.request.body.branch, [name]),
-          codeRes = await Code.findOne({ dbcollection: parentId }),
-          count = codeRes ? codeRes.count : 1,
-          academyData = {
-            code: `${parentId}-K${count}`,
-            url: urls, name, phone, parentId, lang, managerPh, manager
-          };
-    codeRes = codeRes || new Code({
-      dbcollection: parentId,
-      count: count
-    });
-    codeRes.count++;
-    await codeRes.save();
-    ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
-  } else {
     try{
-      console.log("kinders",ctx.request.body.kinders, "branch", ctx.request.body.branch);
+      console.log("old office", ctx.request.body.kinders[0].kinderClasses);
       let kinders = ctx.request.body.kinders,
           names = kinders.map(kinder => kinder.name),
           urls = await getNewUrl(ctx.request.body.branch, names);
+      console.log("===============AAAA===============");
       for(var i = 0; i < kinders.length; i++) {
         const kinder = kinders[i];
         const kinderId = 'K'+(i+1);
         const kinderCode = kinder.parentId+'-'+kinderId;
         const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
         // console.log(url)
+        let kinderClasses = kinder.kinderClasses.map((kinderClass, i) => {
+          return({
+          _id: kinderId+'-KC'+(i+1),
+          code: kinderCode+'-KC'+(i+1),
+          className: kinderClass.className,
+          level: kinderClass.level
+        })})
+
+        console.log("===============BBBB===============", kinderClasses);
         kinders[i] = {
           code: kinderCode, manager, parentId,
           zipNo, roadAddr, detailAddr, lang,
           managerPh,
           url: url || urls[i],
           name: name.trim(), phone,
-          kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
-            return({
-            _id: kinderId+'-KC'+(i+1),
-            code: kinderCode+'-KC'+(i+1),
-            className: kinderClass.className,
-            level: kinderClass.level
-          })})
+          kinderClasses
         };
-        console.log(kinders[i])
+        console.log("===============CCCC===============");
+        // console.log(kinders[i])
       }
+      console.log("===============DDDD===============", kinders);
       ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
+
     } catch(err){
       ctx.status = 500;
       ctx.body = err;
-      console.log(err);
+      console.log("===============EEEE===============", err);
+      // console.log(err);
     }
-  }
+
 }
+
+// if(ctx.request.body.renewal) {
+//   let { name, phone, parentId, lang, managerPh, manager } = ctx.request.body,
+//         urls = await getNewUrl(ctx.request.body.branch, [name]),
+//         codeRes = await Code.findOne({ dbcollection: parentId }),
+//         count = codeRes ? codeRes.count : 1,
+//         academyData = {
+//           code: `${parentId}-K${count}`,
+//           url: urls, name, phone, parentId, lang, managerPh, manager
+//         };
+//   codeRes = codeRes || new Code({
+//     dbcollection: parentId,
+//     count: count
+//   });
+//   codeRes.count++;
+//   await codeRes.save();
+//   ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
+// }
 
 const userUpdateByAdmin = async ctx => {
   try{

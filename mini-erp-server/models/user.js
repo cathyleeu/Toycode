@@ -7,14 +7,14 @@ const bcrypt = require('bcrypt-nodejs');
 //   students: Number
 // })
 
-const kinderClassesSchema = new Schema({
-  parentId: String, //branch
-  academyId: String, // kinder code
-  className: String,
-  classId: String,
-  code: String,
-  level: String,
-})
+// const kinderClassesSchema = new Schema({
+//   parentId: String, //branch
+//   academyId: String, // kinder code
+//   className: String,
+//   classId: String,
+//   code: String,
+//   level: String,
+// })
 
 const kinderSchema = new Schema({
   parentId:String,
@@ -29,7 +29,7 @@ const kinderSchema = new Schema({
   managerPh: String,
   name: String,
   address: String,
-  kinderClasses: [kinderClassesSchema]
+  kinderClasses: []
 })
 
 // userType = [branch, admin, warehouse, kinder]
