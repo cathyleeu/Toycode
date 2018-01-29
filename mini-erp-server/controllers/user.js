@@ -937,5 +937,5 @@ module.exports = {
   deleteAcademyClass,
   getPagination,
   getAutoComplete,
-  getClassReports
+  // getClassReports
 };
