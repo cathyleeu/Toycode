@@ -7,47 +7,80 @@ import { AppBar } from 'material-ui';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
 import Feature from './Feature'
-import { Shop } from './Shop'
-import { OrderDetail } from './OrderDetail'
+// import { Shop } from './Shop'
+// import { OrderDetail } from './OrderDetail'
 import { Account } from './Account'
-import { Kinder } from './Kinder'
+import { Management } from './UserManagement'
+import { SettingAcademy, SettingAcademyClass, SettingStudent, StudentDashboard } from './SettingAcademy'
 
 
-const IssueLogin = (props) => <div>IssueLogin</div>
-const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
-const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
-const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
-const Statement = (props) => <div>Statement 어드민 페이지 </div>
+
+// const OrderList = (props) => <div>OrderList 어드민 페이지 </div>
+// const CustomList = (props) => <div>CustomList 어드민 페이지 </div>
+// const GoodsList = (props) => <div>GoodsList 어드민 페이지 </div>
+// const Statement = (props) => <div>Statement 어드민 페이지 </div>
+// const SettingClass = (props) => <div>SettingClass 어드민 페이지 </div>
 
 class App extends Component {
   state = {
     drawerOpen: false,
     header: "토이코드 오피스 사이트"
   }
+  componentDidMount(){
+    window.addEventListener("load", this.handleLoad.bind(this));
+  }
+  handleLoad() {
+    let headerNameLists = [
+      { path:'settingStudent', name : '학생 설정하기' },
+      { path:'studentDashboard', name : '학생 리포트' },
+      { path:'settingAcademy', name : '소속 학원 설정하기' },
+      { path:'settingClass', name : '반 설정하기' },
+      { path:'management', name : '회원관리' },
+      { path:'', name : '토이코드 오피스 사이트' }
+    ]
+    let header = headerNameLists.find(l => this.props.location.pathname.includes(l.path)).name
+
+    this.setState({ header })
+
+  }
   handleToggle = () => {
     this.setState({drawerOpen: !this.state.drawerOpen})
   }
   handleLink = (match, path, name) => {
+    // 각 페이지에 들어갈때 필요한 데이터 각 불러오도록 해야 할 듯
     this.setState({drawerOpen: !this.state.drawerOpen, header: name})
-    this.props.history.replace(`${match.url}/${path}`)
+    // console.log("handleLink",`${match.url}/${path}`);
+    this.props.history.replace(`${match.url}/${path}`, {customerType: this.props.user.customerType})
   }
   handleLogOut = (history) => {
     this.setState({drawerOpen: !this.state.drawerOpen})
     this.props.tempoLogOut(history)
   }
   render() {
-    const { match } = this.props;
+    const { match, user } = this.props;
+
     let nav = [
-      {path:'shop', component: Shop, name: '주문하기'},
-      {path:'details', component: OrderDetail, name : '주문내역'},
-      {path:'account', component: Account, name : '마이페이지'},
-      {path:'kinder', component: Kinder, name : '소속 원 설정'},
-      {path:'issue', component: IssueLogin, name : '소속 원 프로그램 설정'},
-      {path:'orderlist', component: OrderList, name : '주문상황'},
-      {path:'customlist', component: CustomList, name : '지사상황'},
-      {path:'goodslist', component: GoodsList, name : '상품목록'},
-      {path:'statement', component: Statement, name : '매출장부'}
+      { path:'settingStudent', component: SettingStudent, name : '학생 설정하기' },
+      { path:'studentDashboard', component: StudentDashboard, name : '학생 리포트' },
     ]
+
+    let commonPage = [
+      {path:'settingAcademy', component: SettingAcademy, name : '소속 학원 설정하기'},
+      {path:'settingClass', component: SettingAcademyClass, name : '반 설정하기'}
+    ]
+
+    // userType 에 따라서 drawer list 변경
+    let menu = {
+      "A" : [{path:'account', component: Account, name : '마이페이지'}].concat(commonPage),
+      "B" : commonPage,
+      "C" : commonPage,
+      "D" : commonPage,
+      "E" : commonPage,
+      "T" : commonPage,
+      "Z" : [{path:'management', component: Management, name : '회원관리'}]
+    }
+
+    nav = nav.concat(menu[user.customerType])
     return (
       <div>
         <AppBar
@@ -56,35 +89,39 @@ class App extends Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
         <Switch>
-          {nav.map((n, i) => <Route key={i} path={`${match.url}/${n.path}`} component={n.component}/>)}
+          {nav.map((n, i) =>
+            {
+              if(n.path === 'settingStudent') {
+                return <Route key={i} path={`${match.url}/${n.path}/:id`} component={n.component} />
+              }
+                return <Route key={i} path={`${match.url}/${n.path}`} component={n.component} />
+            }
+          )}
           <Route exact path={match.url} component={Feature}/>
         </Switch>
         <Drawer open={this.state.drawerOpen}>
-          {nav.map((n, i) => <MenuItem key={i} onTouchTap={() => this.handleLink(match, n.path, n.name)}>{n.name}</MenuItem>)}
+          {menu[user.customerType].map(
+            (n, i) => (
+              <MenuItem
+                key={i}
+                onTouchTap={() => this.handleLink(match, n.path, n.name)}
+              >
+                {n.name}
+              </MenuItem>
+            )
+          )}
           <MenuItem onTouchTap={() => this.handleLogOut(this.props.history)}>로그아웃</MenuItem>
         </Drawer>
       </div>
     );
   }
+  componentWillUnmount(){
+    window.removeEventListener("load", this.handleLoad.bind(this));
+  }
 }
 
-export default connect(null, actions)(App);
+const mapStateToProps = (state, second) => ({
+  user: state.login.user
+})
 
-
-
-/*
-  RaisedButton: onClick, onTouchTap 사용가능
-
-
-
-  <div className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <h2>Welcome to React</h2>
-  </div>
-
-
-  <p className="App-intro">
-    To get started, edit <code>src/App.js</code> and save to reload.
-  </p>
-
-*/
+export default connect(mapStateToProps, actions)(App);

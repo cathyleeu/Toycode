@@ -1,4 +1,5 @@
 import * as types from './actions'
+import * as loginTypes from '../Login/actions'
 
 
 const initialState =  {
@@ -6,34 +7,39 @@ const initialState =  {
   manager: {}
 }
 
-
-export default function (state = initialState, action) {
-  switch (action.type) {
-    case types.IS_DEFALUT_MODI:
-      let { branch, education, account } = action.user;
+const filterStateByUser = (state, action) => {
+  let { branch, education, account } = action.user;
+  switch (action.user.customerType) {
+    case "T":
+      return state
+    case "A":
+    case "B":
+    case "C":
+    case "D":
+    case "E":
       return {
         ...state,
         branch: {
-          sub_name: branch.sub_name,
-          location: branch.location,
-          name: branch.name,
-          license: branch.license,
-          repr: branch.repr,
-          detailAddr: branch.address.detailAddr,
-          roadAddr: branch.address.roadAddr,
-          zipNo: branch.address.zipNo,
+          ...branch,
+          ...branch.address,
           phone: '',
           fax: ''
         },
         manager: {
-          E_phone: education.E_phone,
-          E_email: education.E_email,
-          E_manager: education.E_manager,
-          A_phone: account.A_phone,
-          A_email: account.A_email,
-          A_manager: account.A_manager
+          ...education,
+          ...account
         }
       }
+    default:
+      return state
+  }
+}
+
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case types.IS_DEFALUT_MODI:
+    case loginTypes.GET_USER_INFO :
+      return filterStateByUser(state, action)
     case types.IS_MODIFYING_INFO:
       return {
         ...state,

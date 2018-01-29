@@ -3,15 +3,14 @@ import {connect} from 'react-redux'
 import * as actions from './actions'
 import AccountBranch from './AccountBranch'
 import AccountManager from './AccountManager'
-import AccountTableHeader from './AccountTableHeader'
 import Perf from 'react-addons-perf'
 import './index.css'
+import { ConditionalHeader, BodyContainer } from '../Components'
 
 class AccountContainer extends PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      loaded : false,
       branchModi: false,
       mngModi: false,
     }
@@ -19,11 +18,7 @@ class AccountContainer extends PureComponent {
   }
 
   componentWillMount(){
-    window.performance.mark('AccountContainer')
-    if(this.props.user.code){
-      this.setState({loaded: true})
-      this.props.isDefalutModi(this.props.user)
-    }
+    console.log(window.performance.now('AccountContainer'))
   }
   componentDidMount(){
     console.log(window.performance.now('AccountContainer'))
@@ -33,59 +28,73 @@ class AccountContainer extends PureComponent {
     Perf.printInclusive()
     Perf.printWasted()
   }
-  componentWillReceiveProps(newProps){
-    if(newProps.user !== this.props.user){
-      this.props.isDefalutModi(newProps.user)
-      this.setState({loaded: true})
-    }
-  }
-  handleModiToggle(name, btn){
-    // Perf.start()
-    if(this.state[name]){
-      if(btn === "완료"){
-        if(confirm('수정을 완료하시겠습니까?')){
-          this.props.isCompoleteModi(name, this.props[name])
-        } else {
-          this.props.isDefalutModi(this.props.user)
-        }
-      } else {
-        if(confirm('취소 하시겠습니까?')){
-          this.setState(prevState => ({[name]: !prevState[name]}))
-          this.props.isDefalutModi(this.props.user)
-        }
+  handleModiToggle(e){
+    let { name, purpose, api } = e.target.dataset,
+        textContent = e.target.textContent;
+    if(confirm(`${textContent} 하시겠습니까?`)){
+      if(purpose === "complete"){
+        this.props.isCompoleteModi(api, this.props[name])
+      }
+      if(purpose === "cancle") {
+        this.props.isDefalutModi(this.props.user)
       }
     } else {
-      this.setState(prevState => ({[name]: !prevState[name]}))
+      // this.props.isDefalutModi(this.props.user)
+      return false
     }
-    this.props.isDefalutModi(this.props.user)
+    this.setState({
+      [name]: !this.state[name]
+    })
+
   }
-  render(){
-    if(this.state.loaded){
-      return(
-        <div className="Child-Cont Account">
-          <div>
-            <AccountTableHeader
-              title="지사정보"
-              typeOf="branchModi"
-              onClick={this.handleModiToggle}
-              modi={!this.state.branchModi}/>
-            <AccountBranch {...this.props} readOnly={!this.state.branchModi}/>
-          </div>
-          <div>
-            <AccountTableHeader
-              title="담당자 정보"
-              typeOf="mngModi"
-              onClick={this.handleModiToggle}
-              modi={!this.state.mngModi} />
-            <AccountManager {...this.props} readOnly={!this.state.mngModi}/>
-          </div>
-        </div>
-      )
-    }
+  renderAccountTable = (account , i) => {
+    let { Component } = account;
     return(
-      <div>
-        로딩중
-      </div>
+    <div key={i} style={{"width": "90%", "maxWidth": "800px"}}>
+      <ConditionalHeader
+        headerStyle="Account-table-top"
+        headerTitle={account.title}
+        flipStatus={this.state[account.type]}
+        customerType={this.props.user.customerType}
+        btnFront={
+          [
+            {purpose: "edit", name: "수정", dataName: account.type, dataApi: account.api}
+          ]
+        }
+        btnBack={
+          [
+            {purpose: "complete", name: "완료", dataName: account.type, dataApi: account.api},
+            {purpose: "cancle", name: "취소", dataName: account.type, dataApi: account.api}
+          ]
+        }
+        onClick={this.handleModiToggle}
+      />
+      <Component
+        isModifyingInfo={this.props.isModifyingInfo}
+        defaultInfo={this.props[account.type]}
+        code={this.props.user.code}
+        readOnly={!this.state[account.type]}/>
+    </div>
+  )}
+  render(){
+    const AccountTableList = [
+      {
+        title:"지사정보",
+        type: "branchModi",
+        api: "branch",
+        Component: AccountBranch
+      },
+      {
+        title:"담당자 정보",
+        type: "mngModi",
+        api: "manager",
+        Component: AccountManager
+      }
+    ];
+    return(
+      <BodyContainer>
+        {AccountTableList.map(this.renderAccountTable)}
+      </BodyContainer>
     )
   }
 }

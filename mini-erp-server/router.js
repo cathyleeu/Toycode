@@ -15,7 +15,10 @@ const ReturnGoods = require('./controllers/return');
 // router.post('/signin', requireSignin, Users.signin)
 router.post('/signin', Users.signin)
 router.post('/signup', Users.signup);
+router.post('/renewalSignup', Users.renewalSignup);
+router.get('/renewalSignup/:email', Users.renewalExistingUser);
 router.get('/signup/:url', Users.confirmSignUp)
+router.post('/verification/:code', Users.verifiedCode)
 
 
 router.get('/user', Users.allUsers)
@@ -27,7 +30,24 @@ router.get('/branch/:branch/:kinderInfo', Users.isFetchedKinderInfo)
 
 router.get('/user/:user/kinders',  Users.userKinders)
 router.put('/user/:user/info',  Users.userInfoUpdate)
+router.put('/user/:user/info/:info',  Users.userInfoUpdatebyRenew)
 router.put('/user/:user/kinder',  Users.userKinderUpdate)
+router.put('/user/:user/kinder/:academyId',  Users.editAcademy)
+router.get('/user/:user/kinder/:academyId',  Users.getAcademyByUser)
+router.del('/user/:user/kinder/:academyId',  Users.deleteAcademy)
+router.put('/user/:user/academyClass/:academyId',  Users.createAcademyClass)
+router.put('/user/:user/academyClass/:academyId/:classId',  Users.updateAcademyClass)
+router.get('/user/:size/:page/:customerType', Users.getPagination)
+router.post('/user/search/:searchText', Users.getAutoComplete)
+// router.get('/user/:user/kinder/:academyId/',  Users.getAcademyByUser)
+// router.del('/user/:user/kinder/:academyId/',  Users.deleteAcademy)
+
+
+//
+// createAcademyClass,
+// updateAcademyClass,
+// deleteAcademyClass
+
 router.put('/user/:code', Users.userUpdateByAdmin )
 
 
@@ -56,7 +76,13 @@ router.get('/login', Login.isFetchedAllNames)
 router.post('/login', Login.isRegisteredNames)
 router.get('/login/:parentId', Login.isAllNamesByBranch)
 router.get('/login/:classId/:className', Login.isFetchedNamesByClass)
+router.get('/login/:parentId/:academyId/:classId', Login.isFetchedNamesByClassId)
 router.put('/login/update/:classId/:className', Login.isUpdateNames)
+router.put('/login/:editType/:classId', Login.editStudentName)
+router.del('/login/:studentId', Login.delStudentName)
+// router.put('/login/edit/:classId', Login.editStudentName)
+
+
 
 
 

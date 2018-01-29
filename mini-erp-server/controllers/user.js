@@ -159,6 +159,8 @@ const signup = async (ctx, next) => {
     let { userType } = ctx.request.body;
     let errObj = [];
     let customerType = "A";
+
+    //validation
     if(!email){
       errObj.push({ type: "emailErr", msg: "이메일을 입력하세요." })
     }
@@ -196,6 +198,8 @@ const signup = async (ctx, next) => {
       ctx.body = errObj;
       return;
     }
+
+
     let user = await User.findOne({ email: email });
     let codeRes = await Code.findOne({ dbcollection: 'User' });
 
@@ -279,6 +283,192 @@ const signup = async (ctx, next) => {
   // TODO: async await에서 Promise reject의 경우 처리 필요
 };
 
+const renewalExistingUser = async (ctx) => {
+  let { email } = ctx.params;
+
+  let user = await User.findOne({ email });
+  if(!user) {
+    ctx.body = { type: "available", msg: '사용 가능한 이메일입니다.' }
+    return;
+  }
+
+  const result = await createTempUser(user);
+  if(result.existingPersistentUser) {
+    ctx.status = 401;
+    ctx.body = { type: "existErr", msg: '이미 가입된 이메일입니다.' }
+    return;
+  }
+
+}
+const renewalSignup = async (ctx, next) => {
+  const { name, email, password, passwordConfirm, zipNo, roadAddr, detailAddr, customerType, userType, parentId } = ctx.request.body;
+  let errObj = [];
+  let essential = [
+    { name: "email", msg: "이메일", value: email },
+    { name: "password", msg: "비밀번호", value: password },
+    { name: "passwordConfirm", msg: "비밀번호 확인", value: passwordConfirm }
+  ]
+  if(customerType !== "T") {
+    essential.push({ name: "name", msg: "상호명", value: name })
+    essential.push({ name: "roadAddr", msg: "주소", value: roadAddr })
+    essential.push({ name: "detailAddr", msg: "상세 주소", value: detailAddr })
+
+  }
+
+  essential.map( e => {
+    let valid = e.value ? e.value.trim() : e.value;
+    if(!valid) {
+      errObj.push({ type: `${e.name}Err`, msg: `${e.msg}을(를) 입력해주세요.` })
+    }
+  })
+  console.log(errObj);
+  if(passwordConfirm !== password) {
+    errObj.push({ type: `passwordConfirmErr`, msg: `비밀번호가 일치하지 않습니다.` })
+  }
+
+  if(errObj.length > 0) {
+    ctx.status = 422;
+    ctx.body = errObj;
+    return;
+  }
+
+  let user = await User.findOne({ email: email });
+  let codeRes = await Code.findOne({ dbcollection: 'User' });
+
+  let count = codeRes ? codeRes.count : 1,
+      zero = "0".repeat(5),
+      resultId = customerType + (zero+count).slice(-zero.length);
+
+  let commonValue = {
+    userType, email, password,
+    code: resultId,
+    customerType,
+  }
+
+  let exceptTeacher = {
+    branch: {
+      name,
+      address:{ zipNo, roadAddr, detailAddr }
+    },
+    account:{ A_manager: '', A_email: '', A_phone: '' },
+    education:{ E_manager: '', E_email: '', E_phone: '' }
+  }
+
+  if((customerType === 'B') || (customerType === 'D') || (customerType === 'E')){
+    user = new User({
+      ...commonValue,
+      kinders:[{
+        parentId: resultId,
+        name, zipNo, roadAddr, detailAddr,
+        kinderClasses:[]
+      }],
+      ...exceptTeacher
+    });
+  } else if(customerType === 'T'){
+    let academy = await User.findOne({ 'kinders.parentId': parentId, 'kinders.url' : ctx.request.body.code }).select('kinders.$')
+    let { name, kinderClasses, url, lang, phone, manager, managerPh } = academy.kinders[0]
+
+    user = new User({
+      ...commonValue,
+      kinders:[{
+        parentId, lang, url, name,
+        phone, manager, managerPh,
+        kinderClasses: kinderClasses
+      }]
+    });
+
+  } else {
+    user = new User({
+      ...commonValue,
+      ...exceptTeacher
+    });
+  }
+
+  const result = await createTempUser(user);
+  if(result.newTempUser) {
+      const url = result.newTempUser[nev.options.URLFieldName];
+      const info = await sendVerificationEmail(email, url);
+
+      codeRes = codeRes || new Code({
+        dbcollection: 'User',
+        count: count
+      });
+      codeRes.count++;
+      const err = await codeRes.save();
+
+      if(err) {
+        await next(err);
+      }
+
+      ctx.body = {
+        msg: '가입이 완료 되었습니다.\n기입하신 이메일에 인증 메일을 확인하세요.\n인증메일의 링크를 클릭하시면 회원가입이 완료됩니다.',
+        token: tokenForUser(user),
+        info: info
+      };
+  } else {
+      errObj.push({ type: "sendErr", msg: '이미 이메일 인증메일을 보냈습니다. 확인해주세요.' })
+      ctx.body = errObj;
+  }
+
+
+}
+
+const verifiedCode = async ctx => {
+  try {
+    let codeType = ctx.params.code;
+    let { parentId, userType, code } = ctx.request.body;
+
+    let userTypes = {
+      "branch" : {
+        "think2018" : "A",
+        "ybm2018" : "C",
+        "toycode_admin": "Z"
+      },
+      "academy" : {
+        "ecc2018" : "B",
+        "psa2018" : "D",
+        "toy2018" : "E"
+      },
+      "teacher" : {
+      }
+    }
+
+    if(userType === "teacher") {
+      let verification = await User.findOne({
+        "kinders.parentId" : parentId,
+        "kinders.url" : code
+      }).select('kinders.$ -_id')
+
+      codeType = code;
+      userTypes[userType][codeType] = "T";
+    }
+
+    if(!userTypes[userType][codeType]) {
+      ctx.body = {
+        message: "인증된 가입코드가 아닙니다.",
+        result: false
+      }
+      return false
+    }
+    ctx.body = {
+      customerType: userTypes[userType][codeType],
+      message: "인증된 가입코드 입니다.",
+      result: true
+    }
+  } catch (e) {
+    ctx.body = {
+      message: "인증코드를 확인해주세요.",
+      result: false
+    }
+  }
+
+}
+
+
+const renewalSignin = async (ctx) => {
+
+}
+
 const confirmSignUp = async ctx => {
   try {
     const url = ctx.params.url;
@@ -350,6 +540,37 @@ const userInfoUpdate = async ctx => {
   }
 }
 
+const userInfoUpdatebyRenew = async ctx => {
+  let { user, info } = ctx.params;
+  let setObj = {}
+  if(info === "branch") {
+    setObj[info] = {
+      ...ctx.request.body,
+      address: {
+        detailAddr: ctx.request.body.detailAddr,
+        roadAddr: ctx.request.body.roadAddr,
+        zipNo: ctx.request.body.zipNo
+      }
+    }
+  } else {
+    let keyObjs = Object.keys(ctx.request.body)
+    keyObjs.forEach( d => {
+      setObj[d] = {
+        ...ctx.request.body[d]
+      }
+    })
+  }
+  ctx.body = await User.findOneAndUpdate(
+    { email: ctx.params.user },
+    { $set: {
+      ...setObj
+    } },
+    { new: true }
+  )
+
+  // const { sub_name, account, education } = ctx.request.body;
+}
+
 const getNewUrl = ( bId , names ) => {
   return new Promise(async(resolve, reject) => {
     let users = await User.find(),
@@ -417,45 +638,184 @@ const getNewUrl = ( bId , names ) => {
         sum++;
       }
     }
-    console.log("urls",urls);
+    // console.log("urls",urls);
     console.log("newUrls",newUrls);
     resolve(newUrls);
   });
 }
 
-const userKinderUpdate = async ctx => {
-  try{
-    let kinders = ctx.request.body.kinders,
-        names = kinders.map(kinder => kinder.name),
-        urls = await getNewUrl(ctx.request.body.branch, names);
-    for(var i = 0; i < kinders.length; i++) {
-      const kinder = kinders[i];
-      const kinderId = 'K'+(i+1);
-      const kinderCode = kinder.parentId+'-'+kinderId;
-      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
-      console.log(url)
-      kinders[i] = {
-        code: kinderCode, manager, parentId,
-        zipNo, roadAddr, detailAddr, lang,
-        managerPh,
-        url: url || urls[i],
-        name: name.trim(), phone,
-        kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
-          return({
-          _id: kinderId+'-KC'+(i+1),
-          code: kinderCode+'-KC'+(i+1),
-          className: kinderClass.className,
-          level: kinderClass.level
-        })})
-      };
-      console.log(kinders[i])
-    }
+// const createAcademy = async ctx => {
+//   ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{$push: {"kinders": ctx.request.body}});
+// }
 
-    ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
-  } catch(err){
-    ctx.status = 500;
-    ctx.body = err;
-    console.log(err);
+const editAcademy = async ctx => {
+  // 수정하고자 하는 key 값을 뽑음
+  let modified = Object.keys(ctx.request.body)
+  let modiObj = {}
+  // 그에 맞춰서 sub Class 수정
+  modified.forEach( mo => {
+    modiObj[`kinders.$.${mo}`] = ctx.request.body[mo]
+  })
+  ctx.body = await User.findOneAndUpdate(
+    //find subSchema
+    {
+      email: ctx.params.user,
+      "kinders._id" : ctx.params.academyId
+    },
+    modiObj
+  );
+}
+
+const deleteAcademy = async ctx => {
+  ctx.body = await User.findOneAndUpdate(
+    //find subSchema
+    {
+      email: ctx.params.user,
+      "kinders._id" : ctx.params.academyId
+    },
+    // delete subSchema
+    {
+      '$pull' : {
+        'kinders' : {
+          '_id' : ctx.params.academyId
+        }
+      }
+    }
+  );
+}
+
+const getAcademyByUser = async ctx => {
+  console.log(ctx.params.user, ctx.params.academyId);
+  let result = await User.findOne(
+    {
+      email: ctx.params.user,
+      "kinders._id" : ctx.params.academyId
+    }
+  )
+  console.log(result);
+  ctx.body = result
+}
+
+const createAcademyClass = async ctx => {
+  //FIXME:
+
+  let { academyId } = ctx.params,
+      codeRes = await Code.findOne({ dbcollection: academyId }),
+      count = codeRes ? codeRes.count : 1;
+
+    codeRes = codeRes || new Code({
+    dbcollection: academyId,
+    count: count
+    });
+    codeRes.count++;
+    await codeRes.save();
+      // parentId, className, level, academyId
+  ctx.body = await User.findOneAndUpdate(
+    {
+      email: ctx.params.user,
+      "kinders.code" : academyId
+    },
+    { $push:
+      { "kinders.$.kinderClasses": {
+        ...ctx.request.body,
+        classId: `${academyId}-KC${count}`
+      } }
+    }
+  );
+}
+
+const updateAcademyClass = async ctx => {
+  let nested = await User.findOne({
+    email: ctx.params.user,
+    "kinders.code" : ctx.params.academyId,
+    "kinders.kinderClasses._id" : ctx.params.classId
+  }).select('kinders -_id')
+  let parentIndex, childIndex;
+  nested.kinders.forEach( (aca, i) => {
+    if(aca.code === ctx.params.academyId) {
+      parentIndex = i;
+      aca.kinderClasses.forEach((cl, i) => {
+        if(cl._id.toString() === ctx.params.classId) {
+          childIndex = i
+        }
+      })
+    }
+  })
+
+  let modified = Object.keys(ctx.request.body)
+  let modiObj = {}
+  // 그에 맞춰서 sub Class 수정
+  modified.forEach( mo => {
+    modiObj[`kinders.${parentIndex}.kinderClasses.${childIndex}.${mo}`] = ctx.request.body[mo]
+  })
+
+  let filter = await User.findOneAndUpdate(
+    {
+      email: ctx.params.user,
+      "kinders.code" : ctx.params.academyId,
+      "kinders.kinderClasses._id" : ctx.params.classId
+    },
+    modiObj
+  )
+  ctx.body = filter;
+}
+
+const deleteAcademyClass = async ctx => {
+  console.log(ctx.request.body);
+  // ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
+}
+
+const userKinderUpdate = async ctx => {
+  if(ctx.request.body.renewal) {
+    let { name, phone, parentId, lang, managerPh, manager } = ctx.request.body,
+          urls = await getNewUrl(ctx.request.body.branch, [name]),
+          codeRes = await Code.findOne({ dbcollection: parentId }),
+          count = codeRes ? codeRes.count : 1,
+          academyData = {
+            code: `${parentId}-K${count}`,
+            url: urls, name, phone, parentId, lang, managerPh, manager
+          };
+    codeRes = codeRes || new Code({
+      dbcollection: parentId,
+      count: count
+    });
+    codeRes.count++;
+    await codeRes.save();
+    ctx.body = await User.findOneAndUpdate({email: ctx.params.user},{ $push: { "kinders": academyData }});
+  } else {
+    try{
+      console.log("kinders",ctx.request.body.kinders, "branch", ctx.request.body.branch);
+      let kinders = ctx.request.body.kinders,
+          names = kinders.map(kinder => kinder.name),
+          urls = await getNewUrl(ctx.request.body.branch, names);
+      for(var i = 0; i < kinders.length; i++) {
+        const kinder = kinders[i];
+        const kinderId = 'K'+(i+1);
+        const kinderCode = kinder.parentId+'-'+kinderId;
+        const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
+        // console.log(url)
+        kinders[i] = {
+          code: kinderCode, manager, parentId,
+          zipNo, roadAddr, detailAddr, lang,
+          managerPh,
+          url: url || urls[i],
+          name: name.trim(), phone,
+          kinderClasses: kinder.kinderClasses.map((kinderClass, i) => {
+            return({
+            _id: kinderId+'-KC'+(i+1),
+            code: kinderCode+'-KC'+(i+1),
+            className: kinderClass.className,
+            level: kinderClass.level
+          })})
+        };
+        console.log(kinders[i])
+      }
+      ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
+    } catch(err){
+      ctx.status = 500;
+      ctx.body = err;
+      console.log(err);
+    }
   }
 }
 
@@ -481,6 +841,87 @@ const userUpdateByAdmin = async ctx => {
 }
 
 
+
+//==================pagination==========
+
+const getPagination = async ctx => {
+  let { page, size, customerType } = ctx.params;
+  let filter = customerType === "all" ? "true" : "false"
+  let filterObj = {
+    true : { customerType: { $nin: "Z" } },
+    false : {
+      $and : [
+        { customerType },
+        { customerType: { $nin: "Z" } }
+      ]
+    }
+  }
+
+  let totalSize = await User.find(filterObj[filter]).count()
+  let filterUser = await User.find(filterObj[filter])
+                             .limit( +size )
+                             .skip((+(page-1)) * (+size))
+                             .sort( 'createdOn' )
+                             .select('-password')
+
+  ctx.body = { filterUser, totalSize }
+}
+
+const getAutoComplete = async ctx => {
+  let { searchText } = ctx.params;
+  let regex = new RegExp(searchText, 'g');
+
+  //{ customerType: { $nin: "Z" } } 를 뒤로 빼줬어야 했음.. or 을 다르게 사용 해줬어야지 필터링이 됨
+  let matchedUsers = await User.find(
+      {
+        $and:[
+        {
+          $or : [
+            { email: regex },
+            { code: regex },
+            { "branch.name": regex }
+          ]
+        },
+        { customerType: { $nin: "Z" } }
+      ]
+    }
+  ).limit( 10 )
+
+  ctx.body = matchedUsers
+
+
+}
+
+
+
+
+
+
+
 module.exports = {
-  signin, signup, confirmSignUp, allUsers, loggedUser, userKinders, userInfoUpdate, userKinderUpdate, allBranchKinders, isFetchedKinderInfo, allUsersEmails, userUpdateByAdmin
+  signin,
+  signup,
+  renewalSignin,
+  renewalExistingUser,
+  renewalSignup,
+  verifiedCode,
+  confirmSignUp,
+  allUsers,
+  loggedUser,
+  userKinders,
+  userInfoUpdate,
+  userInfoUpdatebyRenew,
+  userKinderUpdate,
+  allBranchKinders,
+  isFetchedKinderInfo,
+  allUsersEmails,
+  userUpdateByAdmin,
+  editAcademy,
+  getAcademyByUser,
+  deleteAcademy,
+  createAcademyClass,
+  updateAcademyClass,
+  deleteAcademyClass,
+  getPagination,
+  getAutoComplete
 };

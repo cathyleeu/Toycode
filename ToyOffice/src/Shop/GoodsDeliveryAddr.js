@@ -1,6 +1,11 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { Modal, ToyCodeButton, ToyCodeInput } from '../Components'
+import {
+  Modal,
+  ToyCodeButton,
+  DirectionContainer,
+  ToyCodeInputCont
+ } from '../Components'
 
 class GoodsDeliveryAddr extends Component{
   state = {
@@ -47,85 +52,42 @@ class GoodsDeliveryAddr extends Component{
     let { juso } = this.props;
     return(
       <div className="Goods-Delivery-Addr">
-        <div className="Delivery-Addr-Col">
-          <div className="Delivery-Addr-Row SpaceBtw">
-            <label>
-            우편번호
-            <input
-              className="Delivery-input"
-              placeholder='우편번호'
-              type='number'
-              name="zipNo"
-              value={this.state.zipNo}
-              readOnly/>
-            </label>
-            <ToyCodeButton
-              buttonType="button"
-              buttonStyle="Delivery-Addr-btn"
-              handleButtonEvent={this.handleAddrModal}
-              buttonName="addrModal"
-              content="주소 검색"
-            />
-            <ToyCodeButton
-              buttonType="button"
-              buttonStyle="Delivery-Addr-btn"
-              content="주소록"
-            />
-          </div>
-          <ToyCodeInput
-            inputStyle="Delivery-input"
-            label="배송처"
-            holder="주소를 검색하여 배송지를 입력해주세요."
-            name="roadAddr"
-            inputType="text"
-            value={this.state.roadAddr}
-            readOnly={true} />
-          <ToyCodeInput
-            inputStyle="Delivery-input"
-            label="배송지 상세주소"
-            holder="배송지 상세주소"
-            name="detailAddr"
-            inputType="text"
-            value={this.state.detailAddr}
-            handleChange={this.handleChange}
-            handleBlur={this.handleSendAddr}
-            readOnly={true} />
-          <div className="Delivery-Addr-Row SpaceBtw">
-            <label>
-              수령인
-            <input
-              className="Delivery-input half"
-              placeholder='수령인'
-              type='text'
-              name="recipient"
-              value={this.state.recipient}
-              onChange={this.handleChange}
-              onBlur={this.handleSendAddr}
-            />
-            </label>
-            <label>연락처
-            <input
-              className="Delivery-input"
-              placeholder='-를 제외하고 입력하세요.'
-              type='number'
-              name="phone"
-              value={this.state.phone}
-              onChange={this.handleChange}
-              onBlur={this.handleSendAddr}
-            />
-            </label>
-          </div>
-          <ToyCodeInput
-            label="요구사항"
-            inputStyle="Delivery-input"
-            inputType="text"
-            holder='요청 사항을 적어주세요.'
-            name="rqcontent"
-            value={this.state.rqcontent}
-            handleChange={this.handleChange}
-            handleBlur={this.handleSendAddr}
-            readOnly={true} />
-        </div>
+        <DirectionContainer direction="row">
+            <ToyCodeInputCont
+              label="우편번호"
+              holder="우편번호"
+              styleType="top_aligned"
+             />
+            <ToyCodeButton content="주소 검색" buttonStyle="toycode_button"/>
+            <ToyCodeButton content="주소록" buttonStyle="toycode_button"/>
+        </DirectionContainer>
+        <ToyCodeInputCont
+          label="배송지"
+          holder="배송지"
+          styleType="top_aligned"
+         />
+        <ToyCodeInputCont
+          holder="상세주소"
+          styleType="top_aligned"
+         />
+        <DirectionContainer direction="row">
+            <ToyCodeInputCont
+              label="수령인"
+              holder="수령인"
+              styleType="top_aligned"
+             />
+            <ToyCodeInputCont
+              label="연락처"
+              holder="연락처"
+              styleType="top_aligned"
+             />
+        </DirectionContainer>
+        <ToyCodeInputCont
+          label="요구사항"
+          holder="요구사항"
+          styleType="top_aligned"
+         />
+
         <Modal
           isModalOpen={this.state.addrModal}
           closeName="addrModal"
@@ -165,8 +127,86 @@ const mapStateToProps = ({goods}) => ({
 
 export default connect(mapStateToProps, null)(GoodsDeliveryAddr)
 
-
-
-
-
-{/* <button className="search-btn" onClick={() => this.setState({addrModal: false })}>닫기</button> */}
+//
+// <div className="Delivery-Addr-Col">
+//   <div className="Delivery-Addr-Row SpaceBtw">
+//     <ToyCodeInput
+//       inputContStyle="Delivery-Container"
+//       inputStyle="Delivery-input"
+//       label="우편번호"
+//       holder='우편번호'
+//       name="zipNo"
+//       inputType="number"
+//       value={this.state.zipNo}
+//       readOnly={true} />
+//     <div>
+//       <ToyCodeButton
+//         buttonType="button"
+//         buttonStyle="Delivery-Addr-btn"
+//         handleButtonEvent={this.handleAddrModal}
+//         buttonName="addrModal"
+//         content="주소 검색"
+//       />
+//       <ToyCodeButton
+//         buttonType="button"
+//         buttonStyle="Delivery-Addr-btn"
+//         content="주소록"
+//       />
+//     </div>
+//   </div>
+//   <ToyCodeInput
+//     inputContStyle="Delivery-Container"
+//     inputStyle="Delivery-input"
+//     label="배송처"
+//     holder="주소를 검색하여 배송지를 입력해주세요."
+//     name="roadAddr"
+//     inputType="text"
+//     value={this.state.roadAddr}
+//     readOnly={true} />
+//   <ToyCodeInput
+//     inputContStyle="Delivery-Container"
+//     inputStyle="Delivery-input"
+//     // label="배송지 상세주소"
+//     holder="배송지 상세주소"
+//     name="detailAddr"
+//     inputType="text"
+//     value={this.state.detailAddr}
+//     handleChange={this.handleChange}
+//     handleBlur={this.handleSendAddr}
+//   />
+//   <div className="Delivery-Addr-Row SpaceBtw">
+//     <ToyCodeInput
+//       inputContStyle="Delivery-Container"
+//       inputStyle="Delivery-input half"
+//       label="수령인"
+//       inputType="text"
+//       holder="수령인"
+//       name="recipient"
+//       value={this.state.recipient}
+//       handleChange={this.handleChange}
+//       handleBlur={this.handleSendAddr}
+//     />
+//     <ToyCodeInput
+//       label="연락처"
+//       inputContStyle="Delivery-Container"
+//       inputStyle="Delivery-input half"
+//       inputType="number"
+//       holder='-를 제외하고 입력하세요.'
+//       name="phone"
+//       value={this.state.phone}
+//       handleChange={this.handleChange}
+//       handleBlur={this.handleSendAddr}
+//     />
+//   </div>
+//   <ToyCodeInput
+//     label="요구사항"
+//     inputStyle="Delivery-input"
+//     inputContStyle="Delivery-Container"
+//     inputType="text"
+//     holder='요청 사항을 적어주세요.'
+//     name="rqcontent"
+//     value={this.state.rqcontent}
+//     handleChange={this.handleChange}
+//     handleBlur={this.handleSendAddr}
+//   />
+// </div>

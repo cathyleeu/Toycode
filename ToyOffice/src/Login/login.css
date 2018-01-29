@@ -14,11 +14,18 @@
 
 .Login-cont{
   width: 350px;
-  height: 400px;
+  /* height: 400px; */
   padding: 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
+  /* align-items: center; */
+}
+
+.Login-cont > div > div > p {
+  font-size: 12px;
+  /* color:  */
 }
 .Login-btn{
   /*width: 80px;*/
@@ -29,16 +36,61 @@
 
 .Login-logo {
   /*animation: App-logo-spin infinite 20s linear;*/
-  height: 40px;
+  height: 25px;
+  margin: 1em;
+}
+.Loing-Btn {
+  width: 250px;
+  margin: 2em 0;
 }
 
-form,
 .Login-logo-cont{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-/*
-form{
-  margin-bottom: 2em;
-}*/
+
+.select {
+  width: 30px;
+  height: 150px;
+  background: #dbdbdb;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px 0 0 10px;
+  margin: 1px 0;
+}
+
+.select > p {
+  width:1em;
+}
+
+.selected {
+  background: #00DBF9;
+}
+
+
+.registerInput {
+  height: 65px !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  margin-top: -12px;
+}
+
+.addrForm > .registerInput {
+  width: 55% !important;
+}
+
+.addrForm {
+  width: 256px;
+  display: inline;
+}
+
+.addrForm > .primary_btn {
+  /* margin-bottom:  */
+}
+
+.search-address-hr {
+  border-top: 1px dashed #8c8b8b;
+}

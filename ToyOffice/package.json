@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "d3-scale": "1.0.7",
     "material-ui": "^0.17.4",
     "moment-timezone": "^0.5.13",
     "react": "^15.5.4",

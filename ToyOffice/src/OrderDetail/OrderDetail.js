@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './actions'
 import './index.css'
 import OrderItem from './OrderItem'
-
+import { BodyContainer } from '../Components'
 
 
 /*
@@ -54,17 +54,17 @@ class OrderDetail extends PureComponent {
       )
     if(!loaded){
       return(
-        <div>
+        <BodyContainer>
           <p>로딩중</p>
-        </div>
+        </BodyContainer>
       )
     }
     return(
-      <div className="Child-Cont">
+      <BodyContainer>
         <div className="Order">
           {orderItems}
         </div>
-      </div>
+      </BodyContainer>
     )
   }
   componentWillUnmount(){
