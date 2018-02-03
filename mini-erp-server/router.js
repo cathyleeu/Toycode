@@ -84,7 +84,7 @@ router.del('/login/:studentId', Login.delStudentName)
 // router.put('/login/edit/:classId', Login.editStudentName)
 
 router.post('/reports', Reports.isPostedReports)
-
+router.get('/reports/:classId/:userId/:chapter', Reports.isGetChapterReportsByUser)
 
 
 module.exports = router;

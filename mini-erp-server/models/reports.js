@@ -8,12 +8,12 @@ const reportsSchema = new Schema({
   userId: String,
   chapter: String,
   problem: String,
-  failed: String,
-  score: String,
-  duration: String,
-  block: String,
-  success: String,
-  date: String
+  failed: Number,
+  score: Number,
+  duration: Number,
+  block: Number,
+  success: Boolean,
+  date: Date
 })
 
 module.exports = mongoose.model('reports', reportsSchema)
