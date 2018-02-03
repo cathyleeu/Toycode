@@ -4,7 +4,7 @@ const Login = require('./controllers/login');
 const Books = require('./controllers/books');
 const Invoices = require('./controllers/invoices');
 const ReturnGoods = require('./controllers/return');
-
+const Reports = require('./controllers/reports');
 
 
 
@@ -83,7 +83,7 @@ router.put('/login/:editType/:classId', Login.editStudentName)
 router.del('/login/:studentId', Login.delStudentName)
 // router.put('/login/edit/:classId', Login.editStudentName)
 
-
+router.post('/reports', Reports.isPostedReports)
 
 
 
