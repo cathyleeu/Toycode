@@ -20,6 +20,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^2.0.1",
+    "recharts": "^1.0.0-beta.9",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "validator": "^6.2.1"

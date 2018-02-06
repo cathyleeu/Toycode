@@ -39,15 +39,7 @@ router.put('/user/:user/academyClass/:academyId',  Users.createAcademyClass)
 router.put('/user/:user/academyClass/:academyId/:classId',  Users.updateAcademyClass)
 router.get('/user/:size/:page/:customerType', Users.getPagination)
 router.post('/user/search/:searchText', Users.getAutoComplete)
-// router.get('/user/:user/kinder/:academyId/',  Users.getAcademyByUser)
-// router.del('/user/:user/kinder/:academyId/',  Users.deleteAcademy)
 
-// router.post('/user/reports/:classId', Users.getClassReports)
-
-//
-// createAcademyClass,
-// updateAcademyClass,
-// deleteAcademyClass
 
 router.put('/user/:code', Users.userUpdateByAdmin )
 

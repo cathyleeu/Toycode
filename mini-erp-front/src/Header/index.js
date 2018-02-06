@@ -5,12 +5,13 @@ import logo from '../../public/logo.png'
 
 
 const Header = ({auth, signoutUser, userType, customerType}) => {
-
+  // let customerCode = auth.user.code
   const adminHeader = [
     {route: '/allIves' , title: '주문상황'},
     {route: '/cst-list' , title: '지사상황'},
     {route: '/catalog' , title: '상품목록'},
-    {route: '/statement' , title: '매출장부'}
+    {route: '/statement' , title: '매출장부'},
+    {route: '/reports', title: '이력관리'}
   ]
 
   const adminHeaderList = adminHeader.map((list,i) => (
@@ -33,7 +34,7 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
               { userType === 'branch' && <li className="head-menu"><Link to="/account"><p>마이페이지</p></Link></li> }
               { userType !== 'admin' && <li className="head-menu"><Link to="/issued"><p>로그인 발급</p></Link></li> }
               { customerType === 'Z' && adminHeaderList }
-
+              {/* { (customerCode === 'C00071' || customerCode === 'C00043') && <li className="head-menu"><a href="http://localhost:3000/reports" target="_blank"><p>이력관리</p></a></li>} */}
               <li className="head-menu"><a href="https://drive.google.com/drive/folders/0B1Aeb4WZ7p9uWGE2NVM2QmRobXM?usp=sharing" target="_blank"><p>자료실</p></a></li>
             </ul>
           </nav>

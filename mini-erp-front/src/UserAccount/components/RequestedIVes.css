@@ -264,7 +264,7 @@
   font-size: 20px;
 }
 
-@media print {
+/* @media print {
   body * { visibility: hidden;}
   #root{
     height: 1000px;
@@ -278,4 +278,4 @@
     position: absolute;
     top: 20px;
   }
-}
+} */

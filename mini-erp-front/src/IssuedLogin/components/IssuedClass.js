@@ -34,8 +34,8 @@ class IssuedClass extends PureComponent {
     this.setState({ students: e.target.value })
   }
   render(){
-    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId } = this.props;
-    console.log("luusedclass",studentsNames);
+    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId, parentId } = this.props;
+    // console.log("IssuedClass", this.props);
     let needNames = studentsNames.needNames;
     let mon = moment().set({year:2017, month:3});
     // YBM 대구지사 3월로 고정 예외처리
@@ -60,6 +60,25 @@ class IssuedClass extends PureComponent {
               disabled={disabled} onClick={() => {
               return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인발급</button>
           </form>
+           {/* || kinderId.split("-")[0] === "C00071" */}
+          {(kinderId.split("-")[0] === "C00043")
+            ? <form action="http://localhost:3000/reports" target="_blank">
+                <input type="hidden" name="code" value={kinderUrl} />
+                <input type="hidden" name="classId" value={kclassId} />
+                <input type="hidden" name="academyId" value={kinderId} />
+                <input type="hidden" name="parentId" value={parentId} />
+                <input type="hidden" name="school" value={kinderName} />
+                <input type="hidden" name="className" value={kclassName} />
+                <input type="hidden" name="level" value={level} />
+                <input type="hidden" name="students" value={studentsNames[kclassId] ? studentsNames[kclassId].students : ''} />
+                <button
+                  className='button-edit'>
+                  이력관리 리포트
+                </button>
+              </form>
+            : false
+          }
+
         </div>
         {(needNames && (needNames.indexOf(kclassId) !== -1))
           ? <div className="issued-login-top">
