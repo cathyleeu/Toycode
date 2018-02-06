@@ -766,47 +766,48 @@ const deleteAcademyClass = async ctx => {
 }
 
 const userKinderUpdate = async ctx => {
-    try{
-      console.log("old office");
-      let kinders = ctx.request.body.kinders,
-          names = kinders.map(kinder => kinder.name),
-          urls = await getNewUrl(ctx.request.body.branch, names);
-      console.log("===============AAAA===============");
-      for(var i = 0; i < kinders.length; i++) {
-        const kinder = kinders[i];
-        const kinderId = 'K'+(i+1);
-        const kinderCode = kinder.parentId+'-'+kinderId;
-        const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
-        // console.log(url)
-        let kinderClasses = kinder.kinderClasses.map((kinderClass, i) => {
-          return({
-          _id: kinderId+'-KC'+(i+1),
-          code: kinderCode+'-KC'+(i+1),
-          className: kinderClass.className,
-          level: kinderClass.level
-        })})
+  try{
+    console.log("old office", ctx.request.body.kinders);
+    let kinders = ctx.request.body.kinders;
+    console.log("+++++++++++AAAA+++++++++++", kinders);
+    let names = kinders.map(kinder => kinder.name);
+    console.log("+++++++++++BBBB+++++++++++");
+    let urls = await getNewUrl(ctx.request.body.branch, names);
+    console.log("===============AAAA===============");
+    for(var i = 0; i < kinders.length; i++) {
+      const kinder = kinders[i];
+      const kinderId = 'K'+(i+1);
+      const kinderCode = kinder.parentId+'-'+kinderId;
+      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
+      // console.log(url)
+      let kinderClasses = kinder.kinderClasses.map((kinderClass, i) => {
+        return({
+        _id: kinderId+'-KC'+(i+1),
+        code: kinderCode+'-KC'+(i+1),
+        className: kinderClass.className,
+        level: kinderClass.level
+      })})
 
-        console.log("===============BBBB===============");
-        kinders[i] = {
-          code: kinderCode, manager, parentId,
-          zipNo, roadAddr, detailAddr, lang,
-          managerPh,
-          url: url || urls[i],
-          name: name.trim(), phone,
-          kinderClasses
-        };
-        console.log("===============CCCC===============");
-        // console.log(kinders[i])
-      }
-      console.log("===============DDDD===============");
-      ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
-
-    } catch(err){
-      ctx.status = 500;
-      ctx.body = err;
-      console.log("===============EEEE===============");
-      // console.log(err);
+      console.log("===============BBBB===============");
+      kinders[i] = {
+        code: kinderCode, manager, parentId,
+        zipNo, roadAddr, detailAddr, lang,
+        managerPh,
+        url: url || urls[i],
+        name: name.trim(), phone,
+        kinderClasses
+      };
+      console.log("===============CCCC===============");
+      // console.log(kinders[i])
     }
+    console.log("===============DDDD===============");
+    ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
+
+  } catch(err){
+    ctx.status = 500;
+    ctx.body = err;
+    console.log("===============EEEE===============", err);
+  }
 
 }
 
