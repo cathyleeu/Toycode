@@ -38,21 +38,20 @@ const isGetAllAveByUserId = async (ctx) => {
   let ch = await Reports.find({classId, userId, chapter}).select('-_id chapter') //.sort('date')
 
   let each = [], chapterAves = [];
-  console.log("======= AAAA =======");
+
   ch.forEach( c => {
     if(each.indexOf(c.chapter) === -1) {
       each.push(c.chapter)
     }
   })
-  console.log("======= BBBB =======");
-  //FIXME: forEach 돌리는 것이 불안정함...  ㅠㅠ
-  each.forEach( async (ch, i) => {
-    let chByStudent = await getAverage({ classId, userId, chapter: ch }, `${classId}.${userId}.${ch}`)
-    let chByClass = await getAverage({ classId, chapter: ch }, `${classId}.${ch}`)
-    let chByTotal = await getAverage({ chapter: ch }, `total.${ch}`)
-    console.log(`======= CCCC ======= ${i}`);
+
+  for( let i = 0; i < each.length; i++) {
+    let chByStudent = await getAverage({ classId, userId, chapter: each[i] }, `${classId}.${userId}.${each[i]}`)
+    let chByClass = await getAverage({ classId, chapter: each[i] }, `${classId}.${each[i]}`)
+    let chByTotal = await getAverage({ chapter: each[i] }, `total.${each[i]}`)
+
     chapterAves.push({
-      name: ch,
+      name: each[i],
       학생블럭수: chByStudent.block,
       반평균블럭: chByClass.block,
       전체평균블럭: chByTotal.block,
@@ -60,8 +59,7 @@ const isGetAllAveByUserId = async (ctx) => {
       반평균시도횟수: chByClass.failed,
       전체평균시도횟수: chByTotal.failed,
     })
-  })
-  console.log("======= DDDD =======");
+  }
   // all average
   let studentAve = await getAverage({ classId, userId, chapter }, `${classId}.${userId}`)
   let classAve = await getAverage({ classId, chapter }, `${classId}`)
