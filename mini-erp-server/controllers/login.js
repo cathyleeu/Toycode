@@ -3,40 +3,40 @@ const Login = require('../models/login');
 
 const isRegisteredNames = async (ctx, next) => {
   const { parentId, kinderId, classId, className, students } = ctx.request.body;
-  if(ctx.request.body.renew) {
-    let filterStudent = students.map(name => (
-      {
-        name,
-        parentId,
-        kinderId,
-        classId
-      }
-    ))
-    console.log("BBBB", filterStudent);
+  try{
+    let studentsList = [];
+    students.map(name => {
+      studentsList.push(name)
+    })
     const login = new Login({
-      parentId,
-      kinderId,
-      classId,
-      className,
-      students : filterStudent
+      parentId, kinderId, classId, className,
+      students : studentsList
     });
     ctx.body = await login.save();
-  } else {
-    try{
-      let studentsList = [];
-      students.map(name => {
-        studentsList.push(name)
-      })
-      const login = new Login({
-        parentId, kinderId, classId, className,
-        students : studentsList
-      });
-      ctx.body = await login.save();
-    } catch(err) {
-      ctx.body = await next(err);
-    }
+  } catch(err) {
+    ctx.body = await next(err);
   }
 }
+//
+// if(ctx.request.body.renew) {
+//   let filterStudent = students.map(name => (
+//     {
+//       name,
+//       parentId,
+//       kinderId,
+//       classId
+//     }
+//   ))
+//   console.log("BBBB", filterStudent);
+//   const login = new Login({
+//     parentId,
+//     kinderId,
+//     classId,
+//     className,
+//     students : filterStudent
+//   });
+//   ctx.body = await login.save();
+// } else {
 
 const isFetchedAllNames = async (ctx) => {
   try {
