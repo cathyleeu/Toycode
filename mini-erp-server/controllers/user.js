@@ -572,10 +572,13 @@ const userInfoUpdatebyRenew = async ctx => {
 }
 
 const getNewUrl = ( bId , names ) => {
+  console.log(bId , names);
   return new Promise(async(resolve, reject) => {
+    console.log("----- getNewUrl AAAA ------");
     let users = await User.find(),
         urls = [],
         newUrls = [];
+    console.log("----- getNewUrl BBBB ------");
     users.filter(function(user) {
       return user.userType == "branch";
     }).forEach(function(user) {
@@ -585,7 +588,7 @@ const getNewUrl = ( bId , names ) => {
         }
       });
     });
-
+    console.log("----- getNewUrl CCCC ------");
     for(let i = 0; i < names.length; i++) {
       let sum = 0,
           kId = names[i];
@@ -638,6 +641,7 @@ const getNewUrl = ( bId , names ) => {
         sum++;
       }
     }
+    console.log("----- getNewUrl DDDD ------");
     // console.log("urls",urls);
     // console.log("newUrls",newUrls);
     resolve(newUrls);
@@ -771,7 +775,7 @@ const userKinderUpdate = async ctx => {
     let kinders = ctx.request.body.kinders;
     console.log("+++++++++++AAAA+++++++++++", kinders);
     let names = kinders.map(kinder => kinder.name);
-    console.log("+++++++++++BBBB+++++++++++");
+    console.log("+++++++++++BBBB+++++++++++", names);
     let urls = await getNewUrl(ctx.request.body.branch, names);
     console.log("===============AAAA===============");
     for(var i = 0; i < kinders.length; i++) {
