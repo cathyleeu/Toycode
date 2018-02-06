@@ -9,7 +9,12 @@ class App extends Component {
     const {auth, signoutUser} = this.props
     return (
       <div>
-        <Header auth={auth} userType={auth.user.userType} signoutUser={signoutUser} customerType={auth.user.customerType}/>
+        <Header
+          auth={auth}
+          userType={auth.user.userType}
+          signoutUser={signoutUser}
+          customerType={auth.user.customerType}
+        />
         {this.props.children}
       </div>
     );

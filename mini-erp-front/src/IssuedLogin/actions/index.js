@@ -11,12 +11,18 @@ export const IS_EDITED_NAMES = 'IS_EDITED_NAMES'
 export const IS_WRITING_NAMES = 'IS_WRITING_NAMES'
 export const IS_REGISTERED_FIRST_TIME = 'IS_REGISTERED_FIRST_TIME'
 
+
+export const IS_REQUESTED_REPORTS = 'IS_REQUESTED_REPORTS'
+
 /*-------------------*/
 
 
 /*----- actions -----*/
 
 
+export const requestedReports = () => (dispatch) => {
+  console.log("requestedReports");
+}
 
 
 export const fetchInfoForIssued = (parentId, name) => (dispatch) => {

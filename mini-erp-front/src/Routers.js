@@ -13,7 +13,7 @@ import { Catalog } from './Catalog'
 import { Statement } from './Statement'
 import { Transport } from './TransportGoods'
 import { Return } from './ReturnGoods'
-import { IssuedLogin } from './IssuedLogin'
+import { IssuedLogin, Reports } from './IssuedLogin'
 import Feature from './Feature'
 import SignUp from './Auth/containers/SignUp'
 
@@ -35,6 +35,7 @@ class Routers extends Component {
     const {auth} = this.props
     return(
       <Router history={browserHistory}>
+        <Route path='reports' component={requireAuth(Reports)}/>
         {auth.user
           && (
             <Route path='/' component={App} auth={auth}>

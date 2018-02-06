@@ -71,3 +71,248 @@
   padding-bottom: 0.5em;
   /*border-bottom: 1px solid #5e5e5e;*/
 }
+
+.print > div {
+  border: 1px solid black;
+  margin: 1em 0;
+}
+
+.reports-top {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2em 0;
+  box-sizing: border-box;
+  /* justify-content: center; */
+}
+.reports-top > h1 {
+  font-size: 25px;
+  font-weight: 500;
+}
+.reports-top > p {
+  font-size: 16px;
+  margin: 0;
+}
+.reports-body {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 1em;
+  box-sizing: border-box;
+  position: relative;
+  height: 31%;
+  font-size: 12px;
+}
+
+.reports-bottom {
+  height: 200px;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.reports-bottom > div:first-child {
+  /* display: flex;
+  flex-direction: row; */
+
+}
+.reports-bottom label > input,
+.reports-bottom label {
+  margin: 0 1em;
+  /* display: inline; */
+  /* margin-right: 30px; */
+}
+
+.reports-bottom > textarea {
+  outline: none;
+  width: 100%;
+  height: 75%;
+  padding: 0.7rem;
+  transition: text-shadow;
+  resize: none;
+  border-radius: 5px;
+  border: 2px solid #f2f2f2;
+  font-size: 13.5px;
+  overflow: hidden;
+}
+
+.reports-chart-cont {
+  width: 70%;
+}
+.reports-guide-cont {
+  right: 1.5em;
+  height: 95%;
+  background-color: #FFF1CE;
+  -webkit-print-color-adjust: exact;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.reports-guide {
+  font-size: 10px;
+  width: 180px;
+  padding: 0 1.5em;
+  box-sizing: border-box;
+  font-weight: 300;
+  list-style: none;
+  margin: 0;
+}
+
+.reports-guide ul {
+  list-style: none;
+  margin-left: -20px;
+  margin-top: 5px;
+}
+
+.reports-guide > li {
+  font-weight: 500;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.reports-guide > li > ul > li {
+  font-weight: 300;
+  font-size: 8px;
+}
+.reports-guide > li > ul > li:nth-child(even) {
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+/* .reports-guide > li > ul > li:nth-child(even) {
+
+} */
+
+.reports-sub {
+  border-left: 3px solid #224688;
+  padding-left: 10px;
+  line-height: 32px;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+
+/* ================== */
+
+.report_card {
+  display: inline-flex;
+  flex-direction: column;
+  height: 120px;
+  width: 47%;
+  margin: 5px;
+  border: 1px solid #dbdbdb;
+}
+.report_card_header{
+  width: 100%;
+  height: 30px;
+  background: #696969;
+  -webkit-print-color-adjust: exact;
+  color: white;
+  font-weight: 200;
+  text-align: center;
+  font-size: 100%;
+  line-height: 30px;
+}
+
+.report_card_foot {
+  height: 100px;
+  position: relative;
+  top: 50%;
+  margin-top: -40px;
+}
+.report_card_foot > div {
+  float: left;
+  width: 33%;
+  text-align: center;
+}
+
+.report_card_foot > div:first-child > p:nth-child(odd) {
+  color: #224688;
+  font-weight: 800;
+}
+
+.report_card_foot > div:first-child > p:nth-child(even) {
+  font-weight: 400;
+}
+
+.report_card_foot > div > p:nth-child(odd) {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #198c8c;
+}
+
+.report_card_foot > div > p:nth-child(even) {
+  font-size: 20px;
+  font-weight: 200;
+  margin: 3px 0 0;
+}
+
+/*====== ====== ====== */
+
+/*======  recharts ====== */
+.recharts-legend-wrapper{
+  width: 500px !important;
+}
+.recharts-wrapper{
+  margin: 24px 0 0 -30px;
+}
+
+
+/*====== ====== ====== */
+
+
+#print-reports {
+  background: rgb(204,204,204);
+  padding: 0.5em 0;
+}
+.print-guide,
+#print-reports > section {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  width: 21cm;
+  padding: 2em;
+  box-sizing: border-box;
+}
+
+#print-reports > section {
+  height: 29.7cm;
+}
+
+@media print {
+  @page {
+     size: auto;
+     margin: 0;
+  }
+  ::-webkit-input-placeholder { /* WebKit browsers */
+      color: transparent;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: transparent;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: transparent;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: transparent;
+  }
+  body * { visibility: hidden;}
+  body, #print-reports > section {
+    margin: 0;
+    box-shadow: 0;
+  }
+  #print-reports *{
+    visibility: visible;
+  }
+  #print-reports {
+    position: absolute;
+  }
+  #print-reports > div:first-child,
+  .reports-bottom > label,
+  .recharts-tooltip-wrapper {
+    display: none;
+  }
+  /* -webkit-print-color-adjust chrome 에서 background-color 잃어버리는 것을 잡아줌 */
+  .report_card_header {
+    background-color: #696969;
+    color: white;
+  }
+}
