@@ -89,7 +89,7 @@ class ReportByStudent extends PureComponent {
       guideComment: {
         "A": "우수한 학생입니다.",
         "B": "보통 학생입니다.",
-        "C": "미흡한 학생입니다."
+        "C": "아직 적응이 필요한 학생입니다."
       },
       reportsResults: {},
       loaded: false
@@ -97,15 +97,20 @@ class ReportByStudent extends PureComponent {
   }
   componentWillMount(){
     let { classId, userId, level } = this.props;
-    let chapter = `${level}0_w0_`
+    let chapter = `${level}0_w0`
     chapter = chapter.toLocaleLowerCase()
     this.props.requestedReports(classId, userId, chapter)
   }
   componentWillReceiveProps(newProps){
     if(newProps.reportsResults !== this.props.reportsResults) {
+      let {chapterAves} = newProps.reportsResults;
+      chapterAves = chapterAves.sort((a, b) => {
+        return +a.name.split("_")[2].match(/\d+/) > +b.name.split("_")[2].match(/\d+/)
+      })
      this.setState({
        reportsResults: {
-         ...newProps.reportsResults
+         ...newProps.reportsResults,
+         chapterAves
        },
        loaded: true
      })
@@ -140,7 +145,7 @@ class ReportByStudent extends PureComponent {
     }
 
     let { school, className, level, name } = this.props;
-
+    console.log(this.state.reportsResults.chapterAves, name);
     return (
       <section className="print">
         <div className="reports-top">
@@ -165,18 +170,16 @@ class ReportByStudent extends PureComponent {
          </div>
          <ReportsGuideCont>
            <DescribeName name="막대 그래프">
-             {/* <li>미완료 (주황색)</li>
-             <li>아직풀지못한문제수</li> */}
-             {/* <li>블록초과(적색)</li>
-             <li>기준보다 많은 블록을 사용</li> */}
-             <li>완료(녹색)</li>
-             <li>최소의 블록을 사용한 경우</li>
+             <li>학생블럭수(녹색)</li>
+             <li>성공까지 블록을 사용한 수</li>
+             <li>반평균블럭(주황색)</li>
+             <li>성공까지 블록을 사용한 반 평균 수</li>
            </DescribeName>
            <DescribeName name="꺾은선 그래프">
-             <li>반평균블록(파랑색)</li>
-             <li>반평균블록사용수</li>
-             <li>사용한블록(보라색)</li>
-             <li>원아가 사용한 블록의 수</li>
+             <li>학생시도횟수(주황색)</li>
+             <li>성공까지 다시 시도한 횟수</li>
+             <li>반 평균시도횟수(보라색)</li>
+             <li>성공까지 다시 시도한 반 평균 횟수</li>
            </DescribeName>
          </ReportsGuideCont>
         </div>
