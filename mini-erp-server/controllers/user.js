@@ -572,13 +572,11 @@ const userInfoUpdatebyRenew = async ctx => {
 }
 
 const getNewUrl = ( bId , names ) => {
-  console.log(bId , names);
+  //FIXME: 유치원 이름이 동일할때 문제 발생
   return new Promise(async(resolve, reject) => {
-    console.log("----- getNewUrl AAAA ------");
     let users = await User.find(),
         urls = [],
         newUrls = [];
-    console.log("----- getNewUrl BBBB ------");
     users.filter(function(user) {
       return user.userType == "branch";
     }).forEach(function(user) {
@@ -588,7 +586,6 @@ const getNewUrl = ( bId , names ) => {
         }
       });
     });
-    console.log("----- getNewUrl CCCC ------");
     for(let i = 0; i < names.length; i++) {
       let sum = 0,
           kId = names[i];
@@ -625,7 +622,6 @@ const getNewUrl = ( bId , names ) => {
       sum += kId.charCodeAt(0) * 11;
       sum += kId.slice(-1).charCodeAt(0) * 19;
       sum += kId.slice(parseInt(kId / 2, 10)).charCodeAt(0) * 7;
-      console.log("----- getNewUrl DDDD ------");
       let code, l, mid;
       while(true) {
         code = sum.toString(16).slice(1);
@@ -640,9 +636,7 @@ const getNewUrl = ( bId , names ) => {
         }
         sum++;
       }
-      console.log("----- getNewUrl EEEE ------");
     }
-    console.log("----- getNewUrl FFFF ------");
     // console.log("urls",urls);
     // console.log("newUrls",newUrls);
     resolve(newUrls);
@@ -772,13 +766,13 @@ const deleteAcademyClass = async ctx => {
 
 const userKinderUpdate = async ctx => {
   try{
-    console.log("old office", ctx.request.body.kinders);
+
     let kinders = ctx.request.body.kinders;
-    console.log("+++++++++++AAAA+++++++++++", kinders);
+
     let names = kinders.map(kinder => kinder.name);
-    console.log("+++++++++++BBBB+++++++++++", names);
+
     let urls = await getNewUrl(ctx.request.body.branch, names);
-    console.log("===============AAAA===============");
+
     for(var i = 0; i < kinders.length; i++) {
       const kinder = kinders[i];
       const kinderId = 'K'+(i+1);
@@ -793,7 +787,7 @@ const userKinderUpdate = async ctx => {
         level: kinderClass.level
       })})
 
-      console.log("===============BBBB===============");
+
       kinders[i] = {
         code: kinderCode, manager, parentId,
         zipNo, roadAddr, detailAddr, lang,
@@ -802,20 +796,21 @@ const userKinderUpdate = async ctx => {
         name: name.trim(), phone,
         kinderClasses
       };
-      console.log("===============CCCC===============");
+
       // console.log(kinders[i])
     }
-    console.log("===============DDDD===============");
+
     ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
 
   } catch(err){
     ctx.status = 500;
     ctx.body = err;
-    console.log("===============EEEE===============", err);
+
   }
 
 }
 
+//TODO: renewal page 수정
 // if(ctx.request.body.renewal) {
 //   let { name, phone, parentId, lang, managerPh, manager } = ctx.request.body,
 //         urls = await getNewUrl(ctx.request.body.branch, [name]),
@@ -840,7 +835,7 @@ const userKinderUpdate = async ctx => {
 
 const userUpdateByAdmin = async ctx => {
   try{
-    console.log("UpdateByAdmin",ctx.request.body)
+
     const { name, sub_name, license, erpCode, location } = ctx.request.body;
     ctx.body = await User.findOneAndUpdate(
       {code: ctx.params.code},

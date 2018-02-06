@@ -61,8 +61,8 @@ class IssuedClass extends PureComponent {
               disabled={disabled} onClick={() => {
               return(alert('로그인 스티커를 인쇄하기 위해, 인쇄설정 및 라벨지를 확인하세요. \n아래의 확인을 클릭하시면, 로그인 발급페이지로 이동합니다.'))}}>로그인발급</button>
           </form>
-          {(kinderId.split("-")[0] === "C00043" || kinderId.split("-")[0] === "C00176")
-            ? <form action="http://localhost:3001/reports" target="_blank">
+          {(kinderId.split("-")[0] === "C00176")
+            ? <form action="http://office.toycode.org/reports" target="_blank">
                 <input type="hidden" name="code" value={kinderUrl} />
                 <input type="hidden" name="classId" value={kclassId} />
                 <input type="hidden" name="academyId" value={kinderId} />

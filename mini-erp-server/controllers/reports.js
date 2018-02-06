@@ -35,19 +35,22 @@ const isGetAllAveByUserId = async (ctx) => {
   let { classId, userId, chapter } = ctx.params;
   chapter = new RegExp(chapter, 'g');
 
-  let ch = await Reports.find({classId, userId, chapter}).select('-_id chapter').sort('date')
+  let ch = await Reports.find({classId, userId, chapter}).select('-_id chapter') //.sort('date')
+
   let each = [], chapterAves = [];
+  console.log("======= AAAA =======");
   ch.forEach( c => {
     if(each.indexOf(c.chapter) === -1) {
       each.push(c.chapter)
     }
   })
-
-  each.forEach( async ch => {
+  console.log("======= BBBB =======");
+  //FIXME: forEach 돌리는 것이 불안정함...  ㅠㅠ
+  each.forEach( async (ch, i) => {
     let chByStudent = await getAverage({ classId, userId, chapter: ch }, `${classId}.${userId}.${ch}`)
     let chByClass = await getAverage({ classId, chapter: ch }, `${classId}.${ch}`)
     let chByTotal = await getAverage({ chapter: ch }, `total.${ch}`)
-
+    console.log(`======= CCCC ======= ${i}`);
     chapterAves.push({
       name: ch,
       학생블럭수: chByStudent.block,
@@ -58,8 +61,7 @@ const isGetAllAveByUserId = async (ctx) => {
       전체평균시도횟수: chByTotal.failed,
     })
   })
-
-  // console.log(chapterAves);
+  console.log("======= DDDD =======");
   // all average
   let studentAve = await getAverage({ classId, userId, chapter }, `${classId}.${userId}`)
   let classAve = await getAverage({ classId, chapter }, `${classId}`)
@@ -75,7 +77,8 @@ const isGetAllAveByUserId = async (ctx) => {
     }
     return result
   }
-
+  console.log("======= EEEE =======");
+  // console.log(chapterAves);
   ctx.body = {
     block : {
       reportTitle: "사용 블럭 수",
