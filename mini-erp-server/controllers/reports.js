@@ -11,7 +11,7 @@ const isPostedReports = async (ctx) => {
 }
 
 const getAverage = async (target, name) => {
-  return await Reports.aggregate([
+  let result = await Reports.aggregate([
     { "$match": target },
     { "$group": {
         "_id": `${name}`,
@@ -21,16 +21,21 @@ const getAverage = async (target, name) => {
         "block": { "$avg": "$block" }
     }}
   ])
+  result = result[0];
+  result.score = +result.score.toFixed(2);
+  result.failed = +result.failed.toFixed(2);
+  result.block = +result.block.toFixed(2);
+
+  return result
 }
 
 
 const isGetAllAveByUserId = async (ctx) => {
 
   let { classId, userId, chapter } = ctx.params;
-  let volume = new RegExp(chapter.split("_")[0], 'g');
+  chapter = new RegExp(chapter, 'g');
 
-  // get average by each chapter
-  let ch = await Reports.find({classId, userId, chapter: volume}).select('-_id chapter')
+  let ch = await Reports.find({classId, userId, chapter}).select('-_id chapter').sort('date')
   let each = [], chapterAves = [];
   ch.forEach( c => {
     if(each.indexOf(c.chapter) === -1) {
@@ -43,10 +48,6 @@ const isGetAllAveByUserId = async (ctx) => {
     let chByClass = await getAverage({ classId, chapter: ch }, `${classId}.${ch}`)
     let chByTotal = await getAverage({ chapter: ch }, `total.${ch}`)
 
-    chByStudent = chByStudent[0]
-    chByClass = chByClass[0]
-    chByTotal = chByTotal[0]
-
     chapterAves.push({
       name: ch,
       학생블럭수: chByStudent.block,
@@ -58,16 +59,11 @@ const isGetAllAveByUserId = async (ctx) => {
     })
   })
 
+  // console.log(chapterAves);
   // all average
-
-
-  let studentAve = await getAverage({ classId, userId, chapter: volume }, `${classId}.${userId}`)
-  let classAve = await getAverage({ classId, chapter: volume }, `${classId}`)
-  let totalAve = await getAverage({ chapter: volume }, `total`)
-
-  studentAve = studentAve[0]
-  classAve = classAve[0]
-  totalAve = totalAve[0]
+  let studentAve = await getAverage({ classId, userId, chapter }, `${classId}.${userId}`)
+  let classAve = await getAverage({ classId, chapter }, `${classId}`)
+  let totalAve = await getAverage({ chapter }, `total`)
 
   function filterDuration(time) {
     let sec = Math.floor(time/1000), min = null; // , hr = null;

@@ -3,7 +3,8 @@ import * as types from '../actions'
 
 const initialState = {
   branchInfo:{},
-  needNames: []
+  needNames: [],
+  reports: {}
 }
 
 const filterNames = (state = initialState.needNames, newName) => {
@@ -40,6 +41,13 @@ export default function (state = initialState, action) {
       return { ...state, [action.classId] : {students: action.students}}
     case types.IS_REGISTERED_FIRST_TIME:
       return { ...state, needNames: needNames(state.needNames, action)  }
+    case types.IS_REQUESTED_REPORTS:
+      return { ...state, reports: {
+        ...state.reports,
+        [action.userId] : {
+          ...action.results
+        }
+      }}
     default:
       return state
   }

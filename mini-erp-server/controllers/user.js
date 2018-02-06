@@ -767,7 +767,7 @@ const deleteAcademyClass = async ctx => {
 
 const userKinderUpdate = async ctx => {
     try{
-      console.log("old office", ctx.request.body.kinders[0].kinderClasses);
+      console.log("old office");
       let kinders = ctx.request.body.kinders,
           names = kinders.map(kinder => kinder.name),
           urls = await getNewUrl(ctx.request.body.branch, names);
@@ -786,7 +786,7 @@ const userKinderUpdate = async ctx => {
           level: kinderClass.level
         })})
 
-        console.log("===============BBBB===============", kinderClasses);
+        console.log("===============BBBB===============");
         kinders[i] = {
           code: kinderCode, manager, parentId,
           zipNo, roadAddr, detailAddr, lang,
@@ -798,13 +798,13 @@ const userKinderUpdate = async ctx => {
         console.log("===============CCCC===============");
         // console.log(kinders[i])
       }
-      console.log("===============DDDD===============", kinders);
+      console.log("===============DDDD===============");
       ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
 
     } catch(err){
       ctx.status = 500;
       ctx.body = err;
-      console.log("===============EEEE===============", err);
+      console.log("===============EEEE===============");
       // console.log(err);
     }
 

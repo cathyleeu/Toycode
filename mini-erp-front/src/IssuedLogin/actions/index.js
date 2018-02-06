@@ -20,8 +20,16 @@ export const IS_REQUESTED_REPORTS = 'IS_REQUESTED_REPORTS'
 /*----- actions -----*/
 
 
-export const requestedReports = () => (dispatch) => {
-  console.log("requestedReports");
+export const requestedReports = (classId, userId, chapter) => (dispatch) => {
+  axios.get(`${ROOT_URL}/reports/${classId}/${userId}/${chapter}`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch({
+          type: IS_REQUESTED_REPORTS,
+          userId,
+          results : res.data
+        })
+      })
 }
 
 
