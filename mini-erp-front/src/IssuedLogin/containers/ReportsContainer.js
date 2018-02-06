@@ -240,9 +240,11 @@ class ReportsContainer extends Component {
   }
   renderReportsByStudent(name, id) {
     let { students, ...stateRest } = this.state;
+    students = [];
     return <ReportByStudent
               key={id} name={name}
               userId={id}
+              students={students}
               reportsResults={this.props.reportsResults[id]}
               requestedReports={this.props.requestedReports}
               {...stateRest}
