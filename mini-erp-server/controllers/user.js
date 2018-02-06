@@ -625,7 +625,7 @@ const getNewUrl = ( bId , names ) => {
       sum += kId.charCodeAt(0) * 11;
       sum += kId.slice(-1).charCodeAt(0) * 19;
       sum += kId.slice(parseInt(kId / 2, 10)).charCodeAt(0) * 7;
-
+      console.log("----- getNewUrl DDDD ------");
       let code, l, mid;
       while(true) {
         code = sum.toString(16).slice(1);
@@ -640,8 +640,9 @@ const getNewUrl = ( bId , names ) => {
         }
         sum++;
       }
+      console.log("----- getNewUrl EEEE ------");
     }
-    console.log("----- getNewUrl DDDD ------");
+    console.log("----- getNewUrl FFFF ------");
     // console.log("urls",urls);
     // console.log("newUrls",newUrls);
     resolve(newUrls);
