@@ -12,8 +12,8 @@ class RegisterKinderClasses extends Component {
   }
   handleRemoveClick = e => {
     e.preventDefault()
-    const { deleteKinderClass, id } = this.props
-    deleteKinderClass(id)
+    const { deleteKinderClass, id, kinderClass } = this.props
+    deleteKinderClass(id, kinderClass)
   }
   isHandleChange = e => {
     e.preventDefault()

@@ -779,13 +779,31 @@ const userKinderUpdate = async ctx => {
       const kinderCode = kinder.parentId+'-'+kinderId;
       const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
       // console.log(url)
+
+      let ids = kinder.kinderClasses.map((kc, i) => kc.code ? kc.code : kinderCode+'-KC'+(i+1))
+
       let kinderClasses = kinder.kinderClasses.map((kinderClass, i) => {
-        return({
-        _id: kinderId+'-KC'+(i+1),
-        code: kinderCode+'-KC'+(i+1),
-        className: kinderClass.className,
-        level: kinderClass.level
-      })})
+        if(kinderClass.code) {
+          return kinderClass
+        } else {
+          let id = kinderCode+'-KC'+(i+1),
+              split = id.split("KC"),
+              newId = i+1;
+
+          for(let i = 0; i < ids.length; i++) {
+            if(ids.indexOf(id) !== -1 || ids[i] === id) {
+              newId = parseInt(split[1], 10) + 1;
+              id = `${split[0]}KC${newId}`
+            }
+          }
+          return({
+            _id: kinderId+'-KC'+newId,
+            code: kinderCode+'-KC'+newId,
+            className: kinderClass.className,
+            level: kinderClass.level
+          })
+        }
+      })
 
 
       kinders[i] = {

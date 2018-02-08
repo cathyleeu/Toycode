@@ -38,6 +38,18 @@ const isRegisteredNames = async (ctx, next) => {
 //   ctx.body = await login.save();
 // } else {
 
+const isRemovedNamesByKC = async ctx => {
+  try{
+    let { _id } = ctx.params;
+    console.log("remove class Names");
+    ctx.body = await Login.findOneAndRemove({ _id })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
+
 const isFetchedAllNames = async (ctx) => {
   try {
     ctx.body = await Login.find();
@@ -152,5 +164,6 @@ module.exports = {
   isFetchedAllNames,
   isAllNamesByBranch,
   editStudentName,
-  delStudentName
+  delStudentName,
+  isRemovedNamesByKC
 };

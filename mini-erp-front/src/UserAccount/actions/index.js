@@ -1,6 +1,8 @@
 import * as types from '../constants/types'
 import axios from 'axios'
 import { isFetchedNamesByClass } from '../../IssuedLogin/actions'
+const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
+
 
 let nextKinId = 0
 export function createKinder(_id){
@@ -34,10 +36,28 @@ export const updateKinderClass = (classname, level, id, parentId, classId) => ({
   classname, level, id, parentId, classId
 })
 
-export const deleteKinderClass = (id) => ({
-  type: types.DELETE_KINDER_CLASS,
-  id
-})
+
+export const deleteKinderClass = (id, kinderClass) => (dispatch, getState) => {
+  let { code, className } = kinderClass;
+  if(code) {
+    // debugger
+    axios.get(`${ROOT_URL}/login/${code}/${className}`)
+      .then(res => {
+        console.log("deleted logins names", res);
+        if(Boolean(res.data)){
+          axios.delete(`${ROOT_URL}/login/${res.data._id}`)
+            .then(res => {
+              console.log("deleted logins names");
+            })
+        }
+      })
+
+  }
+  dispatch({
+    type: types.DELETE_KINDER_CLASS,
+    id
+  })
+}
 
 export const addChild = (childId) => ({
   type: types.ADD_KINDER,
@@ -56,7 +76,7 @@ export const editKinder = (status) => ({
 })
 
 
-const ROOT_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3090'
+
 export const completedAddKinder = (KinData, branch) => (dispatch, getState) => {
   console.log("completedAddKinderDB",KinData);
   const user = localStorage.getItem('email')
