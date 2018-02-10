@@ -104,8 +104,14 @@ class ReportByStudent extends PureComponent {
   componentWillReceiveProps(newProps){
     if(newProps.reportsResults !== this.props.reportsResults) {
       let {chapterAves} = newProps.reportsResults;
+      chapterAves = chapterAves.map(ch => {
+        let vol = ch.name.split("_")[2].match(/\d+/)[0];
+        ch.name = `${vol}권`
+        return ch
+      })
+
       chapterAves = chapterAves.sort((a, b) => {
-        return +a.name.split("_")[2].match(/\d+/) > +b.name.split("_")[2].match(/\d+/)
+        return +a.name.match(/\d+/) > +b.name.match(/\d+/)
       })
      this.setState({
        reportsResults: {
@@ -145,7 +151,6 @@ class ReportByStudent extends PureComponent {
     }
 
     let { school, className, level, name } = this.props;
-    console.log(this.state.reportsResults.chapterAves, name);
     return (
       <section className="print">
         <div className="reports-top">
@@ -262,11 +267,6 @@ class ReportsContainer extends Component {
               의견 및 평가 란 옆에
               에서 A,B,C 중 학생에게 를 선택하면 기본적 코멘트 가이드가 입력됩니다.
             </pre>
-            {/* <ul>
-              <li>A를 클릭한 경우 : 비교적 우수한 학생들에 대한 기본 코멘트 입니다.</li>
-              <li>B를 클릭한 경우 : 아직풀지못한문제수</li>
-              <li>C를 클릭한 경우 : 아직풀지못한문제수</li>
-            </ul> */}
             <button onClick={() => window.print()}>인쇄하기</button>
           </div>
           {this.state.students.map(this.renderReportsByStudent)}
