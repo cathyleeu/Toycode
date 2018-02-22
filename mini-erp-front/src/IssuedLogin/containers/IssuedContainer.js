@@ -1,38 +1,47 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import IssuedClassesList from '../components/IssuedClassesList'
 
 
 
-const IssuedContainer = ({
-  recordedKinders,
-  fetchInfoForIssued,
-  loginInfo,
-  isFetchedNamesByClass,
-  isRegisteredNames,
-  isEditingNames,
-  studentsNames,
-  isWritingNames,
-  customerType
-}) => {
-  return(
-  <div className="has-Header Container">
-    {recordedKinders && (
-      <IssuedClassesList
-        studentsNames={studentsNames}
-        recordedKinders={recordedKinders}
-        fetchInfoForIssued={fetchInfoForIssued}
-        loginInfo={loginInfo}
-        customerType={customerType}
-        isRegisteredNames={isRegisteredNames}
-        isFetchedNamesByClass={isFetchedNamesByClass}
-        isEditingNames={isEditingNames}
-        isWritingNames={isWritingNames}
-      />)}
-  </div>
-)}
-
+class IssuedContainer extends PureComponent {
+  componentWillMount(){
+    if(this.props.customerType === 'T') {
+      let { parentId, name } = this.props.recordedKinders[0]
+      this.props.fetchInfoForIssued(parentId, name)
+    }
+  }
+  render(){
+    let {
+      recordedKinders,
+      fetchInfoForIssued,
+      loginInfo,
+      isFetchedNamesByClass,
+      isRegisteredNames,
+      isEditingNames,
+      studentsNames,
+      isWritingNames,
+      customerType
+    } = this.props;
+    return (
+      <div className="has-Header Container">
+        {recordedKinders && (
+          <IssuedClassesList
+            studentsNames={studentsNames}
+            recordedKinders={recordedKinders}
+            fetchInfoForIssued={fetchInfoForIssued}
+            loginInfo={loginInfo}
+            customerType={customerType}
+            isRegisteredNames={isRegisteredNames}
+            isFetchedNamesByClass={isFetchedNamesByClass}
+            isEditingNames={isEditingNames}
+            isWritingNames={isWritingNames}
+          />)}
+      </div>
+    )
+  }
+}
 
 
 const mapStateToProps = (state) => ({

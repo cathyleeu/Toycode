@@ -3,14 +3,29 @@ import IssuedClasses from './IssuedClasses'
 
 
 class IssuedClassesList extends PureComponent {
+  constructor(){
+    super()
+    this.state = {
+      kinderCode: ""
+    }
+  }
   componentDidMount(){
     const { recordedKinders, fetchInfoForIssued } = this.props;
-    recordedKinders.map(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
+    if(this.props.customerType !== 'T') {
+      recordedKinders.forEach(kinder => fetchInfoForIssued(kinder.parentId, kinder.name))
+    }
   }
   render(){
     const { loginInfo, recordedKinders, customerType} = this.props;
-    //TODO: 유치원 코드 찾기
-    const Code4Kinder = Object.keys(loginInfo).filter(name => name !== 'branchInfo')[1];
+    let Code4Kinder;
+    if(customerType === "T") {
+      let code = recordedKinders[0].kinderClasses < 0 ? false : recordedKinders[0].kinderClasses[0].code
+      if(!code) {
+        alert("지사에 문의하여 반을 등록하세요.")
+      }
+      let getCode = code.split("-");
+      Code4Kinder = `${getCode[0]}-${getCode[1]}`
+    }
     return(
         <div>
           <h3 className='issued-notice'>로그인 발급 : 로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h3>
