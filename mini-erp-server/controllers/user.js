@@ -224,12 +224,15 @@ const signup = async (ctx, next) => {
         education:{ E_manager: '', E_email: '', E_phone: '' }
       });
     } else if(customerType === 'T'){
+      //FIXME: 지사에서 먼저 등록한 반이 있는 경우 반을 불러와서 원에 넣어줘야함
       user = new User({
         userType, email, password,
         code: resultId,
         customerType,
         kinders:[{
-          parentId: signupCode, name: kinderName.trim(),  kinderClasses:[]
+          parentId: signupCode,
+          name: kinderName.trim(),
+          kinderClasses:[]
         }]
       });
     } else {
@@ -500,7 +503,25 @@ const allUsersEmails = async ctx => {
   ctx.body = await User.find().select('email -_id');
 }
 const loggedUser = async ctx => {
-  ctx.body = await User.findOne().where({email: ctx.params.user}).select('-password');
+  let targetUser = await User.findOne().where({email: ctx.params.user}).select('-password')
+  console.log(targetUser.customerType);
+
+  let kinderId;
+  if(targetUser.customerType === 'T') {
+    let splitId = targetUser.kinders[0].kinderClasses[0].code.split('-');
+    kinderId = `${splitId[0]}-${splitId[1]}`;
+    ctx.body = {
+      code: targetUser.code,
+      customerType : targetUser.customerType,
+      kinderId,
+      email: targetUser.email,
+      kinders: targetUser.kinders,
+      userType: targetUser.userType,
+      _id: targetUser._id
+    }
+  } else {
+    ctx.body = targetUser
+  }
 }
 
 // 원-지사코드 매칭

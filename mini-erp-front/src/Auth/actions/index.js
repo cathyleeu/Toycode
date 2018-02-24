@@ -92,12 +92,18 @@ export function fetchUserInfo() {
 
 function receiveUserInfo(response) {
   console.log(response);
-  return {
+  let common = {
     type: types.STATUS_ON_LOGIN,
     response,
     kinder: response.kinders,
     education: response.education,
     account: response.account
+  }
+  if(response.customerType === "T") {
+    common['kinderId'] = response.kinderId;
+  }
+  return {
+    ...common
   }
 }
 

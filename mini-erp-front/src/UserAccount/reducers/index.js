@@ -72,7 +72,7 @@ export default (state = initialState , action) => {
     case STATUS_ON_LOGIN:
       const { account, education } = action;
       return { ...state,
-              kinders:[...action.kinder],
+              kinders:[ ...action.kinder ],
               managers: { account, education }
               }
     case types.ADD_KINDER:
