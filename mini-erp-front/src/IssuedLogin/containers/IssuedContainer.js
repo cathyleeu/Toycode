@@ -22,7 +22,8 @@ class IssuedContainer extends PureComponent {
       isEditingNames,
       studentsNames,
       isWritingNames,
-      customerType
+      customerType,
+      teacherId
     } = this.props;
     return (
       <div className="has-Header Container">
@@ -30,6 +31,7 @@ class IssuedContainer extends PureComponent {
           <IssuedClassesList
             studentsNames={studentsNames}
             recordedKinders={recordedKinders}
+            teacherId={teacherId}
             fetchInfoForIssued={fetchInfoForIssued}
             loginInfo={loginInfo}
             customerType={customerType}
@@ -46,6 +48,7 @@ class IssuedContainer extends PureComponent {
 
 const mapStateToProps = (state) => ({
   recordedKinders: state.auth.user.kinders,
+  teacherId : state.auth.user.kinderId,
   loginInfo: state.issuedLogin,
   studentsNames: state.issuedLogin,
   customerType: state.auth.user.customerType

@@ -16,21 +16,12 @@ class IssuedClassesList extends PureComponent {
     }
   }
   render(){
-    const { loginInfo, recordedKinders, customerType} = this.props;
-    let Code4Kinder;
-    if(customerType === "T") {
-      let code = recordedKinders[0].kinderClasses < 0 ? false : recordedKinders[0].kinderClasses[0].code
-      if(!code) {
-        alert("지사에 문의하여 반을 등록하세요.")
-      }
-      let getCode = code.split("-");
-      Code4Kinder = `${getCode[0]}-${getCode[1]}`
-    }
+    const { loginInfo, recordedKinders, teacherId, customerType} = this.props;
     return(
         <div>
           <h3 className='issued-notice'>로그인 발급 : 로그인 발급을 위해 각 반의 레벨을 꼭 기입해 주세요.</h3>
           {recordedKinders.map((kinder, i) => {
-            const kinder4Info = customerType === 'T' ? loginInfo[Code4Kinder] : loginInfo[kinder.code];
+            const kinder4Info = customerType === 'T' ? loginInfo[teacherId] : loginInfo[kinder.code];
             return( kinder4Info &&
               <IssuedClasses
                 key={i}
