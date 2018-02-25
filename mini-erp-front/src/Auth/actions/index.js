@@ -98,12 +98,6 @@ function receiveUserInfo(response) {
     education: response.education,
     account: response.account
   }
-  if(response.customerType === "T") {
-    common['kinderId'] = response.kinderId;
-  }
-  return {
-    ...common
-  }
 }
 
 
