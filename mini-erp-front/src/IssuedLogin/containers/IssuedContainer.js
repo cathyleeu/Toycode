@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../actions'
 import IssuedClassesList from '../components/IssuedClassesList'
 
-
+//FIXME: teacherId
 
 class IssuedContainer extends PureComponent {
   componentWillMount(){
@@ -22,8 +22,7 @@ class IssuedContainer extends PureComponent {
       isEditingNames,
       studentsNames,
       isWritingNames,
-      customerType,
-      teacherId
+      customerType
     } = this.props;
     return (
       <div className="has-Header Container">
@@ -31,7 +30,6 @@ class IssuedContainer extends PureComponent {
           <IssuedClassesList
             studentsNames={studentsNames}
             recordedKinders={recordedKinders}
-            teacherId={teacherId}
             fetchInfoForIssued={fetchInfoForIssued}
             loginInfo={loginInfo}
             customerType={customerType}
@@ -48,7 +46,6 @@ class IssuedContainer extends PureComponent {
 
 const mapStateToProps = (state) => ({
   recordedKinders: state.auth.user.kinders,
-  teacherId : state.auth.user.kinderId,
   loginInfo: state.issuedLogin,
   studentsNames: state.issuedLogin,
   customerType: state.auth.user.customerType
