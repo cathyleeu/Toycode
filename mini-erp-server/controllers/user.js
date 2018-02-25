@@ -225,6 +225,11 @@ const signup = async (ctx, next) => {
       });
     } else if(customerType === 'T'){
       //FIXME: 지사에서 먼저 등록한 반이 있는 경우 반을 불러와서 원에 넣어줘야함
+      // 여기가 다 비어서 문제가 생긴다~~
+
+      // kinders 안에 code, _id 넣어줘야함... ㅠ
+      // let targetKinder = await User.findOne({ "kinders.name" : kinderName.trim()})
+
       user = new User({
         userType, email, password,
         code: resultId,
@@ -504,24 +509,23 @@ const allUsersEmails = async ctx => {
 }
 const loggedUser = async ctx => {
   let targetUser = await User.findOne().where({email: ctx.params.user}).select('-password')
-  console.log(targetUser.customerType);
 
-  let kinderId;
-  if(targetUser.customerType === 'T') {
-    let splitId = targetUser.kinders[0].kinderClasses[0].code.split('-');
-    kinderId = `${splitId[0]}-${splitId[1]}`;
-    ctx.body = {
-      code: targetUser.code,
-      customerType : targetUser.customerType,
-      kinderId,
-      email: targetUser.email,
-      kinders: targetUser.kinders,
-      userType: targetUser.userType,
-      _id: targetUser._id
-    }
-  } else {
+  // let kinderId;
+  // if(targetUser.customerType === 'T') {
+  //   let splitId = targetUser.kinders[0].kinderClasses[0].code.split('-');
+  //   kinderId = `${splitId[0]}-${splitId[1]}`;
+  //   ctx.body = {
+  //     code: targetUser.code,
+  //     customerType : targetUser.customerType,
+  //     kinderId,
+  //     email: targetUser.email,
+  //     kinders: targetUser.kinders,
+  //     userType: targetUser.userType,
+  //     _id: targetUser._id
+  //   }
+  // } else {
     ctx.body = targetUser
-  }
+  // }
 }
 
 // 원-지사코드 매칭
@@ -836,7 +840,7 @@ const userKinderUpdate = async ctx => {
         kinderClasses
       };
 
-      // console.log(kinders[i])
+
     }
 
     ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
@@ -893,6 +897,21 @@ const userUpdateByAdmin = async ctx => {
   }
 }
 
+const updateKinderClasses = async ctx => {
+  let { parentId, kinderName, customerType } = ctx.params;
+
+  let targetParent = await User.findOne({ "code" : parentId, "kinders.name": kinderName }).select("kinders.$"),
+      targetKinder = await User.findOneAndUpdate(
+        { customerType, "kinders.parentId": parentId, "kinders.name": kinderName },
+        { $set: {
+            "kinders.$.code" : targetParent.kinders[0].code,
+            "kinders.$.kinderClasses" : targetParent.kinders[0].kinderClasses
+          }
+        },
+        { new: true })
+        console.log(targetParent, targetKinder);
+  ctx.body = targetKinder
+}
 
 
 //==================pagination==========
@@ -977,5 +996,6 @@ module.exports = {
   deleteAcademyClass,
   getPagination,
   getAutoComplete,
+  updateKinderClasses
   // getClassReports
 };
