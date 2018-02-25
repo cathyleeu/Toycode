@@ -39,6 +39,8 @@ router.put('/user/:user/academyClass/:academyId',  Users.createAcademyClass)
 router.put('/user/:user/academyClass/:academyId/:classId',  Users.updateAcademyClass)
 router.get('/user/:size/:page/:customerType', Users.getPagination)
 router.post('/user/search/:searchText', Users.getAutoComplete)
+
+router.put('/user/:parentId/:kinderName/:customerType', Users.updateKinderClasses )
 // router.get('/user/:user/kinder/:academyId/',  Users.getAcademyByUser)
 // router.del('/user/:user/kinder/:academyId/',  Users.deleteAcademy)
 
