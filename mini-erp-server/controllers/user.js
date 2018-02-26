@@ -224,20 +224,17 @@ const signup = async (ctx, next) => {
         education:{ E_manager: '', E_email: '', E_phone: '' }
       });
     } else if(customerType === 'T'){
-      //FIXME: 지사에서 먼저 등록한 반이 있는 경우 반을 불러와서 원에 넣어줘야함
-      // 여기가 다 비어서 문제가 생긴다~~
-
-      // kinders 안에 code, _id 넣어줘야함... ㅠ
-      // let targetKinder = await User.findOne({ "kinders.name" : kinderName.trim()})
+      let targetKinder = await User.findOne({ "code": signupCode, "kinders.name" : kinderName.trim()}).select('kinders.$')
 
       user = new User({
         userType, email, password,
         code: resultId,
         customerType,
         kinders:[{
+          code: targetKinder.kinders[0].code,
           parentId: signupCode,
           name: kinderName.trim(),
-          kinderClasses:[]
+          kinderClasses: targetKinder.kinders[0].kinderClasses
         }]
       });
     } else {
