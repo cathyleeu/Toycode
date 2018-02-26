@@ -103,23 +103,25 @@ class ReportByStudent extends PureComponent {
   }
   componentWillReceiveProps(newProps){
     if(newProps.reportsResults !== this.props.reportsResults) {
-      let {chapterAves} = newProps.reportsResults;
-      chapterAves = chapterAves.map(ch => {
-        let vol = ch.name.split("_")[2].match(/\d+/)[0];
-        ch.name = `${vol}권`
-        return ch
-      })
+      let { chapterAves } = newProps.reportsResults;
+      if(chapterAves) {
+        chapterAves = chapterAves.map(ch => {
+          let vol = ch.name.split("_")[2].match(/\d+/)[0];
+          ch.name = `${vol}권`
+          return ch
+        })
 
-      chapterAves = chapterAves.sort((a, b) => {
-        return +a.name.match(/\d+/) > +b.name.match(/\d+/)
-      })
-     this.setState({
-       reportsResults: {
-         ...newProps.reportsResults,
-         chapterAves
-       },
-       loaded: true
-     })
+        chapterAves = chapterAves.sort((a, b) => {
+          return +a.name.match(/\d+/) > +b.name.match(/\d+/)
+        })
+       this.setState({
+         reportsResults: {
+           ...newProps.reportsResults,
+           chapterAves
+         },
+         loaded: true
+       })
+      }
     }
   }
   handleChange = (e) => {
@@ -143,11 +145,7 @@ class ReportByStudent extends PureComponent {
   }
   render(){
     if(!this.state.loaded) {
-      return (
-        <section className="print">
-          <div>로딩중</div>
-        </section>
-      )
+      return false
     }
 
     let { school, className, level, name } = this.props;
@@ -266,6 +264,8 @@ class ReportsContainer extends Component {
             <pre>
               의견 및 평가 란 옆에
               에서 A,B,C 중 학생에게 를 선택하면 기본적 코멘트 가이드가 입력됩니다.
+              <br></br>
+              데이터가 없는 경우, 학생들의 리포트가 뜨지 않습니다.
             </pre>
             <button onClick={() => window.print()}>인쇄하기</button>
           </div>
