@@ -56,13 +56,13 @@ class RegisterKinderClasses extends Component {
             <option value="C">C레벨</option>
           </select>
         </label>
-        <button
+        {/* <button
           style={{display: disabled}}
           className="button-delete"
           onClick={this.handleRemoveClick}>
           <i className="fa fa-trash"></i>
           반 삭제
-        </button>
+        </button> */}
       </div>
     )
   }
