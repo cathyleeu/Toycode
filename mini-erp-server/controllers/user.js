@@ -225,7 +225,7 @@ const signup = async (ctx, next) => {
       });
     } else if(customerType === 'T'){
       let targetKinder = await User.findOne({ "code": signupCode, "kinders.name" : kinderName.trim()}).select('kinders.$')
-
+      console.log("AAAAAAAAAA", targetKinder.kinders[0].kinderClasses);
       user = new User({
         userType, email, password,
         code: resultId,
@@ -506,23 +506,11 @@ const allUsersEmails = async ctx => {
 }
 const loggedUser = async ctx => {
   let targetUser = await User.findOne().where({email: ctx.params.user}).select('-password')
-
-  // let kinderId;
-  // if(targetUser.customerType === 'T') {
-  //   let splitId = targetUser.kinders[0].kinderClasses[0].code.split('-');
-  //   kinderId = `${splitId[0]}-${splitId[1]}`;
-  //   ctx.body = {
-  //     code: targetUser.code,
-  //     customerType : targetUser.customerType,
-  //     kinderId,
-  //     email: targetUser.email,
-  //     kinders: targetUser.kinders,
-  //     userType: targetUser.userType,
-  //     _id: targetUser._id
-  //   }
-  // } else {
     ctx.body = targetUser
-  // }
+}
+
+const findUserByType = async ctx => {
+  ctx.body = await User.find({ customerType: ctx.params.customerType }).select('-password');
 }
 
 // 원-지사코드 매칭
@@ -993,6 +981,7 @@ module.exports = {
   deleteAcademyClass,
   getPagination,
   getAutoComplete,
-  updateKinderClasses
+  updateKinderClasses,
+  findUserByType
   // getClassReports
 };

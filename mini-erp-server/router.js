@@ -24,6 +24,7 @@ router.post('/verification/:code', Users.verifiedCode)
 router.get('/user', Users.allUsers)
 router.get('/email', Users.allUsersEmails)
 router.get('/user/:user', Users.loggedUser)
+router.get('/user/getdata/:customerType', Users.findUserByType)
 
 router.get('/branch/:branch', Users.allBranchKinders)
 router.get('/branch/:branch/:kinderInfo', Users.isFetchedKinderInfo)
