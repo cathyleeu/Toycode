@@ -78,7 +78,7 @@ export const editKinder = (status) => ({
 
 
 export const completedAddKinder = (KinData, branch) => (dispatch, getState) => {
-  console.log("completedAddKinderDB",KinData);
+  console.log("completedAddKinderDB", KinData, branch);
   const user = localStorage.getItem('email')
   axios.put(`${ROOT_URL}/user/${user}/kinder`, {...KinData,branch})
   dispatch({type: types.COMPLETE_ADD_KINDER, branchEdit: false})

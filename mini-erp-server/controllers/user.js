@@ -1,6 +1,7 @@
 const jwt = require('jwt-simple'),
       User = require('../models/user'),
       Code = require('../models/code'),
+      Login = require('../models/login'),
       mongoose = require('mongoose'),
       nev = require('email-verification')(mongoose),
       config = require('../config'),
@@ -775,64 +776,166 @@ const deleteAcademyClass = async ctx => {
 }
 
 const userKinderUpdate = async ctx => {
+
   try{
 
     let kinders = ctx.request.body.kinders;
-
     let names = kinders.map(kinder => kinder.name);
-
     let urls = await getNewUrl(ctx.request.body.branch, names);
 
-    for(var i = 0; i < kinders.length; i++) {
-      const kinder = kinders[i];
-      const kinderId = 'K'+(i+1);
-      const kinderCode = kinder.parentId+'-'+kinderId;
-      const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
-      // console.log(url)
+    if (kinders.length === 0) {
+      // kinders 가 다 비어 있는 경우를 저장할 때,
+      kinders = []
 
-      let ids = kinder.kinderClasses.map((kc, i) => kc.code ? kc.code : kinderCode+'-KC'+(i+1))
+    } else if(kinders[0].code) {
+    // 원을 삭제할 경우, 로그인 db에 있는 원도 삭제를 해줘야함.
+      let orgArr = kinders.filter(a => a.code),
+          newArr = kinders.filter(a => !a.code),
+          lastN = +orgArr[orgArr.length-1].code.split("-K")[1];
+      // 뒤에 있는 것을 잡아줘야함
 
-      let kinderClasses = kinder.kinderClasses.map((kinderClass, i) => {
-        if(kinderClass.code) {
-          return kinderClass
-        } else {
-          let id = kinderCode+'-KC'+(i+1),
-              split = id.split("KC"),
-              newId = i+1;
-
-          for(let i = 0; i < ids.length; i++) {
-            if(ids.indexOf(id) !== -1 || ids[i] === id) {
-              newId = parseInt(split[1], 10) + 1;
-              id = `${split[0]}KC${newId}`
-            }
+      if(orgArr[0].kinderClasses[0].code) {
+        let orgKc = {}, newKc = {}
+        // 원래 있던 원에서 반을 추가 할 경우
+        orgArr.forEach( (org, i) => {
+          if(org.kinderClasses[0].code) {
+            let parentK = org.kinderClasses[0].code.split("-KC")[0];
+            let orgKces = org.kinderClasses.filter(a => a.code);
+            let newKces = org.kinderClasses.filter(a => !a.code);
+            orgKc[parentK] = orgKces;
+            newKc[parentK] = newKces;
           }
-          return({
-            _id: kinderId+'-KC'+newId,
-            code: kinderCode+'-KC'+newId,
-            className: kinderClass.className,
-            level: kinderClass.level
-          })
-        }
+        })
+
+        let orgKeys = Object.keys(orgKc), lastKcN, newKcArr = {};
+
+        orgKeys.forEach(kn => {
+        	if(newKc[kn].length > 0) {
+            lastKcN = +orgKc[kn][orgKc[kn].length-1].code.split("-KC")[1];
+            let pk = kn.split("-K")[1];
+        		newKc[kn] = newKc[kn].map((kc, i) => ({
+                _id: `K${pk}-KC${lastKcN+i+1}`,
+                code: `${kn}-KC${lastKcN+i+1}`,
+                className: kc.className,
+                level: kc.level
+            }))
+        	}
+          newKcArr[kn] = orgKc[kn].concat(newKc[kn])
+
+        })
+
+        orgArr.forEach( (oa, i) => {
+          oa.kinderClasses = newKcArr[oa.code]
+        })
+
+      }
+      newArr = newArr.map((a,i) => {
+        //newArr 경우 아예 처음 생성하는 것.... 그래서 KC 생성시.. 걍
+        let { _id, kinderClasses, ...rest } = a;
+        let kinderCode = `${a.parentId}-K${lastN+i+1}`;
+        let ids = kinderClasses.map((kc, i) => kc.code ? kc.code : kinderCode+'-KC'+(i+1));
+
+        kinderClasses = kinderClasses.map((kc, j) => {
+          if(kc.code) {
+            //KC 가 있으면 그냥 넘겨 그 정보 그대로 넘겨 줌
+            return kc
+          } else {
+          //  KC 가 없을 경우,
+            let id = kinderCode+'-KC'+(j+1), //1
+                split = id.split("KC"),
+                newId = j+1; //1
+
+            //FIXME: 2부터 시작되는 것을 고쳐야함.. - -;;
+
+            for(let i = 0; i < ids.length; i++) { //ids.length = 2
+              if(ids.indexOf(id) !== -1 || ids[i] === id) { //A00016-K2-KC1
+                newId = parseInt(split[1], 10) + 1;
+                id = `${split[0]}KC${newId}`
+
+              }
+            }
+            return({
+              _id: `K${lastN+i+1}-KC${newId}`,
+              code: kinderCode+'-KC'+newId,
+              className: kc.className,
+              level: kc.level
+            })
+          }
+        })
+
+        return ({
+          ...rest,
+          kinderClasses,
+          url: urls[(orgArr.length-1)+i],
+          code: kinderCode
+        })
       })
 
+      kinders = orgArr.concat(newArr)
 
-      kinders[i] = {
-        code: kinderCode, manager, parentId,
-        zipNo, roadAddr, detailAddr, lang,
-        managerPh,
-        url: url || urls[i],
-        name: name.trim(), phone,
-        kinderClasses
-      };
+    } else {
+      for(var i = 0; i < kinders.length; i++) {
+        // 원 삭제시... K2 -> K1 으로 밀려나는 현상 수정해야함.
 
+          const kinder = kinders[i];
+          const kinderId = 'K'+(i+1);
+          const kinderCode = kinder.parentId+'-'+kinderId;
+          const { manager, zipNo, roadAddr, detailAddr, managerPh, name, phone, parentId, lang, url} = kinder;
+
+          let ids = kinder.kinderClasses.map((kc, i) => kc.code ? kc.code : kinderCode+'-KC'+(i+1))
+
+          let kinderClasses = kinder.kinderClasses.map((kinderClass, i) => {
+            if(kinderClass.code) {
+              return kinderClass
+            } else {
+              let id = kinderCode+'-KC'+(i+1),
+                  split = id.split("KC"),
+                  newId = i+1;
+
+              for(let i = 0; i < ids.length; i++) {
+                if(ids.indexOf(id) !== -1 || ids[i] === id) {
+                  newId = parseInt(split[1], 10) + 1;
+                  id = `${split[0]}KC${newId}`
+                }
+              }
+              return({
+                _id: kinderId+'-KC'+newId,
+                code: kinderCode+'-KC'+newId,
+                className: kinderClass.className,
+                level: kinderClass.level
+              })
+            }
+          })
+
+          kinders[i] = {
+            code: kinderCode, manager, parentId,
+            zipNo, roadAddr, detailAddr, lang,
+            managerPh,
+            url: url || urls[i],
+            name: name.trim(), phone,
+            kinderClasses
+          };
+      }
 
     }
+
+    let ln = kinders.map(k => k.code);
+    let loginList = await Login.find({parentId: kinders[0].parentId})
+    // TODO: kinder 삭제시 Login 도 같이 삭제하기
+
+    loginList.forEach(async l => {
+    	if(ln.indexOf(l.kinderId) === -1){
+        await Login.findOneAndRemove({kinderId: l.kinderId})
+    	}
+    })
+
 
     ctx.body = await User.findOneAndUpdate({email: ctx.params.user}, {$set: {kinders, updateOn: Date.now() }}, { new: true })
 
   } catch(err){
     ctx.status = 500;
     ctx.body = err;
+    console.log(err);
 
   }
 
