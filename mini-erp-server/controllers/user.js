@@ -792,9 +792,11 @@ const userKinderUpdate = async ctx => {
       let orgArr = kinders.filter(a => a.code),
           newArr = kinders.filter(a => !a.code),
           lastN = +orgArr[orgArr.length-1].code.split("-K")[1];
+      let checked = orgArr[0].kinderClasses[0] ? orgArr[0].kinderClasses[0].code : false;
       // 뒤에 있는 것을 잡아줘야함
 
-      if(orgArr[0].kinderClasses[0].code) {
+
+      if(checked) {
         let orgKc = {}, newKc = {}
         // 원래 있던 원에서 반을 추가 할 경우
         orgArr.forEach( (org, i) => {
