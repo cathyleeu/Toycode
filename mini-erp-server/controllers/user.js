@@ -800,7 +800,8 @@ const userKinderUpdate = async ctx => {
         let orgKc = {}, newKc = {}
         // 원래 있던 원에서 반을 추가 할 경우
         orgArr.forEach( (org, i) => {
-          if(org.kinderClasses[0].code) {
+          let eachCode = org.kinderClasses[0] ? org.kinderClasses[0].code : false;
+          if(eachCode) {
             let parentK = org.kinderClasses[0].code.split("-KC")[0];
             let orgKces = org.kinderClasses.filter(a => a.code);
             let newKces = org.kinderClasses.filter(a => !a.code);
