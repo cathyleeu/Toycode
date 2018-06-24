@@ -34,8 +34,14 @@ class IssuedClass extends PureComponent {
     e.preventDefault()
     this.setState({ students: e.target.value })
   }
+  handleSubmit = ( e:Event ) => {
+    e.preventDefault()
+    console.log("handleSubmit");
+    // window.open("http://localhost:3001/reports", "_blank")
+
+  }
   render(){
-    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId, parentId } = this.props;
+    const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId } = this.props;
     // console.log("IssuedClass", this.props);
     let needNames = studentsNames.needNames;
     let mon = moment().set({year:2017, month:3});
@@ -65,8 +71,6 @@ class IssuedClass extends PureComponent {
             ? <form action="http://office.toycode.org/reports" target="_blank">
                 <input type="hidden" name="code" value={kinderUrl} />
                 <input type="hidden" name="classId" value={kclassId} />
-                <input type="hidden" name="academyId" value={kinderId} />
-                <input type="hidden" name="parentId" value={parentId} />
                 <input type="hidden" name="school" value={kinderName} />
                 <input type="hidden" name="className" value={kclassName} />
                 <input type="hidden" name="level" value={level} />

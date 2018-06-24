@@ -24,6 +24,7 @@ export const requestedReports = (classId, userId, chapter) => (dispatch) => {
   axios.get(`${ROOT_URL}/reports/${classId}/${userId}/${chapter}`)
       .then((res) => {
         console.log(res.data);
+        // FIXME: 여기서 data!!
         dispatch({
           type: IS_REQUESTED_REPORTS,
           userId,
