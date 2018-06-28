@@ -124,7 +124,7 @@
 .reports-bottom > textarea {
   outline: none;
   width: 96%;
-  height: 50%;
+  height: 70%;
   padding: 0.7rem;
   transition: text-shadow;
   resize: none;
