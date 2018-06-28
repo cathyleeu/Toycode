@@ -93,12 +93,12 @@ class ReportByStudent extends PureComponent {
       comment: "",
       select: "",
       englooComment : {
-        A1: "A1 입니다.",
-        A2: "A2 입니다.",
-        A3: "A3 입니다.",
-        A4: "A4 입니다.",
-        A5: "A5 입니다.",
-        A6: "A6 입니다.",
+        A1: "소프트웨어의 이해 : 정보사회를 이해하고 정보사회를 살아가는 윤리를 이해한다. 프로그래밍 수학 : 가로 좌표를 이해한다. 명제의 참과 거짓을 구별할 수 있다. 키즈코딩 : 순차를 이해하고 직진과 회전을 활용하여 복잡한 길을 찾을 수 있다. 적절한 위치에서 다양한 블록을 사용할 수 있다.",
+        A2: "소프트웨어의 이해 : 자료와 정보의 차이점을 이해하고 정보의 다양한 형태를 설명할 수 있다. 프로그래밍 수학 : 격자를 이용하여 길이를 비교하고 수의 대소를 비교할 수 있다. 부정과 이중 부정이 있는 문장을 이해할 수 있다. 키즈코딩 : 가위바위보의 규칙을 이해하고 실습 프로그램에서 사용할 수 있다. 조건 블록을 이용하여 상황에 따라 다르게 동작하는 코딩을 할 수 있다.",
+        A3: "소프트웨어의 이해 : 아날로그 정보와 디지털 정보를 구분하고, 이진수 카드로 이진수를 표현할 수 있다. 프로그래밍 수학 : 격자에서 순서쌍 좌표로 위치를 표현할 수 있다. 도형이 나타내는 수를 보고, 수를 도형으로 표현할 수 있다. 키즈코딩 : '반복' 블록, '여러 칸 이동' 블록, '만약에 반복' 블록을 이해하고 실습 프로그램에서 사용할 수 있다.",
+        A4: "소프트웨어의 이해 : 이미지를 저장할 때의 비트맵과 벡터의 차이를 안다. 자료 수집과 정보 분석을 통해 여행 계획을 세운다. 프로그래밍 수학 : 모양과 수가 나열되어 있는 것을 보고 규칙성을 파악할 수 있다. 키즈코딩 : 정해진 위치에 그림을 그리기 위해 필요한 블록을 이해하고, 다양한 형태의 그림을 그릴 수 있다.",
+        A5: "소프트웨어의 이해 : 자료와 정보의 구조화를 이해하고, 여러가지 형태로 표현할 수 있다. 프로그래밍 수학 : 반복되는 규칙성과 논리곱을 이해할 수 있다. 키즈코딩 : 일정하게 증가하며 반복하는 개념을 이해하고, 이를 활용하여 주어진 문제를 해결할 수 있다.",
+        A6: "소프트웨어의 이해 : 자료를 표와 그림그래프로 정리하고, 필요한 것만 추려내어 핵심 정보를 전달할 수 있다. 프로그래밍 수학 : 네모네모 로직 문제를 풀고, 논리합을 이해한다. 키즈코딩 : '만약에 아니라면', '만약에 반복', '모양/색깔 정하기', '모양/색깔 바꾸기', '일정하게 증가하며 반복' 블록을 사용하여 문제를 해결할 수 있다.",
         A7: "A7 입니다.",
         A8: "A8 입니다.",
         A9: "A9 입니다.",
@@ -145,7 +145,8 @@ class ReportByStudent extends PureComponent {
       if(chapterAves) {
         chapterAves = chapterAves.map(ch => {
           let vol = ch.name.split("_")[2].match(/\d+/)[0];
-          ch.name = `${vol}권`
+          ch.name = this.props.code === "engloo" ? `${vol}단원` : `${vol}권`
+          // ch.name = `${vol}권`
           return ch
         })
 
@@ -189,6 +190,7 @@ class ReportByStudent extends PureComponent {
         <div className="reports-bottom">
           <ReportsSubHeader name="의견 및 평가" display="inline"/>
           <textarea
+            disabled
             name="comment"
             maxLength="500"
             value={this.state.englooComment[level]} />
@@ -223,7 +225,7 @@ class ReportByStudent extends PureComponent {
         </div>
         <div className="reports-body">
           <div className="reports-chart-cont">
-            <ReportsSubHeader name="키즈씽킹 학습 현황 그래프"/>
+            <ReportsSubHeader name={`${this.state.header} 학습 현황 그래프`}/>
             <ComposedChart width={500} height={220} data={this.state.reportsResults.chapterAves}
                 margin={{top: 20, right: 20, bottom: 20, left: 20}}>
               <XAxis dataKey="name"/>
@@ -254,7 +256,7 @@ class ReportByStudent extends PureComponent {
         </div>
         <div className="reports-body">
          <div className="reports-chart-cont">
-           <ReportsSubHeader name="키즈씽킹 학습 이력 통계"/>
+           <ReportsSubHeader name={`${this.state.header} 학습 이력 통계`}/>
 
            {this.renderReportCards('block')}
            {this.renderReportCards('failed')}
