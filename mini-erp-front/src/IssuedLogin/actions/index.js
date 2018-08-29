@@ -21,6 +21,7 @@ export const IS_REQUESTED_REPORTS = 'IS_REQUESTED_REPORTS'
 
 
 export const requestedReports = (classId, userId, chapter) => (dispatch) => {
+  // console.log("dataaaaa",classId, userId, chapter);
   axios.get(`${ROOT_URL}/reports/${classId}/${userId}/${chapter}`)
       .then((res) => {
         console.log(res.data);

@@ -73,10 +73,6 @@ const ReportCard = ({
           <p>{studentValue}</p>
         </div>
         <div>
-          <p>전체 평균</p>
-          <p>{totalAverage}</p>
-        </div>
-        <div>
           <p>반 평균</p>
           <p>{classAverage}</p>
         </div>
