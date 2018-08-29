@@ -84,6 +84,9 @@ router.del('/login/:_id', Login.isRemovedNamesByKC)
 // router.put('/login/edit/:classId', Login.editStudentName)
 
 router.post('/reports', Reports.isPostedReports)
+router.get('/reports/:classId/:chapter', Reports.isGetAcademyReports)
+
+
 router.get('/reports/:classId/:userId/:chapter', Reports.isGetAllAveByUserId)
 
 
