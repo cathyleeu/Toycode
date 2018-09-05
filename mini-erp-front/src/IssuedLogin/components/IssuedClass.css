@@ -61,6 +61,38 @@
   margin: 0 1em 0 0;
   font-weight: 500;
 }
+
+
+.modal_outerStyle {
+  left: 0;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+}
+
+.modal_innerStyle {
+  background: white;
+    width: 300px;
+    position: relative;
+    left: 50%;
+    margin-left: -150px;
+    top: 50%;
+    margin-top: -100px;
+    height: 200px;
+    border-radius: 5px;
+    padding: 30px;
+}
+.modal_innerStyle select {
+  width: 200px;
+  height: 40px;
+  margin: 15px 0;
+}
+
+
+
+
+
 .register_names{
   padding: 0.6em 6em;
   width: 80%;
@@ -241,6 +273,10 @@
   font-size: 20px;
   font-weight: 200;
   margin: 3px 0 0;
+}
+
+body.preventScroll {
+  overflow: hidden;
 }
 
 /*====== ====== ====== */

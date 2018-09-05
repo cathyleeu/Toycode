@@ -10,6 +10,9 @@ export const IS_FETCHED_NAMES = 'IS_FETCHED_NAMES';
 export const IS_EDITED_NAMES = 'IS_EDITED_NAMES'
 export const IS_WRITING_NAMES = 'IS_WRITING_NAMES'
 export const IS_REGISTERED_FIRST_TIME = 'IS_REGISTERED_FIRST_TIME'
+export const IS_FETCHED_FINISHED = 'IS_FETCHED_FINISHED'
+
+
 
 
 export const IS_REQUESTED_REPORTS = 'IS_REQUESTED_REPORTS'
@@ -21,7 +24,7 @@ export const IS_REQUESTED_REPORTS = 'IS_REQUESTED_REPORTS'
 
 
 export const requestedReports = (classId, userId, chapter) => (dispatch) => {
-  // console.log("dataaaaa",classId, userId, chapter);
+  console.log("dataaaaa",classId, userId, chapter);
   axios.get(`${ROOT_URL}/reports/${classId}/${userId}/${chapter}`)
       .then((res) => {
         console.log(res.data);
@@ -77,6 +80,7 @@ export const isFetchedNamesByClass = (classId, kclassName) => (dispatch) => {
         // console.log("비교하려는 것",kclassName)
         dispatch({ type: IS_REGISTERED_FIRST_TIME, classId})
       }
+
     })
     // .catch(err => {
     //   dispatch({ type: IS_REGISTERED_FIRST_TIME, classId})

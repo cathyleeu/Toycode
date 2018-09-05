@@ -12,9 +12,10 @@ class IssuedNames extends PureComponent {
   }
   onChange = (e) => {
     e.preventDefault()
+    console.log("IssuedNames");
     this.setState({ students: e.target.value })
   }
-  isWritingNames4Issue = () => {
+  handleCompletedEdit = () => {
     const { kclassId, isWritingNames } = this.props;
     const students = splitNames(this.state.students)
     isWritingNames(kclassId, students)
@@ -26,7 +27,7 @@ class IssuedNames extends PureComponent {
         <textarea
           className={disabled ? 'students-names names-disabled' : 'students-names'}
           onChange={this.onChange}
-          onBlur={this.isWritingNames4Issue}
+          onBlur={this.handleCompletedEdit}
           value={this.state.students}
           disabled={disabled}
         />

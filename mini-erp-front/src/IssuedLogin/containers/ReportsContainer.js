@@ -112,11 +112,45 @@ class ReportByStudent extends PureComponent {
       scoreName : "점수(포인트)",
       reportsResults: {},
       lebel: "",
-      loaded: false
+      loaded: false,
+      volume : {
+        a: [
+          { name: "10", val: "a9"},
+          { name: "11", val: "a10"},
+          { name: "12(겨울)", val: "a105"}
+        ],
+        b: [
+          { name: "2", val: "b2re"},
+          { name: "3", val: "b3re"},
+          { name: "4", val: "b4re"},
+          { name: "5", val: "b5re"},
+          { name: "6(여름)", val: "b55"},
+          { name: "7", val: "b6"},
+          { name: "8", val: "b7"},
+          { name: "9", val: "b8"},
+          { name: "10", val: "b9"},
+          { name: "11", val: "b10"},
+          { name: "12(겨울)", val: "b105"}
+        ],
+        c: [
+          { name: "2", val: "c2re"},
+          { name: "3", val: "c3re"},
+          { name: "4", val: "c4re"},
+          { name: "5", val: "c5re"},
+          { name: "6(여름)", val: "c55re"},
+          { name: "7", val: "c6"},
+          { name: "8", val: "c7"},
+          { name: "9", val: "c8"},
+          { name: "10", val: "c9"},
+          { name: "11", val: "c10"},
+          { name: "12(겨울)", val: "c105"}
+        ]
+      },
     }
   }
   componentWillMount(){
-    let { classId, level, code, userId, school, className, name } = this.props;
+    let { classId, level, code, userId, school, className, name} = this.props;
+    //TODO : chapter 받아오기
     let chapter;
 
     if(code === "engloo") {
@@ -125,24 +159,40 @@ class ReportByStudent extends PureComponent {
         subHead : `${name} (${level.split("_")[1].toLocaleUpperCase()})`,
         scoreName : "해결한 문제"
       })
-      chapter = level.toLocaleLowerCase();
     } else {
       this.setState({
-        subHead : `${school} ${className} ${name} (${level}레벨)`
+        subHead : `${school} ${className} ${name} (${level[0].toLocaleUpperCase()}레벨)`
       })
-      // 대구 지사에 맞춰서 만든 것이기 때문에 챕터를 이런식으로 고정하였음.
-      chapter = `${level}0_w0`.toLocaleLowerCase();
     }
+    chapter = level.toLocaleLowerCase();
+
     this.props.requestedReports(classId, userId, chapter)
   }
   componentWillReceiveProps(newProps){
     if(newProps.reportsResults !== this.props.reportsResults) {
       let { chapterAves } = newProps.reportsResults;
+      let volume = this.state.volume;
+      // debugger
       if(chapterAves) {
         chapterAves = chapterAves.map(ch => {
-          let vol = ch.name.split("_")[2].match(/\d+/)[0];
-          ch.name = this.props.code === "engloo" ? `${vol}단원` : `${vol}권`
-          // ch.name = `${vol}권`
+          console.log(ch.name);
+          // TODO : 분기별 명 바꿔주기
+          let vol;
+          let targetVol;
+          let code = this.props.code;
+          let names = ch.name.split("_")
+          if(code === "engloo") {
+            targetVol = names[1][1];
+            vol = names[2].match(/\d+/)[0];
+            ch.name = `${targetVol}권 ${vol}단원`;
+          } else {
+            targetVol = volume[ch.name[0]].find( vol => vol.val === names[0]).name;
+            vol = names[1].match(/\d+/)[0];
+            ch.name = `${targetVol}권 ${vol}단원`;
+            if(names[2]) {
+              ch.name = `${targetVol}권 ${vol}단원 ${names[2][1]}차`;
+            }
+          }
           return ch
         })
 
@@ -282,7 +332,7 @@ class ReportsContainer extends Component {
   }
   componentWillMount(){
     let reportData = this.props.location.query;
-
+    console.log(decodeURIComponent(window.location.href));
     // let getUrl = decodeURIComponent(window.location.href)
     // let reportData = getUrl.split("?")[1].split("&")
     // reportData.forEach(r => {

@@ -32,7 +32,7 @@
   padding:0.5em 1.5em;
   border-radius:20px;
   background: none;
-  display: block;
+  /* display: block; */
   font-family: "Lato";
 }
 
