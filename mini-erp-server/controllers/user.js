@@ -507,7 +507,69 @@ const allUsersEmails = async ctx => {
 }
 const loggedUser = async ctx => {
   let targetUser = await User.findOne().where({email: ctx.params.user}).select('-password')
-    ctx.body = targetUser
+  let targetCode = { parentId : targetUser.code };
+  let targetOne;
+
+  if( targetUser.customerType === 'T' ) {
+
+    targetOne = targetUser.kinders[0];
+    targetCode = { kinderId : targetOne.code, parentId: targetOne.parentId }
+
+  }
+
+  let academies = await Login.find(targetCode)
+  let obj = {};
+
+  // console.log(academies);
+
+  targetUser.kinders.forEach( k => {
+  	obj[k.code] = { ...obj[k.code] }
+    	k.kinderClasses.forEach( kc => {
+    		obj[k.code][kc.code] = { ...obj[k.code][kc.code] }
+    	})
+  })
+
+  academies.forEach( (ac, i) => {
+    let { kinderId, classId, parentId, ...restData } = ac;
+  	obj[ac.kinderId] = {
+  		...obj[ac.kinderId]
+  	};
+  	obj[ac.kinderId][ac.classId] = {
+      "students" : ac.students,
+      "className" : ac.className
+    };
+  })
+
+
+
+  if(targetUser.customerType === 'T') {
+    // console.log(targetOne.code);
+    let extraInfo = await User.aggregate([
+        { $unwind :'$kinders'},
+        { $match : { 'kinders.code': targetOne.code } },
+        { $project : {
+          _id:0,
+          lang : '$kinders.lang',
+          name : '$kinders.name',
+          url : '$kinders.url' }
+        }
+      ])
+
+
+      // console.log(extraInfo);
+    obj[targetOne.code] = {
+      ...obj[targetOne.code],
+      "lang" : extraInfo[0].lang,
+      "url" : extraInfo[0].url,
+      "name" : extraInfo[0].name
+    }
+
+  }
+
+  ctx.body = {
+    user : targetUser,
+    loginInfo : obj
+  }
 }
 
 const findUserByType = async ctx => {

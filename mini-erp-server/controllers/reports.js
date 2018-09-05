@@ -145,11 +145,17 @@ const isGetAllAveByUserId = async (ctx) => {
   try {
     let { classId, userId, chapter } = ctx.params;
     chapter = new RegExp(chapter, 'g');
+    console.log(chapter);
 
     // target 학생의 reports
-    let academy = await Reports.find({classId, chapter})
+    let academy = await Reports.find({
+          classId,
+          chapter
+        })
         // block 을 한번도 사용하지 않은 것은 필터링
         academy = academy.filter(ac => ac.success)
+
+        // console.log(academy);
 
 
     let chapterAves = [];
@@ -195,9 +201,8 @@ const isGetAllAveByUserId = async (ctx) => {
       1. DONE - total 전부 빼기
       2. DONE - 반 평균 구하는 방법 수정하기 = 각 학생에 따라 푼 만큼의 평균을 보여줘야함
       3. 월별, 분기별에 구하기
-      4: 반 최고를 뽑아내기
     */
-    
+
     ctx.body = {
       block : {
         reportTitle: "사용 블럭 수",

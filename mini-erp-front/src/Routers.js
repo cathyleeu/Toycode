@@ -19,8 +19,24 @@ import SignUp from './Auth/containers/SignUp'
 
 
 class Routers extends Component {
+  constructor() {
+    super()
+    this.state = {
+      status : false
+    }
+  }
   componentDidMount(){
     this.props.fetchUserInfo()
+
+  }
+  componentWillReceiveProps(nextProps) {
+    if(this.props.completed !== nextProps.completed) {
+      this.setState({
+        status : nextProps.completed
+      })
+    }
+    console.log("Routers componentWillReceiveProps");
+
   }
   requireLogin = (nextState, replace) => {
     const token = localStorage.getItem('token')
@@ -32,30 +48,29 @@ class Routers extends Component {
     }
   }
   render(){
-    const {auth} = this.props
-    return(
+    const { auth } = this.props;
+    if(!this.state.status) {
+      return false;
+    }
+     return(
       <Router history={browserHistory}>
         <Route path='reports' component={requireAuth(Reports)}/>
-        {auth.user
-          && (
-            <Route path='/' component={App} auth={auth}>
-              <IndexRoute component={Feature} onEnter={this.requireLogin}/>
-              <Route path="login" component={Auth} />
-              <Route path="logout" component={Auth} />
-              <Route path="signup" component={SignUp} />
-              <Route path='feature' component={requireAuth(Feature)}/>
-              <Route path='shop' component={requireAuth(Shop)}/>
-              <Route path='issued' component={requireAuth(IssuedLogin)}/>
-              <Route path='account' component={requireAuth(UserAccount)}/>
-              <Route path='allIves' component={requireAuth(AllIVes)}/>
-              <Route path='cst-list' component={requireAuth(CustomerLists)}/>
-              <Route path="catalog" component={requireAuth(Catalog)} />
-              <Route path="statement" component={requireAuth(Statement)} />
-              <Route path="transport" component={requireAuth(Transport)} />
-              <Route path="return" component={requireAuth(Return)} />
-            </Route>
-          )
-        }
+          <Route path='/' component={App} auth={auth}>
+            <IndexRoute component={Feature} onEnter={this.requireLogin}/>
+            <Route path="login" component={Auth} />
+            <Route path="logout" component={Auth} />
+            <Route path="signup" component={SignUp} />
+            <Route path='feature' component={requireAuth(Feature)}/>
+            <Route path='shop' component={requireAuth(Shop)}/>
+            <Route path='issued' component={requireAuth(IssuedLogin)}/>
+            <Route path='account' component={requireAuth(UserAccount)}/>
+            <Route path='allIves' component={requireAuth(AllIVes)}/>
+            <Route path='cst-list' component={requireAuth(CustomerLists)}/>
+            <Route path="catalog" component={requireAuth(Catalog)} />
+            <Route path="statement" component={requireAuth(Statement)} />
+            <Route path="transport" component={requireAuth(Transport)} />
+            <Route path="return" component={requireAuth(Return)} />
+          </Route>
       </Router>
     )
   }
@@ -63,7 +78,8 @@ class Routers extends Component {
 
 function mapStateToProps(state){
   return {
-    auth: state.auth
+    auth: state.auth,
+    completed: state.auth.completed
   }
 }
 

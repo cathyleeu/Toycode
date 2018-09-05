@@ -9,7 +9,6 @@ const initialState = function(){
     return {
       authenticated:true,
       status: false,
-      // authenticated: false,
       error: '',
       email:'',
       user:{}
@@ -38,7 +37,13 @@ export default function (state = initialState(), action) {
     case types.MATCHED_BRANCH:
       return { ...state, matchedB: action.matchedB }
     case types.STATUS_ON_LOGIN:
-      return { ...state, user: action.response, email: localStorage.getItem('email'), authenticated: true }
+      return { ...state,
+               user: action.response.user,
+               loginInfo: action.response.loginInfo,
+               email: localStorage.getItem('email'),
+               authenticated: true, 
+               completed : action.completed
+             }
     case types.UNAUTH_USER:
       return { ...state, authenticated: false, email: '', user: '', status: false }
     case types.LOGIN_ERROR:

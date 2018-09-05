@@ -91,12 +91,14 @@ export function fetchUserInfo() {
 }
 
 function receiveUserInfo(response) {
+  console.log("receiveUserInfo", response);
   return {
     type: types.STATUS_ON_LOGIN,
     response,
-    kinder: response.kinders,
-    education: response.education,
-    account: response.account
+    kinder: response.user.kinders,
+    education: response.user.education,
+    account: response.user.account,
+    completed : true
   }
 }
 
