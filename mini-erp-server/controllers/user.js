@@ -507,6 +507,10 @@ const allUsersEmails = async ctx => {
 }
 const loggedUser = async ctx => {
   let targetUser = await User.findOne().where({email: ctx.params.user}).select('-password')
+  if(!targetUser) {
+    ctx.body = {};
+    return;
+  }
   let targetCode = { parentId : targetUser.code };
   let targetOne;
 
