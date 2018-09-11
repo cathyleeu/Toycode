@@ -36,12 +36,17 @@ export default function (state = initialState(), action) {
       return { ...state, authenticated: true}
     case types.MATCHED_BRANCH:
       return { ...state, matchedB: action.matchedB }
+    case types.INITIAL_STATE :
+     return {
+       ...state,
+       completed : action.completed
+     }
     case types.STATUS_ON_LOGIN:
       return { ...state,
                user: action.response.user,
                loginInfo: action.response.loginInfo,
                email: localStorage.getItem('email'),
-               authenticated: true, 
+               authenticated: true,
                completed : action.completed
              }
     case types.UNAUTH_USER:
