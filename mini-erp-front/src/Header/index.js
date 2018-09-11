@@ -9,9 +9,9 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
   const adminHeader = [
     {route: '/allIves' , title: '주문상황'},
     {route: '/cst-list' , title: '지사상황'},
-    {route: '/catalog' , title: '상품목록'},
-    {route: '/statement' , title: '매출장부'},
-    {route: '/reports', title: '이력관리'}
+    {route: '/catalog' , title: '상품목록'}
+    // {route: '/statement' , title: '매출장부'}
+    // {route: '/reports', title: '이력관리'}
   ]
 
   const adminHeaderList = adminHeader.map((list,i) => (
