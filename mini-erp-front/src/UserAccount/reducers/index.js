@@ -66,24 +66,20 @@ const deleteKinder = (state, id) => (
   state.filter(kinder => kinder._id !== id)
 )
 
-const statusUser = (state, action) => {
-
-  let kinder = action.user.kinder || {};
-  let education = action.user.education || {} ;
-  let account  = action.user.account || {} ;
-
-
-  return { ...state,
-          kinders:[ ...kinder ],
-          managers: { account, education }
-          }
-
+const statusUser = (state, user) => {
+  let { education, account } = user;
+  let kinder = user.kinders || {};
+  return {
+           ...state,
+           kinders:[ ...kinder ],
+           managers: { account, education }
+         }
 }
 
 export default (state = initialState , action) => {
   switch (action.type) {
     case STATUS_ON_LOGIN:
-      return statusUser(state, action.response)
+      return statusUser(state, action.response.user)
     case types.ADD_KINDER:
     case types.UPDATE_KINDER:
     case types.DELETE_KINDER:
