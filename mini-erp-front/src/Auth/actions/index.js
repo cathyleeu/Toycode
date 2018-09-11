@@ -78,18 +78,12 @@ export const toggleSignup = () => ({
   status: true
 })
 
-
-export function fetchUserInfo() {
-  return function (dispatch) {
-    // dispatch({ type: types.AUTH_USER })
-    const user = localStorage.getItem('email')
-    return axios.get(`${ROOT_URL}/user/${user}`)
-      .then((response) => {
-        dispatch(receiveUserInfo(response.data))
-      })
+function initialState() {
+  return {
+    type: types.INITIAL_STATE,
+    completed : true
   }
 }
-
 function receiveUserInfo(response) {
   console.log("receiveUserInfo", response);
   return {
@@ -98,6 +92,31 @@ function receiveUserInfo(response) {
     completed : true
   }
 }
+
+
+export function fetchUserInfo() {
+  console.log("fetchUserInfo");
+
+  const user = localStorage.getItem('email')
+  if(user) {
+    return function (dispatch) {
+      // dispatch({ type: types.AUTH_USER })
+
+      return axios.get(`${ROOT_URL}/user/${user}`)
+        .then((response) => {
+          dispatch(receiveUserInfo(response.data))
+        })
+    }
+  } else {
+
+    return function (dispatch) {
+      dispatch(initialState())
+    }
+  }
+
+}
+
+
 
 
 

@@ -27,7 +27,6 @@ class Routers extends Component {
   }
   componentDidMount(){
     this.props.fetchUserInfo()
-
   }
   componentWillReceiveProps(nextProps) {
     if(this.props.completed !== nextProps.completed) {
