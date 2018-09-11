@@ -50,7 +50,7 @@ class Routers extends Component {
   render(){
     const { auth } = this.props;
     if(!this.state.status) {
-      return false;
+      return false
     }
      return(
       <Router history={browserHistory}>

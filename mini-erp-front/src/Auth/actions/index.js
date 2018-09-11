@@ -95,9 +95,6 @@ function receiveUserInfo(response) {
   return {
     type: types.STATUS_ON_LOGIN,
     response,
-    kinder: response.user.kinders,
-    education: response.user.education,
-    account: response.user.account,
     completed : true
   }
 }
