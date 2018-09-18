@@ -246,7 +246,7 @@ class IssuedClass extends PureComponent {
       return;
     }
 
-    let url = `http://localhost:3001/reports?code=${kinderUrl}&classId=${kclassId}&school=${kinderName}&className=${kclassName}&level=${volume}&students=${studentsNames}&range=${range}`
+    let url = `http://office.toycode.org/reports?code=${kinderUrl}&classId=${kclassId}&school=${kinderName}&className=${kclassName}&level=${volume}&students=${studentsNames}&range=${range}`
     window.open(url, "_blank")
 
     this.handleOpenModal(e)
