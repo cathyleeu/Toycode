@@ -253,7 +253,7 @@ class IssuedClass extends PureComponent {
   }
   render(){
     const { kinderName, kclassName, kinderUrl, level, disabled, studentsNames, kinderLang, kclassId, kinderId } = this.props;
-
+    console.log(studentsNames);
     let mon = moment().set({year:2017, month:3});
     // YBM 대구지사 3월로 고정 예외처리
     if(kinderId.split("-")[0] === "C00071") {
@@ -304,7 +304,7 @@ class IssuedClass extends PureComponent {
             <input type="hidden" name="className" value={kclassName} />
             <input type="hidden" name="yearmonth" value={mon.format('YYYYMM')} />
             <input type="hidden" name="level" value={level} />
-            <input type="hidden" name="students" value={studentsNames[kclassId] ? studentsNames[kclassId].students : ''} />
+            <input type="hidden" name="students" value={studentsNames} />
             <button
               className='button-edit'
               disabled={disabled}
