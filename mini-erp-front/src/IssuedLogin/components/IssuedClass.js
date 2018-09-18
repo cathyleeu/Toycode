@@ -316,16 +316,13 @@ class IssuedClass extends PureComponent {
             </button>
           </form>
           {/* http://office.toycode.org/reports  */}
-          {(kinderId.split("-")[0] === "C00176" || kinderId.split("-")[0] === "A00083" || kinderId.split("-")[0] === "C00071")
-            ? <div>
-              <button
-                onClick={this.handleOpenModal}
-                className='button-edit'>
-                이력관리 리포트
-              </button>
-            </div>
-            : false
-          }
+          <div>
+            <button
+              onClick={this.handleOpenModal}
+              className='button-edit'>
+              이력관리 리포트
+            </button>
+          </div>
 
         </div>
         <IssuedClassTop
