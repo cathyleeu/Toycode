@@ -53,7 +53,7 @@ class Routers extends Component {
     }
      return(
       <Router history={browserHistory}>
-        <Route path='reports' component={requireAuth(Reports)}/>
+        <Route path='reports' component={Reports}/>
           <Route path='/' component={App} auth={auth}>
             <IndexRoute component={Feature} onEnter={this.requireLogin}/>
             <Route path="login" component={Auth} />
