@@ -19,18 +19,24 @@ export default function (state = initialState, action) {
     case types.IS_FETCHED_NAMES:
       return { ...state, [action.classId]: { students: action.students, name:action.name }}
     case types.IS_EDITED_NAMES:
-      return { ...state, [action.classId]: { students: action.students, name:action.name}}
+      return { ...state, [action.classId]: { students: action.students, name:action.name }}
     case types.IS_WRITING_NAMES:
-      return { ...state, [action.classId] : {students: action.students}}
+      return { ...state, [action.classId] : { students: action.students }}
     case types.IS_REGISTERED_FIRST_TIME:
       return { ...state }
+    // case types.NO_DATA_REPORTS : {
+    //   ...state
+    // }
     case types.IS_REQUESTED_REPORTS:
-      return { ...state, reports: {
-        ...state.reports,
-        [action.userId] : {
-          ...action.results
+      return {
+        ...state,
+        reports: {
+          ...state.reports,
+          [action.userId] : {
+            ...action.results
         }
-      }}
+      }
+    }
     default:
       return state
   }

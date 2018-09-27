@@ -248,7 +248,6 @@ class IssuedClass extends PureComponent {
 
     let url = `http://office.toycode.org/reports?code=${kinderUrl}&classId=${kclassId}&school=${kinderName}&className=${kclassName}&level=${volume}&students=${studentsNames}&range=${range}`
     window.open(url, "_blank")
-
     this.handleOpenModal(e)
   }
   render(){
@@ -315,7 +314,6 @@ class IssuedClass extends PureComponent {
                   로그인발급
             </button>
           </form>
-          {/* http://office.toycode.org/reports  */}
           <div>
             <button
               onClick={this.handleOpenModal}

@@ -261,7 +261,14 @@ class ReportByStudent extends PureComponent {
   }
   render(){
     if(!this.state.loaded) {
-      return false
+      return (
+        <div className="loading-bro">
+          <h1>데이터 로딩 중입니다. 잠시만 기다려 주세요.</h1>
+          <svg className="load" x="0px" y="0px" viewBox="0 0 150 150">
+            <circle className="loading-inner" cx="75" cy="75" r="60"/>
+         </svg>
+        </div>
+      )
     }
     return (
       <section className="print">
@@ -329,6 +336,7 @@ class ReportsContainer extends Component {
     this.state = {
     }
     this.renderReportsByStudent = this.renderReportsByStudent.bind(this)
+    document.title = '이력관리 레포트';
   }
   componentWillMount(){
     let reportData = this.props.location.query;
@@ -348,6 +356,7 @@ class ReportsContainer extends Component {
       ...reportData
     })
     history.replaceState("", "", "reports");
+
 
   }
   renderReportsByStudent(name, id) {
