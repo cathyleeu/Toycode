@@ -11,6 +11,8 @@ export const IS_EDITED_NAMES = 'IS_EDITED_NAMES'
 export const IS_WRITING_NAMES = 'IS_WRITING_NAMES'
 export const IS_REGISTERED_FIRST_TIME = 'IS_REGISTERED_FIRST_TIME'
 export const IS_FETCHED_FINISHED = 'IS_FETCHED_FINISHED'
+export const NO_DATA_REPORTS = 'NO_DATA_REPORTS'
+
 
 
 
@@ -24,11 +26,16 @@ export const IS_REQUESTED_REPORTS = 'IS_REQUESTED_REPORTS'
 
 
 export const requestedReports = (classId, userId, chapter) => (dispatch) => {
-  console.log("dataaaaa",classId, userId, chapter);
+  // console.log("dataaaaa",classId, userId, chapter);
   axios.get(`${ROOT_URL}/reports/${classId}/${userId}/${chapter}`)
       .then((res) => {
         console.log(res.data);
-        // FIXME: 여기서 data!!
+        // if(!res.data) {
+        //   console.log("nononono");
+        //   dispatch({
+        //     type: NO_DATA_REPORTS
+        //   })
+        // }
         dispatch({
           type: IS_REQUESTED_REPORTS,
           userId,

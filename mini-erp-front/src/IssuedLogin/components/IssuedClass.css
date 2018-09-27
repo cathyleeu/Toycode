@@ -293,6 +293,60 @@ body.preventScroll {
 /*====== ====== ====== */
 
 
+
+/* ======================== */
+
+.loading-bro {
+  margin: 50px auto;
+  width: 500px;
+  text-align: center;
+}
+
+.loading-bro > h1 {
+  text-align: center;
+  margin-bottom: 1em;
+  font-weight: 700;
+  /* display: block; */
+  font-size: 87.5%;
+  color: #212529;
+}
+
+.load {
+	width: 70px;
+  margin: 50px;
+  animation: loading 3s linear infinite;
+}
+
+.loading-inner {
+  animation: loading-circle 2s linear infinite;
+  stroke: #51BBA7;
+  fill: transparent;
+  stroke-dashoffset: 0;
+  stroke-dasharray: 300;
+  stroke-width: 10;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+}
+
+@keyframes loading {
+		0% {
+      transform: rotate(0);
+    }
+		100% {
+      transform: rotate(360deg);
+    }
+}
+@keyframes loading-circle {
+		0% {
+      stroke-dashoffset: 0
+    }
+		100% {
+      stroke-dashoffset: -600;
+    }
+}
+
+/* ======================== */
+
 #print-reports {
   background: rgb(204,204,204);
   padding: 0.5em 0;
