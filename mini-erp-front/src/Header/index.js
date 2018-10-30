@@ -35,7 +35,7 @@ const Header = ({auth, signoutUser, userType, customerType}) => {
               { userType !== 'admin' && <li className="head-menu"><Link to="/issued"><p>로그인 발급</p></Link></li> }
               { customerType === 'Z' && adminHeaderList }
               {/* { (customerCode === 'C00071' || customerCode === 'C00043') && <li className="head-menu"><a href="http://localhost:3000/reports" target="_blank"><p>이력관리</p></a></li>} */}
-              <li className="head-menu"><a href="https://drive.google.com/drive/folders/0B1Aeb4WZ7p9uWGE2NVM2QmRobXM?usp=sharing" target="_blank"><p>자료실</p></a></li>
+              <li className="head-menu"><a href="https://drive.google.com/drive/folders/1hem73HHKXBPJpfC1WZ8VMdmTFi41Lm27?usp=sharing" target="_blank"><p>자료실</p></a></li>
             </ul>
           </nav>
           <div className="Logout" onClick={() => signoutUser()}>로그아웃</div>
