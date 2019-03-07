@@ -101,6 +101,17 @@ const delStudentName = async (ctx) => {
   );
 }
 
+const isDeleteNamesByClass = async (ctx) => {
+  try{
+    let { classId, className } = ctx.params;
+    console.log("remove class Names");
+    ctx.body = await Login.findOneAndRemove({ classId, className })
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+    console.log(err);
+  }
+}
 const isUpdateNames = async (ctx) => {
 
   try{
@@ -165,5 +176,6 @@ module.exports = {
   isAllNamesByBranch,
   editStudentName,
   delStudentName,
-  isRemovedNamesByKC
+  isRemovedNamesByKC,
+  isDeleteNamesByClass
 };

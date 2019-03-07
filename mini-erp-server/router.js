@@ -81,6 +81,7 @@ router.put('/login/update/:classId/:className', Login.isUpdateNames)
 router.put('/login/:editType/:classId', Login.editStudentName)
 // router.del('/login/:studentId', Login.delStudentName)
 router.del('/login/:_id', Login.isRemovedNamesByKC)
+router.del('/login/:classId/:className', Login.isDeleteNamesByClass)
 // router.put('/login/edit/:classId', Login.editStudentName)
 
 router.post('/reports', Reports.isPostedReports)
