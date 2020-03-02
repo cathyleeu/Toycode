@@ -6,30 +6,30 @@ const moment = require('moment-timezone')
 
 
 let transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-          user: 'toycodeinc@gmail.com',
-          pass: 'c0d1ng!@'
-      },
-      logger: true, // log to console
-      debug: true // include SMTP traffic in the logs
-  }, {
-      from: '키즈씽킹 주문<toycodeinc_do_not_reply@gmail.com>'
-  });
+  service: 'Gmail',
+  auth: {
+    user: 'toycodeinc@gmail.com',
+    pass: 'c0d1ng!@!!'
+  },
+  logger: true, // log to console
+  debug: true // include SMTP traffic in the logs
+}, {
+  from: '키즈씽킹 주문<toycodeinc_do_not_reply@gmail.com>'
+});
 
 function Commas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 const isRegisteredNewIVes = async (ctx, next) => {
   try {
-    const {userName, userEmail, userCode, userErp, delivery, requestedGoods, requestDesc, totalSales} = ctx.request.body;
-    const {to, phone, address} = delivery;
-    const {roadAddr, detailAddr, zipNo} = address;
+    const { userName, userEmail, userCode, userErp, delivery, requestedGoods, requestDesc, totalSales } = ctx.request.body;
+    const { to, phone, address } = delivery;
+    const { roadAddr, detailAddr, zipNo } = address;
 
-    let codeRes = await Code.findOne({dbcollection: 'Invoices'});
+    let codeRes = await Code.findOne({ dbcollection: 'Invoices' });
     let count = codeRes ? codeRes.count : 1,
-        zero = "0".repeat(9),
-        invoiceId = "IV" + (zero+count).slice(-zero.length);
+      zero = "0".repeat(9),
+      invoiceId = "IV" + (zero + count).slice(-zero.length);
     const invoice = new Invoices({
       invoiceId, userName, userEmail, userCode, userErp,
       modifiability: true,
@@ -42,7 +42,7 @@ const isRegisteredNewIVes = async (ctx, next) => {
     });
     codeRes.count++;
     const err = await codeRes.save();
-    if(err) {
+    if (err) {
       await next(err);
     }
     ctx.body = await invoice.save();
@@ -96,9 +96,9 @@ const isRegisteredNewIVes = async (ctx, next) => {
     };
     transporter.sendMail(message, function (error, info) {
       if (error) {
-          console.log('Error occurred');
-          console.log(error.message);
-          return;
+        console.log('Error occurred');
+        console.log(error.message);
+        return;
       }
       console.log('Message sent successfully!');
       // console.log('Server responded with "%s"', info.response);
@@ -138,7 +138,7 @@ const isRegisteredNewIVes = async (ctx, next) => {
 
 const isFetchedAllIVes = async ctx => {
   try {
-    ctx.body = await Invoices.find().sort({createdOn: -1});
+    ctx.body = await Invoices.find().sort({ createdOn: -1 });
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
@@ -152,12 +152,15 @@ const isPostTrackNumber = async ctx => {
   console.log(ctx.params.invoiceId)
   try {
     ctx.body = await Invoices.findOneAndUpdate(
-      {invoiceId: ctx.params.invoiceId},
-      {$set: {
-        trackingNo: ctx.request.body.trackingNo,
-        filterReleaseDate: ctx.request.body.filterReleaseDate,
-        status: 'FFMT',
-        releaseDate: Date.now()}}, { new: true })
+      { invoiceId: ctx.params.invoiceId },
+      {
+        $set: {
+          trackingNo: ctx.request.body.trackingNo,
+          filterReleaseDate: ctx.request.body.filterReleaseDate,
+          status: 'FFMT',
+          releaseDate: Date.now()
+        }
+      }, { new: true })
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
@@ -167,7 +170,7 @@ const isPostTrackNumber = async ctx => {
 
 const isFetchedOrderStatus = async ctx => {
   try {
-    ctx.body = await Invoices.find({status:ctx.params.status.toUpperCase()})
+    ctx.body = await Invoices.find({ status: ctx.params.status.toUpperCase() })
   } catch (e) {
     ctx.status = 500;
     ctx.body = err;
@@ -180,11 +183,11 @@ const isFetchedOrderStatus = async ctx => {
 //     let filterDate = ctx.params.date.split("-")
 //     console.log(filterDate)
 //     const ffmt = await Invoices.find({createdOn: {"$gte": new Date(2017,2,1), "$lt": new Date(2017,4,1)}})
-    // let obj = {};
-    // ffmt.forEach(ff => {
-    //
-    // })
-    // moment(this.state.startDate).tz("Asia/Seoul").format('MM월 DD일')
+// let obj = {};
+// ffmt.forEach(ff => {
+//
+// })
+// moment(this.state.startDate).tz("Asia/Seoul").format('MM월 DD일')
 //     ctx.body = ffmt
 //   } catch (err) {
 //     ctx.status = 500;
@@ -196,7 +199,7 @@ const isFetchedOrderStatus = async ctx => {
 
 const isFetchedIVesByUser = async ctx => {
   try {
-    ctx.body = await Invoices.find().where({userEmail: ctx.params.user}).sort({createdOn: -1});
+    ctx.body = await Invoices.find().where({ userEmail: ctx.params.user }).sort({ createdOn: -1 });
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
@@ -206,29 +209,29 @@ const isFetchedIVesByUser = async ctx => {
 
 /*============ xlsx ====================================*/
 function datenum(v, date1904) {
-  if(date1904) v+=1462;
+  if (date1904) v += 1462;
   var epoch = Date.parse(v);
   return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
 }
 function sheet_from_array_of_arrays(data, opts) {
   var ws = {};
-  var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
-  for(var R = 0; R != data.length; ++R) {
-    for(var C = 0; C != data[R].length; ++C) {
-      if(range.s.r > R) range.s.r = R;
-      if(range.s.c > C) range.s.c = C;
-      if(range.e.r < R) range.e.r = R;
-      if(range.e.c < C) range.e.c = C;
+  var range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 } };
+  for (var R = 0; R != data.length; ++R) {
+    for (var C = 0; C != data[R].length; ++C) {
+      if (range.s.r > R) range.s.r = R;
+      if (range.s.c > C) range.s.c = C;
+      if (range.e.r < R) range.e.r = R;
+      if (range.e.c < C) range.e.c = C;
       var cell = {
         v: data[R][C]
         // , s: ????
       };
-      if(cell.v == null) continue;
-      var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+      if (cell.v == null) continue;
+      var cell_ref = XLSX.utils.encode_cell({ c: C, r: R });
 
-      if(typeof cell.v === 'number') cell.t = 'n';
-      else if(typeof cell.v === 'boolean') cell.t = 'b';
-      else if(cell.v instanceof Date) {
+      if (typeof cell.v === 'number') cell.t = 'n';
+      else if (typeof cell.v === 'boolean') cell.t = 'b';
+      else if (cell.v instanceof Date) {
         cell.t = 'n'; cell.z = XLSX.SSF._table[14];
         cell.v = datenum(cell.v);
       }
@@ -237,11 +240,11 @@ function sheet_from_array_of_arrays(data, opts) {
       ws[cell_ref] = cell;
     }
   }
-  if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
+  if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
   return ws;
 }
 function Workbook() {
-  if(!(this instanceof Workbook)) return new Workbook();
+  if (!(this instanceof Workbook)) return new Workbook();
   this.SheetNames = [];
   this.Sheets = {};
 }
@@ -251,7 +254,7 @@ function Workbook() {
 
 
 const isGetXlsx = async ctx => {
-  let rqt = await Invoices.find({status: 'RQT'})
+  let rqt = await Invoices.find({ status: 'RQT' })
 
   /* original data */
 
@@ -265,31 +268,31 @@ const isGetXlsx = async ctx => {
       ["거래명세서", null, null, null, null, null, null, null, null],
       // FIXME: v:, s: 등등으로 스타일을 입힐 수 있을 것 같은데 obj obj 라고 결과가 도출 -0 -;;;
       //   s: { alignment: {horizontal: "left"},
-          //     border: {
-          //         left: {style: 'thick', color: {auto: 1}},
-          //         top: {style: 'thick', color: {auto: 1}},
-          //         bottom: {style: 'thick', color: {auto: 1}}
-          //       }}}
-      [null, null, null, null, null, null, null, null, null ],
-      ["일자", "우편번호","전표:1", null, null, null, null, null, null],
-      [today, state.delivery.address.zipNo , "공급자", '등록번호'   , "764-86-00016"                 , null, null],
-      [state.delivery.address.roadAddr,  null  , "공급자", '상호(법인명)', '주식회사 토이코드'                ,"성명","홍현기"],
-      [state.delivery.address.detailAddr, null  , "공급자", '사업장주소'  , "서울특별시 강남구 강남대로 408 13층" , null,null],
-      ["아래와 같이 계산합니다.",null,"공급자","업태", "출판, 영상, 방송통신\n및 정보서비스업","종목","교육출판물, 시스템\n소프트웨어개발및 공급"],
-      ["합계금액", null, state.totalSales , null, null, null, null, null, null],
-      ["품목", null, "수량" , "단가", "공급가액", "세액", "비율", null , null]
+      //     border: {
+      //         left: {style: 'thick', color: {auto: 1}},
+      //         top: {style: 'thick', color: {auto: 1}},
+      //         bottom: {style: 'thick', color: {auto: 1}}
+      //       }}}
+      [null, null, null, null, null, null, null, null, null],
+      ["일자", "우편번호", "전표:1", null, null, null, null, null, null],
+      [today, state.delivery.address.zipNo, "공급자", '등록번호', "764-86-00016", null, null],
+      [state.delivery.address.roadAddr, null, "공급자", '상호(법인명)', '주식회사 토이코드', "성명", "홍현기"],
+      [state.delivery.address.detailAddr, null, "공급자", '사업장주소', "서울특별시 강남구 강남대로 408 13층", null, null],
+      ["아래와 같이 계산합니다.", null, "공급자", "업태", "출판, 영상, 방송통신\n및 정보서비스업", "종목", "교육출판물, 시스템\n소프트웨어개발및 공급"],
+      ["합계금액", null, state.totalSales, null, null, null, null, null, null],
+      ["품목", null, "수량", "단가", "공급가액", "세액", "비율", null, null]
     ];
 
     state.requestedGoods.forEach(g => {
-      list = [g.name, null, g.qutt, g.sales/g.qutt , g.sales, null, null];
+      list = [g.name, null, g.qutt, g.sales / g.qutt, g.sales, null, null];
       totalQutt += g.qutt
       data.push(list);
     })
-    let nullRow = [null,null,null,null,null,null,null,null,null,null]
+    let nullRow = [null, null, null, null, null, null, null, null, null, null]
     data.push(nullRow)
     data.push(nullRow)
     data.push(nullRow)
-    data.push(["계", "총수량", totalQutt ,"총금액",state.totalSales,null,null,null,null,null])
+    data.push(["계", "총수량", totalQutt, "총금액", state.totalSales, null, null, null, null, null])
     data.push(nullRow)
     data.push(nullRow)
     data.push(["배송처"])
@@ -302,23 +305,23 @@ const isGetXlsx = async ctx => {
     wb.SheetNames.push(ws_name);
     wb.Sheets[ws_name] = ws;
     ws['!merges'] = [
-      {s:{c:8,r:0},e:{c:0,r:1}}, //거래명세서
-      {s:{c:2,r:6},e:{c:2,r:3}}, //공급자
-      {s:{c:4,r:3},e:{c:6,r:3}}, //등록번호
-      {s:{c:4,r:5},e:{c:6,r:5}}, // 사업장 주소
-      {s:{c:0,r:4},e:{c:1,r:4}}, // 주소
-      {s:{c:0,r:5},e:{c:1,r:5}}, // 상세주소
-      {s:{c:0,r:6},e:{c:1,r:6}}, //아래와 같이
-      {s:{c:0,r:7},e:{c:1,r:7}}, //합계
-      {s:{c:2,r:7},e:{c:6,r:7}}, //total sales
-      {s:{c:0,r:8},e:{c:1,r:8}},
-      {s:{c:0,r:9},e:{c:1,r:9}},
-      {s:{c:0,r:10},e:{c:1,r:10}},
-      {s:{c:0,r:11},e:{c:1,r:11}},
-      {s:{c:0,r:12},e:{c:1,r:12}}
+      { s: { c: 8, r: 0 }, e: { c: 0, r: 1 } }, //거래명세서
+      { s: { c: 2, r: 6 }, e: { c: 2, r: 3 } }, //공급자
+      { s: { c: 4, r: 3 }, e: { c: 6, r: 3 } }, //등록번호
+      { s: { c: 4, r: 5 }, e: { c: 6, r: 5 } }, // 사업장 주소
+      { s: { c: 0, r: 4 }, e: { c: 1, r: 4 } }, // 주소
+      { s: { c: 0, r: 5 }, e: { c: 1, r: 5 } }, // 상세주소
+      { s: { c: 0, r: 6 }, e: { c: 1, r: 6 } }, //아래와 같이
+      { s: { c: 0, r: 7 }, e: { c: 1, r: 7 } }, //합계
+      { s: { c: 2, r: 7 }, e: { c: 6, r: 7 } }, //total sales
+      { s: { c: 0, r: 8 }, e: { c: 1, r: 8 } },
+      { s: { c: 0, r: 9 }, e: { c: 1, r: 9 } },
+      { s: { c: 0, r: 10 }, e: { c: 1, r: 10 } },
+      { s: { c: 0, r: 11 }, e: { c: 1, r: 11 } },
+      { s: { c: 0, r: 12 }, e: { c: 1, r: 12 } }
     ];
     ws['!cols'] = [
-      {wch:25},{wch:10},{wch:5},{wch:7},{wch:15},{wch:7},{wch:15},{wch:5},{wch:5},
+      { wch: 25 }, { wch: 10 }, { wch: 5 }, { wch: 7 }, { wch: 15 }, { wch: 7 }, { wch: 15 }, { wch: 5 }, { wch: 5 },
     ];
 
   })
@@ -333,10 +336,10 @@ const isGetXlsx = async ctx => {
 }
 
 const isModifyingIVes = async ctx => {
-  try{
+  try {
     console.log("modi", ctx.request.body, ctx.params)
     let { userCode, invoiceId } = ctx.params;
-    ctx.body = await Invoices.findOneAndUpdate({ userCode, invoiceId }, {$set: { requestedGoods: ctx.request.body }}, { new: true })
+    ctx.body = await Invoices.findOneAndUpdate({ userCode, invoiceId }, { $set: { requestedGoods: ctx.request.body } }, { new: true })
   } catch (err) {
     ctx.status = 500;
     ctx.body = err;
@@ -344,7 +347,7 @@ const isModifyingIVes = async ctx => {
   }
 }
 const isRemoveIVes = async ctx => {
-  try{
+  try {
     console.log("deleteBBBB");
     let { invoiceId, userCode } = ctx.params;
     ctx.body = await Invoices.findOneAndRemove({ invoiceId, userCode })
@@ -357,44 +360,44 @@ const isRemoveIVes = async ctx => {
 
 const isGetXlsxDayFFMT = async ctx => {
   console.log(ctx.params.date)
-  let ffmtAday = await Invoices.find({filterReleaseDate: ctx.params.date})
+  let ffmtAday = await Invoices.find({ filterReleaseDate: ctx.params.date })
   var wb = new Workbook();
   var data = [
     ["판매자료 입력"],
     [null],
     ["Ⅰ. 공급자 인적사항"],
-    ["①  회 사 명"   , null , null, "②사업자등록번호" , null, "필수입력 항목" , null, null],
-    ["주식회사 토이코드", null , null, "764-86-00016" ,null, null, null],
+    ["①  회 사 명", null, null, "②사업자등록번호", null, "필수입력 항목", null, null],
+    ["주식회사 토이코드", null, null, "764-86-00016", null, null, null],
     [null],
     [" Ⅱ. 거래내역"],
-    ["년월일", "번호", "처리유형(상위)", "처리유형(하위)" ,"거래처코드", "거래처명", "사업자등록번호", "부서/사원", "납기일자","비고(상단)", "분개", "자산", "품목코드","품목명" ,"규격", "수량", "단가", "VAT", "공급가액", "세액", "합계금액", "창고","프로젝트","품목비고","금융기관","납품처","거래명세서비고","(세금)계산서 비고"],
+    ["년월일", "번호", "처리유형(상위)", "처리유형(하위)", "거래처코드", "거래처명", "사업자등록번호", "부서/사원", "납기일자", "비고(상단)", "분개", "자산", "품목코드", "품목명", "규격", "수량", "단가", "VAT", "공급가액", "세액", "합계금액", "창고", "프로젝트", "품목비고", "금융기관", "납품처", "거래명세서비고", "(세금)계산서 비고"],
   ];
   ffmtAday.forEach(state => {
     let list = []
     state.requestedGoods.forEach((g, i) => {
-      list = [ctx.params.date, i+1 , 1, 3 , state.userErp, null, null, null, null,null, 3,4, g.erpCode, g.name, null, g.qutt, g.sales/g.qutt, null, null,null,null,null,null,null,null,null,null];
+      list = [ctx.params.date, i + 1, 1, 3, state.userErp, null, null, null, null, null, 3, 4, g.erpCode, g.name, null, g.qutt, g.sales / g.qutt, null, null, null, null, null, null, null, null, null, null];
       data.push(list);
     })
   })
   var ws = sheet_from_array_of_arrays(data);
   ws['!merges'] = [
-    {s:{c:4,r:0},e:{c:0,r:0}}, //판매자료 입력
-    {s:{c:4,r:2},e:{c:0,r:2}}, //공급자
-    {s:{c:2,r:3},e:{c:0,r:3}}, //회사명
-    {s:{c:4,r:3},e:{c:3,r:3}}, //사업자
-    {s:{c:2,r:4},e:{c:0,r:4}}, //회사명
-    {s:{c:4,r:4},e:{c:3,r:4}}, //사업자
-    {s:{c:4,r:6},e:{c:0,r:6}}
+    { s: { c: 4, r: 0 }, e: { c: 0, r: 0 } }, //판매자료 입력
+    { s: { c: 4, r: 2 }, e: { c: 0, r: 2 } }, //공급자
+    { s: { c: 2, r: 3 }, e: { c: 0, r: 3 } }, //회사명
+    { s: { c: 4, r: 3 }, e: { c: 3, r: 3 } }, //사업자
+    { s: { c: 2, r: 4 }, e: { c: 0, r: 4 } }, //회사명
+    { s: { c: 4, r: 4 }, e: { c: 3, r: 4 } }, //사업자
+    { s: { c: 4, r: 6 }, e: { c: 0, r: 6 } }
   ];
   ws['!cols'] = [
     //  a       b       c       d       e       f       g       h
-    {wch:10},{wch:5},{wch:5},{wch:5},{wch:10},{wch:7},{wch:7},{wch:5}
+    { wch: 10 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 10 }, { wch: 7 }, { wch: 7 }, { wch: 5 }
     //  i       j       k       l       m       n     o         p
-    ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:10},{wch:20},{wch:5},{wch:5}
+    , { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 10 }, { wch: 20 }, { wch: 5 }, { wch: 5 }
     // q        r      s        t       u      v        w       x
-    ,{wch:10},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
+    , { wch: 10 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }
     // y         z        aa      ab     ac
-    ,{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}
+    , { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 5 }
   ];
   var ws_name = `토이코드-출고입력-${ctx.params.date}`;
 
@@ -411,7 +414,7 @@ const isGetXlsxDayFFMT = async ctx => {
 
 module.exports = {
   isRegisteredNewIVes,
-  isFetchedAllIVes ,
+  isFetchedAllIVes,
   isFetchedIVesByUser,
   isFetchedOrderStatus,
   isPostTrackNumber,
@@ -420,4 +423,4 @@ module.exports = {
   isModifyingIVes,
   isRemoveIVes
   // isFetchedOrderFFMT
- };
+};
