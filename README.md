@@ -1,7 +1,3 @@
-## 이번주 꼭 해야할 것
-  * total 받아오기 => 각 상품에 주문에 따라 수량 및 계산된 가격 data
-  * 회원가입 및 로그인 auth 리팩토링
-
 ## 설치
   * 서버 설치
   ```
@@ -46,9 +42,3 @@
   * [axios](https://github.com/mzabriskie/axios)
   * [mongod](https://www.mongodb.com)
   * [mongoose](http://mongoosejs.com/)
-
-
-## 장기적으로 해야할 것
-  * User 모델 스키마 정의
-  * 고객지원 페이지 
-  * 매터리얼 디자인 적용
